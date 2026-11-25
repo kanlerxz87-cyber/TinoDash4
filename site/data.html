@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>TinoDash4 · Data tables</title>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body data-page="data">
+<div class="wrap">
+  <nav class="side" id="nav"></nav>
+  <main>
+    <h1>Data tables</h1>
+    <p class="lede">Every row carries its source link where a source exists; household-reported values are labeled and flagged —
+      never inferred. Values round to $10. Flagged items are unverified and listed on <a href="flagged.html">Flagged for review</a>.</p>
+
+    <h2 id="hist-a">Property A (inherited Cupertino, 95014) — tax history</h2>
+    <div id="hist-a"></div>
+    <div class="note">F1: household-implied rate ≈1.335% vs published typical TRA ≈1.15–1.30% — official SCC tax-rate book not located this session; model uses the implied rate for continuity.
+      Assumed assessed value for modeling: $550,540 (2026 base).</div>
+
+    <h2 id="hist-b">Property B (owned SF Outer Sunset, 94122) — tax history</h2>
+    <div id="hist-b"></div>
+    <div class="note">F2: household-implied rate ≈2.135% vs official SF secured rate 1.18162182% — gap is parcel taxes/direct levies; obtain the bill breakdown from the SF Treasurer.</div>
+
+    <h2 id="law">Law &amp; rate rules (verified line by line)</h2>
+    <div id="law-table"></div>
+
+    <h2 id="rates">Rates &amp; taxes in force</h2>
+    <div id="rates-table"></div>
+
+    <h2 id="costs">Operating costs &amp; capital-cost assumptions</h2>
+    <div id="costs-table"></div>
+
+    <h2 id="prop19">Prop 19 cap schedule (biennial, BOE)</h2>
+    <div id="prop19-table"></div>
+
+    <h2 id="estate">Estate-tax scenarios (federal; CA = $0)</h2>
+    <div id="estate-table"></div>
+    <div class="note">Federal basic exclusion $15,000,000 (2026, OBBBA / Rev. Proc. 2025-32); 40% above the exclusion; 9-month payment rule; CA estate tax = federal credit only → $0 today (R&amp;T §13302).
+      2026 ballot repeal initiative failed to qualify — watch 2028.</div>
+
+    <h2 id="taxes">Three taxes, kept separate</h2>
+    <table>
+      <thead><tr><th>Tax</th><th>Trigger</th><th>Who pays</th><th>Modeled here</th></tr></thead>
+      <tbody>
+        <tr><td><b>Estate tax</b></td><td>Death; gross estate above the federal basic exclusion ($15M in 2026)</td><td>The estate, due 9 months from death (Form 706)</td>
+            <td>Federal only — $0 at exclusion, 40% above. California: $0 by statute (R&amp;T §13302) <span class="src">[<a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=13302" target="_blank" rel="noopener">leginfo-13302</a>]</span>. Scenarios above.</td></tr>
+        <tr><td><b>Income tax</b></td><td>Sale gain, rent received, treasury interest, dividends</td><td>Heir/household on their own return</td>
+            <td>CG: step-up at death → ~$0 on same-year sale; §121 up to $500k MFJ if qualified; Form 540 illustration above. Rental income taxable (not netted in path cash flows — flagged simplification).</td></tr>
+        <tr><td><b>Property tax</b></td><td>Annual ownership; reassessment on change of ownership unless excluded</td><td>Owner of each parcel</td>
+            <td>Prop 19 capped base if occupied + filed ≤1yr; full FMV reassessment otherwise (history &amp; rates tables above). Prop H adds $249+/yr on B from 2027-07-01.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="recapture">Depreciation recapture illustration (Property B)</h2>
+    <p class="lede">If B was placed in service as a rental and depreciation was claimed, a later sale recaptures the lesser of depreciation taken or gain:
+      federal unrecaptured §1250 rate ≤25%, CA taxes it as ordinary income (top 13.3% incl. BHST — simplified). <b>F14: actual depreciation schedule unknown</b> — rows are illustrations at assumed amounts, rounded to $10.</p>
+    <table>
+      <thead><tr><th>Depreciation taken (assumed)</th><th>Fed 25%</th><th>CA 13.3% top (simp.)</th><th>Combined</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="num">$0</td><td class="num">$0</td><td class="num">$0</td><td class="num">$0</td><td><span class="badge warn">assumption — F14</span></td></tr>
+        <tr><td class="num">$50,000</td><td class="num">$12,500</td><td class="num">$6,650</td><td class="num">$19,150</td><td><span class="badge warn">assumption — F14</span></td></tr>
+        <tr><td class="num">$100,000</td><td class="num">$25,000</td><td class="num">$13,300</td><td class="num">$38,300</td><td><span class="badge warn">assumption — F14</span></td></tr>
+        <tr><td class="num">$200,000</td><td class="num">$50,000</td><td class="num">$26,600</td><td class="num">$76,600</td><td><span class="badge warn">assumption — F14</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note">Mechanics verified: §1250 recapture at ordinary rates up to 25% federal (IRS Pub 523 / Form 4797 instructions); CA conforms to federal depreciation adjustments (FTB).
+      Property A is modeled as never depreciated (never rented by the household); if it was rented before the transfer, its recapture follows the same table.</div>
+
+    <h2 id="f540">Form 540 sensitivity — what a $1M gain costs in California</h2>
+    <div id="f540-table"></div>
+    <div class="note">Simplified top-rate illustrations (flagged): CA ordinary top 13.3% includes the 1% Behavioral Health Services Tax (line 62) + top rate; fed LTCG+NIIT 23.8%.
+      1% BHST is verified via FTB; the ordinary-income path is an illustration — actual brackets require the return.</div>
+
+    <h2 id="same-year">Same-year sale after inheritance (step-up ⇒ ~$0 gain)</h2>
+    <div id="sy-note"></div>
+    <div id="sy-table"></div>
+
+    <h2 id="sens">Sensitivity matrix — stocks × homes</h2>
+    <div id="sens-table2"></div>
+
+    <h2 id="mc">Monte-Carlo parameters</h2>
+    <div id="mc-note"></div>
+
+    <div class="foot">Regenerate: <code>python3 model/build_model.py</code> → <code>site/data/*.json</code> · research log: <code>research/SOURCES.md</code>.</div>
+  </main>
+</div>
+<script src="js/site.js"></script>
+</body>
+</html>

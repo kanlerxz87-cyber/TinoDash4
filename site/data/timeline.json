@@ -1,0 +1,92 @@
+[
+ {
+  "when": "At death (est. 2040\u20132050)",
+  "what": "Trust administration opens; date of death fixes step-up basis (FMV) and Prop 13/19 evaluation date",
+  "src": "irs-p523",
+  "kind": "process"
+ },
+ {
+  "when": "Within 30 days of Form 706 due",
+  "what": "Form 8971 basis reporting to heirs if 706 filed (heirs must use reported values)",
+  "src": "irs-706",
+  "kind": "deadline"
+ },
+ {
+  "when": "9 months after death",
+  "what": "Form 706 due (and any estate tax); Form 4768 extension must be filed by this date for +6 months to file",
+  "src": "irs-706",
+  "kind": "deadline"
+ },
+ {
+  "when": "\u22641 year of transfer",
+  "what": "File homeowners' exclusion for Prop 19 (BOE-19-P pathway) \u2014 REQUIRED to keep parent-child base",
+  "src": "boe-prop19",
+  "kind": "deadline"
+ },
+ {
+  "when": "\u22643 years of transfer (or before transfer to third party)",
+  "what": "File Proposition 19 intergenerational exclusion claim",
+  "src": "boe-prop19",
+  "kind": "deadline"
+ },
+ {
+  "when": "Same tax year as inheritance",
+  "what": "Model a sale first (this site does): step-up means ~$0 gain; transfer tax still due",
+  "src": "irs-p523",
+  "kind": "decision"
+ },
+ {
+  "when": "Apr 15 following year",
+  "what": "CA estimated tax / final return if sale or rental income occurred; Form 709 if gifts made",
+  "src": "ftb-540i",
+  "kind": "deadline"
+ },
+ {
+  "when": "July 2 \u2013 Sept 15 (annual)",
+  "what": "Santa Clara County assessment appeal window (BOE-305-AH); free informal Prop 8 review by Aug 8",
+  "src": "scc-aab",
+  "kind": "deadline"
+ },
+ {
+  "when": "Nov 1 / Dec 10 & Feb 1 / Apr 10 (annual)",
+  "what": "Santa Clara County secured tax installments (delinquency dates)",
+  "src": "scc-assessor",
+  "kind": "deadline"
+ },
+ {
+  "when": "Dec 10 & Apr 10 (annual)",
+  "what": "San Francisco secured tax installments",
+  "src": "sf-treasurer",
+  "kind": "deadline"
+ },
+ {
+  "when": "Each Feb 16 (odd years)",
+  "what": "BOE publishes next Prop 19 $1M cap adjustment (CA HPI)",
+  "src": "boe-lta25009",
+  "kind": "deadline"
+ },
+ {
+  "when": "July 1, 2027",
+  "what": "SF Prop H parcel tax begins (FY2027-28); CPI adjustments from FY2028-29; sunsets June 30, 2042",
+  "src": "sf-proph-text",
+  "kind": "law"
+ },
+ {
+  "when": "Every December 3",
+  "what": "SF Department of Elections certifies Nov 3 results (2026 certification due 2026-12-03)",
+  "src": "sf-results",
+  "kind": "deadline"
+ },
+ {
+  "when": "Every January",
+  "what": "Re-run this model with updated inputs; re-check federal/state/local sources (governance calendar)",
+  "src": null,
+  "kind": "process"
+ },
+ {
+  "when": "Aug 4, 2027 (approx.)",
+  "what": "Next CA initiative signature deadline cycle \u2014 watch for 60+ property tax exemption revival (25-0035 targeted 2028)",
+  "src": "ag-init250035",
+  "kind": "law"
+ }
+]
