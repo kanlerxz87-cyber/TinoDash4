@@ -261,7 +261,7 @@ Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared fi
 
 - PR #7 (`arena/d4ff329e-tinodash4` → `main`): **merged** 2026-11-25 13:48:20 UTC, merge commit `decb3fb` (merge commit, not waited on for review; flagged items do not block).
 - Pages: legacy build from `main` `/` for `decb3fb` reported `built`. Site checked by fetch: `https://kanlerxz87-cyber.github.io/TinoDash4/decision-analysis/site/` returns the first-screen content. No Pages setting was changed by this session.
-- Board record: PR #8 (board only), see the log below.
+- Board record: PR #9 (board only), see the log below.
 
 ### Log (after merge)
 
