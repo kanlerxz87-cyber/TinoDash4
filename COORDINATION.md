@@ -309,3 +309,17 @@ Session ID: `8c530ff4` · Branch: `arena/8c530ff4-tinodash4` · PR: #8 (`arena/8
 - 2026-11-25 · `8c530ff4` · Merged `origin/main` (PRs #1 to #6) into the branch. Conflicts resolved as in decisions 2 to 5. Legacy outputs removed as in decision 1.
 - 2026-11-25 · `8c530ff4` · Opened PR #8 to `main`.
 - 2026-11-25 · `8c530ff4` · Merged `origin/main` at `75595d3` (PRs #1–#10 and later) keeping this branch's tree; legacy trees from other sessions were not carried into the tree and remain in history.
+
+### Restored, self-contained (session 6d864338)
+
+PR #8's integration tree kept only its own generated output and dropped the other sessions'
+site outputs and generators from the merged working tree, including this session's
+`decision-model/`. That is a defensible call for a repo whose Pages source is the root of `main`,
+but it removed work that had already been reviewed and merged, so it is restored here —
+**self-contained this time**, with sources, facts, stylesheet and build tooling all under
+`decision-model/src/` and writing to nothing outside `decision-model/`. No future integration has
+to choose between deleting it and keeping it. The repo root and the integrated site are untouched.
+
+Found while doing it: `sitegen.py` wipes its output directory, and `--out ..` deleted the working
+tree twice. The build now refuses to wipe any directory that is not empty and does not already
+look like a previous build of the site.
