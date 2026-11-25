@@ -21,7 +21,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
 PRIVATE = os.path.join(ROOT, "private", "raw_inputs.json")
-SCAN_EXT = (".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".yml", ".yaml", ".toml")
+SCAN_EXT = (".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".yml", ".yaml", ".toml", ".pdf")
 SKIP_DIRS = {".git", "private", "node_modules", "__pycache__", ".github"}
 ALLOW_PUBLIC_NUMBERS = {
     # public, sourced figures that are allowed to appear
@@ -69,6 +69,26 @@ def walk_strings(x, out):
         out.append(x)
 
 
+def pdf_streams(data):
+    """Decode every stream in a PDF (ASCII85 and/or Flate) so the drawn text is scanned."""
+    import base64
+    import zlib
+    out = []
+    for m in re.finditer(rb"stream\r?\n(.*?)endstream", data, re.S):
+        body = m.group(1).strip()
+        try:
+            if body.endswith(b"~>"):
+                body = base64.a85decode(body[:-2].strip(), adobe=False)
+            try:
+                body = zlib.decompress(body)
+            except zlib.error:
+                pass
+            out.append(body.decode("latin-1"))
+        except Exception:
+            out.append(m.group(1).decode("latin-1", "replace"))
+    return out
+
+
 def published_files():
     for dp, dns, fns in os.walk(ROOT):
         dns[:] = [d for d in dns if d not in SKIP_DIRS]
@@ -110,7 +130,10 @@ def main():
     scanned = 0
     for fp in published_files():
         scanned += 1
-        text = open(fp, encoding="utf-8", errors="replace").read()
+        raw_bytes = open(fp, "rb").read()
+        text = raw_bytes.decode("latin-1") if fp.endswith(".pdf") else raw_bytes.decode("utf-8", "replace")
+        if fp.endswith(".pdf"):
+            text += "\n".join(pdf_streams(raw_bytes))
         rel = os.path.relpath(fp, ROOT)
         for label, rx in pats:
             if rx.search(text):
