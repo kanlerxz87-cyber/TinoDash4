@@ -1,28 +1,35 @@
-# Inheritance decision analysis (TinoDash4)
+# TinoDash4 — inheritance decision analysis
 
-A privacy-first, source-checked comparison of paths for an inherited Cupertino-area house against an existing San Francisco property. Published as a static GitHub Pages site from `docs/`.
+Privacy-first analysis of an inherited property (Property A, Santa Clara County) versus an owned rental (Property B, San Francisco).
+All figures are rounded to the nearest $10 and shown in 2026 dollars. Personal information is not published.
 
-## What is here
+- `docs/` — static site for GitHub Pages (generated; do not hand-edit)
+- `build/build_site.py` — builds `docs/` from `data/`
+- `model/model.py` — projection model; writes `data/projections.json`
+- `data/` — inputs, sources, flags
+- `COORDINATION.md` — shared task board
 
-- `model/model.js` - the decision model (pure JavaScript; used by the build and by the browser what-if page). Monthly simulation of seven paths, Monte Carlo over market regimes, stylised 1929/2008 entry shocks, and breakpoints.
-- `data/` - source registry (`sources.json`), table rows with status (`tables.json`), flagged items (`flags.json`), timeline, glossary, anonymised inventory, criteria written before modelling (`criteria.json`), suggestions.
-- `scripts/build.js` - builds every page in `docs/` and `docs/results.json`. Run `node scripts/build.js`.
-- `scripts/app.js`, `scripts/style.css` - browser what-if controls and styles (copied into `docs/`).
-- `docs/` - the published site (GitHub Pages).
-- `COORDINATION.md` - task board and deployment record.
+Rebuild: `python3 model/model.py && python3 build/build_site.py`
 
-## Rules applied
+Not legal or tax advice.
 
-- Personal information is excluded from the site; the household is described with placeholders (Property A, Property B).
-- Every dollar figure is rounded to the nearest $10.
-- A value that cannot be verified is left blank and listed on the Flagged for Review page; the model never infers a missing value.
-- Each table row links to its source and carries a status (primary, secondary, owner, assumption, blank, conflict, preliminary).
+---
 
-## Build
+## Estate decision model (session 150580b0)
 
-```
-node model/model.js   # loads without output
-node scripts/build.js
-```
+A separate decision model compares paths for Property A (inherited, Santa Clara County) and Property B (San Francisco): live, rent, sell, phased sale, mixed, or live then sell.
 
-Not tax, legal or investment advice. Consult an attorney and a CPA before acting on any path.
+- Site: `estate-model/` (13 pages; open `estate-model/index.html`).
+- Model: `tools/model.js` (also copied to `estate-model/assets/model.js` for the browser what-if page).
+- Build: `node tools/build.js` writes `estate-model/*.html` and `estate-model/data/model.json`.
+- Checks: `node tools/privacy_check.js` (this session's files) and `node tools/check_links.js`.
+- Rules fixed before model output: `DECISION_RULES.md`.
+- Figures are rounded to the nearest $10. Unverified values are flagged on `estate-model/flagged.html`.
+
+## Decision analysis (session d4ff329e)
+
+Inherited Cupertino-area house (Property A) compared with the existing San Francisco property (Property B). Seven paths, transfer years 2040/2045/2050, horizons 5/10/20 years, Monte Carlo, stylised 1929/2008 entry shocks, what-if controls and a flagged-items register.
+
+- Site: `decision-analysis/site/` (see `decision-analysis/README.md`).
+- Build: `node decision-analysis/scripts/build.js`.
+- Not tax, legal or investment advice.

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-/* Build the static GitHub Pages site into docs/.
+/* Build the static site into site/ (served from the repository's main branch under decision-analysis/site/).
  * Inputs : model/model.js, data/*.json
- * Outputs: docs/*.html, docs/style.css, docs/app.js, docs/model.js, docs/results.json
+ * Outputs: site/*.html, site/style.css, site/app.js, site/model.js, site/results.json
  * Every dollar figure is rounded to the nearest $10 (model.r10).
  * Run: node scripts/build.js
  */
@@ -11,7 +11,7 @@ const path = require('path');
 const M = require('../model/model.js');
 
 const ROOT = path.join(__dirname, '..');
-const DOCS = path.join(ROOT, 'docs');
+const DOCS = path.join(ROOT, 'site');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const SOURCES = read('data/sources.json');
 const TABLES = read('data/tables.json');
