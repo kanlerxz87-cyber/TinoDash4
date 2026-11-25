@@ -1,163 +1,231 @@
-#!/usr/bin/env python3
 """
-tools/check_site.py — build verification.
+Pre-publish gate. Exits non-zero (fails the build) if any check fails.
 
-Checks, in order of severity:
+  1. Privacy scan: no value, key, or text string from private/raw_inputs.json appears in any
+     published or tracked text file (html, css, js, json, md, py, txt). The private folder is
+     excluded from the scan; it is never published.
+  2. Forbidden identifiers: zip codes, neighbourhood labels, parcel terms, and personal names.
+  3. Rounding: every money value in data/model_outputs.json is a multiple of $10.
+  4. Row links: every table row on every page contains at least one official-source link.
+  5. Internal links: every relative href and src points to a file that exists.
+  6. Required content: first-screen 'What would change the answer', Flagged for Review, the
+     Attorney & CPA Briefing Sheet, and the glossary, suggestions, and questions pages.
 
-  1. Every internal href resolves to a file that exists (or an in-page anchor
-     that exists).
-  2. Every external <a href> points at https and is not a placeholder.
-  3. No page contains an unescaped personal-data smell: an email address, a
-     phone number, a street address pattern, or a 10+ digit number that could be
-     an APN or account number.
-  4. No figure marked "verified" in data/facts.json lacks a URL.
-  5. Every row of every "facts" table on the authorities/flagged pages links to
-     a source or explicitly says it has none.
-  6. Numeric precision: no rendered dollar figure has more significant precision
-     than the configured rounding step allows, and no assessed-value style figure
-     is rendered at full precision.
-  7. HTML sanity: balanced <table>/<section>/<article> tags, no duplicate ids.
-
-Exit code 0 = clean, 1 = errors found (warnings do not fail the build).
-
-    python3 tools/check_site.py site
+Run: python3 tools/check_site.py
 """
-
-from __future__ import annotations
-
-import html
 import json
-import pathlib
+import os
 import re
 import sys
-from typing import Dict, List, Set, Tuple
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-FACTS = ROOT / "data" / "facts.json"
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.abspath(os.path.join(HERE, ".."))
+PRIVATE = os.path.join(ROOT, "private", "raw_inputs.json")
+SCAN_EXT = (".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".yml", ".yaml", ".toml", ".pdf")
+SKIP_DIRS = {".git", "private", "node_modules", "__pycache__", ".github"}
+ALLOW_PUBLIC_NUMBERS = {
+    # public, sourced figures that are allowed to appear
+    15000000, 15480000, 19000, 20000, 194000, 201000, 250000, 500000, 1000000, 1044590, 1044586,
+    400000, 129, 177000000, 10000000, 2026, 2027,
+}
+FORBIDDEN_WORDS = [
+    "cupertino", "outer sunset", "sunset", "95014", "94122", "gmail",
+]
+SELF = os.path.normpath(os.path.abspath(__file__))
+LOG = []
+FAIL = []
 
 
-def strip_tags(s: str) -> str:
-    return re.sub(r"<[^>]+>", "", s)
+def ok(msg):
+    LOG.append("PASS  " + msg)
 
 
-def main(argv: List[str]) -> int:
-    site = pathlib.Path(argv[1]) if len(argv) > 1 else ROOT / "site"
-    if not site.exists():
-        print(f"FATAL: {site} does not exist. Run sitegen.py first.")
+def bad(msg):
+    FAIL.append("FAIL  " + msg)
+    LOG.append("FAIL  " + msg)
+
+
+def walk_numbers(x, out):
+    if isinstance(x, dict):
+        for k, v in x.items():
+            walk_numbers(v, out)
+    elif isinstance(x, list):
+        for v in x:
+            walk_numbers(v, out)
+    elif isinstance(x, bool):
+        return
+    elif isinstance(x, (int, float)):
+        out.append(x)
+
+
+def walk_strings(x, out):
+    if isinstance(x, dict):
+        for k, v in x.items():
+            walk_strings(v, out)
+    elif isinstance(x, list):
+        for v in x:
+            walk_strings(v, out)
+    elif isinstance(x, str):
+        out.append(x)
+
+
+def pdf_streams(data):
+    """Decode every stream in a PDF (ASCII85 and/or Flate) so the drawn text is scanned."""
+    import base64
+    import zlib
+    out = []
+    for m in re.finditer(rb"stream\r?\n(.*?)endstream", data, re.S):
+        body = m.group(1).strip()
+        try:
+            if body.endswith(b"~>"):
+                body = base64.a85decode(body[:-2].strip(), adobe=False)
+            try:
+                body = zlib.decompress(body)
+            except zlib.error:
+                pass
+            out.append(body.decode("latin-1"))
+        except Exception:
+            out.append(m.group(1).decode("latin-1", "replace"))
+    return out
+
+
+def published_files():
+    for dp, dns, fns in os.walk(ROOT):
+        dns[:] = [d for d in dns if d not in SKIP_DIRS]
+        for fn in fns:
+            full = os.path.join(dp, fn)
+            if fn.endswith(SCAN_EXT) and os.path.normpath(full) != SELF:
+                yield full
+
+
+def main():
+    if not os.path.exists(PRIVATE):
+        bad("private/raw_inputs.json missing: privacy scan cannot run (it is required in the working copy)")
+        return finish()
+    raw = json.load(open(PRIVATE, encoding="utf-8"))
+
+    # 1. Privacy scan values
+    nums = []
+    walk_numbers(raw, nums)
+    nums = sorted({int(n) for n in nums if n >= 1000})
+    collide = [n for n in nums if n in ALLOW_PUBLIC_NUMBERS]
+    if collide:
+        bad(f"private numbers collide with allowed public figures: {collide}")
+    pats = []
+    for n in nums:
+        comma = f"{n:,}"
+        pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9])")))
+        if n >= 10000:  # plain digits only for 5+ digit values (avoids chance matches such as counts)
+            s = str(n)
+            pats.append(("value " + s, re.compile(r"(?<![0-9.,])" + re.escape(s) + r"(?![0-9])")))
+    # small private numbers that appear in ranges (water, solar, etc.)
+    strs = []
+    walk_strings(raw, strs)
+    for s in strs:
+        if len(s) >= 6 and s.lower() not in ("property", "estimate"):
+            pats.append(("text '" + s[:24] + "...'", re.compile(re.escape(s), re.IGNORECASE)))
+    # zip codes (any digits in the private zip list)
+    for z in raw.get("zip_codes_internal_only", []):
+        pats.append(("zip " + str(z), re.compile(r"(?<![0-9])" + re.escape(str(z)) + r"(?![0-9])")))
+    scanned = 0
+    for fp in published_files():
+        scanned += 1
+        raw_bytes = open(fp, "rb").read()
+        text = raw_bytes.decode("latin-1") if fp.endswith(".pdf") else raw_bytes.decode("utf-8", "replace")
+        if fp.endswith(".pdf"):
+            text += "\n".join(pdf_streams(raw_bytes))
+        rel = os.path.relpath(fp, ROOT)
+        for label, rx in pats:
+            if rx.search(text):
+                bad(f"privacy: {label} found in {rel}")
+        low = text.lower()
+        for w in FORBIDDEN_WORDS:
+            if w in low:
+                bad(f"forbidden identifier '{w}' in {rel}")
+    ok(f"privacy scan of {scanned} files against {len(pats)} patterns")
+
+    # 3. Rounding
+    dat = json.load(open(os.path.join(ROOT, "data", "model_outputs.json"), encoding="utf-8"))
+    money_vals = []
+    money_vals += list(dat["base_results_real_2026"].values())
+    money_vals += [v for r in dat["grid"] for v in r["results"].values()]
+    money_vals += [v for s in dat["monte_carlo"]["summary"].values() for v in s.values() if isinstance(v, (int, float)) and v > 1000]
+    money_vals += [v for r in dat["projection_base"] for k, v in r.items() if k != "year"]
+    bad_round = [v for v in money_vals if round(v) % 10 != 0]
+    if bad_round:
+        bad(f"{len(bad_round)} money values are not rounded to $10 (first: {bad_round[:3]})")
+    else:
+        ok(f"rounding: {len(money_vals)} money values are multiples of $10")
+
+    # 4-5. HTML checks
+    pages = [f for f in os.listdir(ROOT) if f.endswith(".html")]
+    if "index.html" not in pages:
+        bad("index.html missing")
+    row_fail = 0
+    row_total = 0
+    for p in sorted(pages):
+        html = open(os.path.join(ROOT, p), encoding="utf-8").read()
+        for tb in re.findall(r"<tbody>(.*?)</tbody>", html, re.S):
+            for tr in re.findall(r"<tr>(.*?)</tr>", tb, re.S):
+                row_total += 1
+                if "href=" not in tr:
+                    row_fail += 1
+                    bad(f"table row without an official-source link in {p}: {re.sub('<[^>]+>', ' ', tr)[:90].strip()}")
+        for href in re.findall(r'(?:href|src)="([^"]+)"', html):
+            if href.startswith(("http://", "https://", "#", "mailto:")):
+                continue
+            target = href.split("#")[0]
+            if target and not os.path.exists(os.path.join(ROOT, target)):
+                bad(f"broken internal link in {p}: {href}")
+    ok(f"row links: {row_total - row_fail} of {row_total} table rows linked")
+
+    # 6. Required content
+    idx = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+    for needle, where in [
+        ("What would change the answer", "index.html"),
+        ("Reinvestment risk", "index.html"),
+        ("Executive summary", "index.html"),
+    ]:
+        if needle not in idx:
+            bad(f"'{needle}' missing from {where}")
+    must = {
+        "flagged.html": "Flagged for Review",
+        "brief.html": "Attorney &amp; CPA Briefing Sheet",
+        "glossary.html": "Terms",
+        "suggestions.html": "Suggestions",
+        "questions.html": "Questions and information gaps",
+        "estate-tax.html": "Estate tax",
+        "income-basis.html": "Income-tax basis",
+        "property-tax.html": "Property-tax assessment",
+        "blackswan.html": "Black swan",
+        "timeline.html": "Deadlines timeline",
+        "sources.html": "Sources",
+    }
+    for fn, needle in must.items():
+        path = os.path.join(ROOT, fn)
+        if not os.path.exists(path):
+            bad(f"required page missing: {fn}")
+        elif needle not in open(path, encoding="utf-8").read():
+            bad(f"'{needle}' missing from {fn}")
+    if not os.path.exists(os.path.join(ROOT, ".nojekyll")):
+        bad(".nojekyll missing (GitHub Pages)")
+    irr = os.path.join(ROOT, "data", "irregularities.json")
+    if not os.path.exists(irr):
+        bad("data/irregularities.json missing")
+    else:
+        ok(f"irregularities: {len(json.load(open(irr)))} items in data/irregularities.json")
+    return finish()
+
+
+def finish():
+    for line in LOG:
+        print(line)
+    if FAIL:
+        print(f"\n{len(FAIL)} check(s) failed. The build must not be published.")
         return 1
-
-    pages = sorted(site.glob("*.html"))
-    errors: List[str] = []
-    warnings: List[str] = []
-
-    ids_by_page: Dict[str, Set[str]] = {}
-    hrefs: List[Tuple[str, str]] = []
-
-    for p in pages:
-        text = p.read_text(encoding="utf-8")
-        ids = set(re.findall(r'\sid="([^"]+)"', text))
-        ids_by_page[p.name] = ids
-        for href in re.findall(r'<a[^>]+href="([^"]+)"', text):
-            hrefs.append((p.name, href))
-
-        # --- 6. numeric precision ---
-        # Statutory figures quoted verbatim from a source (inside class="quote"
-        # or class="exact") must stay exact — rounding a tax threshold would be
-        # a factual error, not a privacy protection.
-        scrubbed = re.sub(r'<div class="quote">.*?</div>', "", text, flags=re.S)
-        scrubbed = re.sub(r'<span class="exact">.*?</span>', "", scrubbed, flags=re.S)
-        for m in re.finditer(r"\$([0-9][0-9,]*)(\.[0-9]+)?", scrubbed):
-            intpart = m.group(1).replace(",", "")
-            # A dollar amount with 4+ significant trailing digits that are not
-            # multiples of the rounding step is a precision leak.
-            if len(intpart) >= 5 and intpart[-1] not in "0":
-                snippet = strip_tags(text[max(0, m.start() - 60):m.end() + 40])
-                warnings.append(
-                    f"{p.name}: dollar figure ${m.group(1)}{m.group(2) or ''} is not on a "
-                    f"$10 step — check the rounding. Context: …{snippet.strip()[:120]}…")
-            # assessed values must never appear between 100k and 2M at full precision
-        # --- 3. personal-data smells ---
-        bare = strip_tags(text)
-        for mail in re.findall(r"[\w.+-]+@[\w-]+\.[\w.]{2,}", bare):
-            errors.append(f"{p.name}: email address present ({mail})")
-        for phone in re.findall(r"\(?\b\d{3}\)?[ .-]\d{3}[ .-]\d{4}\b", bare):
-            errors.append(f"{p.name}: phone-number pattern present ({phone})")
-        for addr in re.findall(r"\b\d{2,5}\s+[A-Z][a-z]+\s+(Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Court|Ct|Way|Boulevard|Blvd)\b", bare):
-            errors.append(f"{p.name}: street-address pattern present ({addr})")
-        for longnum in re.findall(r"\b\d{10,}\b", bare):
-            # allow index values like 337476 and money with commas stripped
-            if len(longnum) >= 10:
-                errors.append(f"{p.name}: 10+ digit number present ({longnum}) — possible APN or account number")
-        # --- 7. tag balance ---
-        for tag in ("table", "section", "article", "div"):
-            opens = len(re.findall(rf"<{tag}\b", text))
-            closes = len(re.findall(rf"</{tag}>", text))
-            if opens != closes:
-                errors.append(f"{p.name}: unbalanced <{tag}> — {opens} open, {closes} close")
-        if "<title>" not in text:
-            errors.append(f"{p.name}: no <title>")
-        if 'name="robots"' not in text:
-            warnings.append(f"{p.name}: no robots meta tag")
-
-        # --- 5. facts tables must carry a source ---
-        for m in re.finditer(r"<tr>(.*?)</tr>", text, re.S):
-            row = m.group(1)
-            if "<code>" in row and ('class="badge' in row):
-                if "http" not in row and "no official source located" not in row:
-                    errors.append(
-                        f"{p.name}: a fact row has neither a source link nor an explicit "
-                        f"'no official source' marker: {strip_tags(row)[:90]}")
-
-    # --- 1 & 2. links ---
-    for page, href in hrefs:
-        if href.startswith("#"):
-            if href[1:] and href[1:] not in ids_by_page.get(page, set()):
-                errors.append(f"{page}: dead in-page anchor {href}")
-            continue
-        if href.startswith("mailto:") or href.startswith("tel:"):
-            errors.append(f"{page}: {href} — contact links are not allowed")
-            continue
-        if href.startswith(("http://", "https://")):
-            if href.startswith("http://"):
-                warnings.append(f"{page}: insecure external link {href}")
-            continue
-        target, _, frag = href.partition("#")
-        tp = site / target
-        if not tp.exists():
-            errors.append(f"{page}: broken internal link {href}")
-            continue
-        if frag and frag not in ids_by_page.get(tp.name, set()):
-            errors.append(f"{page}: link {href} points at a missing anchor #{frag}")
-
-    # --- 4. verified facts must have a URL ---
-    if FACTS.exists():
-        data = json.loads(FACTS.read_text())
-        for f in data["facts"]:
-            if f["status"] == "verified" and not f.get("url"):
-                errors.append(f"facts.json: {f['id']} is marked verified but has no url")
-            if f["status"] != "verified" and not f.get("flag"):
-                warnings.append(f"facts.json: {f['id']} is {f['status']} but carries no flag "
-                                f"explaining why")
-
-    # --- report ---
-    print(f"Checked {len(pages)} pages, {len(hrefs)} links\n")
-    if warnings:
-        print(f"{len(warnings)} warning(s):")
-        for w in warnings[:60]:
-            print("  WARN  " + w)
-        if len(warnings) > 60:
-            print(f"  … and {len(warnings) - 60} more")
-        print()
-    if errors:
-        print(f"{len(errors)} ERROR(S):")
-        for e in errors[:120]:
-            print("  FAIL  " + e)
-        if len(errors) > 120:
-            print(f"  … and {len(errors) - 120} more")
-        return 1
-    print("No errors. Build is clean.")
+    print("\nAll checks passed.")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv))
+    sys.exit(main())

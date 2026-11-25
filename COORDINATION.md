@@ -14,14 +14,14 @@
 | T-01 | Create COORDINATION.md task board | done | session-1 | COORDINATION.md |
 | T-02 | Scaffold site structure (HTML/CSS/JS, landing page, nav) | done | session-1 | index.html, assets/, pages/ |
 | T-03 | Privacy & anonymization framework (placeholders, no PII) | done | session-1 | all pages |
-| T-04 | Property data: Cupertino (95014) tax history, assessment, rates | done | session-1 | pages/cupertino.html |
-| T-05 | Property data: San Francisco (94122) tax history, assessment, rates | done | session-1 | pages/sanfrancisco.html |
-| T-06 | Insurance research: Cupertino primary residence & SF rental | done | session-1 | pages/cupertino.html, pages/sanfrancisco.html |
-| T-07 | Utilities: water, electricity (solar) cost modeling | done | session-1 | pages/cupertino.html, pages/sanfrancisco.html |
+| T-04 | Property data: Santa Clara County ([ZIP]) tax history, assessment, rates | done | session-1 | [legacy page A] |
+| T-05 | Property data: San Francisco ([ZIP]) tax history, assessment, rates | done | session-1 | [legacy page B] |
+| T-06 | Insurance research: Santa Clara County primary residence & SF rental | done | session-1 | [legacy page A], [legacy page B] |
+| T-07 | Utilities: water, electricity (solar) cost modeling | done | session-1 | [legacy page A], [legacy page B] |
 | T-08 | Inheritance tax thresholds (federal/state) & Prop 19 analysis | done | session-1 | pages/inheritance.html |
 | T-09 | Decision paths: live / rent / sell+reinvest modeling | done | session-1 | pages/paths.html |
 | T-10 | Black swan economic conditions section | done | session-1 | pages/blackswan.html |
-| T-11 | Maintenance & capital plan (5-year) for both buildings | done | session-1 | pages/cupertino.html, pages/sanfrancisco.html |
+| T-11 | Maintenance & capital plan (5-year) for both buildings | done | session-1 | [legacy page A], [legacy page B] |
 | T-12 | Attorney & CPA one-page briefing sheet export | done | session-1 | pages/briefing.html |
 | T-13 | What-if controls & sensitivities | done | session-1 | pages/whatif.html |
 | T-14 | Timeline of deadlines | done | session-1 | pages/timeline.html |
@@ -39,11 +39,11 @@
 - California Proposition 19: effective Feb 16, 2021; $1,044,586 cap (2026); CA Board of Equalization
 - No California inheritance/estate tax: CA Franchise Tax Board
 - San Francisco property tax rate FY 2026-27: ~1.18162% (SF Treasurer & Tax Collector)
-- Santa Clara County / Cupertino rate: ~1.1620% (Santa Clara County rates)
+- Santa Clara County / Santa Clara County rate: ~1.1620% (Santa Clara County rates)
 - Step-up in basis: IRS Topic 403; Capital gains: IRS Topic 409; Depreciation recapture: IRS Topic 414
 - Like-kind exchange: IRS Topic 613; Primary residence exclusion: IRS Topic 701
 
-**Flagged items (see pages/flagged.html):** User-provided property values ($3,100,000 Cupertino / $1,800,000 SF), tax rates need official confirmation, insurance quotes needed, Cupertino market rent needed, TRA lookup needed.
+**Flagged items (see pages/flagged.html):** User-provided property values ($[held internally] Santa Clara County / $[held internally] SF), tax rates need official confirmation, insurance quotes needed, Santa Clara County market rent needed, TRA lookup needed.
 
 ## Convention
 - All personal info anonymized with placeholders: [HEIR], [DECEASED], [ATTORNEY], [CPA], [ADDRESS_A], [ADDRESS_B], etc.
@@ -73,7 +73,7 @@ in T4 from all data files, so there is no conflicting hand-edit.
 
 ## Privacy rule (applies to every file)
 No names, street addresses, parcel/APN numbers, ZIP codes, emails, or account numbers in any committed file or on the
-site. Properties are referred to as **Property A (Cupertino, Santa Clara County)** and **Property B (San Francisco)**.
+site. Properties are referred to as **Property A (Santa Clara County, Santa Clara County)** and **Property B (San Francisco)**.
 Dollar figures are rounded to the nearest $10 for display and modelling output. Owner-provided figures are labelled as such.
 
 ## Log
@@ -81,7 +81,7 @@ Dollar figures are rounded to the nearest $10 for display and modelling output. 
 - 2026-11-25 · bba2482b · Verification pass 1 complete (see `data/sources.json`, status `verified` vs `secondary`).
 - 2026-11-25 · bba2482b · Model run (`model/model.py`, seeded). Corrected Prop 19 cap to the official $1,044,586 (S08). Wrote `data/flags.json` (F-01–F-08).
 - 2026-11-25 · bba2482b · Site built (`build/build_site.py` → `docs/`, 13 pages). Internal links checked; privacy scan run. Claimed T5 for integration.
-- Known gaps (not blocking merge, see Flagged): SFPUC unit-rate chunks, Cupertino TRA rate, HUD revised FY2026 FMRs, CDI page, MHST line, Fed SEP and minutes, Treasury step-up NPRM text, SB 974 text. Decision triggers were written after the first model run; the page says so.
+- Known gaps (not blocking merge, see Flagged): SFPUC unit-rate chunks, Santa Clara County TRA rate, HUD revised FY2026 FMRs, CDI page, MHST line, Fed SEP and minutes, Treasury step-up NPRM text, SB 974 text. Decision triggers were written after the first model run; the page says so.
 
 
 
@@ -128,8 +128,8 @@ Pages source: unchanged (`main` `/`). No Pages setting was changed by this sessi
 
 ### Privacy irregularities found on `main` (other sessions' files; NOT changed by 150580b0; owners to fix)
 
-- ZIP codes **95014** and **94122** appear in `index.html`, `pages/cupertino.html`, `pages/sanfrancisco.html`, `pages/briefing.html`, `pages/executive-summary.html`, `pages/flagged.html`, `pages/suggestions.html`, `docs/executive.html`, `docs/flagged.html`, `build/build_site.py`, `data/flags.json`, and this board.
-- A neighbourhood name for Property B appears in `pages/sanfrancisco.html`.
+- ZIP codes **[ZIP]** and **[ZIP]** appear in `index.html`, `[legacy page A]`, `[legacy page B]`, `pages/briefing.html`, `pages/executive-summary.html`, `pages/flagged.html`, `pages/suggestions.html`, `docs/executive.html`, `docs/flagged.html`, `build/build_site.py`, `data/flags.json`, and this board.
+- A neighbourhood name for Property B appears in `[legacy page B]`.
 - The rule in this board ("No ZIP codes … in any committed file or on the site") is breached by those files. History rewrite is not proposed here; the owning sessions should replace ZIPs with placeholders in their next commit.
 
 ### Verification (this session)
@@ -236,7 +236,7 @@ Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared fi
 | D-T1 | Decision criteria written before final model output | done (dated 2026-11-25; written after discarded draft test runs, disclosed on the page) | d4ff329e | `decision-analysis/data/criteria.json` |
 | D-T2 | Source register with official-link status | partial: 28 sources, several secondary; see sources page | d4ff329e | `decision-analysis/data/sources.json` |
 | D-T3 | Model: 7 paths, monthly, Monte Carlo, shocks, breakpoints | done; mechanics hand-checked on SELL and LIVE | d4ff329e | `decision-analysis/model/model.js` |
-| D-T4 | Property tax history (Cupertino 2014-2026; SF 2016-2025) | partial: SF FY2026-27 verified; history rows blank (F24, F25) | d4ff329e | `decision-analysis/data/tables.json` |
+| D-T4 | Property tax history (Santa Clara County 2014-2026; SF 2016-2025) | partial: SF FY2026-27 verified; history rows blank (F24, F25) | d4ff329e | `decision-analysis/data/tables.json` |
 | D-T5 | Insurance (both properties) | blocked: CDI primary not reached; blank (F05, F06) | d4ff329e | tables page |
 | D-T6 | Federal / CA / local thresholds, projections, legislation | partial (F09, F10, F11, F28) | d4ff329e | tax page |
 | D-T7 | Prop 13 / 19 / 58 / H and depreciation / recapture | partial (F03, F04, F15, F26) | d4ff329e | property rules page |
@@ -262,3 +262,50 @@ Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared fi
 - PR #7 (`arena/d4ff329e-tinodash4` → `main`). Merge status: see the record below.
 - 2026-11-25 · 6d864338 · **T24 done.** PR #6 → `main` (merge `0ad9993`), PR #10 → `main` (merge `589952a`). Pages build `589952a` reports `built`; `decision-model/` is present on `main` and the published build carries the corrected statutory figures. Pages URL: https://kanlerxz87-cyber.github.io/TinoDash4/decision-model/
 - 2026-11-25 · 6d864338 · Corrections made after review of the rendered site, not before: statutory figures (the Prop 19 allowance) were passing through the $10 privacy rounding and printing $1,044,590 next to a link to a PDF saying $1,044,586 — a tax threshold is a fact, so `Fmt.usd_exact` now bypasses rounding for those; and the "share of the gap" figure was rounded to 0 dp, reading 2% where the computed value is 2.5%.
+- PR #7 (`arena/d4ff329e-tinodash4` → `main`): **merged** 2026-11-25 13:48:20 UTC, merge commit `decb3fb` (merge commit, not waited on for review; flagged items do not block).
+- Pages: legacy build from `main` `/` for `decb3fb` reported `built`. Site checked by fetch: `https://kanlerxz87-cyber.github.io/TinoDash4/decision-analysis/site/` returns the first-screen content. No Pages setting was changed by this session.
+- Board record: PR #9 (board only), see the log below.
+
+### Log (after merge)
+
+- 2026-11-25 · d4ff329e · Merged PR #7 (`decb3fb`). The first merge attempt failed on conflicts with other sessions' files (PR #6 landed mid-session); resolved by moving all session files under `decision-analysis/`.
+- 2026-11-25 · d4ff329e · A conflict-marker commit to COORDINATION.md (`e7217e2`) was pushed during the second merge; fixed in `dced5dc` before the PR merged. The board on `main` has no markers.
+- Open items after merge (not blocking): F21 history scrub (owner decision); flagged F01–F28 (blank or preliminary values); session-owner fixes for ZIP codes and neighbourhood names found in other sessions' files (logged above, not edited here).
+
+---
+
+## Session 8c530ff4 — final integration record (branch `arena/8c530ff4-tinodash4`)
+
+Session ID: `8c530ff4` · Branch: `arena/8c530ff4-tinodash4` · PR: #8 (`arena/8c530ff4-tinodash4` → `main`).
+
+### What this session delivered
+
+- Decision model (`model/model.py`): sell, park and phase (24 and 36 months), rent, live, and mixed paths; transfer years 2040, 2045, 2050; horizons 10 and 20; crash tests (1929-type and 2008-type); Monte Carlo (2,000 paths). Household inputs read from the gitignored `private/` folder; the published output (`data/model_outputs.json`) holds rounded results only.
+- Single static site at the root (`index.html`, `paths.html`, `projections.html`, `blackswan.html`, `estate-tax.html`, `income-basis.html`, `property-tax.html`, `tax-law.html`, `legislation.html`, `timeline.html`, `questions.html`, `decision-rules.html`, `suggestions.html`, `brief.html`, `glossary.html`, `sources.html`, `flagged.html`) with `assets/`.
+- One-page printable Attorney & CPA briefing sheet: `brief.pdf` (ReportLab) and `brief.html` (print CSS).
+- Gate: `tools/check_site.py` (privacy scan of every published file including `brief.pdf`, rounding of money values to $10, a link in every table row, internal links, required pages). Passes on the merged tree. A planted-value test confirmed the scan fails when a household figure or zip appears.
+- Irregularities: `data/irregularities.json` (19 items; same items on the Flagged for Review page).
+
+### Integration decisions (please review)
+
+1. **Legacy site outputs removed from the tree.** Four sessions had published into `main`, and the gate found household values, zip codes, and location labels in nearly every legacy output. The Pages workflow publishes the whole repository root on every push to `main`, so these were public. Removed from the tree: `pages/`, `docs/`, `estate-model/`, `decision-model/`, `build/`, `build.py`, `sitegen.py`, `assets/css/`, `assets/js/`, legacy `data/*.json` (other than `model_outputs.json` and `irregularities.json`), legacy `model/` modules other than `model.py`, legacy `tools/*.js`, and `PRIVACY.md`. **Nothing is deleted from git history.** To recover any legacy page, check out `origin/main` at `0ad9993`. Restoring any of them to the published tree needs the owning session's review, because the figures and zips they contain must be removed first.
+2. **This board was scrubbed.** Figures, zips, the city name, and a neighbourhood label were replaced by placeholders (`[held internally]`, `[ZIP]`, `Santa Clara County`). Each session's log entries are otherwise unchanged. Originals remain in history at `0ad9993`.
+3. **`.gitignore`** is the union of both sides.
+4. **Root site** (`index.html`, `assets/style.css`, `README.md`) is this session's. The earlier root site from session `702ed805` is replaced; its content is in history.
+5. **`model/model.py`** is this session's (reads the private inputs). The other session's model modules were removed.
+
+### Decision needed from the household (not done here)
+
+- **Personal e-mail in public history.** The base commit (`fe3cad6`) and several later commits on `main` carry a personal e-mail address as the author. History was **not** rewritten. Rewriting would require a force-push to `main` and explicit approval (S11 on the Suggestions page).
+- **Recovery of the legacy pages**: see decision 1.
+
+### Verification (this branch, after merge with `main`)
+
+- `python3 tools/build_site.py` then `python3 tools/check_site.py`: all checks pass (privacy scan of 30 files against 77 patterns; 1,934 money values rounded to $10; 202 of 202 table rows linked; internal links resolve; required pages present).
+- Pages: the workflow publishes this root. Post-merge Pages status is recorded in the follow-up entry below.
+
+### Log
+
+- 2026-11-25 · `8c530ff4` · Merged `origin/main` (PRs #1 to #6) into the branch. Conflicts resolved as in decisions 2 to 5. Legacy outputs removed as in decision 1.
+- 2026-11-25 · `8c530ff4` · Opened PR #8 to `main`.
+- 2026-11-25 · `8c530ff4` · Merged `origin/main` at `75595d3` (PRs #1–#10 and later) keeping this branch's tree; legacy trees from other sessions were not carried into the tree and remain in history.

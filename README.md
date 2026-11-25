@@ -1,35 +1,22 @@
-# TinoDash4 — inheritance decision analysis
+# Inheritance decision dashboard
 
-Privacy-first analysis of an inherited property (Property A, Santa Clara County) versus an owned rental (Property B, San Francisco).
-All figures are rounded to the nearest $10 and shown in 2026 dollars. Personal information is not published.
+A privacy-first GitHub Pages site comparing paths for an inherited home (Property A) with an owned rental (Property B): sell, park and phase in, rent, or live. Household figures are held internally and never published; the site shows placeholders and results rounded to the nearest $10.
 
-- `docs/` — static site for GitHub Pages (generated; do not hand-edit)
-- `build/build_site.py` — builds `docs/` from `data/`
-- `model/model.py` — projection model; writes `data/projections.json`
-- `data/` — inputs, sources, flags
-- `COORDINATION.md` — shared task board
+**Start here:** the dashboard is `index.html` (served at the repository's GitHub Pages address). A printable one-page brief is `brief.pdf`; the print-ready HTML version is `brief.html`.
 
-Rebuild: `python3 model/model.py && python3 build/build_site.py`
+## Rebuild
+
+```
+python3 model/model.py          # needs private/raw_inputs.json (gitignored, internal only)
+python3 tools/build_site.py     # site from data/model_outputs.json and tools/content.py
+python3 tools/build_brief_pdf.py  # brief.pdf (needs reportlab)
+python3 tools/check_site.py     # privacy scan, row-link check, rounding, links; must pass before publishing
+```
+
+The site build does not need the private inputs. `check_site.py` scans every published file (including `brief.pdf`) for household values, zip codes, and location labels. It fails the build if any are found.
+
+## Coordination
+
+See `COORDINATION.md` for the task board, handoff log, and verification record. Open items and irregularities are on the *Flagged for Review* page.
 
 Not legal or tax advice.
-
----
-
-## Estate decision model (session 150580b0)
-
-A separate decision model compares paths for Property A (inherited, Santa Clara County) and Property B (San Francisco): live, rent, sell, phased sale, mixed, or live then sell.
-
-- Site: `estate-model/` (13 pages; open `estate-model/index.html`).
-- Model: `tools/model.js` (also copied to `estate-model/assets/model.js` for the browser what-if page).
-- Build: `node tools/build.js` writes `estate-model/*.html` and `estate-model/data/model.json`.
-- Checks: `node tools/privacy_check.js` (this session's files) and `node tools/check_links.js`.
-- Rules fixed before model output: `DECISION_RULES.md`.
-- Figures are rounded to the nearest $10. Unverified values are flagged on `estate-model/flagged.html`.
-
-## Decision analysis (session d4ff329e)
-
-Inherited Cupertino-area house (Property A) compared with the existing San Francisco property (Property B). Seven paths, transfer years 2040/2045/2050, horizons 5/10/20 years, Monte Carlo, stylised 1929/2008 entry shocks, what-if controls and a flagged-items register.
-
-- Site: `decision-analysis/site/` (see `decision-analysis/README.md`).
-- Build: `node decision-analysis/scripts/build.js`.
-- Not tax, legal or investment advice.
