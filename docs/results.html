@@ -1,0 +1,191 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Results by case · Inherited-property decision</title><link rel="stylesheet" href="assets/style.css"></head>
+<body class=""><header class="top"><strong>Inherited-property decision (Property A, Santa Clara County; Property B, San Francisco)</strong>
+<span class="sub">Privacy-first. No personal identifiers. Figures rounded to the nearest $10. Model results are illustrative, not advice.</span></header>
+<div class="wrap"><nav class="menu"><div class="navg"><div class="navt">Decide</div><a href="index.html">Start here</a><a href="results.html" class="on">Results by case</a><a href="whatif.html">What-if controls</a><a href="rules.html">Decision criteria</a></div><div class="navg"><div class="navt">Evidence</div><a href="estate.html">Estate, income and property tax</a><a href="phased.html">Phased investing</a><a href="blackswan.html">Black swan tests</a><a href="timeline.html">Timeline of deadlines</a></div><div class="navg"><div class="navt">Reference</div><a href="glossary.html">Glossary</a><a href="sources.html">Source register</a><a href="brief.html">Attorney/CPA brief (print)</a></div><div class="navg"><div class="navt">Review</div><a href="flagged.html">Flagged for review</a><a href="suggestions.html">Suggestions</a></div></nav><main>
+<section class="card"><h1>Results by case</h1>
+<p class="small">Primary metric (DECISION_RULES.md §2): median real net position across six fixed scenarios and 1000 Monte Carlo draws. Paths A, E and F include imputed rent for the occupied share (Rule 3). Financial-only results are in <code>data/model.json</code>.</p>
+<h3>Transfer 2040 · horizon 10 years (pick: <b>D24 · Sell, park 24 mo, phase 12 mo</b>)</h3>
+<div class="scroll"><table><thead><tr><th>Path</th><th>Primary: median real net</th><th>10th to 90th percentile</th><th>Worst black swan</th><th>Liquid at transfer</th><th>Year-1 carrying cost</th><th>Official basis</th></tr></thead><tbody><tr><td><b>A</b> Live in A <span class="muted">(not in choice set)</span></td>
+<td class="num">$3,528,900</td>
+<td class="num">$2,470,270 to $4,924,720</td>
+<td class="num">$3,762,390</td>
+<td class="num">$0</td>
+<td class="num">$94,580</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf" rel="noopener">BOE Letter to Assessors 2025/009</a> (indexed amount); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy rules) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>B</b> Rent A <span class="muted">(not in choice set)</span> <span class="muted">floor only</span></td>
+<td class="num">$3,579,650</td>
+<td class="num">$2,557,120 to $5,011,850</td>
+<td class="num">$3,809,670</td>
+<td class="num">$0</td>
+<td class="num">$95,530</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (reassessment); <a href="https://www.sf.gov/news--annual-rent-increase-3127-22928-announced" rel="noopener">SF Rent Board</a> <span class="flag" title="See flagged item">[F11]</span></td></tr><tr><td><b>C</b> Sell, invest lump sum</td>
+<td class="num">$4,950,990</td>
+<td class="num">$3,497,190 to $6,530,160</td>
+<td class="num">$742,650</td>
+<td class="num">$4,389,320</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=17043" rel="noopener">California Revenue &amp; Taxation Code §17043</a> (CA surcharge) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D24</b> Sell, park 24 mo, phase 12 mo</td>
+<td class="num">$5,033,250</td>
+<td class="num">$3,721,220 to $6,740,960</td>
+<td class="num">$2,804,150</td>
+<td class="num">$4,389,320</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D36</b> Sell, park 36 mo, phase 12 mo</td>
+<td class="num">$5,077,190</td>
+<td class="num">$3,934,290 to $6,568,910</td>
+<td class="num">$5,616,280</td>
+<td class="num">$4,389,320</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>E</b> Mixed: occupy 50%, rent 50% <span class="muted">(not in choice set)</span></td>
+<td class="num">$3,556,300</td>
+<td class="num">$2,514,850 to $4,963,400</td>
+<td class="num">$3,786,030</td>
+<td class="num">$0</td>
+<td class="num">$95,060</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>F</b> Live 3 years, then sell <span class="muted">(not in choice set)</span></td>
+<td class="num">$4,550,210</td>
+<td class="num">$3,262,800 to $6,088,770</td>
+<td class="num">$2,592,550</td>
+<td class="num">$4,782,370</td>
+<td class="num">$94,580</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis) <span class="flag" title="See flagged item">[F12]</span></td></tr></tbody></table></div>
+<p class="small">Notes: Rule 3: A, E and F removed (no written occupancy commitment). Rule 4: B is reported as a floor, not a choice (fewer than three verified comparables). Rule 8: paths within 2% on the primary metric; higher liquidity at transfer, then lower regulatory exposure (interpretation: sale paths and shorter parking first).</p><h3>Transfer 2040 · horizon 20 years (pick: <b>D36 · Sell, park 36 mo, phase 12 mo</b>)</h3>
+<div class="scroll"><table><thead><tr><th>Path</th><th>Primary: median real net</th><th>10th to 90th percentile</th><th>Worst black swan</th><th>Liquid at transfer</th><th>Year-1 carrying cost</th><th>Official basis</th></tr></thead><tbody><tr><td><b>A</b> Live in A <span class="muted">(not in choice set)</span></td>
+<td class="num">$2,713,690</td>
+<td class="num">$1,552,310 to $4,558,620</td>
+<td class="num">$3,135,910</td>
+<td class="num">$0</td>
+<td class="num">$94,580</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf" rel="noopener">BOE Letter to Assessors 2025/009</a> (indexed amount); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy rules) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>B</b> Rent A <span class="muted">(not in choice set)</span> <span class="muted">floor only</span></td>
+<td class="num">$3,322,150</td>
+<td class="num">$2,010,170 to $5,426,640</td>
+<td class="num">$3,742,260</td>
+<td class="num">$0</td>
+<td class="num">$95,530</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (reassessment); <a href="https://www.sf.gov/news--annual-rent-increase-3127-22928-announced" rel="noopener">SF Rent Board</a> <span class="flag" title="See flagged item">[F11]</span></td></tr><tr><td><b>C</b> Sell, invest lump sum</td>
+<td class="num">$6,538,470</td>
+<td class="num">$3,949,680 to $9,861,830</td>
+<td class="num">$1,574,030</td>
+<td class="num">$4,389,320</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=17043" rel="noopener">California Revenue &amp; Taxation Code §17043</a> (CA surcharge) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D24</b> Sell, park 24 mo, phase 12 mo</td>
+<td class="num">$6,706,990</td>
+<td class="num">$4,484,560 to $9,699,350</td>
+<td class="num">$5,442,640</td>
+<td class="num">$4,389,320</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D36</b> Sell, park 36 mo, phase 12 mo</td>
+<td class="num">$6,855,430</td>
+<td class="num">$4,693,760 to $9,724,040</td>
+<td class="num">$11,214,350</td>
+<td class="num">$4,389,320</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>E</b> Mixed: occupy 50%, rent 50% <span class="muted">(not in choice set)</span></td>
+<td class="num">$3,008,520</td>
+<td class="num">$1,798,300 to $4,981,800</td>
+<td class="num">$3,439,090</td>
+<td class="num">$0</td>
+<td class="num">$95,060</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>F</b> Live 3 years, then sell <span class="muted">(not in choice set)</span></td>
+<td class="num">$5,944,220</td>
+<td class="num">$3,953,460 to $8,646,300</td>
+<td class="num">$5,174,860</td>
+<td class="num">$4,782,370</td>
+<td class="num">$94,580</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis) <span class="flag" title="See flagged item">[F12]</span></td></tr></tbody></table></div>
+<p class="small">Notes: Rule 3: A, E and F removed (no written occupancy commitment). Rule 4: B is reported as a floor, not a choice (fewer than three verified comparables).</p><h3>Transfer 2050 · horizon 10 years (pick: <b>D36 · Sell, park 36 mo, phase 12 mo</b>)</h3>
+<div class="scroll"><table><thead><tr><th>Path</th><th>Primary: median real net</th><th>10th to 90th percentile</th><th>Worst black swan</th><th>Liquid at transfer</th><th>Year-1 carrying cost</th><th>Official basis</th></tr></thead><tbody><tr><td><b>A</b> Live in A <span class="muted">(not in choice set)</span></td>
+<td class="num">$4,315,170</td>
+<td class="num">$2,605,670 to $6,957,160</td>
+<td class="num">$4,996,750</td>
+<td class="num">$0</td>
+<td class="num">$124,600</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf" rel="noopener">BOE Letter to Assessors 2025/009</a> (indexed amount); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy rules) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>B</b> Rent A <span class="muted">(not in choice set)</span> <span class="muted">floor only</span></td>
+<td class="num">$4,400,910</td>
+<td class="num">$2,700,120 to $7,115,880</td>
+<td class="num">$5,087,340</td>
+<td class="num">$0</td>
+<td class="num">$125,540</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (reassessment); <a href="https://www.sf.gov/news--annual-rent-increase-3127-22928-announced" rel="noopener">SF Rent Board</a> <span class="flag" title="See flagged item">[F11]</span></td></tr><tr><td><b>C</b> Sell, invest lump sum</td>
+<td class="num">$5,956,320</td>
+<td class="num">$3,688,460 to $9,062,480</td>
+<td class="num">$988,420</td>
+<td class="num">$5,841,860</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=17043" rel="noopener">California Revenue &amp; Taxation Code §17043</a> (CA surcharge) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D24</b> Sell, park 24 mo, phase 12 mo</td>
+<td class="num">$6,122,780</td>
+<td class="num">$3,986,690 to $9,169,130</td>
+<td class="num">$3,732,120</td>
+<td class="num">$5,841,860</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D36</b> Sell, park 36 mo, phase 12 mo</td>
+<td class="num">$6,283,920</td>
+<td class="num">$4,220,070 to $9,100,830</td>
+<td class="num">$7,474,850</td>
+<td class="num">$5,841,860</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>E</b> Mixed: occupy 50%, rent 50% <span class="muted">(not in choice set)</span></td>
+<td class="num">$4,357,400</td>
+<td class="num">$2,653,750 to $7,030,830</td>
+<td class="num">$5,042,040</td>
+<td class="num">$0</td>
+<td class="num">$125,070</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>F</b> Live 3 years, then sell <span class="muted">(not in choice set)</span></td>
+<td class="num">$5,445,980</td>
+<td class="num">$3,496,010 to $8,470,760</td>
+<td class="num">$3,453,550</td>
+<td class="num">$6,364,980</td>
+<td class="num">$124,600</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis) <span class="flag" title="See flagged item">[F12]</span></td></tr></tbody></table></div>
+<p class="small">Notes: Rule 3: A, E and F removed (no written occupancy commitment). Rule 4: B is reported as a floor, not a choice (fewer than three verified comparables).</p><h3>Transfer 2050 · horizon 20 years (pick: <b>D36 · Sell, park 36 mo, phase 12 mo</b>)</h3>
+<div class="scroll"><table><thead><tr><th>Path</th><th>Primary: median real net</th><th>10th to 90th percentile</th><th>Worst black swan</th><th>Liquid at transfer</th><th>Year-1 carrying cost</th><th>Official basis</th></tr></thead><tbody><tr><td><b>A</b> Live in A <span class="muted">(not in choice set)</span></td>
+<td class="num">$3,336,930</td>
+<td class="num">$1,638,900 to $6,498,870</td>
+<td class="num">$4,184,760</td>
+<td class="num">$0</td>
+<td class="num">$124,600</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf" rel="noopener">BOE Letter to Assessors 2025/009</a> (indexed amount); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy rules) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>B</b> Rent A <span class="muted">(not in choice set)</span> <span class="muted">floor only</span></td>
+<td class="num">$4,108,970</td>
+<td class="num">$2,120,810 to $7,768,460</td>
+<td class="num">$5,018,580</td>
+<td class="num">$0</td>
+<td class="num">$125,540</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (reassessment); <a href="https://www.sf.gov/news--annual-rent-increase-3127-22928-announced" rel="noopener">SF Rent Board</a> <span class="flag" title="See flagged item">[F11]</span></td></tr><tr><td><b>C</b> Sell, invest lump sum</td>
+<td class="num">$7,983,240</td>
+<td class="num">$4,251,460 to $12,955,250</td>
+<td class="num">$2,094,920</td>
+<td class="num">$5,841,860</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=17043" rel="noopener">California Revenue &amp; Taxation Code §17043</a> (CA surcharge) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D24</b> Sell, park 24 mo, phase 12 mo</td>
+<td class="num">$8,212,010</td>
+<td class="num">$5,009,260 to $13,023,420</td>
+<td class="num">$7,243,750</td>
+<td class="num">$5,841,860</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>D36</b> Sell, park 36 mo, phase 12 mo</td>
+<td class="num">$8,449,140</td>
+<td class="num">$5,228,010 to $13,148,600</td>
+<td class="num">$14,925,460</td>
+<td class="num">$5,841,860</td>
+<td class="num">$0</td>
+<td class="small"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" rel="noopener">US Treasury daily par yield curve rates</a> (Treasury); <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=11911" rel="noopener">California Revenue &amp; Taxation Code §11911</a> (transfer tax) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>E</b> Mixed: occupy 50%, rent 50% <span class="muted">(not in choice set)</span></td>
+<td class="num">$3,717,350</td>
+<td class="num">$1,887,440 to $7,151,760</td>
+<td class="num">$4,601,670</td>
+<td class="num">$0</td>
+<td class="num">$125,070</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener">BOE Letter to Assessors 2026/026</a> (occupancy) <span class="flag" title="See flagged item">[F12]</span></td></tr><tr><td><b>F</b> Live 3 years, then sell <span class="muted">(not in choice set)</span></td>
+<td class="num">$7,208,770</td>
+<td class="num">$4,365,410 to $11,644,340</td>
+<td class="num">$6,893,840</td>
+<td class="num">$6,364,980</td>
+<td class="num">$124,600</td>
+<td class="small"><a href="https://www.boe.ca.gov/prop19/" rel="noopener">BOE</a> (Prop 19); <a href="https://www.irs.gov/publications/p551" rel="noopener">IRS Publication 551, Basis of Assets</a> (basis) <span class="flag" title="See flagged item">[F12]</span></td></tr></tbody></table></div>
+<p class="small">Notes: Rule 3: A, E and F removed (no written occupancy commitment). Rule 4: B is reported as a floor, not a choice (fewer than three verified comparables).</p>
+<h3>Break-even gross rent yield (base case)</h3>
+<table><thead><tr><th>Case</th><th>Yield at which renting (B) matches sale (C)</th><th>Yield at which living (A) matches sale (C)</th></tr></thead><tbody>
+<tr><td>2040, 10 years</td><td class="num">6.2%</td><td class="num">6.9%</td></tr><tr><td>2040, 20 years</td><td class="num">6.3%</td><td class="num">8.9%</td></tr><tr><td>2050, 10 years</td><td class="num">6.1%</td><td class="num">6.9%</td></tr><tr><td>2050, 20 years</td><td class="num">6.3%</td><td class="num">8.9%</td></tr>
+</tbody></table>
+<p class="small">Assumed gross yield: 2.5% (no verified comparables) <span class="flag" title="See flagged item">[F11]</span>. Source for the model's constants: <a href="sources.html">source register</a>.</p>
+</section></main></div>
+<footer>Last built 2026-11-25. Source register: <a href="sources.html">sources.html</a>. Unverified items: <a href="flagged.html">flagged.html</a>.</footer></body></html>
