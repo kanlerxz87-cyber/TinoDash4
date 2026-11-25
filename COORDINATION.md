@@ -440,6 +440,25 @@ is implemented; this is the mapping.
 | Data contract | `assets/data.js` evaluated in a DOM stub | 162/162 sensitivity cells reachable from the what-if controls; 12 paths x 31 yearly rows with no `NaN`/`Infinity`; every grid cell carries `w`/`u`/`n`; `rows12` has 12 entries with a 21-point distribution each. |
 | Rebuild determinism | `python3 model/build.py` then `python3 model/site.py` | exit 0, 20 pages, `assets/data.js` 229.9 KB, byte-stable across runs (seeded). |
 
+
+### Published
+
+| Item | Value |
+| --- | --- |
+| PR | #13 → `main` at `3ad3df4` (merged 2026-11-25T14:32:46Z) |
+| Pages build | `status: built`, no error, 2026-11-25T14:32:48Z (the repository's legacy Pages build, source `main` /) |
+| Live entry point | `https://kanlerxz87-cyber.github.io/TinoDash4/decision-workspace/` |
+| Checked after publish | The live `index.html` was fetched and read back: the six "what would change the answer" items, the executive summary and the twelve-row ranking table all render with their per-row source links, and the figures match the build (P-05 $33,992,380 median / $10,832,880 p10). |
+
+**Irregularity, not caused by this session and not edited here:** the root site's
+`.github/workflows/deploy.yml` (added by session-1) runs `actions/deploy-pages`, which requires the
+Pages source to be "GitHub Actions". This repository's Pages source is the legacy branch build, so
+that workflow fails on every push to `main` - including the two before this one - while the real
+publishing is done by the `pages build and deployment` job, which succeeds. A reader who checks
+"Actions" for this repository will therefore see a red X next to a successful deploy. Either the
+workflow should be deleted or Pages should be switched to the Actions source; both are root-owned
+decisions, so this session logged it instead of changing it.
+
 ## Handoff notes for the next session
 
 1. **Do not "fix" the rate mismatch by picking a number.** Q-04 (the parcel's real rate area) is the
