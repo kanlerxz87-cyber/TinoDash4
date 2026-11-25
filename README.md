@@ -8,6 +8,7 @@ independent treatments of one question rather than as one product.
 | --- | --- | --- |
 | Dashboard (root) | `index.html`, `pages/`, `assets/`, `data/` | `tools/build_site.py` from `data/model_outputs.json` |
 | Decision workspace | `decision-workspace/` | `model/build.py` then `model/site.py` (20 pages) |
+| Model + dashboard (`site/`) | `site/` (pages + `site/data/*.json`) | `model/build_model.py` then static HTML/JS; smoke-tested by `model/check_site.js` |
 
 Both hold the household's figures only as rounded, anonymized output: every published dollar figure
 is rounded to the nearest $10, and no address, parcel number or account number appears anywhere.

@@ -9,6 +9,3 @@ __pycache__/
 *.py[cod]
 *.pyc
 .DS_Store
-
-# Legacy build output of earlier sessions (kept in history only)
-/site/

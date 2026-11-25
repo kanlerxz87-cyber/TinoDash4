@@ -479,3 +479,54 @@ decisions, so this session logged it instead of changing it.
    (Q-16, `tax-rules.html`, `comparables.html`), not an oversight.
 7. **Rebuild, then re-verify.** The check scripts in the verification log above are cheap; run them
    after touching any builder, because the prose and the numbers are generated together.
+
+---
+
+## Session arena-65b70013 — full model + `site/` treatment (integration record)
+
+Session ID: `arena-65b70013` · Branch: `arena/65b70013-tinodash4` · PR #15 into `main`.
+Scope: research batches (official sources only), `model/build_model.py` generator, and the
+static site under `site/` (11 pages + `site/data/*.json`). Root site, `docs/`, `decision-model/`
+and `decision-workspace/` were not edited by this session.
+
+### Task list
+
+| # | Task | Status | Files |
+|---|------|--------|-------|
+| 1 | Create/claim coordination board | done (earlier commit; re-based onto main's append-only board at merge) | COORDINATION.md |
+| 2 | Official-source research (federal estate/gift, CA property/transfer, SCC, SF, macro, legislation tracker) | done | research/SOURCES.md |
+| 3 | Projection model (pure + mixed paths, black swans, phased Treasury entry, sensitivity matrix, Monte-Carlo, what-if) | done | model/build_model.py |
+| 4 | Site: exec summary + what-would-change-the-answer first screen | done | site/index.html |
+| 5 | Site: dashboard, what-if lab, charts, sourced data tables, Flagged for Review | done | site/dashboard.html, site/data.html, site/flagged.html, site/js/site.js |
+| 6 | Site: attorney/CPA one-page printable briefing | done | site/briefing.html |
+| 7 | Site: timeline, questions, suggestions, glossary, source registry, grouped nav | done | site/*.html |
+| 8 | Headless smoke test + CI verify workflow | done | model/check_site.js, .github/workflows/verify.yml |
+
+### Verification log (this session)
+
+| Date | Item | Verified against | Result |
+|------|------|------------------|--------|
+| 2026-11-25 | Federal estate exclusion $15M / 40% / 9-month rule; CA estate tax $0 | IRS Rev. Proc. 2025-32, Form 706 instructions, RTC §13302 (fetched) | verified; sources.json rows carry links |
+| 2026-11-25 | Prop 19 cap $1,044,590 (2026-02-16→2027-02-15), filing windows ≤1yr/≤3yr | BOE prop-19 page + LTA 2025/009 (fetched) | verified |
+| 2026-11-25 | SF secured rate 1.18162182% FY26-27; transfer-tax tiers; Prop H text ($129/$249, +$0.195/sqft, eff. 2027-07-01) | SF Treasurer page, sf.gov fee table, Prop H legal text PDF (fetched) | verified |
+| 2026-11-25 | SCC recording fees ($0.55/$500 county DTT, $25+$3 record, SB2 $75) | clerkrecorder.sccgov.org fee schedule (fetched) | verified |
+| 2026-11-25 | Damodaran 1928–2025 stock/T-bill annual returns (black-swan backtests) | histretSP.html (full series fetched) | verified |
+| 2026-11-25 | Initiative 25-0035 did not qualify for Nov 2026 (watch 2028); SF Prop H 74.42% Yes pre-cert | AG title/summary, election results pages | verified; certification due 2026-12-03 |
+| 2026-11-25 | Model determinism + renderers | `python3 model/build_model.py`, `node model/check_site.js` | ALL CHECKS PASSED (11 renderers, what-if, source hrefs) |
+| 2026-11-25 | Internal links/anchors/assets across site/*.html | node link checker | ALL INTERNAL LINKS OK |
+| 2026-11-25 | Privacy scrub of this session's files to repo-wide identifiers rule (city/ZIP/neighbourhood words) | tools/check_site.py FORBIDDEN_WORDS | scrubbed; one logged exception below |
+
+### Conflict log (this session)
+
+| Date | Conflict | Resolution |
+|------|----------|------------|
+| 2026-11-25 | add/add on `.gitignore` with main | Union of both; the `/site/` ignore line from main was dropped because `site/` is this session's active published tree (tracked files are unaffected either way, but new files under `site/` must remain addable). |
+| 2026-11-25 | add/add on `COORDINATION.md` | Main's append-only board kept in full; this session's section appended at the end (same pattern as prior sessions). |
+| 2026-11-25 | Two Pages deploy workflows would race (`deploy.yml` path `.` vs this session's `pages.yml` path `site/`) | This session's `pages.yml` deleted; `deploy.yml` (whole-repo artifact, so root site + `site/` + workspaces all publish) kept as the single deployer; `verify.yml` added for build+smoke-test only. |
+| 2026-11-25 | Official CSD ordinance URL contains the city name in the domain | Kept: dropping an official source would violate the official-sources rule. Logged as an irregularity of the same class as `decision-model/` identifiers — prose throughout this session's files uses Property A/B labels instead. |
+
+### Merge / deploy log (this session)
+
+| Date | PR | Merge result | Pages URL |
+|------|----|--------------|-----------|
+| 2026-11-25 | #15 arena/65b70013-tinodash4 → main | see rows below after merge | root dashboard at Pages root; this session's site at `/site/` |

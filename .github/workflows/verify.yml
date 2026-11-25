@@ -1,0 +1,21 @@
+name: Verify model + site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Regenerate model data (deterministic)
+        run: python3 model/build_model.py
+      - name: Fail if regeneration changed tracked data (data must be committed in sync)
+        run: git diff --exit-code -- site/data
+      - name: Headless smoke test of all site renderers
+        run: node model/check_site.js
