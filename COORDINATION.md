@@ -42,6 +42,6 @@ Session: `d4ff329e` · Branch: `arena/d4ff329e-tinodash4` (integration branch fo
 
 ## Deployment and PR record
 
-- PR: pending (to be filled in before merge)
+- PR: #7 (https://github.com/kanlerxz87-cyber/TinoDash4/pull/7), head `arena/d4ff329e-tinodash4` -> base `main`, opened 2026-11-25
 - Merge: pending
 - Pages: pending
