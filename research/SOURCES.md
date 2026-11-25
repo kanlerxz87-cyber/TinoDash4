@@ -9,7 +9,7 @@ this session or the exact wording appeared in the retrieved official document.
 | Fact | Value | Source | Status |
 |---|---|---|---|
 | Basic exclusion amount, deaths in 2026 | $15,000,000 | IRS Rev. Proc. 2025-32, §14 (OBBBA §70106) https://www.irs.gov/pub/irs-drop/rp-25-32.pdf | verified |
-| OBBBA (Public Law 119-21) signed 2025-07-04; no sunset; indexed from 2027 | — | IRS "One, Big, Beautiful Bill provisions" https://www.irs.gov/newsroom/one-big-beautiful-bill-provisions-individuals-and-workers | verified (search excerpt) |
+| OBBBA (Public Law 119-21) signed 2025-07-04; no phase-out; indexed from 2027 | — | IRS "One, Big, Beautiful Bill provisions" https://www.irs.gov/newsroom/one-big-beautiful-bill-provisions-individuals-and-workers | verified (search excerpt) |
 | Top federal estate/GST rate | 40% | IRS Instructions for Form 706 (07/2026) https://www.irs.gov/instructions/i706 | verified (search excerpt) |
 | Form 706 due 9 months after death; Form 4768 = +6 months to file (not pay) | — | IRS Instructions for Form 706 https://www.irs.gov/instructions/i706 | verified (search excerpt) |
 | Portability: DSUE elected on timely, complete Form 706; late relief up to 5 years (Rev. Proc. 2022-32) | — | IRS "What's new — Estate and gift tax" https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax | verified (search excerpt) |
@@ -41,18 +41,18 @@ this session or the exact wording appeared in the retrieved official document.
 | FTB does not conform to OBBBA individual rate changes; conforms to IRC capital-gain computation as of 2025-01-01 with modifications | — | FTB Summary of Federal Income Tax Changes https://www.ftb.ca.gov/about-ftb/data-reports-plans/summary-of-federal-income-tax-changes/index.html | verified (search excerpt) |
 | AB 1482 statewide: 5% + local CPI, max 10%; SF 8.8% for 2026-08-01 → 2027-07-31 | 8.8% | SF.gov https://www.sf.gov/reports--california-tenant-protection-act-2019-ab-1482 | verified (search excerpt) |
 
-## Local — Santa Clara County / Cupertino (Property A)
+## Local — Santa Clara County / Property A's city (Property A)
 
 | Fact | Value | Source | Status |
 |---|---|---|---|
 | County documentary transfer tax | $0.55 per $500 (0.11% of value) | SCC Clerk-Recorder https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-document-fees/record-fees | verified (page fetched) |
-| City conveyance tax ($1.65/$500) applies only in San Jose, Mountain View, Palo Alto — **Cupertino has none** | — | same SCC page | verified (page fetched) |
+| City conveyance tax ($1.65/$500) applies only in San Jose, Mountain View, Palo Alto — **Property A's city has none** | — | same SCC page | verified (page fetched) |
 | Recording fees: $25 first page + $3/additional; SB2 fee $75; REI $10; monument $10 on transfer-tax deeds | — | same SCC page | verified (page fetched) |
 | SCC has 800+ tax rate areas; typical TRA example rate 1.1488% (1% + county/school/water bonds) | 1.1488% | SCC Assessor 2026 assessment booklet (URL above) | verified (excerpt) |
 | Homeowners' exemption reduces taxable value by $7,000 | $7,000 | same booklet | verified (excerpt) |
 | Assessment appeal: regular window July 2 – Sept 15 (BOE-305-AH); informal Prop 8 review by Aug 8; fee $290 (2026) | — | multiple county-guidance sources; official AAB page not re-opened | FLAGGED (verify at clerk of board) |
 | Secured tax installments: 1st due Nov 1 (delinquent Dec 10), 2nd due Feb 1 (delinquent Apr 10) | — | county guidance sources | FLAGGED (verify at tax.santaclaracounty.gov) |
-| Cupertino Sanitary District sewer, SFR per unit/yr FY2025-26 | $802.14 → rounds to $800 | CSD Ordinance 135 https://cupertinosanitarydistrict.org/i/u/10207194/f/Agendas/2025-05-21_Agenda_Packet.pdf | verified (excerpt) |
+| Special district (Property A) sewer, SFR per unit/yr FY2025-26 | $802.14 → rounds to $800 | CSD Ordinance 135 https://cupertinosanitarydistrict.org/i/u/10207194/f/Agendas/2025-05-21_Agenda_Packet.pdf | verified (excerpt) |
 | Household bill data (Property A): taxes/assessment history, water $100–150/mo, solar credit +$10–20/mo, insurance ~$1,500/yr | rounded to $10 | household-provided | user data — flagged as unverified estimates |
 | Property A implied all-in tax rate from household bill (7,210 ÷ 539,740) | ≈1.34% | derived from household data | FLAGGED: exceeds typical published TRA rates (~1.15–1.30%) — likely direct assessments/Mello-Roos; verify against parcel bill |
 

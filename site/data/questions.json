@@ -47,7 +47,7 @@
    "q": "What is the actual insurance premium (Property A and B) \u2014 and is Property B insured as a rental (DP-3/LL policy)?",
    "why": "Household estimates (~$1,500) sit below CA DOI statewide averages; underinsurance is a tail risk.",
    "status": "MISSING \u2014 quotes required",
-   "how": "Two broker quotes each; also pull ZIP-level CDI report figures for 95014/94122."
+   "how": "Two broker quotes each; also pull ZIP-level CDI report figures for both property ZIPs (internal)."
   },
   {
    "id": "Q8",

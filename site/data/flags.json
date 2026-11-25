@@ -24,14 +24,14 @@
   "id": "F4",
   "severity": "High",
   "item": "Property A market rent unknown",
-  "detail": "HUD FMR floor $3,604 (SF County 2-BR) used as a labeled floor only; Cupertino comps required before ranking rent path on evidence.",
+  "detail": "HUD FMR floor $3,604 (SF County 2-BR) used as a labeled floor only; Property A comps required before ranking rent path on evidence.",
   "src": "hud-fmr"
  },
  {
   "id": "F5",
   "severity": "Medium",
   "item": "Insurance estimates (~$1,500) below CA DOI statewide averages",
-  "detail": "Obtain quotes; CDI ZIP-level report holds 95014/94122 experience data (not extracted here).",
+  "detail": "Obtain quotes; CDI ZIP-level report holds both property ZIPs (internal) experience data (not extracted here).",
   "src": "cdi-report"
  },
  {

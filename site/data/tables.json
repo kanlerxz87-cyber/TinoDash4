@@ -257,7 +257,7 @@
   },
   {
    "item": "SCC transfer tax (sale of Property A)",
-   "value": "$0.55 per $500 = 0.11%; Cupertino adds NO city conveyance tax",
+   "value": "$0.55 per $500 = 0.11%; Property A's city adds NO city conveyance tax",
    "src": "scc-recorder",
    "status": "Enacted"
   },
@@ -269,7 +269,7 @@
   },
   {
    "item": "SF Prop H parcel tax (Property B)",
-   "value": "Multifamily \u22645,000 sqft: $249/yr from FY2027-28; CPI-adjusted from FY2028-29; sunsets 2042",
+   "value": "Multifamily \u22645,000 sqft: $249/yr from FY2027-28; CPI-adjusted from FY2028-29; expires 2042",
    "src": "sf-proph-text",
    "status": "Enacted (passed 2026-11-03, 74.42%)"
   },
@@ -311,7 +311,7 @@
   },
   {
    "item": "OBBBA (PL 119-21)",
-   "value": "$15M exemption, no sunset, indexed from 2027",
+   "value": "$15M exemption, no phase-out, indexed from 2027",
    "src": "irs-obbb",
    "status": "Enacted 2025-07-04"
   },
@@ -424,7 +424,7 @@
    "status": "Unverified range $100\u2013$150"
   },
   {
-   "item": "Property A sewer (Cupertino Sanitary District)",
+   "item": "Property A sewer (Special district (Property A))",
    "value": 800,
    "unit": "$/yr",
    "src": "csd-ord135",
@@ -463,7 +463,7 @@
    "value": null,
    "unit": "$/mo",
    "src": "hud-fmr",
-   "status": "UNVERIFIED \u2014 model uses HUD FMR floor $3,604 (SF County 2-BR) only; Cupertino comps required"
+   "status": "UNVERIFIED \u2014 model uses HUD FMR floor $3,604 (SF County 2-BR) only; Property A comps required"
   },
   {
    "item": "Property A maintenance",
@@ -491,7 +491,7 @@
    "value": null,
    "unit": "$/yr",
    "src": "cdi-report",
-   "status": "ZIP-level values in report \u2014 not extracted; look up 95014 / 94122"
+   "status": "ZIP-level values in report \u2014 not extracted; look up both property ZIPs (internal)"
   }
  ],
  "rates": [

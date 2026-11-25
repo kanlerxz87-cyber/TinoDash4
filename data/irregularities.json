@@ -1,0 +1,152 @@
+[
+ {
+  "item": "Household tax-history record: repeated values",
+  "found": "The internal tax-history record repeats some year-by-year values. Details are held internally and not published.",
+  "action": "Check the repeated years against the county bills before relying on the history.",
+  "sources": [
+   "HOUSEHOLD"
+  ]
+ },
+ {
+  "item": "Property A assessed value for 2026 is a projection",
+  "found": "The 2026 figure is a 2% projection of the prior assessment, not a bill.",
+  "action": "Use the county roll for the 2026-27 year when it is published.",
+  "sources": [
+   "BOE-LTA-2026-002"
+  ]
+ },
+ {
+  "item": "Property B effective tax rate looks high",
+  "found": "The derived rate for Property B is higher than for Property A. Special assessments or bonds may be included.",
+  "action": "Read the itemised bill for Property B.",
+  "sources": [
+   "HOUSEHOLD"
+  ]
+ },
+ {
+  "item": "Assessed value far below market for both properties",
+  "found": "Under Prop 13 the legal base is not the market value. This is expected, but it means the model's base depends on the change-in-ownership rules.",
+  "action": "Obtain a written valuation at date of death.",
+  "sources": [
+   "BOE-PROP19-INTRO",
+   "CA-RTC-63.2"
+  ]
+ },
+ {
+  "item": "Market rent for Property A is not known",
+  "found": "No official comparables were found. HUD Fair Market Rents are voucher benchmarks, not market rents.",
+  "action": "Obtain at least three comparable rentals and a broker opinion.",
+  "sources": [
+   "FED-FMR-2027",
+   "HUD-FMR"
+  ]
+ },
+ {
+  "item": "FY 2027 Fair Market Rent values conflict",
+  "found": "Secondary sites give conflicting values for the Bay Area counties. The Federal Register notice confirms the effective date (Oct 1, 2026) but was not used for values.",
+  "action": "Left blank. Check the HUD query tool for the county and metro.",
+  "sources": [
+   "FED-FMR-2027",
+   "HUD-FMR"
+  ]
+ },
+ {
+  "item": "Measure H not yet certified",
+  "found": "Measure H results are preliminary (74.42% yes). Certification is due within 30 days of Election Day (Dec 3, 2026).",
+  "action": "Recheck after certification. Tier and pass-through rules are unverified.",
+  "sources": [
+   "SF-ELECTIONS-2026"
+  ]
+ },
+ {
+  "item": "SF documentary transfer tax tiers conflict",
+  "found": "Secondary sources give different tier schedules. Measure I (transfer tax over $10,000,000) failed on the preliminary count, but it does not apply to sales at this price range.",
+  "action": "Left blank in the model. Check the SF Treasurer page.",
+  "sources": [
+   "SF-TREASURER",
+   "SF-ELECTIONS-2026"
+  ]
+ },
+ {
+  "item": "Insurance cost unverified",
+  "found": "No official average premium was confirmed for either county. Secondary sites disagree widely.",
+  "action": "Obtain quotes for both properties.",
+  "sources": [
+   "CDI-INSURANCE"
+  ]
+ },
+ {
+  "item": "Solar credit depends on interconnection date",
+  "found": "Under NEM 3.0 export credits are set by the net billing tariff. Installations before April 15, 2023 may have different terms.",
+  "action": "Confirm the interconnection date and tariff with the utility.",
+  "sources": [
+   "CPUC-NBT"
+  ]
+ },
+ {
+  "item": "Water provider for Property A not confirmed",
+  "found": "The San Jose Water rate schedule is shown for reference only. Service to the address has not been confirmed.",
+  "action": "Confirm the water provider and tariff with the bill.",
+  "sources": [
+   "SJW-AL628"
+  ]
+ },
+ {
+  "item": "Prop 19 repeal initiative: status reported, memo not opened",
+  "found": "Secondary sources report that the initiative did not qualify. The Secretary of State memo was not opened in this session.",
+  "action": "Recheck before any decision. This is a current-law point only.",
+  "sources": [
+   "SOS-PROP19-REPEAL"
+  ]
+ },
+ {
+  "item": "Prop 19 loss after the heir moves out: two readings",
+  "found": "The model keeps two readings (A: the Prop 19 base carries on; B: the base resets to value at transfer). The rule is not settled in the sources reviewed.",
+  "action": "Counsel to confirm which reading applies.",
+  "sources": [
+   "CA-RTC-63.2"
+  ]
+ },
+ {
+  "item": "California '1% tax above $1 million' is the Behavioral Health Services Tax",
+  "found": "It is 1% of taxable income over $1,000,000 (FTB instructions). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
+  "action": "CPA to confirm the state rate on large gains for the transfer year.",
+  "sources": [
+   "FTB-540ES-2025"
+  ]
+ },
+ {
+  "item": "Public Git history contains a personal e-mail address",
+  "found": "The base commit on main lists a personal e-mail address as the author. The repository is public. History was NOT rewritten.",
+  "action": "Decide whether to rewrite history (requires a force-push to main and your explicit approval), or set the e-mail to private for future commits.",
+  "sources": []
+ },
+ {
+  "item": "Parallel session branch overlaps this work",
+  "found": "Branch arena/1277b9f1-tinodash4 has its own COORDINATION.md and claims the same files. It was not modified here.",
+  "action": "Reconcile before any merge of that branch to main.",
+  "sources": []
+ },
+ {
+  "item": "Platform branch rule differs from the request",
+  "found": "The request asked for per-task branches and an integration branch. The platform allows one branch per session, so all work is on arena/8c530ff4-tinodash4.",
+  "action": "No action beyond noting the constraint.",
+  "sources": []
+ },
+ {
+  "item": "Household figures are used but not verified",
+  "found": "Household figures are used in the model and held internally. Each is labelled USER and is not verified against an official source.",
+  "action": "Verify against bills and appraisals before any decision.",
+  "sources": [
+   "HOUSEHOLD"
+  ]
+ },
+ {
+  "item": "Federal 2027 exclusion from secondary sources",
+  "found": "The 2027 figures ($15,480,000 estate and gift exclusion; $20,000 annual gift exclusion) come from secondary reports.",
+  "action": "Confirm on the IRS release before relying on them.",
+  "sources": [
+   "IRS-NEWS-2027"
+  ]
+ }
+]

@@ -19,7 +19,7 @@
   "id": "S3",
   "priority": "High",
   "title": "Insurance audit for both properties",
-  "body": "Replace the ~$1,500 household guesses with quoted premiums (HO-3 for A; DP-3/landlord for B). Check CDI ZIP-level report for 95014/94122 context.",
+  "body": "Replace the ~$1,500 household guesses with quoted premiums (HO-3 for A; DP-3/landlord for B). Check CDI ZIP-level report for both property ZIPs (internal) context.",
   "owner": "Household + broker",
   "status": "Proposed"
  },
