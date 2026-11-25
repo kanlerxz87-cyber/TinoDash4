@@ -1,0 +1,5 @@
+# Private, internal-use-only inputs. Never commit or publish.
+private/
+__pycache__/
+*.pyc
+.DS_Store
