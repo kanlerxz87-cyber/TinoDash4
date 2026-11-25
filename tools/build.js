@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Build the static site under docs/ from tools/model.js and tools/content.js. Run: node tools/build.js */
+/* Build the static site under estate-model/ from tools/model.js and tools/content.js. Run: node tools/build.js */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -7,7 +7,7 @@ const M = require('./model.js');
 const { SOURCES, FLAGGED, TIMELINE, GLOSSARY, SUGGESTIONS } = require('./content.js');
 
 const ROOT = path.join(__dirname, '..');
-const DOCS = path.join(ROOT, 'docs');
+const DOCS = path.join(ROOT, 'estate-model');
 const N = 1000; // Monte Carlo draws per case
 const money = (v) => { const x = M.r10(v); return (x < 0 ? '\u2212$' : '$') + Math.abs(x).toLocaleString('en-US'); };
 const pct = (v, d = 2) => (v * 100).toFixed(d) + '%';

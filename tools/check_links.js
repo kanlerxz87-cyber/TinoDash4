@@ -4,7 +4,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const DOCS = path.join(__dirname, '..', 'docs');
+const DOCS = path.join(__dirname, '..', 'estate-model');
 const pages = fs.readdirSync(DOCS).filter((f) => f.endsWith('.html'));
 const ext = new Set();
 let bad = 0;

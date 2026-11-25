@@ -3,10 +3,10 @@
  * Shared by tools/build.js (Node, build time) and the browser (what-if controls).
  *
  * Tags on every constant:
- *   [V]  verified against an official source (see docs/sources.html)
+ *   [V]  verified against an official source (see estate-model/sources.html)
  *   [U]  user-supplied, not yet verified
  *   [A]  modelling assumption, illustrative, not a forecast
- *   [F]  flagged: needed by the model but not verified; listed on docs/flagged.html
+ *   [F]  flagged: needed by the model but not verified; listed on estate-model/flagged.html
  *   BLANK  unknown; the model uses the conservative fallback stated beside it
  *
  * Money is in US dollars. Published figures are rounded to the nearest $10.

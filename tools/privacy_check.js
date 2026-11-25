@@ -5,8 +5,10 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const ROOT = path.join(__dirname, '..');
+// Scope: this session's files only (other sessions' files are checked by their owners; see COORDINATION.md).
+const SCOPE = /^(estate-model\/|tools\/|DECISION_RULES\.md$)/;
 const files = execSync('git ls-files -co --exclude-standard', { cwd: ROOT }).toString().split('\n').filter(Boolean)
-  .filter((f) => /\.(html|js|css|md|json)$/.test(f) && !f.startsWith('.git'));
+  .filter((f) => SCOPE.test(f) && /\.(html|js|css|md|json)$/.test(f));
 const patterns = [
   [/\b9501[0-9]\b|\b9412[0-9]\b/, 'ZIP code'],
   [/\b\d{1,5}\s+[A-Z][a-z]+\s+(Ave|Avenue|St|Street|Rd|Road|Blvd|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place)\b/, 'street address'],
