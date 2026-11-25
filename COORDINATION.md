@@ -259,4 +259,12 @@ Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared fi
 
 ### Pull request and merge
 
-- PR #7 (`arena/d4ff329e-tinodash4` → `main`). Merge status: see the record below.
+- PR #7 (`arena/d4ff329e-tinodash4` → `main`): **merged** 2026-11-25 13:48:20 UTC, merge commit `decb3fb` (merge commit, not waited on for review; flagged items do not block).
+- Pages: legacy build from `main` `/` for `decb3fb` reported `built`. Site checked by fetch: `https://kanlerxz87-cyber.github.io/TinoDash4/decision-analysis/site/` returns the first-screen content. No Pages setting was changed by this session.
+- Board record: PR #9 (board only), see the log below.
+
+### Log (after merge)
+
+- 2026-11-25 · d4ff329e · Merged PR #7 (`decb3fb`). The first merge attempt failed on conflicts with other sessions' files (PR #6 landed mid-session); resolved by moving all session files under `decision-analysis/`.
+- 2026-11-25 · d4ff329e · A conflict-marker commit to COORDINATION.md (`e7217e2`) was pushed during the second merge; fixed in `dced5dc` before the PR merged. The board on `main` has no markers.
+- Open items after merge (not blocking): F21 history scrub (owner decision); flagged F01–F28 (blank or preliminary values); session-owner fixes for ZIP codes and neighbourhood names found in other sessions' files (logged above, not edited here).
