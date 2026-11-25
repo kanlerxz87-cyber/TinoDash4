@@ -1,0 +1,21 @@
+[
+  {"id": "A", "name": "Property A - inherited residence (Cupertino area; held in trust)", "fields": [
+     ["Market value (Nov 2026)", "Owner estimate: $3,100,000 (unverified; F01)"],
+     ["Expected transfer", "Around 2040-2050 (trust)"],
+     ["Occupancy", "Not provided (not assumed)"],
+     ["Water", "$100-$150 per month (owner range)"],
+     ["Electricity", "Near zero; solar net credit +$10 to +$20 per month (owner range)"],
+     ["Insurance", "Not verified (F05)"],
+     ["Assessment history", "Not collected (F25)"]]},
+  {"id": "B", "name": "Property B - San Francisco residence (3 units)", "fields": [
+     ["Units", "3 livable: 2 rented; 1 owner-occupiable"],
+     ["Rent (2 rented units)", "About $7,150 per month combined (owner figure; unverified)"],
+     ["Water", "$330-$400 per month (owner range)"],
+     ["Electricity", "$30-$70 per month (owner range)"],
+     ["Insurance", "Owner estimate about $1,500 per year (unverified; F06)"],
+     ["Assessment history", "FY2026-27 rate verified; history not collected (F24)"]]},
+  {"id": "C", "name": "Household finances", "fields": [
+     ["Income and tax bracket", "Not provided; model uses rate assumptions (F23)"],
+     ["Other accounts", "Not provided"],
+     ["Estate size of decedent", "Not provided (F19)"]]}
+]

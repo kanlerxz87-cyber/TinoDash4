@@ -1,0 +1,843 @@
+{
+ "build": "2026-11-25",
+ "mc": {
+  "n": 1000,
+  "seed": 20261125
+ },
+ "base": {
+  "2040|5": [
+   {
+    "path": "SELL",
+    "realRounded": 3593890
+   },
+   {
+    "path": "M3",
+    "realRounded": 3460940
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 2895900
+   },
+   {
+    "path": "M1",
+    "realRounded": 2895900
+   },
+   {
+    "path": "M4",
+    "realRounded": 2895900
+   },
+   {
+    "path": "RENT",
+    "realRounded": 2865620
+   },
+   {
+    "path": "M2",
+    "realRounded": 2865620
+   }
+  ],
+  "2040|10": [
+   {
+    "path": "SELL",
+    "realRounded": 4090070
+   },
+   {
+    "path": "M3",
+    "realRounded": 3900370
+   },
+   {
+    "path": "M1",
+    "realRounded": 3262430
+   },
+   {
+    "path": "RENT",
+    "realRounded": 2530290
+   },
+   {
+    "path": "M2",
+    "realRounded": 2530290
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 2497650
+   },
+   {
+    "path": "M4",
+    "realRounded": 2490870
+   }
+  ],
+  "2040|20": [
+   {
+    "path": "SELL",
+    "realRounded": 5512690
+   },
+   {
+    "path": "M3",
+    "realRounded": 5181350
+   },
+   {
+    "path": "M1",
+    "realRounded": 4366310
+   },
+   {
+    "path": "M2",
+    "realRounded": 3282440
+   },
+   {
+    "path": "RENT",
+    "realRounded": 1957390
+   },
+   {
+    "path": "M4",
+    "realRounded": 1871650
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 1691570
+   }
+  ],
+  "2045|5": [
+   {
+    "path": "SELL",
+    "realRounded": 3682410
+   },
+   {
+    "path": "M3",
+    "realRounded": 3546200
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 2961210
+   },
+   {
+    "path": "M1",
+    "realRounded": 2961210
+   },
+   {
+    "path": "M4",
+    "realRounded": 2961210
+   },
+   {
+    "path": "RENT",
+    "realRounded": 2932140
+   },
+   {
+    "path": "M2",
+    "realRounded": 2932140
+   }
+  ],
+  "2045|10": [
+   {
+    "path": "SELL",
+    "realRounded": 4190810
+   },
+   {
+    "path": "M3",
+    "realRounded": 3996440
+   },
+   {
+    "path": "M1",
+    "realRounded": 3336040
+   },
+   {
+    "path": "RENT",
+    "realRounded": 2584300
+   },
+   {
+    "path": "M2",
+    "realRounded": 2584300
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 2554040
+   },
+   {
+    "path": "M4",
+    "realRounded": 2548320
+   }
+  ],
+  "2045|20": [
+   {
+    "path": "SELL",
+    "realRounded": 5648480
+   },
+   {
+    "path": "M3",
+    "realRounded": 5308980
+   },
+   {
+    "path": "M1",
+    "realRounded": 4464960
+   },
+   {
+    "path": "M2",
+    "realRounded": 3354240
+   },
+   {
+    "path": "RENT",
+    "realRounded": 1988240
+   },
+   {
+    "path": "M4",
+    "realRounded": 1905190
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 1729670
+   }
+  ],
+  "2050|5": [
+   {
+    "path": "SELL",
+    "realRounded": 3773120
+   },
+   {
+    "path": "M3",
+    "realRounded": 3633540
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 3028840
+   },
+   {
+    "path": "M1",
+    "realRounded": 3028840
+   },
+   {
+    "path": "M4",
+    "realRounded": 3028840
+   },
+   {
+    "path": "RENT",
+    "realRounded": 3000290
+   },
+   {
+    "path": "M2",
+    "realRounded": 3000290
+   }
+  ],
+  "2050|10": [
+   {
+    "path": "SELL",
+    "realRounded": 4294040
+   },
+   {
+    "path": "M3",
+    "realRounded": 4094880
+   },
+   {
+    "path": "M1",
+    "realRounded": 3412270
+   },
+   {
+    "path": "RENT",
+    "realRounded": 2639640
+   },
+   {
+    "path": "M2",
+    "realRounded": 2639640
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 2612450
+   },
+   {
+    "path": "M4",
+    "realRounded": 2607190
+   }
+  ],
+  "2050|20": [
+   {
+    "path": "SELL",
+    "realRounded": 5787610
+   },
+   {
+    "path": "M3",
+    "realRounded": 5439750
+   },
+   {
+    "path": "M1",
+    "realRounded": 4567090
+   },
+   {
+    "path": "M2",
+    "realRounded": 3427820
+   },
+   {
+    "path": "RENT",
+    "realRounded": 2019850
+   },
+   {
+    "path": "M4",
+    "realRounded": 1939560
+   },
+   {
+    "path": "LIVE",
+    "realRounded": 1769190
+   }
+  ]
+ },
+ "mc_p50": {
+  "LIVE|2040|5": {
+   "p10": 2036260,
+   "p50": 2614470,
+   "p90": 3246560,
+   "probBeatsSell": 0.28
+  },
+  "RENT|2040|5": {
+   "p10": 2099680,
+   "p50": 2602410,
+   "p90": 3199590,
+   "probBeatsSell": 0.28
+  },
+  "SELL|2040|5": {
+   "p10": 1753160,
+   "p50": 3083370,
+   "p90": 4587660,
+   "probBeatsSell": 0
+  },
+  "M1|2040|5": {
+   "p10": 2036260,
+   "p50": 2614470,
+   "p90": 3246560,
+   "probBeatsSell": 0.28
+  },
+  "M2|2040|5": {
+   "p10": 2099680,
+   "p50": 2602410,
+   "p90": 3199590,
+   "probBeatsSell": 0.28
+  },
+  "M3|2040|5": {
+   "p10": 2112700,
+   "p50": 3005040,
+   "p90": 3996820,
+   "probBeatsSell": 0.45
+  },
+  "M4|2040|5": {
+   "p10": 2036260,
+   "p50": 2614470,
+   "p90": 3246560,
+   "probBeatsSell": 0.28
+  },
+  "LIVE|2040|10": {
+   "p10": 1673720,
+   "p50": 2189960,
+   "p90": 2791260,
+   "probBeatsSell": 0.2
+  },
+  "RENT|2040|10": {
+   "p10": 1785290,
+   "p50": 2240210,
+   "p90": 2788230,
+   "probBeatsSell": 0.23
+  },
+  "SELL|2040|10": {
+   "p10": 1524060,
+   "p50": 3156380,
+   "p90": 5703300,
+   "probBeatsSell": 0
+  },
+  "M1|2040|10": {
+   "p10": 1509480,
+   "p50": 2686780,
+   "p90": 4240170,
+   "probBeatsSell": 0.26
+  },
+  "M2|2040|10": {
+   "p10": 1785290,
+   "p50": 2240210,
+   "p90": 2788230,
+   "probBeatsSell": 0.23
+  },
+  "M3|2040|10": {
+   "p10": 1741460,
+   "p50": 3073100,
+   "p90": 5124490,
+   "probBeatsSell": 0.44
+  },
+  "M4|2040|10": {
+   "p10": 1717930,
+   "p50": 2195270,
+   "p90": 2771640,
+   "probBeatsSell": 0.21
+  },
+  "LIVE|2040|20": {
+   "p10": 940210,
+   "p50": 1430670,
+   "p90": 2045510,
+   "probBeatsSell": 0.11
+  },
+  "RENT|2040|20": {
+   "p10": 1248890,
+   "p50": 1696010,
+   "p90": 2238780,
+   "probBeatsSell": 0.17
+  },
+  "SELL|2040|20": {
+   "p10": 1175220,
+   "p50": 3370780,
+   "p90": 8244040,
+   "probBeatsSell": 0
+  },
+  "M1|2040|20": {
+   "p10": 975110,
+   "p50": 2777040,
+   "p90": 6563530,
+   "probBeatsSell": 0.26
+  },
+  "M2|2040|20": {
+   "p10": 1042450,
+   "p50": 2400140,
+   "p90": 4546310,
+   "probBeatsSell": 0.2
+  },
+  "M3|2040|20": {
+   "p10": 1271160,
+   "p50": 3269410,
+   "p90": 7591710,
+   "probBeatsSell": 0.43
+  },
+  "M4|2040|20": {
+   "p10": 1170250,
+   "p50": 1622040,
+   "p90": 2177050,
+   "probBeatsSell": 0.15
+  },
+  "LIVE|2045|5": {
+   "p10": 1959960,
+   "p50": 2576550,
+   "p90": 3266650,
+   "probBeatsSell": 0.28
+  },
+  "RENT|2045|5": {
+   "p10": 2007470,
+   "p50": 2582920,
+   "p90": 3227310,
+   "probBeatsSell": 0.29
+  },
+  "SELL|2045|5": {
+   "p10": 1794270,
+   "p50": 3047870,
+   "p90": 4681970,
+   "probBeatsSell": 0
+  },
+  "M1|2045|5": {
+   "p10": 1959960,
+   "p50": 2576550,
+   "p90": 3266650,
+   "probBeatsSell": 0.28
+  },
+  "M2|2045|5": {
+   "p10": 2007470,
+   "p50": 2582920,
+   "p90": 3227310,
+   "probBeatsSell": 0.29
+  },
+  "M3|2045|5": {
+   "p10": 2035300,
+   "p50": 2968730,
+   "p90": 4066040,
+   "probBeatsSell": 0.44
+  },
+  "M4|2045|5": {
+   "p10": 1959960,
+   "p50": 2576550,
+   "p90": 3266650,
+   "probBeatsSell": 0.28
+  },
+  "LIVE|2045|10": {
+   "p10": 1636140,
+   "p50": 2188310,
+   "p90": 2851240,
+   "probBeatsSell": 0.22
+  },
+  "RENT|2045|10": {
+   "p10": 1750240,
+   "p50": 2254260,
+   "p90": 2843100,
+   "probBeatsSell": 0.24
+  },
+  "SELL|2045|10": {
+   "p10": 1421750,
+   "p50": 3158570,
+   "p90": 5509720,
+   "probBeatsSell": 0
+  },
+  "M1|2045|10": {
+   "p10": 1370110,
+   "p50": 2649920,
+   "p90": 4174720,
+   "probBeatsSell": 0.27
+  },
+  "M2|2045|10": {
+   "p10": 1750240,
+   "p50": 2254260,
+   "p90": 2843100,
+   "probBeatsSell": 0.24
+  },
+  "M3|2045|10": {
+   "p10": 1575370,
+   "p50": 3050740,
+   "p90": 5125830,
+   "probBeatsSell": 0.44
+  },
+  "M4|2045|10": {
+   "p10": 1685560,
+   "p50": 2203960,
+   "p90": 2829700,
+   "probBeatsSell": 0.23
+  },
+  "LIVE|2045|20": {
+   "p10": 907190,
+   "p50": 1423650,
+   "p90": 2004800,
+   "probBeatsSell": 0.1
+  },
+  "RENT|2045|20": {
+   "p10": 1222670,
+   "p50": 1689710,
+   "p90": 2210900,
+   "probBeatsSell": 0.17
+  },
+  "SELL|2045|20": {
+   "p10": 1252310,
+   "p50": 3276960,
+   "p90": 7940190,
+   "probBeatsSell": 0
+  },
+  "M1|2045|20": {
+   "p10": 1005520,
+   "p50": 2690150,
+   "p90": 6163680,
+   "probBeatsSell": 0.25
+  },
+  "M2|2045|20": {
+   "p10": 1012900,
+   "p50": 2336410,
+   "p90": 4504850,
+   "probBeatsSell": 0.23
+  },
+  "M3|2045|20": {
+   "p10": 1251370,
+   "p50": 3155780,
+   "p90": 7170050,
+   "probBeatsSell": 0.44
+  },
+  "M4|2045|20": {
+   "p10": 1136890,
+   "p50": 1618470,
+   "p90": 2154120,
+   "probBeatsSell": 0.16
+  },
+  "LIVE|2050|5": {
+   "p10": 1927090,
+   "p50": 2575900,
+   "p90": 3346660,
+   "probBeatsSell": 0.29
+  },
+  "RENT|2050|5": {
+   "p10": 1969180,
+   "p50": 2582190,
+   "p90": 3304810,
+   "probBeatsSell": 0.29
+  },
+  "SELL|2050|5": {
+   "p10": 1672950,
+   "p50": 2997660,
+   "p90": 4646820,
+   "probBeatsSell": 0
+  },
+  "M1|2050|5": {
+   "p10": 1927090,
+   "p50": 2575900,
+   "p90": 3346660,
+   "probBeatsSell": 0.29
+  },
+  "M2|2050|5": {
+   "p10": 1969180,
+   "p50": 2582190,
+   "p90": 3304810,
+   "probBeatsSell": 0.29
+  },
+  "M3|2050|5": {
+   "p10": 1982330,
+   "p50": 2925020,
+   "p90": 4179380,
+   "probBeatsSell": 0.47
+  },
+  "M4|2050|5": {
+   "p10": 1927090,
+   "p50": 2575900,
+   "p90": 3346660,
+   "probBeatsSell": 0.29
+  },
+  "LIVE|2050|10": {
+   "p10": 1522020,
+   "p50": 2175540,
+   "p90": 2921540,
+   "probBeatsSell": 0.22
+  },
+  "RENT|2050|10": {
+   "p10": 1678810,
+   "p50": 2233070,
+   "p90": 2916950,
+   "probBeatsSell": 0.24
+  },
+  "SELL|2050|10": {
+   "p10": 1432250,
+   "p50": 3117810,
+   "p90": 5689130,
+   "probBeatsSell": 0
+  },
+  "M1|2050|10": {
+   "p10": 1424780,
+   "p50": 2629520,
+   "p90": 4289060,
+   "probBeatsSell": 0.28
+  },
+  "M2|2050|10": {
+   "p10": 1678810,
+   "p50": 2233070,
+   "p90": 2916950,
+   "probBeatsSell": 0.24
+  },
+  "M3|2050|10": {
+   "p10": 1662880,
+   "p50": 3066150,
+   "p90": 5148570,
+   "probBeatsSell": 0.47
+  },
+  "M4|2050|10": {
+   "p10": 1595890,
+   "p50": 2187350,
+   "p90": 2901390,
+   "probBeatsSell": 0.23
+  },
+  "LIVE|2050|20": {
+   "p10": 1082250,
+   "p50": 855950,
+   "p90": 1849480,
+   "probBeatsSell": 0.11
+  },
+  "RENT|2050|20": {
+   "p10": 1395250,
+   "p50": 1209770,
+   "p90": 2075220,
+   "probBeatsSell": 0.17
+  },
+  "SELL|2050|20": {
+   "p10": 1785660,
+   "p50": 1112920,
+   "p90": 5863010,
+   "probBeatsSell": 0
+  },
+  "M1|2050|20": {
+   "p10": 1571560,
+   "p50": 985050,
+   "p90": 4939180,
+   "probBeatsSell": 0.26
+  },
+  "M2|2050|20": {
+   "p10": 1440690,
+   "p50": 962710,
+   "p90": 3559480,
+   "probBeatsSell": 0.23
+  },
+  "M3|2050|20": {
+   "p10": 1933910,
+   "p50": 1272900,
+   "p90": 5586320,
+   "probBeatsSell": 0.46
+  },
+  "M4|2050|20": {
+   "p10": 1304880,
+   "p50": 1112970,
+   "p90": 2011960,
+   "probBeatsSell": 0.16
+  }
+ },
+ "scenarios": [
+  {
+   "id": "eq55",
+   "label": "Equity return 5.5% (was 6.5%)",
+   "status": "assumption",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "eq75",
+   "label": "Equity return 7.5%",
+   "status": "assumption",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "gp2",
+   "label": "Property value growth 2%/yr (was 3%)",
+   "status": "assumption",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "gp4",
+   "label": "Property value growth 4%/yr",
+   "status": "assumption",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "cash3",
+   "label": "Treasury yields 3.0% (was about 4.4%)",
+   "status": "official base, test value",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "infl4",
+   "label": "Inflation 4%/yr (was 2.5%)",
+   "status": "assumption",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "v28",
+   "label": "Property A value $2.8M (was $3.1M)",
+   "status": "test value",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "v34",
+   "label": "Property A value $3.4M",
+   "status": "test value",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "rent13",
+   "label": "Rent 30% above HUD floor",
+   "status": "test value",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "ins",
+   "label": "Insurance $2,000 owner + $2,500 landlord (test values, not estimates)",
+   "status": "test value",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "pb1m",
+   "label": "Decedent base-year value $1,000,000 (hypothetical; Prop 19 test)",
+   "status": "hypothetical",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "mfj",
+   "label": "Married filing jointly exclusion $500,000",
+   "status": "test value",
+   "moved": false,
+   "changed": []
+  },
+  {
+   "id": "fed35",
+   "label": "Household federal bracket 35% (was 24%)",
+   "status": "test value",
+   "moved": false,
+   "changed": []
+  }
+ ],
+ "breakpoints": {
+  "eqSellVsLive": null,
+  "eqSellVsRent": 0.0006192357329698472,
+  "gpLiveVsSell": 0.0862782733391102,
+  "gpRentVsSell": 0.0900790264960224,
+  "pbLiveVsSell": null,
+  "pbLiveVsSell20": null
+ },
+ "shocks": {
+  "1929": {
+   "SELL": {
+    "vals": [
+     1051580,
+     955820,
+     931930,
+     908630,
+     885910
+    ],
+    "min": 885910,
+    "max": 1051580,
+    "median": 931930
+   },
+   "M3": {
+    "vals": [
+     7392750,
+     4242580,
+     2120210,
+     956060,
+     815900
+    ],
+    "min": 815900,
+    "max": 7392750,
+    "median": 2120210
+   }
+  },
+  "2008": {
+   "SELL": {
+    "vals": [
+     4241000,
+     4079230,
+     4079230,
+     4079230,
+     4079230
+    ],
+    "min": 4079230,
+    "max": 4241000,
+    "median": 4079230
+   },
+   "M3": {
+    "vals": [
+     6484200,
+     7136490,
+     6333110,
+     4140250,
+     3861170
+    ],
+    "min": 3861170,
+    "max": 7136490,
+    "median": 6333110
+   }
+  }
+ },
+ "regimeShares": [
+  {
+   "code": "N",
+   "name": "Normal growth",
+   "share": 0.8116766101646264
+  },
+  {
+   "code": "I",
+   "name": "Inflation spike",
+   "share": 0.07990695470503378
+  },
+  {
+   "code": "R",
+   "name": "Recession",
+   "share": 0.06785701465319831
+  },
+  {
+   "code": "D",
+   "name": "Deflationary depression (1929-type)",
+   "share": 0.014825504174833304
+  },
+  {
+   "code": "S",
+   "name": "Stagflation",
+   "share": 0.025733916302311144
+  }
+ ],
+ "topPathBase": "SELL",
+ "topPathMC": "SELL"
+}

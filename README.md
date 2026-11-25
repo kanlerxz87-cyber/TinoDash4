@@ -25,3 +25,11 @@ A separate decision model compares paths for Property A (inherited, Santa Clara 
 - Checks: `node tools/privacy_check.js` (this session's files) and `node tools/check_links.js`.
 - Rules fixed before model output: `DECISION_RULES.md`.
 - Figures are rounded to the nearest $10. Unverified values are flagged on `estate-model/flagged.html`.
+
+## Decision analysis (session d4ff329e)
+
+Inherited Cupertino-area house (Property A) compared with the existing San Francisco property (Property B). Seven paths, transfer years 2040/2045/2050, horizons 5/10/20 years, Monte Carlo, stylised 1929/2008 entry shocks, what-if controls and a flagged-items register.
+
+- Site: `decision-analysis/site/` (see `decision-analysis/README.md`).
+- Build: `node decision-analysis/scripts/build.js`.
+- Not tax, legal or investment advice.

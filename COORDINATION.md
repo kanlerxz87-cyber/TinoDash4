@@ -221,3 +221,42 @@ contradict the conventional telling, so they are worth checking rather than copy
 3. **"Rent it out and keep the Prop 13 base" is legally dead post-Prop 19** — the exclusion is
    removed when the heir stops being homeowners'-exemption-eligible. Modelled explicitly.
 
+---
+
+## Session d4ff329e — inheritance decision analysis (board entry)
+
+Session ID: `d4ff329e` · Branch: `arena/d4ff329e-tinodash4` · PR #7 into `main` · Site: `decision-analysis/site/` (not `docs/`, which belongs to `bba2482b`; not `estate-model/`, which belongs to `150580b0`).
+
+Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared files changed: `README.md` and this board (appended section only). No other session's files were edited.
+
+### Tasks
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| D-T1 | Decision criteria written before final model output | done (dated 2026-11-25; written after discarded draft test runs, disclosed on the page) | d4ff329e | `decision-analysis/data/criteria.json` |
+| D-T2 | Source register with official-link status | partial: 28 sources, several secondary; see sources page | d4ff329e | `decision-analysis/data/sources.json` |
+| D-T3 | Model: 7 paths, monthly, Monte Carlo, shocks, breakpoints | done; mechanics hand-checked on SELL and LIVE | d4ff329e | `decision-analysis/model/model.js` |
+| D-T4 | Property tax history (Cupertino 2014-2026; SF 2016-2025) | partial: SF FY2026-27 verified; history rows blank (F24, F25) | d4ff329e | `decision-analysis/data/tables.json` |
+| D-T5 | Insurance (both properties) | blocked: CDI primary not reached; blank (F05, F06) | d4ff329e | tables page |
+| D-T6 | Federal / CA / local thresholds, projections, legislation | partial (F09, F10, F11, F28) | d4ff329e | tax page |
+| D-T7 | Prop 13 / 19 / 58 / H and depreciation / recapture | partial (F03, F04, F15, F26) | d4ff329e | property rules page |
+| D-T8 | Black-swan section (separate) | done (stylised; assumptions labelled) | d4ff329e | black-swan page |
+| D-T9 | Anonymised inventory; flagged register; suggestions | done (F01-F28; suggestions not applied) | d4ff329e | inventory, flagged, suggestions pages |
+| D-T10 | Attorney & CPA one-page briefing | done (print CSS) | d4ff329e | briefing page |
+| D-T11 | Integration: PR to main, merge, Pages check | in progress (see record below) | d4ff329e | this board |
+
+### Log
+
+- 2026-11-25 · d4ff329e · Claimed D-T1 to D-T11. Built the site in `decision-analysis/`. Moved from root `model/`, `data/`, `scripts/`, `docs/` to avoid overwriting other sessions' `data/` and `docs/` files.
+- 2026-11-25 · d4ff329e · Merge into `main` was blocked by conflicts with the other sessions' root files; resolved by moving all session files under `decision-analysis/` and keeping both boards.
+- 2026-11-25 · d4ff329e · Owner decision needed (F21): the public initial commit (`fe3cad6`) shows a personal email as author. History was not rewritten (a rewrite requires a force-push to `main`). Not changed.
+- 2026-11-25 · d4ff329e · Irregularities on `main` (other sessions' files, not changed here): this board's earlier notes (session 150580b0) and `pages/`, `docs/` contain ZIP codes and a neighbourhood name, which conflict with the privacy rule above. Owners should replace them with placeholders. Logged, not edited.
+
+### Verification (this session)
+
+- Build: `node decision-analysis/scripts/build.js`. Scenario re-runs (13 input changes): the top path moved in 0 of 13. Breakpoints and what-if results are on the dashboard.
+- Privacy scan on this session's built pages: no e-mail addresses, ZIP codes in the site, or personal names.
+
+### Pull request and merge
+
+- PR #7 (`arena/d4ff329e-tinodash4` → `main`). Merge status: see the record below.
