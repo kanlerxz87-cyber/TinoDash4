@@ -169,7 +169,7 @@ function renderTable(cols, rows, withSrc) {
 function DEF() {
   const m = Site.d.model_constants || {};
   return {
-    av: m.A_VALUE_2026 ?? 3.1e6, bv: m.B_VALUE_2026 ?? 1.8e6,
+    av: m.A_VALUE_2026 ?? 3.1e6, bv: m.B_VALUE_2026 ?? 1.8e6, av2026: m.A_AV_2026 ?? 550540,
     rateA: m.A_RATE_IMPL ?? 0.013353, sfRate: m.SF_RATE ?? 0.0118162182,
     traA: 1490, traB: 4000,
     cap: m.PROP19_CAP_2026 ?? 1044590, sc: m.XFER_SC ?? 0.0011,
@@ -210,14 +210,20 @@ function runWhatIf(c) {
   const inf = t => Math.pow(1 + c.infl, t);
   const propH = yr => (yr >= 2027 ? m.propH : 0);
   const taxOcc = [], taxFull = [], aOps = [], bTax = [], bOps = [], rentA = [], rentB = [];
+  const av0 = m.av2026 || 550540;                 // A assessed value 2026 (household)
+  const bTax2025 = 2440;                          // B household bill 2025 (flagged F2)
   for (let t = 0; t < N; t++) {
     const yr = Y + t;
-    const fbyv = Math.max(m.av, vA[0]);            // Prop 19 FBYV ≈ FMV at death (conservative max)
-    const prop19taxable = (c.policy === "none") ? vA[t] : Math.max(fbyv, vA[t] - m.cap);
-    taxOcc.push(prop19taxable * m.rateA + m.traA * Math.pow(1.02, t) + propH(yr));
-    taxFull.push(vA[t] * m.rateA + m.traA * Math.pow(1.02, t) + propH(yr));
+    const dt = (Y - 2026) + t;                    // years after 2026
+    // Prop 19 (BOE): taxable = max(factored parent AV, FMV − cap); cap indexed with home growth (model assumption)
+    const fbyv = av0 * Math.pow(1.02, dt);
+    const capT = m.cap * Math.pow(1 + c.hg, dt);
+    const prop19taxable = (c.policy === "none") ? vA[t] : Math.max(fbyv, vA[t] - capT);
+    taxOcc.push(prop19taxable * m.rateA);
+    taxFull.push(vA[t] * m.rateA);
     aOps.push((m.aIns + m.aWater * 12 + m.aElec * 12 + m.aSewer) * inf(t) + vA[t] * m.aMaint);
-    bTax.push(vB[0] * m.sfRate * Math.pow(1.02, t) + m.traB * 0 + propH(yr));  // B: official SF rate + parcels ≈ flag
+    // B: household bill grown 2% + Prop H from 2027 (matches model/build_model.py)
+    bTax.push(bTax2025 * Math.pow(1.02, yr - 2025) + propH(yr));
     bOps.push((m.bIns + m.bWater * 12 + m.bElec * 12) * inf(t) + vB[t] * m.bMaint);
     rentA.push(m.aRent * 12 * inf(t));
     rentB.push(m.bRent * 12 * inf(t));
