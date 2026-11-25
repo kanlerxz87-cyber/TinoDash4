@@ -1,35 +1,27 @@
-# TinoDash4 — inheritance decision analysis
+# Household Legacy decision dashboard
 
-Privacy-first analysis of an inherited property (Property A, Santa Clara County) versus an owned rental (Property B, San Francisco).
-All figures are rounded to the nearest $10 and shown in 2026 dollars. Personal information is not published.
+A privacy-first, static decision-support site for comparing inherited-home paths without publishing family identifiers or precise property / financial facts. The public dashboard uses neutral aliases (`Property A` / `Property B`), blank inputs for unverified values, official source links, and rounded calculator outputs.
 
-- `docs/` — static site for GitHub Pages (generated; do not hand-edit)
-- `build/build_site.py` — builds `docs/` from `data/`
-- `model/model.py` — projection model; writes `data/projections.json`
-- `data/` — inputs, sources, flags
-- `COORDINATION.md` — shared task board
+## Local preview
 
-Rebuild: `python3 model/model.py && python3 build/build_site.py`
+Open `index.html` directly, or serve this directory with any static web server, for example:
 
-Not legal or tax advice.
+```sh
+python3 -m http.server 8000 --bind 0.0.0.0
+```
 
----
+The what-if calculator runs entirely in the browser. It does not use cookies, analytics, local storage, a server, external fonts, or network requests to submit inputs. Refresh the page to clear the form. Do not enter personal identifiers or sensitive account details.
 
-## Estate decision model (session 150580b0)
+## Publish with GitHub Pages
 
-A separate decision model compares paths for Property A (inherited, Santa Clara County) and Property B (San Francisco): live, rent, sell, phased sale, mixed, or live then sell.
+The GitHub Actions workflow in `.github/workflows/pages.yml` publishes the root directory after changes reach `main` (or can be run manually). It requires GitHub Pages to be configured for GitHub Actions in repository settings.
 
-- Site: `estate-model/` (13 pages; open `estate-model/index.html`).
-- Model: `tools/model.js` (also copied to `estate-model/assets/model.js` for the browser what-if page).
-- Build: `node tools/build.js` writes `estate-model/*.html` and `estate-model/data/model.json`.
-- Checks: `node tools/privacy_check.js` (this session's files) and `node tools/check_links.js`.
-- Rules fixed before model output: `DECISION_RULES.md`.
-- Figures are rounded to the nearest $10. Unverified values are flagged on `estate-model/flagged.html`.
+## Important limits
 
-## Decision analysis (session d4ff329e)
+- This is not legal, tax, financial, investment, appraisal, insurance, or property-management advice.
+- Current law is not a forecast of law in 2040–2050. Recheck official sources at transfer and filing dates.
+- No supplied exact home value, ZIP, street address, property-tax history, rent, utility bill, or personal identity is reproduced.
+- The calculator uses user-entered assumptions and tax estimates; it does not compute tax liability, Prop 19 eligibility, depreciation recapture, local transfer tax, or probability distributions.
+- The 2026 San Francisco Measure H result is preliminary as of the last source check (November 25, 2026); confirm certification and implementation before modeling any parcel charge.
 
-Inherited Cupertino-area house (Property A) compared with the existing San Francisco property (Property B). Seven paths, transfer years 2040/2045/2050, horizons 5/10/20 years, Monte Carlo, stylised 1929/2008 entry shocks, what-if controls and a flagged-items register.
-
-- Site: `decision-analysis/site/` (see `decision-analysis/README.md`).
-- Build: `node decision-analysis/scripts/build.js`.
-- Not tax, legal or investment advice.
+See [COORDINATION.md](COORDINATION.md) for the task log and verification record.

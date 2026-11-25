@@ -1,141 +1,222 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TinoDash4 | Estate Decision Support Dashboard</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <meta name="description" content="Privacy-first estate inheritance decision support for Cupertino and San Francisco properties.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A privacy-first, source-linked inheritance decision dashboard. No personal figures are published or stored.">
+  <meta name="theme-color" content="#0b1d2b">
+  <title>Household Legacy | Decision dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-
-  <div class="privacy-banner no-print">
-    <strong>Privacy Notice:</strong> This site is privacy-first. All personal information is anonymized with placeholders.
-    No personal identifiers, addresses, or names appear on this site. All data is for internal decision support only.
-  </div>
-
-  <header>
-    <div class="container">
-      <div class="logo">
-        <div class="logo-icon">T</div>
-        <span>TinoDash4</span>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="pages/executive-summary.html">Executive Summary</a></li>
-          <li><a href="pages/cupertino.html">Cupertino Property</a></li>
-          <li><a href="pages/sanfrancisco.html">San Francisco Property</a></li>
-          <li><a href="pages/inheritance.html">Inheritance & Tax</a></li>
-          <li><a href="pages/paths.html">Decision Paths</a></li>
-          <li><a href="pages/blackswan.html">Black Swan Scenarios</a></li>
-          <li><a href="pages/timeline.html">Deadlines Timeline</a></li>
-          <li><a href="pages/briefing.html">Attorney &amp; CPA Brief</a></li>
-          <li><a href="pages/whatif.html">What-If Controls</a></li>
-          <li><a href="pages/glossary.html">Glossary</a></li>
-          <li><a href="pages/suggestions.html">Suggestions</a></li>
-          <li><a href="pages/flagged.html">Flagged for Review</a></li>
-        </ul>
-      </nav>
-    </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Household Legacy home"><span class="brand-mark">H</span><span>Household <b>Legacy</b></span></a>
+    <div class="top-actions"><span class="privacy-pill"><i></i> Private-first · no data sent</span><button class="button button-quiet print-button" type="button" onclick="window.print()">Print / save PDF</button></div>
   </header>
+  <div class="layout" id="top">
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="side-label">DECISION WORKSPACE</div>
+      <nav>
+        <a class="nav-link active" href="#overview"><span>01</span> Executive overview</a>
+        <div class="nav-group-label">DECISION PATHS</div>
+        <a class="nav-link" href="#compare"><span>02</span> Compare & model</a>
+        <a class="nav-link" href="#black-swan"><span>03</span> Black swan lab</a>
+        <a class="nav-link" href="#timeline"><span>04</span> Process timeline</a>
+        <div class="nav-group-label">EVIDENCE & ACTION</div>
+        <a class="nav-link" href="#known"><span>05</span> Known / missing</a>
+        <a class="nav-link" href="#suggestions"><span>06</span> Suggestions</a>
+        <a class="nav-link" href="#law-watch"><span>07</span> Law & source register</a>
+        <a class="nav-link" href="#glossary"><span>08</span> Glossary</a>
+        <a class="nav-link" href="#brief"><span>09</span> Attorney / CPA brief</a>
+      </nav>
+      <div class="sidebar-foot"><span class="lock">▣</span><p>Use aliases only.<br><strong>Do not enter identifiers.</strong></p></div>
+    </aside>
+    <main id="main">
+      <section class="hero" id="overview">
+        <div class="eyebrow">CALIFORNIA · TRUST INHERITANCE · WORKING DECISION FILE</div>
+        <h1>Decide with evidence.<br><em>Keep the details private.</em></h1>
+        <p class="hero-copy">A structured framework for deciding whether to live in, rent, sell, or combine paths for an inherited home—while accounting for the separate property already owned by the inheritor.</p>
+        <div class="status-row"><span class="status status-review">PRELIMINARY · NOT A RECOMMENDATION</span><span>Evidence reviewed: <b>November 25, 2026</b></span><span>Planned inheritance window: <b>2040–2050 (planning only)</b></span></div>
+        <div class="hero-grid">
+          <article class="hero-callout callout-primary">
+            <div class="callout-icon">↗</div><div><div class="eyebrow">WHAT WOULD CHANGE THE ANSWER</div><h2>Seven facts decide the ranking.</h2>
+              <p>Written date-of-death value and basis; trust terms and estate liquidity; Proposition 19 eligibility and actual tax-rate area; leases / occupancy rights; independent rent and insurance quotes; five-year capital needs; and the heir's written use-and-risk priorities.</p>
+              <a class="text-link" href="#known">See the open questions <span>→</span></a>
+            </div>
+          </article>
+          <article class="hero-callout callout-warning"><div class="callout-icon">!</div><div><div class="eyebrow">PRIVACY & DECISION GATE</div><h2>No defensible “best path” yet.</h2><p>Current amounts, addresses, ZIP codes, rent figures and assessor histories have intentionally been excluded from this public site. Inputs are blank; unverified reports are not treated as facts.</p><span class="micro">Calculator values stay in this browser tab only. Nothing is transmitted or saved.</span></div></article>
+        </div>
+      </section>
 
-  <section class="hero">
-    <div class="container">
-      <h1>Estate Inheritance Decision Support</h1>
-      <p>Analyze, compare, and decide: live in, rent, or sell the inherited Cupertino property — with taxes, insurance, maintenance, and economic scenarios modeled side by side.</p>
-      <div class="hero-actions">
-        <a href="pages/executive-summary.html" class="btn btn-primary">Start with Executive Summary</a>
-        <a href="pages/paths.html" class="btn btn-outline">Compare Decision Paths</a>
-      </div>
-    </div>
-  </section>
+      <section class="section-block" aria-labelledby="summary-title">
+        <div class="section-heading"><div><div class="eyebrow">EXECUTIVE SUMMARY</div><h2 id="summary-title">A useful answer needs more than a home-price forecast.</h2></div><span class="source-badge">Decision frame</span></div>
+        <div class="summary-grid">
+          <article class="summary-card"><span class="summary-number">01</span><h3>Two different assets</h3><p><b>Property A</b> is the home expected to pass through a trust. <b>Property B</b> is already owned by the inheritor and has rental / occupancy economics. Never treat B as an inherited asset or assume its basis is reset.</p></article>
+          <article class="summary-card"><span class="summary-number">02</span><h3>Separate three tax systems</h3><p>Federal estate tax applies to an estate under its rules; inherited asset income-tax basis is a separate question; California property-tax reassessment is separate again. A transfer is not automatically a recipient income-tax bill. <a href="#law-watch">Sources ↗</a></p></article>
+          <article class="summary-card"><span class="summary-number">03</span><h3>Compare the same date & horizon</h3><p>Use the same inheritance/decision date, horizon, tax estimates, debt payoff, occupancy, capital plan and liquidity reserve for each path. Compare pure and mixed options, with reinvestment risk beside any staging result.</p></article>
+        </div>
+        <div class="decision-banner"><div><span class="eyebrow">CURRENT CONCLUSION</span><strong>Do not select a path from this incomplete record.</strong><p>The highest-value next move is an evidence-gathering and tax-planning sprint—not a point forecast for 2040–2050.</p></div><div class="banner-right"><span>Confidence in ranking</span><b>Not estimable</b></div></div>
+      </section>
 
-  <section class="container">
-    <div class="cards-grid">
-      <div class="card">
-        <h3>📊 Executive Summary</h3>
-        <p>Key findings, recommendation, and the decision criteria agreed upon before figures arrive.</p>
-        <a href="pages/executive-summary.html" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.85rem;">View Summary</a>
-      </div>
+      <section class="section-block" id="compare">
+        <div class="section-heading"><div><div class="eyebrow">DECISION MODEL · LOCAL ONLY</div><h2>Compare paths on a common horizon</h2><p class="section-subtitle">Enter rounded, non-identifying estimates only. All fields start blank. Inputs are never stored or sent anywhere; refresh to clear.</p></div><span class="source-badge">Illustrative arithmetic · not tax advice</span></div>
+        <div class="model-layout">
+          <form id="scenario-form" class="model-form" autocomplete="off">
+            <div class="form-intro"><span class="eyebrow">SHARED INPUTS</span><span class="micro">Use advisor-estimated, after-tax values where requested.</span></div>
+            <div class="form-grid">
+              <label>Property A value at transfer ($)<input inputmode="decimal" type="number" min="0" step="10" name="homeValue" placeholder="Leave blank until independently valued"></label>
+              <label>Comparison horizon (years)<input inputmode="numeric" type="number" min="1" max="50" step="1" name="horizon" placeholder="1–50"></label>
+              <label>Other inherited cash, net and investable ($)<input inputmode="decimal" type="number" min="0" step="10" name="otherCash" placeholder="After tax and emergency reserve"></label>
+              <label>Annual home value change, base (%)<input inputmode="decimal" type="number" step="0.1" name="homeGrowth" placeholder="Scenario input"></label>
+              <label>Home value change, low / high (%)<span class="range-inputs"><input aria-label="Low annual home value change" inputmode="decimal" type="number" step="0.1" name="homeGrowthLow" placeholder="Low"><input aria-label="High annual home value change" inputmode="decimal" type="number" step="0.1" name="homeGrowthHigh" placeholder="High"></span></label>
+              <label>Annual expense inflation, base (%)<input inputmode="decimal" type="number" step="0.1" name="expenseInflation" placeholder="Costs may differ by category"></label>
+              <label>Expense inflation, low / high (%)<span class="range-inputs"><input aria-label="Low annual expense inflation" inputmode="decimal" type="number" step="0.1" name="expenseInflationLow" placeholder="Low"><input aria-label="High annual expense inflation" inputmode="decimal" type="number" step="0.1" name="expenseInflationHigh" placeholder="High"></span></label>
+              <label>General inflation / CPI, base (%)<input inputmode="decimal" type="number" step="0.1" name="cpi" placeholder="Purchasing-power deflator"></label>
+              <label>General inflation, low / high (%)<span class="range-inputs"><input aria-label="Low general inflation" inputmode="decimal" type="number" step="0.1" name="cpiLow" placeholder="Low"><input aria-label="High general inflation" inputmode="decimal" type="number" step="0.1" name="cpiHigh" placeholder="High"></span></label>
+              <label>Rent / imputed-rent growth, base (%)<input inputmode="decimal" type="number" step="0.1" name="rentGrowth" placeholder="Use independent long-run assumptions"></label>
+              <label>Rent growth, low / high (%)<span class="range-inputs"><input aria-label="Low rent growth" inputmode="decimal" type="number" step="0.1" name="rentGrowthLow" placeholder="Low"><input aria-label="High rent growth" inputmode="decimal" type="number" step="0.1" name="rentGrowthHigh" placeholder="High"></span></label>
+              <label>Sale friction (% of price)<input inputmode="decimal" type="number" min="0" max="100" step="0.1" name="saleCost" placeholder="Agent, transfer, recording, etc."></label>
+              <label>Sale tax if sold in transfer tax year ($)<input inputmode="decimal" type="number" min="0" step="10" name="saleTax" placeholder="CPA estimate; do not infer"></label>
+              <label>Debt / liens paid at sale ($)<input inputmode="decimal" type="number" min="0" step="10" name="debt" placeholder="Verified payoff amount"></label>
+              <label>Future sale tax if Property A was rented ($)<input inputmode="decimal" type="number" min="0" step="10" name="rentSaleTax" placeholder="CPA estimate; include depreciation effects"></label>
+              <label>Future sale tax if Property A was lived in ($)<input inputmode="decimal" type="number" min="0" step="10" name="liveSaleTax" placeholder="CPA estimate; evaluate home-sale exclusion"></label>
+              <label>Annual net rent cash flow from A ($)<input inputmode="decimal" type="number" step="10" name="rentFlow" placeholder="After property costs and income tax"></label>
+              <label>Annual live-in benefit for A ($)<input inputmode="decimal" type="number" step="10" name="imputedRent" placeholder="Independent comparable housing value"></label>
+              <label>Annual A property tax ($)<input inputmode="decimal" type="number" min="0" step="10" name="aTax" placeholder="Published bill / tax-rate area"></label>
+              <label>Annual A insurance ($)<input inputmode="decimal" type="number" min="0" step="10" name="aInsurance" placeholder="Written occupancy-specific quote"></label>
+              <label>Annual A utilities, net of solar credits ($)<input inputmode="decimal" type="number" step="10" name="aUtilities" placeholder="Actual bills / net-metering records"></label>
+              <label>Annual A maintenance and capital reserve ($)<input inputmode="decimal" type="number" min="0" step="10" name="aCapital" placeholder="Inspection + five-year plan annualized"></label>
+              <label>Annual net cash flow from B if staying there ($)<input inputmode="decimal" type="number" step="10" name="bStayFlow" placeholder="After rent, costs, property/Measure H and income tax"></label>
+              <label>Annual net cash flow from B if living in A ($)<input inputmode="decimal" type="number" step="10" name="bAFlow" placeholder="After costs/taxes and verified lease changes"></label>
+              <label>Mixed path: liquid cash invested in stocks now (%)<input inputmode="decimal" type="number" min="0" max="100" step="1" name="cashStockShare" placeholder="Remainder uses 2–3y Treasury staging"></label>
+              <label>Annual Treasury return, base / after tax (%)<input inputmode="decimal" type="number" step="0.1" name="treasuryReturn" placeholder="Use a scenario, not today's rate"></label>
+              <label>Treasury return, low / high (%)<span class="range-inputs"><input aria-label="Low Treasury return" inputmode="decimal" type="number" step="0.1" name="treasuryLow" placeholder="Low"><input aria-label="High Treasury return" inputmode="decimal" type="number" step="0.1" name="treasuryHigh" placeholder="High"></span></label>
+              <label>Annual stock return, base / after tax (%)<input inputmode="decimal" type="number" step="0.1" name="stockReturn" placeholder="Policy scenario, not a forecast"></label>
+              <label>Stock return, low / high (%)<span class="range-inputs"><input aria-label="Low stock return" inputmode="decimal" type="number" step="0.1" name="stockLow" placeholder="Low"><input aria-label="High stock return" inputmode="decimal" type="number" step="0.1" name="stockHigh" placeholder="High"></span></label>
+              <label>Staging period (years)<select name="stageYears"><option value="">Choose 2 or 3 years</option><option value="2">2 years</option><option value="3">3 years</option></select></label>
+              <label>Stock shock at first entry, base (%)<input inputmode="decimal" type="number" step="0.1" name="shock" placeholder="Enter a sourced / chosen scenario"></label>
+              <label>Entry shock, severe / mild (%)<span class="range-inputs"><input aria-label="Severe stock entry shock" inputmode="decimal" type="number" step="0.1" name="shockLow" placeholder="Severe"><input aria-label="Mild stock entry shock" inputmode="decimal" type="number" step="0.1" name="shockHigh" placeholder="Mild"></span></label>
+              <label>Cash reinvestment return, after tax (%)<input inputmode="decimal" type="number" step="0.1" name="cashReturn" placeholder="For net annual cash flows"></label>
+            </div>
+            <div class="model-actions"><button class="button button-primary" type="submit">Run same-horizon comparison</button><button class="button button-quiet" id="clear-form" type="reset">Clear inputs</button></div>
+            <p class="disclaimer">The calculator is a sensitivity aid, not a tax, investment, valuation or legal model. Taxes are manually entered as adviser estimates; it does not calculate federal, state, transfer, depreciation-recapture, estate, property or Measure H taxes. It applies user-entered flat annual return / rent / expense-growth assumptions; it does not forecast parcel-specific reassessment, Proposition 19 adjustments, variable maintenance shocks, cash-flow timing, annual marginal tax brackets, transaction mechanics or a historical 1929 / 2008 sequence. The future sale tax and debt amounts are horizon estimates supplied by advisers. Do not use it to transact.</p>
+          </form>
+          <div class="model-results" aria-live="polite">
+            <div class="results-head"><div><div class="eyebrow">COMMON-HORIZON OUTCOMES</div><h3>Waiting for complete inputs</h3></div><span class="result-mark">—</span></div>
+            <p id="result-message">No projection is shown until all required fields are supplied. This avoids silently filling missing facts with assumptions.</p>
+            <div id="result-list" class="result-list" hidden></div>
+            <div class="risk-note"><strong>Reinvestment risk · shown beside staging</strong><p>Phasing can reduce the amount exposed to an immediate stock-market entry shock while increasing the chance of missing stock-market gains during the Treasury period. The modeled 2–3 year staging period represents rolling 3-month to 2-year maturities, not a guaranteed rate. Treasury maturities create reinvestment-rate risk and do not remove inflation, issuer, liquidity, tax or market risk. <a href="#src-treasury">Official Treasury / IRS references ↗</a></p></div>
+            <div class="mini-chart" id="outcome-chart" aria-label="Outcome distribution chart placeholder"><div class="chart-top"><span>Scenario distribution</span><span>Not computed</span></div><div class="chart-empty">Enter one set of estimates to plot outcomes.<br><span>A point estimate is not a probability distribution.</span></div></div>
+          </div>
+        </div>
+      </section>
 
-      <div class="card">
-        <h3>🏠 Cupertino Property (95014)</h3>
-        <p>Inherited property — assessed value history, property tax, insurance, utilities, and maintenance projections.</p>
-        <a href="pages/cupertino.html" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.85rem;">View Details</a>
-      </div>
+      <section class="section-block" id="black-swan">
+        <div class="section-heading"><div><div class="eyebrow">BLACK SWAN LAB</div><h2>Test the path against different economic regimes</h2><p class="section-subtitle">A 50-year planning window must not assume smooth, constant returns. Regime labels below are prompts—not invented forecasts or event-return claims.</p></div><span class="source-badge">Stress tests require cited inputs</span></div>
+        <div class="regime-grid">
+          <article class="regime-card"><div class="regime-top"><span class="regime-icon">▱</span><span class="status status-review">SCENARIO TO DEFINE</span></div><h3>1929-style crash entry</h3><p>Model a severe entry shock followed by multiple weak/recovery years. The staging path delays stock exposure; specify the actual year-by-year return sequence and Treasury roll assumptions from a chosen dataset before interpreting results.</p><div class="regime-footer"><span>Stress variables</span><b>Entry loss · recovery time · yields</b></div></article>
+          <article class="regime-card"><div class="regime-top"><span class="regime-icon">↘</span><span class="status status-review">SCENARIO TO DEFINE</span></div><h3>2008-style financial crisis</h3><p>Test correlated job / rent stress, asset drawdown, reduced liquidity and refinancing risk alongside the portfolio shock. A single shock percentage does not reproduce a historical crisis.</p><div class="regime-footer"><span>Stress variables</span><b>Drawdown · vacancy · cash reserve</b></div></article>
+          <article class="regime-card"><div class="regime-top"><span class="regime-icon">♨</span><span class="status status-review">SCENARIO TO DEFINE</span></div><h3>Inflation / rate shock</h3><p>Raise insurance, repairs, utilities and taxes at different rates; lower real Treasury returns and test stock valuation compression. Keep nominal and real dollars separate.</p><div class="regime-footer"><span>Stress variables</span><b>Inflation · renewal premiums · rates</b></div></article>
+          <article class="regime-card"><div class="regime-top"><span class="regime-icon">⌁</span><span class="status status-review">SCENARIO TO DEFINE</span></div><h3>Local housing / liquidity shock</h3><p>Test falling sale value, higher time-to-sell, uninsured loss, major capital work, rent disruption and a period in which liquid assets are needed.</p><div class="regime-footer"><span>Stress variables</span><b>Value haircut · repair · hold period</b></div></article>
+        </div>
+        <div class="notice notice-blue"><b>Why the staging headline is incomplete.</b> A Treasury-first path exchanges one risk (immediate equity entry) for another (delayed equity participation and changing reinvestment yields). Compare the same net sale proceeds, after-tax yield, 24 / 36-month window, equity return sequence, liquidity needs and investment policy—not a guaranteed “safer” return. <a href="#suggestions">Write the policy before money arrives →</a></div>
+      </section>
 
-      <div class="card">
-        <h3>🏘️ San Francisco Property (94122)</h3>
-        <p>Already-owned rental property — 3 units, 2 rented, rental income, insurance, and occupancy analysis.</p>
-        <a href="pages/sanfrancisco.html" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.85rem;">View Details</a>
-      </div>
+      <section class="section-block" id="timeline">
+        <div class="section-heading"><div><div class="eyebrow">INHERITANCE PROCESS</div><h2>Timeline with decisions, documents and deadlines</h2><p class="section-subtitle">Dates below are process checkpoints. Exact obligations depend on the trust, death date, filings, county and facts; counsel/CPA should calendar case-specific deadlines.</p></div><span class="source-badge">Use a professional calendar</span></div>
+        <div class="timeline">
+          <article class="timeline-item"><div class="timeline-date">NOW · BEFORE DEATH</div><div class="timeline-dot"></div><div class="timeline-content"><h3>Prepare privately; agree on principles</h3><p>Review trust and successor-trustee provisions, document intended choices, identify prior taxable gifts and any spouse portability election, estimate estate liquidity, inventory assets/debt, and agree in writing what would justify each path.</p><span class="tag">No public inventory</span></div></article>
+          <article class="timeline-item"><div class="timeline-date">DATE OF DEATH · TRANSFER YEAR</div><div class="timeline-dot"></div><div class="timeline-content"><h3>Secure, value and establish basis evidence</h3><p>Obtain an independent date-of-death appraisal; preserve trust, title, insurance, leases, depreciation schedules, improvement records and debt statements. Determine tax year, trust administration steps and transfer date. Do not equate assessed value, estate value and income-tax basis.</p><span class="tag">Same-tax-year sale sensitivity</span></div></article>
+          <article class="timeline-item"><div class="timeline-date">PROMPTLY · CASE-SPECIFIC</div><div class="timeline-dot"></div><div class="timeline-content"><h3>Confirm Proposition 19 path before occupancy changes</h3><p>Ask county assessor about family-home eligibility, transferee occupancy, homeowner exemption filing, claim form, value limit and deadlines. Under current BOE guidance, qualifying transferee occupancy and exemption filings generally have a one-year requirement; confirm current rules with the assessor.</p><span class="tag">Do not assume exclusion</span><a href="https://www.boe.ca.gov/prop19/" target="_blank" rel="noopener">BOE source ↗</a></div></article>
+          <article class="timeline-item"><div class="timeline-date">WITHIN 9 MONTHS · FEDERAL ESTATE TAX</div><div class="timeline-dot"></div><div class="timeline-content"><h3>File/pay if required; address portability</h3><p>IRS 2026 Form 706 instructions generally set a nine-month filing and payment deadline; an extension to file may be requested. A timely Form 706 is generally needed to elect portability. This current deadline/rule must be rechecked at the actual date of death.</p><span class="tag">Executor + estate CPA / attorney</span><a href="https://www.irs.gov/instructions/i706" target="_blank" rel="noopener">IRS Form 706 instructions ↗</a></div></article>
+          <article class="timeline-item"><div class="timeline-date">FIRST YEAR · OWNER / RENTAL DECISION</div><div class="timeline-dot"></div><div class="timeline-content"><h3>Choose occupancy after a lease and tax review</h3><p>Verify every lease, rent-control coverage, lawful owner occupancy, notice requirements and tenant status. Obtain independent appraisals, rent comps, insurance and capital bids. Inherited-home exclusion eligibility is a separate post-transfer tax question.</p><span class="tag">Do not presume vacant possession</span><a href="https://www.sf.gov/landlord-petitions-and-passthroughs" target="_blank" rel="noopener">SF Rent Board ↗</a></div></article>
+          <article class="timeline-item"><div class="timeline-date">ANNUALLY · THROUGH 2040–2050</div><div class="timeline-dot"></div><div class="timeline-content"><h3>Refresh the law, values and plan</h3><p>Re-run sensitivity ranges, update official federal/state/local rules and proposals, renew insurance, compare rents and repair bids, confirm trust changes, update the distribution plan and investment policy. Proposed legislation is not enacted law.</p><span class="tag">Annual decision log</span></div></article>
+        </div>
+      </section>
 
-      <div class="card">
-        <h3>💰 Inheritance & Tax</h3>
-        <p>Federal estate tax exclusion, California Prop 19, capital gains, depreciation recapture, and thresholds.</p>
-        <a href="pages/inheritance.html" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.85rem;">View Details</a>
-      </div>
+      <section class="section-block" id="known">
+        <div class="section-heading"><div><div class="eyebrow">EVIDENCE REGISTER · PUBLIC-SAFE</div><h2>What is known, what is reported, and what is missing</h2><p class="section-subtitle">No precise personal values are reproduced here. A “reported” value is not independently verified, and the calculator intentionally leaves it blank.</p></div><span class="source-badge">Every legal claim links to authority</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Topic / fact needed</th><th>Current status</th><th>Decision relevance</th><th>Evidence / next step</th></tr></thead><tbody>
+          <tr><td>Asset relationship</td><td><span class="status status-known">Known from brief</span></td><td>Property A is expected to be inherited through a trust; Property B is already owned by the inheritor. Separate ownership, basis, debt, income and occupancy in every case.</td><td>Confirm deeds, trust, title vesting and ownership shares with counsel. <a href="https://asr.santaclaracounty.gov/online-services/property-search/real-property" target="_blank" rel="noopener">Santa Clara Assessor ↗</a> · <a href="https://www.sf.gov/departments--assessor-recorder--about" target="_blank" rel="noopener">SF Assessor-Recorder ↗</a></td></tr>
+          <tr><td>Market value / date-of-death value</td><td><span class="status status-missing">Missing verification</span></td><td>Controls net sale proceeds, gain/loss, equity and estate valuation. Current estimate is not a future value or appraisal.</td><td>Independent written appraisal at the relevant date; reconcile comparables. <a href="https://www.irs.gov/publications/p551" target="_blank" rel="noopener">IRS basis guidance ↗</a></td></tr>
+          <tr><td>Taxable value / parcel tax rate area</td><td><span class="status status-missing">Missing parcel evidence</span></td><td>Assessment history is not market value; the actual tax bill includes voter-approved debt / local charges.</td><td>Private parcel lookup, assessor roll, tax bill, TRA and published rate; no address is published. <a href="https://www.boe.ca.gov/maps/SantaClaraCo.htm" target="_blank" rel="noopener">BOE map ↗</a></td></tr>
+          <tr><td>Proposition 19</td><td><span class="status status-review">Eligibility unknown</span></td><td>Family-home exclusion depends on transferor / transferee status, occupancy, filings and value threshold; not automatic.</td><td>Get assessor determination and track claim / homeowner-exemption deadline. <a href="https://www.boe.ca.gov/prop19/" target="_blank" rel="noopener">BOE official guidance ↗</a></td></tr>
+          <tr><td>Property B leases, units and rent</td><td><span class="status status-missing">Not independently checked</span></td><td>Owner occupancy, rent continuation, vacancy, rent-control coverage and lawful notice can alter mixed paths.</td><td>Attorney review of each lease, unit status, registration and local rules. <a href="https://www.sf.gov/landlord-petitions-and-passthroughs" target="_blank" rel="noopener">SF Rent Board ↗</a></td></tr>
+          <tr><td>Property A tax assessment, TRA and published rate</td><td><span class="status status-missing">Not verified</span></td><td>Tax amount depends on enrolled taxable value, tax-rate area, voter-approved debt and charges; an assessed-value table is not a market appraisal.</td><td>Privately retrieve current tax bill, parcel TRA, assessor roll and published rate; after transfer, obtain reassessment / Proposition 19 determination. <a href="https://www.boe.ca.gov/maps/SantaClaraCo.htm" target="_blank" rel="noopener">Official map ↗</a></td></tr>
+          <tr><td>Property A insurance, water, solar/electricity and maintenance</td><td><span class="status status-missing">User-reported; not independently verified</span></td><td>Premium depends on carrier, coverage, occupancy, risk and market; utility credits may change. No public values are reproduced.</td><td>Gather actual bills, inverter / net-metering statements, written owner-occupancy policy quotes, inspection and five-year maintenance/capital bids. <a href="https://www.insurance.ca.gov/01-consumers/" target="_blank" rel="noopener">CA Department of Insurance ↗</a></td></tr>
+          <tr><td>Property B property tax, insurance, utility and capital plan</td><td><span class="status status-missing">User-reported; not independently verified</span></td><td>Current rents may not equal net yield; insurance, maintenance, taxes, utilities, vacancies and local charges affect both rental and occupancy paths.</td><td>Privately obtain annual bills, landlord coverage quote, utility history, lease schedule, deferred maintenance report and five-year capital plan. <a href="https://www.insurance.ca.gov/01-consumers/" target="_blank" rel="noopener">CA Department of Insurance ↗</a></td></tr>
+          <tr><td>Rents, leases and comparable value for A and B</td><td><span class="status status-missing">Not independently verified</span></td><td>Rent can be constrained by lease, local law, unit legality, tenant rights, vacancy and turnover costs. Voucher or asking-rent benchmarks are not verified comps.</td><td>Written property-specific rent analysis, unit / permit verification and attorney review of every lease and local rule. <a href="https://www.sf.gov/landlord-petitions-and-passthroughs" target="_blank" rel="noopener">SF Rent Board ↗</a></td></tr>
+          <tr><td>2026 federal estate exclusion / inheritance tax</td><td><span class="status status-known">Current state rule + 2026 federal figure</span></td><td>IRS Form 706 instructions state a $15,000,000 federal basic exclusion for a decedent dying in 2026; filing / liability also depends on adjusted taxable gifts, deductions, prior use and elections. California Revenue and Taxation Code §13301 prohibits state/local gift, inheritance, succession, legacy and estate taxes. These are estate / transfer rules, not a blanket income-tax exemption for later trust income, inherited retirement distributions or investment income. No 2040–2050 exclusion is forecast.</td><td>Inventory asset types, prior taxable gifts, deductions and any spouse DSUE privately; obtain an estate CPA calculation. <a href="https://www.irs.gov/instructions/i706" target="_blank" rel="noopener">IRS Form 706 ↗</a> · <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13301." target="_blank" rel="noopener">California RTC §13301 ↗</a> · <a href="https://www.irs.gov/publications/p17" target="_blank" rel="noopener">IRS Publication 17 ↗</a></td></tr>
+          <tr><td>Trust terms, gifts, marital portability</td><td><span class="status status-missing">Documents unavailable</span></td><td>Can change who owns assets, filing duties, tax exposure and authority to sell / occupy.</td><td>Trust attorney review; request prior Form 709/706, gift history and any DSUE election evidence. <a href="https://www.irs.gov/instructions/i706" target="_blank" rel="noopener">IRS Form 706 ↗</a></td></tr>
+          <tr><td>San Francisco 2026 Measure H (Muni parcel tax)</td><td><span class="status status-review">Preliminary result; certification pending</span></td><td>Official SFE results updated November 23 show preliminary Yes at 74.42%. If certified, the pamphlet describes an annual inflation-adjusted parcel tax from July 2027–June 2042. Rounded 2027 starting bands are about $130 for single-family parcels up to 3,000 sq ft, $250 for multifamily up to 5,000 sq ft, and $800 for nonresidential / mixed-use up to 5,000 sq ft; charges vary by building area and have a stated parcel cap. These are general statutory bands, not a property-specific estimate.</td><td>Confirm certification (due by December 3, 2026), implementing rules, private parcel type / building area, exemption or pass-through and tax bill. Include any confirmed annual charge in B's after-tax cash-flow estimate. <a href="https://www.sfelections.org/results/20261103/index.html" target="_blank" rel="noopener">Official election results ↗</a> · <a href="https://media.api.sf.gov/documents/N26_EN_VIP.pdf" target="_blank" rel="noopener">Official voter pamphlet ↗</a></td></tr>
+          <tr><td>Future law / 2040–2050 thresholds</td><td><span class="status status-review">Not projectable as enacted fact</span></td><td>Today’s exemption, tax provisions, rent laws and ballot measures may change; no reliable exact future threshold can be asserted.</td><td>Use annual recheck; show current law separately from enacted future effective changes and proposals. <a href="https://leginfo.legislature.ca.gov/" target="_blank" rel="noopener">California Legislature ↗</a> · <a href="https://www.congress.gov/" target="_blank" rel="noopener">Congress ↗</a></td></tr>
+        </tbody></table></div>
+        <div class="notice notice-amber"><b>Property-assessment histories supplied for review are not republished.</b> The source tables and tax bills were not included in this repository, so completeness, arithmetic, assessed-value changes and tax rates cannot be checked line by line here. Verify each year against official county bills and assessment records before using it.
+      </section>
 
-      <div class="card">
-        <h3>🔀 Decision Paths</h3>
-        <p>Live in, rent out, or sell + reinvest — modeled side by side with taxes, debt, occupancy, and liquidity.</p>
-        <a href="pages/paths.html" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.85rem;">Compare Paths</a>
-      </div>
+      <section class="section-block" id="suggestions">
+        <div class="section-heading"><div><div class="eyebrow">SUGGESTIONS · CHOOSE BEFORE IMPLEMENTING</div><h2>A ranked discovery plan</h2><p class="section-subtitle">These are options for the household and its advisers to select from—not unilateral instructions. Record the decision and date next to each item.</p></div><span class="source-badge">Decision log required</span></div>
+        <div class="suggestion-list">
+          <article class="suggestion-row"><div class="suggestion-rank">1</div><div><span class="priority priority-now">URGENT · PRIVACY</span><h3>Keep the estate inventory off the public site</h3><p>Create an encrypted, access-controlled inventory for trust, accounts, title, insurance, debt, leases and tax documents. Maintain this site with aliases, blank unknowns and rounded non-identifying scenarios only. Restrict access, set retention rules, and scrub any accidentally committed private data from all reachable Git history.</p><div class="suggestion-meta">Decision / owner / date: <span>Not yet recorded</span></div></div><label class="choice-check"><input type="checkbox" aria-label="Select privacy-first inventory suggestion"><span>Select</span></label></article>
+          <article class="suggestion-row"><div class="suggestion-rank">2</div><div><span class="priority priority-now">BEFORE MODELING</span><h3>Write the household's decision rules before receiving estimates</h3><p>Define what would make the household choose: occupy, rent, sell, retain and exchange, or use a mixed route. Include minimum liquidity, willingness to manage rentals, acceptable drawdown, time horizon and housing priorities.</p><div class="suggestion-meta">Decision / owner / date: <span>Not yet recorded</span></div></div><label class="choice-check"><input type="checkbox" aria-label="Select written decision rules suggestion"><span>Select</span></label></article>
+          <article class="suggestion-row"><div class="suggestion-rank">3</div><div><span class="priority priority-next">NEXT · EVIDENCE</span><h3>Commission independent valuations, rent comparables and inspections</h3><p>Obtain date-of-death valuation when available; now, collect independent market rent comparables and a five-year maintenance/capital plan for both buildings. Distinguish broker opinions from licensed appraisal and contractor bids.</p><div class="suggestion-meta">Decision / owner / date: <span>Not yet recorded</span></div></div><label class="choice-check"><input type="checkbox" aria-label="Select valuation and property evidence suggestion"><span>Select</span></label></article>
+          <article class="suggestion-row"><div class="suggestion-rank">4</div><div><span class="priority priority-next">NEXT · LEGAL</span><h3>Have county and San Francisco counsel verify property-specific rules</h3><p>Get Property A's tax-rate area and current published rate privately; verify Proposition 19 eligibility / claim deadline; have counsel analyze Property B's leases, rent-control coverage, notices, owner-occupancy options, recording / transfer tax and possible Proposition H relevance.</p><div class="suggestion-meta">Decision / owner / date: <span>Not yet recorded</span></div></div><label class="choice-check"><input type="checkbox" aria-label="Select local legal verification suggestion"><span>Select</span></label></article>
+          <article class="suggestion-row"><div class="suggestion-rank">5</div><div><span class="priority priority-next">NEXT · TAX</span><h3>Build a tax-aware same-year sale and basis model</h3><p>Ask a CPA to separate federal estate tax, income-tax basis, property-tax assessment, post-death gain, California income tax (including current 1% surtax calculation), depreciation / recapture, and state / local transfer and recording charges. Decide whether a 1031 exchange is relevant before any sale.</p><div class="suggestion-meta">Decision / owner / date: <span>Not yet recorded</span></div></div><label class="choice-check"><input type="checkbox" aria-label="Select tax model suggestion"><span>Select</span></label></article>
+          <article class="suggestion-row"><div class="suggestion-rank">6</div><div><span class="priority priority-next">BEFORE PROCEEDS ARRIVE</span><h3>Adopt an investment policy and liquidity plan</h3><p>Specify emergency reserve, asset allocation, diversification, 3M–2Y Treasury ladder / maturity reinvestment, phased-entry schedule, fees and rebalancing in writing. Test immediate investment and 24 / 36-month staging against sourced historical and hypothetical sequences—not one crash-year average.</p><div class="suggestion-meta">Decision / owner / date: <span>Not yet recorded</span></div></div><label class="choice-check"><input type="checkbox" aria-label="Select investment policy suggestion"><span>Select</span></label></article>
+          <article class="suggestion-row"><div class="suggestion-rank">7</div><div><span class="priority priority-annual">ANNUAL</span><h3>Rebuild every year and keep an auditable decision log</h3><p>Refresh local assessment/rates, official tax rules, enacted changes, proposals, insurance, rent and capital costs. After every input change, rebuild the comparison and record whether the preferred route moved and why.</p><div class="suggestion-meta">Decision / owner / date: <span>Not yet recorded</span></div></div><label class="choice-check"><input type="checkbox" aria-label="Select annual review suggestion"><span>Select</span></label></article>
+        </div>
+      </section>
 
-      <div class="card">
-        <h3>🌪️ Black Swan Scenarios</h3>
-        <p>Non-consistent growth and inflation over 50 years — 1929, 2008, and mixed economic conditions.</p>
-        <a href="pages/blackswan.html" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.85rem;">View Scenarios</a>
-      </div>
-    </div>
-  </section>
+      <section class="section-block" id="law-watch">
+        <div class="section-heading"><div><div class="eyebrow">OFFICIAL SOURCES · LAW WATCH</div><h2>Source register and current-law guardrails</h2><p class="section-subtitle">Links below point to government / official sources, checked for this draft on November 25, 2026. This is not a legal opinion. Recheck at the actual transfer and filing dates.</p></div><span class="source-badge">Official links only</span></div>
+        <div class="source-grid">
+          <article class="source-card" id="src-prop19"><span class="source-type">CALIFORNIA · PROPERTY TAX</span><h3>Proposition 19 / intergenerational transfer</h3><p>BOE guidance describes the family-home exclusion conditions: the home must be the transferor's principal residence and the transferee's principal residence; its value limit is factored taxable value plus $1,000,000 (biennially adjusted); the transferee generally must occupy within one year and file for the homeowners' exemption within one year; the exclusion claim is generally due within three years or before a transfer to a third party. Eligibility is factual; this tool does not presume qualification or calculate the excess-value adjustment.</p><a href="https://www.boe.ca.gov/prop19/" target="_blank" rel="noopener">BOE: Proposition 19 ↗</a><a href="https://www.boe.ca.gov/pdf/pub800-1.pdf" target="_blank" rel="noopener">BOE information sheet (PDF) ↗</a></article>
+          <article class="source-card" id="src-tra"><span class="source-type">CALIFORNIA · ASSESSMENT</span><h3>Proposition 13 and tax-rate areas</h3><p>Assessed values are not market value; the annual inflation adjustment is capped at 2% under ordinary Prop 13 treatment, subject to decline-in-value rules. Parcel-specific voter debt / special charges require a private parcel-level rate and tax bill.</p><a href="https://boe.ca.gov/pdf/pub800-10.pdf" target="_blank" rel="noopener">BOE: How property is assessed (PDF) ↗</a><a href="https://www.boe.ca.gov/maps/SantaClaraCo.htm" target="_blank" rel="noopener">BOE: Santa Clara TRA map ↗</a><a href="https://asr.santaclaracounty.gov/home" target="_blank" rel="noopener">Santa Clara County Assessor ↗</a></article>
+          <article class="source-card" id="src-706"><span class="source-type">FEDERAL · ESTATE / GIFT</span><h3>Estate tax, exclusion and portability</h3><p>IRS 2026 Form 706 instructions state a $15,000,000 basic exclusion for decedents dying in 2026, with inflation adjustments and prior taxable gifts relevant. This is a 2026 figure, not a 2040–2050 forecast. The return is generally due nine months after death; consult the current instructions.</p><a href="https://www.irs.gov/instructions/i706" target="_blank" rel="noopener">IRS: 2026 Form 706 instructions ↗</a><a href="https://www.irs.gov/forms-pubs/about-form-706" target="_blank" rel="noopener">IRS: Form 706 ↗</a></article>
+          <article class="source-card" id="src-basis"><span class="source-type">FEDERAL · INCOME-TAX BASIS</span><h3>Inherited basis, depreciation and property</h3><p>IRS Publication 551 describes inherited-property basis generally by reference to fair market value at death (subject to exceptions and elections). Rental conversion depreciation and later gain require a tax professional's asset-level analysis.</p><a href="https://www.irs.gov/publications/p551" target="_blank" rel="noopener">IRS Publication 551 ↗</a><a href="https://www.irs.gov/publications/p527" target="_blank" rel="noopener">IRS Publication 527: residential rental property ↗</a></article>
+          <article class="source-card" id="src-home-sale"><span class="source-type">FEDERAL · PRINCIPAL RESIDENCE</span><h3>Home-sale exclusion</h3><p>Current IRS Publication 523 describes up to $250,000 ($500,000 for qualifying joint filers) of gain exclusion if ownership, use, and other requirements are met. Living in a home is not by itself enough; rental use, depreciation and timing matter.</p><a href="https://www.irs.gov/publications/p523" target="_blank" rel="noopener">IRS Publication 523 ↗</a></article>
+          <article class="source-card" id="src-ftb"><span class="source-type">CALIFORNIA · INCOME TAX</span><h3>One-percent tax and capital gain treatment</h3><p>The 2025 Form 540 instructions compute the 1% Behavioral Health Services Tax on the amount of an individual filer’s California taxable income above $1,000,000. FTB states California has no lower capital-gains rate; gains are taxed as ordinary income. These current rules may change before inheritance; exact filing status, taxable income and basis require CPA review. This model uses no assumed rate.</p><a href="https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html" target="_blank" rel="noopener">FTB: 2025 Form 540 instructions, line 62 ↗</a><a href="https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html" target="_blank" rel="noopener">FTB: capital gains and losses ↗</a></article>
+          <article class="source-card" id="src-1031"><span class="source-type">FEDERAL · LIKE-KIND EXCHANGE</span><h3>1031 exchange decision</h3><p>IRC section 1031 can defer gain on qualifying real property held for business / investment, not a personal residence. Eligibility, deadlines, qualified intermediary rules and subsequent personal-use treatment need specialist advice before sale.</p><a href="https://www.irs.gov/pub/irs-pdf/p544.pdf" target="_blank" rel="noopener">IRS Publication 544 ↗</a><a href="https://www.irs.gov/taxtopics/tc701" target="_blank" rel="noopener">IRS: sale of your home ↗</a></article>
+          <article class="source-card" id="src-inherit"><span class="source-type">CALIFORNIA + FEDERAL · INHERITED ASSETS</span><h3>Inheritance vs. income tax</h3><p>California Revenue and Taxation Code §13301 bars state/local gift, inheritance, succession, legacy and estate taxes. IRS guidance says inherited property generally is not included in a beneficiary's income, but later interest, dividends, rents, trust income or retirement distributions may be taxable. Property tax reassessment, local parcel charges and transaction taxes are separate; confirm each asset and filing with advisers.</p><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13301." target="_blank" rel="noopener">California Revenue and Taxation Code §13301 ↗</a><a href="https://www.irs.gov/publications/p17" target="_blank" rel="noopener">IRS Publication 17 ↗</a><a href="https://www.irs.gov/publications/p559" target="_blank" rel="noopener">IRS Publication 559: estates and beneficiaries ↗</a></article>
+          <article class="source-card" id="src-sfrent"><span class="source-type">LOCAL · SAN FRANCISCO HOUSING</span><h3>Leases, rent rules and occupancy</h3><p>San Francisco Rent Board rules / processes can affect rent increases, passthroughs and eviction matters. A unit's coverage and current tenant rights are fact-specific. Do not assume the currently vacant space can be used or rented without checking law and permits.</p><a href="https://www.sf.gov/departments/rent-board" target="_blank" rel="noopener">SF Rent Board ↗</a><a href="https://www.sf.gov/landlord-petitions-and-passthroughs" target="_blank" rel="noopener">SF landlord petitions / passthroughs ↗</a><a href="https://www.sf.gov/reports--rent-board-regulations" target="_blank" rel="noopener">Rent Board regulations ↗</a></article>
+          <article class="source-card" id="src-sftax"><span class="source-type">LOCAL · PROPERTY / TRANSFER TAX</span><h3>Rates, transfer and recording charges</h3><p>San Francisco publishes secured property tax bills and annual rates; its published secured rate for FY 2026–27 is 1.18162182%. That is a citywide published rate, not a parcel-specific total and excludes no need to check special charges. Transfer tax and recording fees depend on current law and transaction facts; obtain a current official fee schedule and escrow estimate before sale. No amount is presumed for either property.</p><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener">SF Treasurer: secured property taxes ↗</a><a href="https://www.sf.gov/departments--assessor-recorder--about" target="_blank" rel="noopener">SF Assessor-Recorder (transfer-tax administrator) ↗</a><a href="https://media.api.sf.gov/documents/N26_EN_VIP.pdf" target="_blank" rel="noopener">Official 2026 voter pamphlet, Measure I (current rate structure / proposal status) ↗</a></article>
+          <article class="source-card" id="src-treasury"><span class="source-type">FEDERAL · TREASURY / INVESTMENT</span><h3>Treasury maturity and tax mechanics</h3><p>IRS Publication 550 describes Treasury bill and note interest and maturity; TreasuryDirect lists marketable securities. A 3M–2Y ladder uses rolling maturities and unknown future yields; current yields must not be projected unchanged to inheritance.</p><a href="https://www.treasurydirect.gov/marketable-securities/" target="_blank" rel="noopener">TreasuryDirect: marketable securities ↗</a><a href="https://www.irs.gov/publications/p550" target="_blank" rel="noopener">IRS Publication 550 ↗</a></article>
+          <article class="source-card" id="src-proph"><span class="source-type">LOCAL · SAN FRANCISCO · MEASURE H</span><h3>2026 Measure H: Muni operations parcel tax</h3><p>The official November 2026 pamphlet describes an annual, inflation-adjusted parcel tax based on property type and building area, scheduled for July 1, 2027 through June 30, 2042 if certified. It lists rounded 2027 starting bands of about $130 for single-family parcels up to 3,000 sq ft, $250 for multifamily up to 5,000 sq ft, and $800 for nonresidential / mixed-use up to 5,000 sq ft; rates vary with building area and the proposal states a maximum of $400,000 per parcel. The November 23 preliminary result was 74.42% Yes; certification was due by December 3. Property-specific liability requires the exact private parcel category, area, exemptions / pass-through and tax-bill implementation. Do not apply this to property outside San Francisco.</p><a href="https://www.sfelections.org/results/20261103/index.html" target="_blank" rel="noopener">SFE: November 2026 preliminary results and Measure H ↗</a><a href="https://media.api.sf.gov/documents/N26_EN_VIP.pdf" target="_blank" rel="noopener">SF official November 2026 voter pamphlet, Measure H (PDF) ↗</a></article>
+          <article class="source-card"><span class="source-type">NOT OFFICIALLY RATEABLE</span><h3>Insurance, utilities and market rent</h3><p>No verified property-specific quote is available in this checkout. No premium, utility cost or market rent is invented. Insurance must be quoted for the actual occupancy / rental exposure; utilities need bills; rent requires independent comparable units and lease review.</p><span class="source-unavailable">Evidence required: licensed insurance broker, carrier quote, utility bills, permitted-unit details, independent rental comps.</span></article>
+        </div>
+        <div class="notice notice-amber"><b>Proposals vs enacted law:</b> The dashboard does not count a bill, ballot argument, campaign promise, draft instruction or proposal as law. Check bill status and effective date in the relevant official legislature / elections / agency source at each annual review. The identified Prop H materials conflict in title / scope and remain flagged rather than guessed.</div>
+      </section>
 
-  <section class="container">
-    <h2 class="section-title">How to Use This Dashboard</h2>
-    <ol style="margin-left: 1.5rem; margin-bottom: 2rem; line-height: 1.8;">
-      <li><strong>Read the Executive Summary</strong> — start here for the high-level recommendation and decision criteria.</li>
-      <li><strong>Review each property page</strong> — Cupertino (inherited ~2040-2050) and San Francisco (already owned).</li>
-      <li><strong>Compare decision paths</strong> — live / rent / sell+reinvest modeled with taxes and costs.</li>
-      <li><strong>Test what-if scenarios</strong> — adjust inputs and see how the recommendation changes.</li>
-      <li><strong>Review black swan scenarios</strong> — understand how extreme economic conditions affect outcomes.</li>
-      <li><strong>Download the Attorney &amp; CPA Briefing Sheet</strong> — one-page printable summary for your advisers.</li>
-      <li><strong>Check Flagged for Review</b> — unverified items needing your attention before final decisions.</li>
-    </ol>
+      <section class="section-block" id="glossary">
+        <div class="section-heading"><div><div class="eyebrow">QUICK REFERENCE</div><h2>Glossary</h2></div><span class="source-badge">Plain language</span></div>
+        <div class="glossary-grid">
+          <details><summary>Estate tax</summary><p>Tax imposed on a decedent's taxable estate under applicable law. It is not the same as a beneficiary's income tax.</p></details>
+          <details><summary>Income-tax basis</summary><p>Tax cost used to compute gain or loss. Inherited property is generally assigned a date-of-death fair-market-value basis, subject to exceptions and elections; document the appraisal.</p></details>
+          <details><summary>Assessed value / FBYV</summary><p>Property-tax value. Under ordinary Prop 13 rules, base-year value is factored annually up to the lesser of inflation or 2%, subject to change-in-ownership, new construction and decline-in-value rules.</p></details>
+          <details><summary>Proposition 19 exclusion</summary><p>A conditional California property-tax reassessment exclusion for qualifying intergenerational transfers of a family home / farm. It is not an income-tax basis adjustment.</p></details>
+          <details><summary>Imputed rent</summary><p>An estimate of the housing service the household receives by living in a property instead of renting an equivalent home. It is an economic comparison input, not cash income or an automatic tax deduction.</p></details>
+          <details><summary>Depreciation recapture</summary><p>Tax treatment on sale related to depreciation allowed or allowable for rental/business use. It can make some gain taxable even when other home-sale exclusion rules apply.</p></details>
+          <details><summary>DSUE / portability</summary><p>A deceased spouse's unused federal exclusion potentially transferred to the surviving spouse when an executor makes a valid portability election, generally on a timely Form 706.</p></details>
+          <details><summary>1031 exchange</summary><p>A tax deferral mechanism for qualifying investment/business real property exchanges. It is not a simple sale-and-reinvest rule and requires advance structuring.</p></details>
+          <details><summary>Tax-rate area (TRA)</summary><p>A geographic area with a unique combination of taxing districts. The parcel's actual rate must be checked in official records; a county average is not its rate.</p></details>
+          <details><summary>Reinvestment risk</summary><p>The risk that maturing fixed-income proceeds must be reinvested at lower yields. Staging also risks missing stock gains before entry.</p></details>
+        </div>
+      </section>
 
-    <div class="cards-grid">
-      <div class="card">
-        <h3>⚠️ Important Disclaimers</h3>
-        <ul style="list-style: none; padding-left: 0;">
-          <li style="margin-bottom: 0.5rem; font-size: 0.9rem;">• All figures are estimates rounded to the nearest $10.</li>
-          <li style="margin-bottom: 0.5rem; font-size: 0.9rem;">• Personal information is anonymized; no PII on this site.</li>
-          <li style="margin-bottom: 0.5rem; font-size: 0.9rem;">• Tax laws change; verify with official sources before acting.</li>
-          <li style="margin-bottom: 0; font-size: 0.9rem;">• Consult an attorney and CPA before making decisions.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>📅 Planning Horizon</h3>
-        <p style="font-size: 0.9rem; color: var(--secondary); margin-bottom: 0;">
-          Inheritance expected around 2040-2050. Models project 50 years with variable economic conditions.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div>
-        <strong>TinoDash4</strong><br>
-        Estate Decision Support Dashboard
-      </div>
-      <div class="disclaimer">
-        Privacy-first • No personal information stored • For internal decision support only •
-        Not tax, legal, or investment advice • Consult qualified professionals
-      </div>
-    </div>
-  </footer>
-
-  <script src="assets/js/main.js"></script>
+      <section class="section-block brief-section" id="brief">
+        <div class="section-heading"><div><div class="eyebrow">PRINT-READY · ONE PAGE</div><h2>Attorney & CPA briefing sheet</h2><p class="section-subtitle">Print this page with the browser print control. No client names, addresses or exact asset amounts are included.</p></div><button class="button button-primary print-button" type="button" onclick="window.print()">Print briefing sheet</button></div>
+        <div class="brief-paper" id="print-brief">
+          <div class="brief-header"><div><span class="eyebrow">CONFIDENTIAL WORKING BRIEF · ALIASES ONLY</span><h2>Inherited Home & Household Path Review</h2><p>Planning horizon: expected transfer during 2040–2050 · Current law reviewed November 25, 2026</p></div><span class="brief-seal">A / B</span></div>
+          <div class="brief-parties"><div><span>PROPERTY A</span><b>Home expected to pass through a trust</b><small>Value, title, basis and tax-rate area: obtain privately</small></div><div><span>PROPERTY B</span><b>Already owned by the inheritor</b><small>Existing rent / occupancy / lease facts: verify privately</small></div></div>
+          <div class="brief-columns"><div><h3>Questions for the attorney</h3><ol><li>Who owns and controls each asset under the trust and at what date?</li><li>Will the heir occupy Property A within one year, long term, rent it, sell it or exchange it?</li><li>Does Prop 19 apply? What filings, assessed-value cap and deadline apply?</li><li>What are Property B's lease, tenant, unit-status, rent-control and occupancy constraints?</li><li>What transfer tax, recording charge and local ballot measure apply on sale?</li></ol></div><div><h3>Questions for the CPA / estate adviser</h3><ol><li>What is the date-of-death appraisal, income-tax basis and asset-specific depreciation history?</li><li>What estate value, adjusted taxable gifts, prior filings, portability and liquidity are relevant?</li><li>Compare same-year sale with live, rent, invest-now, staged 24 / 36 months and mixed paths.</li><li>Estimate federal / California income tax, $1M California surtax, depreciation recapture and 1031 feasibility.</li><li>Which estimates are enacted current law versus proposals, and when should the plan be refreshed?</li></ol></div></div>
+          <div class="brief-bottom"><div><b>Required evidence</b><span>Trust + title · independent appraisal · leases · parcel tax bill / TRA · five-year repair plan · rent comps · insurance quotes · debt payoff · private asset inventory.</span></div><div><b>Decision rule before figures arrive</b><span>Write liquidity floor, occupancy priority, landlord tolerance, risk budget and conditions for each path before seeing projections.</span></div></div>
+          <div class="brief-footer"><span>Not legal, tax, valuation, insurance or investment advice.</span><span>Public file contains no personal identifiers or precise property figures.</span></div>
+        </div>
+      </section>
+      <footer class="site-footer"><span>Household Legacy · privacy-first decision support</span><span>Updated November 25, 2026 · <a href="#law-watch">Official source register</a></span></footer>
+    </main>
+  </div>
 </body>
 </html>
