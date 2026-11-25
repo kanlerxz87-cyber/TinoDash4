@@ -84,3 +84,8 @@ Dollar figures are rounded to the nearest $10 for display and modelling output. 
 - Known gaps (not blocking merge, see Flagged): SFPUC unit-rate chunks, Cupertino TRA rate, HUD revised FY2026 FMRs, CDI page, MHST line, Fed SEP and minutes, Treasury step-up NPRM text, SB 974 text. Decision triggers were written after the first model run; the page says so.
 
 
+
+### Integration record (T5, session bba2482b)
+- PR #2 (`arena/bba2482b-tinodash4` → `main`): merged with a merge commit at 2026-11-25 13:37:47 UTC, after `origin/main` was merged into the branch (kept both sessions' board entries).
+- Pages: repository Pages status `built` (legacy build from `main` /). Site for this session: `https://kanlerxz87-cyber.github.io/TinoDash4/docs/` (not reachable from the sandbox; verify in a browser). The `Deploy to GitHub Pages` Actions run for the merge commit reported `failure` with a log-retrieval error; the legacy Pages build succeeded.
+- Open after integration (not blocking, see Flagged): F-01 to F-08; several secondary sources; the root site's own index is not linked from `docs/`.
