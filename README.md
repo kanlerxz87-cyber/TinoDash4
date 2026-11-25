@@ -12,3 +12,16 @@ All figures are rounded to the nearest $10 and shown in 2026 dollars. Personal i
 Rebuild: `python3 model/model.py && python3 build/build_site.py`
 
 Not legal or tax advice.
+
+---
+
+## Estate decision model (session 150580b0)
+
+A separate decision model compares paths for Property A (inherited, Santa Clara County) and Property B (San Francisco): live, rent, sell, phased sale, mixed, or live then sell.
+
+- Site: `estate-model/` (13 pages; open `estate-model/index.html`).
+- Model: `tools/model.js` (also copied to `estate-model/assets/model.js` for the browser what-if page).
+- Build: `node tools/build.js` writes `estate-model/*.html` and `estate-model/data/model.json`.
+- Checks: `node tools/privacy_check.js` (this session's files) and `node tools/check_links.js`.
+- Rules fixed before model output: `DECISION_RULES.md`.
+- Figures are rounded to the nearest $10. Unverified values are flagged on `estate-model/flagged.html`.

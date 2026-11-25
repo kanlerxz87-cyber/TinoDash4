@@ -89,3 +89,54 @@ Dollar figures are rounded to the nearest $10 for display and modelling output. 
 - PR #2 (`arena/bba2482b-tinodash4` → `main`): merged with a merge commit at 2026-11-25 13:37:47 UTC, after `origin/main` was merged into the branch (kept both sessions' board entries).
 - Pages: repository Pages status `built` (legacy build from `main` /). Site for this session: `https://kanlerxz87-cyber.github.io/TinoDash4/docs/` (not reachable from the sandbox; verify in a browser). The `Deploy to GitHub Pages` Actions run for the merge commit reported `failure` with a log-retrieval error; the legacy Pages build succeeded.
 - Open after integration (not blocking, see Flagged): F-01 to F-08; several secondary sources; the root site's own index is not linked from `docs/`.
+
+---
+
+## Session 150580b0 — inherited-property decision model and site (integration record)
+
+Session ID: `150580b0-tinodash4` · Branch: `arena/150580b0-tinodash4` (fixed for this session) · PR #4 into `main`.
+Scope of this session: `DECISION_RULES.md`, `tools/` (model, content, build, checks), `estate-model/` (site, 13 pages), this board entry, and `README.md` section below.
+Site location: **`estate-model/`** (not `docs/`, because `docs/` belongs to `bba2482b`). Served at `https://kanlerxz87-cyber.github.io/TinoDash4/estate-model/` once Pages builds from `main` `/`.
+Pages source: unchanged (`main` `/`). No Pages setting was changed by this session.
+
+### Tasks
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| S-T1 | Repo review and irregularity log (this session's files; other sessions' privacy hits logged below) | partial: flagged register F01–F27 in `estate-model/flagged.html`; full line-by-line review of other files not done | 150580b0 | `estate-model/flagged.html`, `estate-model/sources.html`, this board |
+| S-T2 | Decision rules written before model output | done (2026-11-25) | 150580b0 | `DECISION_RULES.md` |
+| S-T3 | Source register (official links; unfetched sources marked) | partial: 25 entries; several fetches failed (see flagged) | 150580b0 | `tools/content.js`, `estate-model/sources.html` |
+| S-T4 | Decision model: paths A–F, Monte Carlo, black swan, phased investing, sensitivity, break-evens | done as first version; re-run when flagged inputs are verified | 150580b0 | `tools/model.js`, `estate-model/assets/model.js`, `estate-model/data/model.json` |
+| S-T5 | Static site (13 pages incl. printable brief, what-if, flagged, suggestions) | done as first version | 150580b0 | `tools/build.js`, `estate-model/*.html`, `estate-model/assets/*` |
+| S-T6 | Privacy scan (this session's files), internal link check | done; passes for this session's files | 150580b0 | `tools/privacy_check.js`, `tools/check_links.js` |
+| S-T7 | Integration: PR to `main`, merge, Pages check | in progress (see record below) | 150580b0 | this board, `README.md` section |
+
+### Claims and log
+
+- 2026-11-25 · 150580b0 · Claimed S-T1 to S-T7. Commit `35600ec` (claims and decision rules) pushed to `arena/150580b0-tinodash4`.
+- 2026-11-25 · 150580b0 · First draft of this board marked tasks "done" before work was complete; corrected above.
+- 2026-11-25 · 150580b0 · Site first built under `docs/`; moved to `estate-model/` after `main` gained `docs/` from `bba2482b`. No files of other sessions were changed.
+- 2026-11-25 · 150580b0 · An earlier note in this session said Pages would be switched to `/docs`. That was not done and is withdrawn. Pages source stays `main` `/`.
+
+### Interpretations (logged; apply to this session's model only)
+
+- **F24:** DECISION_RULES.md Rule 3 names A and F. Mixed path E includes occupancy, so Rule 3 is also applied to E.
+- **F25:** Rule 8's second tie-break ("lower regulatory exposure") is read as: sale paths before occupancy paths; shorter parking before longer parking.
+- Imputed rent counts for the occupied share of A, E and F (Rule 3 "economic value of living, including imputed rent"). Financial-only results are in `estate-model/data/model.json`.
+- The Prop 19 base-year value is not in the workspace and is not invented. The model reassesses Property A at full value as the conservative fallback until it is entered (F08).
+- Primary metric = median of six fixed scenarios plus Monte Carlo draws (Rule 1). The phased pick depends on crash probability (F22); reported on the what-if page.
+
+### Privacy irregularities found on `main` (other sessions' files; NOT changed by 150580b0; owners to fix)
+
+- ZIP codes **95014** and **94122** appear in `index.html`, `pages/cupertino.html`, `pages/sanfrancisco.html`, `pages/briefing.html`, `pages/executive-summary.html`, `pages/flagged.html`, `pages/suggestions.html`, `docs/executive.html`, `docs/flagged.html`, `build/build_site.py`, `data/flags.json`, and this board.
+- A neighbourhood name for Property B appears in `pages/sanfrancisco.html`.
+- The rule in this board ("No ZIP codes … in any committed file or on the site") is breached by those files. History rewrite is not proposed here; the owning sessions should replace ZIPs with placeholders in their next commit.
+
+### Verification (this session)
+
+- Build: `node tools/build.js` writes `estate-model/`. Privacy scan (this session's files): `node tools/privacy_check.js` passes. Links: `node tools/check_links.js` passes.
+- Model picks (default inputs, no written commitment): 2040/10 → D24; 2040/20, 2050/10, 2050/20 → D36. Sale paths only, because Rules 3 and 4 remove A, E, F and B.
+
+### Pull request and merge
+
+- PR #4 (`arena/150580b0-tinodash4` → `main`): see the record below once merged.
