@@ -146,6 +146,7 @@ Pages source: unchanged (`main` `/`). No Pages setting was changed by this sessi
 
 ---
 
+<<<<<<< HEAD
 ## Session d4ff329e — inheritance decision analysis (board entry)
 
 Session ID: `d4ff329e` · Branch: `arena/d4ff329e-tinodash4` · PR #7 into `main` · Site: `decision-analysis/site/` (not `docs/`, which belongs to `bba2482b`; not `estate-model/`, which belongs to `150580b0`).
@@ -183,3 +184,80 @@ Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared fi
 ### Pull request and merge
 
 - PR #7 (`arena/d4ff329e-tinodash4` → `main`). Merge status: see the record below.
+=======
+## Session 6d864338 — independent decision model (`decision-model/`)
+
+Session ID: `6d864338` · Branch: `arena/6d864338-tinodash4` · Base: `fe3cad6`.
+Output directory: **`decision-model/`** — deliberately separate from `docs/` (session bba2482b),
+`estate-model/` (session 150580b0) and the root `index.html` + `pages/` (session 1). GitHub Pages
+serves the root of `main`, so all four are published side by side. **No file belonging to another
+session is modified by this one.**
+
+Rebase note: the first attempt to rebase this branch onto `main` conflicted on `COORDINATION.md`
+(add/add) and on `docs/paths.html`. Rather than resolve in favour of one session's board, this
+session reset onto `main`, kept `main`'s board intact, and appended this section. `docs/` is
+untouched — this session's earlier build lived there briefly and was moved before any push.
+
+### Task board
+
+Status values: `unclaimed` · `in progress` · `done` · `needs review`
+
+**What `done` means here.** `done` means the artefact exists, builds, and passes
+`python3 build.py` (which runs `tools/check_site.py`: 765 links, anchors, source-link presence,
+rounding, personal-data smells). It does **not** mean the content is beyond challenge.
+
+| # | Task | Status | Files in scope |
+|---|---|---|---|
+| T01 | Privacy model: rounding, placeholder rules, banded assessed values | done | `PRIVACY.md` |
+| T02 | Fact registry, federal/state/local, with status | done | `data/facts.json` |
+| T03 | Model: params, engine, runner, sensitivities, black swans, phasing | done | `model/` |
+| T04 | Site generator, build gate, stylesheet | done | `sitegen.py`, `build.py`, `assets/style.css` |
+| T05 | Executive summary + "what would change the answer" as the first block | done | `decision-model/index.html` |
+| T06 | Pre-commitment agreement — criteria signed before figures | done | `decision-model/decision.html` |
+| T07 | Nine paths (pure + mixed) at identical dates and horizons | done | `decision-model/paths.html` |
+| T08 | Black swans + phased Treasury entry + crash-timing grid | done | `decision-model/black-swan.html` |
+| T09 | Year-by-year projections + distribution | done | `decision-model/projections.html` |
+| T10 | Assumptions and ranges registry | done | `decision-model/assumptions.html` |
+| T11 | Authorities registry | done | `decision-model/authorities.html` |
+| T12 | Inheritance process + deadlines timeline | done | `decision-model/inheritance.html`, `deadlines.html` |
+| T13 | Property B (already-owned SF building) | done | `decision-model/property-b.html` |
+| T14 | Reinvestment risk + investing policy | **needs review** | `decision-model/reinvestment.html` |
+| T15 | Private estate inventory | done | `decision-model/inventory.html` |
+| T16 | Open questions / information gaps | done | `decision-model/questions.html` |
+| T17 | Flagged for Review | done | `decision-model/flagged.html` |
+| T18 | Suggestions + review schedule | done | `decision-model/suggestions.html` |
+| T19 | Glossary + grouped navigation | done | `decision-model/glossary.html` |
+| T20 | Printable Attorney & CPA briefing sheet | done | `decision-model/briefing-sheet.html` |
+| T21 | Method & privacy page | done | `decision-model/method.html` |
+| T22 | Decision log | **needs review** | `decision-model/decision-log.html` |
+| T23 | Link / anchor / source / privacy checker | done | `tools/check_site.py` |
+| T24 | Integration: PR to `main`, merge, Pages verified | `in progress` | — |
+
+### Things this session deliberately did not do
+
+- **T14 needs review.** The reinvestment section states an equity/Treasury spread and a
+  break-even drawdown. The spread is an assumption, not an observation. A reviewer should replace
+  it with a forward-looking capital-market estimate from a named source.
+- **T22 needs review.** The decision log ships empty. A decision log filled in by the person who
+  built the model is not a decision log.
+- **All `HH-*` household figures are `unverified`** and are printed as such. They are the
+  household's own estimates. The model is only as good as they are, and the first page says so.
+- **The 2045 Prop 19 allowance is unpublished.** It is modelled as three growth scenarios and
+  no single number is quoted for it.
+
+### Findings worth carrying across sessions
+
+These are model outputs, re-runnable with `python3 -c "from model import runner; ..."`. They
+contradict the conventional telling, so they are worth checking rather than copying:
+
+1. **The Prop 19 exclusion is worth ~$0.56M over 30 years at a 2045 transfer**, not the
+   life-changing figure inherited-base folklore implies. It caps reassessment; it does not exempt
+   from it. By 2045 the house is far above base-plus-allowance either way. Before Prop 19 (i.e.
+   under Prop 58) the folklore was true — the law changed and the stories did not.
+2. **Phasing sale proceeds into Treasuries only pays for a crash in years 1–3.** None/1929/2008/
+   2022: −$2.8M / +$13.4M / +$15.0M / +$6.2M. Any phasing result with the crash pinned to year 1
+   is a tautology, not a finding.
+3. **"Rent it out and keep the Prop 13 base" is legally dead post-Prop 19** — the exclusion is
+   removed when the heir stops being homeowners'-exemption-eligible. Modelled explicitly.
+
+>>>>>>> origin/main
