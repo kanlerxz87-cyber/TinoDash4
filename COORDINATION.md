@@ -529,4 +529,5 @@ and `decision-workspace/` were not edited by this session.
 
 | Date | PR | Merge result | Pages URL |
 |------|----|--------------|-----------|
-| 2026-11-25 | #15 arena/65b70013-tinodash4 → main | see rows below after merge | root dashboard at Pages root; this session's site at `/site/` |
+| 2026-11-25 | #15 arena/65b70013-tinodash4 → main | merged at `924e2a1` (add/add conflicts resolved: .gitignore union, COORDINATION append-only, single deploy workflow) | `https://kanlerxz87-cyber.github.io/TinoDash4/` root dashboard (legacy branch build, status `built` at `924e2a1`); this session's site: `https://kanlerxz87-cyber.github.io/TinoDash4/site/` (fetched after publish: exec summary, cards, source links all render) |
+| 2026-11-25 | follow-up polish PR (prose after privacy scrub) | see next row after merge | Pages rebuilds from main automatically |

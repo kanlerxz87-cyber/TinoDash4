@@ -308,7 +308,7 @@ function renderIndex() {
   <div class="hl">
     <h3 style="margin-top:0">Decision at a glance <span class="pill">values rounded to $10 · model run 2026-11-25</span></h3>
     <ul class="tight">
-      <li><b>Selling the inherited Property A's city house and reinvesting leads on projected net worth at every horizon in the baseline</b> (30y: ${moneyC(ls && ls.net_worth["30"])} vs ${moneyC(live && live.net_worth["30"])} holding) — property tax (≈1.335% implied) + 0.75%/yr maintenance + 5.5% exit cost drag a ${moneyC(mc && mc.A_VALUE_2026)} house vs a diversified portfolio at 8.5%.</li>
+      <li><b>Selling the inherited house (Property A) and reinvesting leads on projected net worth at every horizon in the baseline</b> (30y: ${moneyC(ls && ls.net_worth["30"])} vs ${moneyC(live && live.net_worth["30"])} holding) — property tax (≈1.335% implied) + 0.75%/yr maintenance + 5.5% exit cost drag a ${moneyC(mc && mc.A_VALUE_2026)} house vs a diversified portfolio at 8.5%.</li>
       <li><b>Living in it (Prop 19 claim) beats renting it out</b>: first-year property tax ${money(live && live.property_tax_first_year)} vs ${money(rent && rent.property_tax_first_year)}, plus 8% management and vacancy on the rental path. You must live somewhere; both homes are owned outright in every path.</li>
       <li><b>Phased Treasury entry (24–36 months in 3M–2Y bills, then 24-month phase into stocks) beat day-one lump-sum in 4 of 5 historical entries over 10 years</b> and cut the worst drawdowns from −65% → −34% (1929) and −37% → −4% (2008). It lags in V-shaped rebounds (2020). Recommended default for the proceeds <span class="pill">decision · 2026-11-25</span></li>
       <li><b>No estate-tax problem today</b>: federal exclusion ${money(mc && mc.BEA)} (2026) ${src("irs-rp2532")}; CA collects $0 ${src("leginfo-13302")}. The 2026 repeal initiative failed to qualify (watch 2028) ${src("ag-init250035")}.</li>
@@ -785,7 +785,7 @@ function renderBriefing() {
   el.innerHTML = `
   <div class="print-grid">
     <div class="card"><div class="k">Decision framed</div>
-      <div class="n">Inherit Property A's city SFR (A) ~$3.1M — occupy (Prop 19) / rent out / sell; already own SF 3-unit (B) ~$1.8M, 2 units rented ~$7,150/mo. Model: inherit 2045, stocks 8.5% / homes 3.5% / bills 2.5%.</div></div>
+      <div class="n">Inherit Property A (single-family) ~$3.1M — occupy (Prop 19) / rent out / sell; already own Property B (three-unit) ~$1.8M, 2 units rented ~$7,150/mo. Model: inherit 2045, stocks 8.5% / homes 3.5% / bills 2.5%.</div></div>
     <div class="card"><div class="k">Baseline result (30y)</div>
       <div class="v" style="font-size:17px">SELL ${moneyC(ls && ls.net_worth["30"])} · LIVE ${moneyC(live && live.net_worth["30"])} · RENT ${moneyC(rent && rent.net_worth["30"])}</div>
       <div class="n">Recommended entry: 24-mo Treasury park → 24-mo phase (beats lump-sum in 4/5 historical crash entries; −65%→−34% drawdown in 1929).</div></div>

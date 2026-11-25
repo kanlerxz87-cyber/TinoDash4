@@ -50,7 +50,7 @@ SOURCES = {
   "ftb-fedchanges": {"t": "FTB — Summary of Federal Income Tax Changes (capital-gain conformity)", "u": "https://www.ftb.ca.gov/about-ftb/data-reports-plans/summary-of-federal-income-tax-changes/index.html", "o": "CA Franchise Tax Board", "k": "gov", "v": TODAY},
   "sf-ab1482": {"t": "SF.gov — California Tenant Protection Act (AB 1482), SF rate 8.8% (Aug 2026–Jul 2027)", "u": "https://www.sf.gov/reports--california-tenant-protection-act-2019-ab-1482", "o": "City & County of San Francisco", "k": "gov", "v": TODAY},
   "ag-init250035": {"t": "CA Attorney General Title & Summary — Initiative 25-0035 (60+ property tax exemption)", "u": "https://oag.ca.gov/system/files/initiatives/pdfs/Title%20and%20Summary%20(25-0035).pdf", "o": "CA Attorney General", "k": "gov", "v": TODAY},
-  # Santa Clara County / Property A's city
+  # Santa Clara County (Property A)
   "scc-recorder": {"t": "SCC Clerk-Recorder — recording fees & transfer tax ($0.55/$500; city tax only SJ/PA/MV)", "u": "https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-document-fees/record-fees", "o": "Santa Clara County", "k": "gov", "v": TODAY},
   "scc-assessor": {"t": "SCC Assessor — 2026 Assessment Information Booklet (800+ TRAs; typical 1.1488%; $7,000 exemption)", "u": "https://files.santaclaracounty.gov/exjcpb1521/2026-04/assessment-information-2026-booklet-english-3-23-26-web.pdf", "o": "Santa Clara County Assessor", "k": "gov", "v": TODAY},
   "scc-aab": {"t": "SCC Assessment Appeals Board — July 2–Sept 15 window (BOE-305-AH)", "u": "https://www.santaclaracounty.gov/your-government/departments/assessor", "o": "Santa Clara County", "k": "gov", "v": None},
