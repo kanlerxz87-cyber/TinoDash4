@@ -135,7 +135,7 @@ SOURCES = {
                       "https://www.sfcta.org/blogs/bay-area-voters-approve-transit-funding-measures", "official"),
     "SCVWD-MEASURES": ("Santa Clara Valley Water District Measure S (Nov 2020) - renewal of the "
                        "Safe, Clean Water and Natural Flood Protection Program parcel tax, "
-                       "~$45.5M/yr, no sunset, up to 2%/yr adjustment",
+                       "~$45.5M/yr, no expiry, up to 2%/yr adjustment",
                        "https://files.santaclaracounty.gov/migrated/Measure%20S.pdf", "official"),
     "DAMO": ("A. Damodaran, 'Historical Returns on Stocks, Bonds and Bills: 1928-2024' "
              "(S&P 500 total return incl. dividends; 3-month T-bill average rate during "
@@ -146,13 +146,13 @@ SOURCES = {
                   "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026",
                   "official"),
     "CDTFA-RATES": ("California Department of Tax and Fee Administration, city/county sales "
-                    "and use tax rates (Cupertino 9.750% from 10/1/2026)",
+                    "and use tax rates (the city's rate is 9.750% from 10/1/2026)",
                     "https://cdtfa.ca.gov/taxes-and-fees/rates.aspx", "official"),
 }
 
 # ------------------------------------------------------------------- A / B ----
 PROPERTY_A = {
-    "label": "Property A - Cupertino / Santa Clara County (ZIP 95014)",
+    "label": "Property A - single-family house, Santa Clara County",
     "role": "The inherited house (single-family, solar installed).",
     "value_2026": r10(3_100_000),
     "value_source": "owner estimate, November 2026",
@@ -187,7 +187,7 @@ HISTORY_A = [
 ]
 
 PROPERTY_B = {
-    "label": "Property B - San Francisco / Outer Sunset (ZIP 94122)",
+    "label": "Property B - three-unit building, San Francisco",
     "role": "Already owned outright by the person who inherits Property A. 3 livable "
             "units, 2 rented, 1 vacant; owner can occupy one unit without giving up rent.",
     "value_2026": r10(1_800_000),
@@ -322,7 +322,7 @@ QUESTIONS = [
          status="OPEN", where="Licensed appraiser; must be a written, dated report",
          src="owner"),
     dict(id="Q-03", kind="fact", topic="Market rent for Property A",
-         q="What does a comparable Cupertino single-family house actually rent for today?",
+         q="What does a comparable Santa Clara County single-family house actually rent for today?",
          why="Two of the eleven paths rank on rent. Right now that ranking rests on the owner's "
              "estimate, not on evidence. Get 4 closed comparables plus 2 landlord fee quotes.",
          status="OPEN", where="Broker comp sheet + RentBoard/rent-data cross-check", src="owner"),
@@ -534,10 +534,10 @@ FLAGS = [
                 "not a forecast.",
          action="Broker comp sheet for the ZIP, 4 closed leases, 2025-26 rent board/ab1482 status check.",
          srcs=[]),
-    dict(id="F-5", severity="medium", item="Cupertino utility rates not read from an official rate sheet",
+    dict(id="F-5", severity="medium", item="the city's utility rates not read from an official rate sheet",
          detail="Water $100-$150/month and the solar electricity credit are household-supplied. The City of "
-                "Cupertino's current rate resolution was not located and read in this session.",
-         action="City of Cupertino Utilities rate sheet; PG&E bill for 12 months of true-up history.", srcs=[]),
+                "The city's current rate resolution was not located and read in this session.",
+         action="The city's utility rate sheet; PG&E bill for 12 months of true-up history.", srcs=[]),
     dict(id="F-6", severity="medium", item="'California has no estate tax' was not verified this session",
          detail="The model assumes no California estate or inheritance tax at death. This is a load-bearing "
                 "assumption and is stated as unverified rather than asserted as fact.",

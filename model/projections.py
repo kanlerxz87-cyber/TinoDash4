@@ -201,7 +201,7 @@ def capital_plan():
              why="The single most common surprise on an inherited house. Inspect before deciding anything.",
              src=None, status="inspection required"),
         dict(building="A", item="Sewer line scope + camera", trigger="once, before any sale",
-             cost=(r10(600), r10(2_500)), why="Clay lateral failure on a 1960s Cupertino house is a "
+             cost=(r10(600), r10(2_500)), why="Clay lateral failure on a 1960s single-family house is a "
              "$20k+ event and a sale blocker.", src=None, status="action required"),
         dict(building="A", item="Solar: inverter / battery, panel warranty status",
              trigger="inverter ~12-15 yr", cost=(r10(2_000), r10(8_000)),

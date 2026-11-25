@@ -189,7 +189,7 @@ def note(text):
 def head(active, title, blurb="", body_class=""):
     nav = ['<header class="top"><a class="brand" href="index.html">'
            'Property A &amp; B &middot; decision workspace</a>'
-           '<span class="sub">inherited Cupertino house &middot; owned SF triplex &middot; '
+           '<span class="sub">inherited Santa Clara County house &middot; owned SF triplex &middot; '
            "transfer modelled at 2045</span>"
            '<span class="privacy">Privacy mode: every figure rounded to $10 &middot; no names, '
            "addresses or parcel numbers &middot; no analytics, no cookies</span></header>",
@@ -220,7 +220,8 @@ FOOT = ('<p class="footnote">Built as a decision workspace, not advice. Every fi
         '<a href="flagged.html">Flagged for review</a> &middot; <a href="glossary.html">Glossary</a>. '
         'This workspace is one of two treatments of the same question in this repository: the other '
         'is the <a href="../index.html">dashboard at the site root</a>, built by an earlier session '
-        'from its own inputs - the two do not share numbers, and neither is a revision of the other.</p>')
+        'from its own inputs - the two do not share numbers, and neither is a revision of the other. '
+        'Neither site is advice; both are there to be argued with.</p>')
 
 
 def page(active, title, body, blurb=""):

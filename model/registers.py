@@ -114,7 +114,7 @@ LAWS = [
          status="enacted-verified",
          detail="$0.55 per $500 of consideration (0.11%), measured on the price EXCLUSIVE of debt "
                 "that stays with the property. A city may add one-half of the county amount and the "
-                "county credits it. No Cupertino add-on was identified in the FY 2025-26 compilation "
+                "county credits it. No municipal add-on was identified in the FY 2025-26 compilation "
                 "(F-11: confirm with escrow).",
          effective="statute; county administered", expires=None, src="RTC-11911",
          next_check="2027-06-30",
@@ -154,7 +154,7 @@ LAWS = [
     dict(id="L-15", system="local", jurisdiction="Santa Clara Valley Water District",
          rule="Measure S parcel fee (Safe, Clean Water and Flood Protection)",
          status="enacted-not-read",
-         detail="Approved November 2020, no sunset, adjusts up to 2% a year, billed as a line on the "
+         detail="Approved November 2020, no expiry date, adjusts up to 2% a year, billed as a line on the "
                 "property tax bill. This is the most likely reason the household's bills imply a rate "
                 "above the county's 1% levy (F-2). Modelled as a separate $0 for now and flagged, "
                 "because the per-parcel charge for this parcel was not read.",
@@ -167,9 +167,9 @@ LAWS = [
                 "and to justify a 5% vacancy/turn allowance. The statute text (Civ. Code 1947.12) was "
                 "not read this session, and the local CPI ordinance for Santa Clara County was not "
                 "obtained (F-3).",
-         effective="2020-01-01", expires="2030-01-01 (sunset stated in summaries; not verified)",
+         effective="2020-01-01", expires="2030-01-01 (an expiry is stated in the summaries; not verified)",
          src=None, next_check="2027-01-15",
-         watch="The 2030 sunset is the single most consequential tenant-law date for the rent paths."),
+         watch="The 2030 expiry is the single most consequential tenant-law date for the rent paths."),
     dict(id="L-17", system="tenant", jurisdiction="San Francisco",
          rule="Owner move-in eviction, Rent Ordinance 37.9(a)(11) and 37.9C relocation",
          status="enacted-verified",
@@ -296,7 +296,7 @@ CRITERIA = dict(
         "income without borrowing.",
     ],
     rent=[
-        "Four closed leases for comparable Cupertino single-family houses show net yield (after tax, "
+        "Four closed leases for comparable Santa Clara County single-family houses show net yield (after tax, "
         "insurance, upkeep, vacancy and management) above the after-tax yield on Treasuries by at least "
         "0.5 percentage points.",
         "The household accepts that a non-owner-occupied inherited house gets NO Prop 19 exclusion: "
@@ -355,7 +355,7 @@ DECISION_LOG = [
                    "on a bill that has not passed is a wager, not a plan.", status="adopted",
          owner="workspace"),
     dict(date="2026-11-25", decision="Leave unconfirmable figures blank rather than estimating them",
-         rationale="Cupertino utility rates, the CPI series, the 2025/26 Form 579 amounts and the parcel's "
+         rationale="municipal utility rates, the CPI series, the 2025-26 Form 579 amounts and the parcel's "
                    "tax rate area could not be read from an official source in this session. They are "
                    "blank + flagged, and the affected rows say so.", status="adopted", owner="workspace"),
     dict(date="2026-11-25", decision="Keep the 2045 transfer year as the shared comparison date",

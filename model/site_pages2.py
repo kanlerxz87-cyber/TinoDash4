@@ -67,7 +67,7 @@ def watch(ctx):
                      e(L["effective"] or ""), e(L["expires"] or "none stated"),
                      L["next_check"], e(L["watch"]), srclink(L["src"])])
     body.append(simple_table([("Ref", "l"), ("Rule", "l"), ("Who sets it", "l"), ("System", "l"),
-                              ("Status", "l"), ("What it says", "l"), ("Effective", "l"), ("Sunset", "l"),
+                              ("Status", "l"), ("What it says", "l"), ("Effective", "l"), ("Expires", "l"),
                               ("Re-read by", "l"), ("Watch for", "l"), ("Source", "src")], rows))
     body.append("<h2>Where to look, by authority</h2>")
     auth = [
@@ -106,7 +106,7 @@ def watch(ctx):
         "failed at the ballot more than once.",
         "Any San Francisco measure to widen the transfer-tax exemptions or to add a tier. It changes the net "
         "proceeds of a Property B sale by tens of thousands.",
-        "Any change to the statewide rent cap or its stated sunset around 2030. It is the difference between "
+        "Any change to the statewide rent cap or its stated expiry around 2030. It is the difference between "
         "'rent grows with the market' and 'rent grows with the cap' in the rent paths.",
     ]) + "</ul>" + note("No bill numbers are quoted, because no bill was verified in this pass. A list of "
                         "bill numbers copied from a search result would look like research and be a "
@@ -189,7 +189,7 @@ def open_questions(ctx):
                                   ("Source / lead", "src")], rows))
     body.append("<h2>What we searched and did not find</h2>")
     body.append("<ul class='tight'>" + "".join(f"<li>{e(x)}</li>" for x in [
-        "The City of Cupertino's water and sewer rate schedule. Every attempt returned a different city's "
+        "The city's water and sewer rate schedule. Every attempt returned a different city's "
         "rates. Left blank rather than borrowed - see F-5.",
         "An official edition of San Francisco Form 579 covering notices served after 2025-02-28. The latest "
         "table found is the 2024-25 one; its amounts are used and flagged as possibly superseded (F-4).",
@@ -396,7 +396,7 @@ def sources(ctx):
         "Opened the county's FY 2025-26 compilation of tax rates and read the 1.00000% maximum levy, the "
         "CPI-or-2% factoring rule, the installment and delinquency dates, the 10% penalty plus 1.5% monthly "
         "redemption penalty, and the school-district and community-college-district bond lines that could "
-        "make up a Cupertino composite.",
+        "make up the composite rate for this parcel.",
         "Opened the State Board of Equalization's Prop 19 pages and the letter to assessors carrying the "
         "indexed amount, and read the allowance across all three published windows.",
         "Read R&amp;T Code 11911 in full from the Legislature's site, and R&amp;T Code 61.",
@@ -414,7 +414,7 @@ def sources(ctx):
         "Read the full annual equity and bill series from the academic dataset and recomputed every statistic "
         "on the risk pages from those rows, rather than quoting a summary of them.",
         "Tried and did not obtain: the county's FY 2026-27 rate book (not yet published), an official CPI "
-        "series, the 2025-26 Form 579 edition, Cupertino utility rates, and the text of R&amp;T Code 11930. "
+        "series, the 2025-26 Form 579 edition, municipal utility rates, and the text of R&amp;T Code 11930. "
         "Those appear as blanks and flags, not as numbers.",
     ]) + "</ul>")
     body.append(note("No page on this site was populated from a search-result summary. Where a summary was "
@@ -486,11 +486,10 @@ def briefing(ctx):
     body.append('<div class="card"><div class="kicker">Attorney &amp; CPA briefing sheet - ' + ASOF + "</div>")
     body.append("<h2>Situation</h2>")
     body.append("<ul class='tight'>" + "".join(f"<li>{e(x)}</li>" for x in [
-        "The client owns Property B outright: a three-unit building in San Francisco (ZIP 94122, Outer "
-        "Sunset), two units let, one vacant and livable. The client can occupy the vacant unit without "
-        "displacing a tenant.",
-        "The client is a beneficiary of a trust holding Property A: a single-family house in Cupertino "
-        "(ZIP 95014) with solar, expected to pass at the settlor's death, provisionally 2040-2050 "
+        "The client owns Property B outright: a three-unit building in San Francisco - one unit vacant "
+        "and livable, two units let. The client can occupy the vacant unit without displacing a tenant.",
+        "The client is a beneficiary of a trust holding Property A: a single-family house in Santa Clara "
+        "County with solar, expected to pass at the settlor's death, provisionally 2040-2050 "
         "(modelled at 2045).",
         "The inheritance is expected to include a considerable amount of cash, possibly above the federal "
         "exclusion. The character of that cash - taxable brokerage, retirement accounts, insurance - is "
