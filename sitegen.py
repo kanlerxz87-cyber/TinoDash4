@@ -65,6 +65,17 @@ class Fmt:
         sign = "−" if neg else ""
         return f"{sign}${abs(v):,.0f}"
 
+    def usd_exact(self, v: float) -> str:
+        """A statutory figure, printed exactly.
+
+        Tax thresholds and published allowances are facts, not estimates: rounding
+        the Prop 19 allowance to the nearest $10 would print a number that is not
+        the law, right next to a link to a PDF saying it is $1,044,586.
+        """
+        if v is None:
+            return "—"
+        return f"${v:,.0f}"
+
     def pct(self, v: float, dp: int = 1) -> str:
         if v is None:
             return "—"
@@ -341,7 +352,7 @@ reverse-engineered from one projection. If any of these hold, the ranking moves.
     homeowners' exemption.</p>
     <p class="flipimpact">Computed, not asserted: claiming Proposition&nbsp;19 is worth
     <strong>{F.usd(ctx.prop19["difference"])}</strong> to the hold path over 30 years —
-    real money, but only about {F.pct(ctx.prop19["difference"] / gap_live, 0)} of the gap
+    real money, but only about {F.pct(ctx.prop19["difference"] / gap_live, 1)} of the gap
     to selling. If occupancy is a &ldquo;maybe&rdquo;, the hold path is not really
     available at all.</p>
     <p class="srcrow">{src("RTC § 63.2 — official California code text",
@@ -1403,7 +1414,7 @@ entirely a creature of state constitutional law.</p>
              src("RTC § 63.2(a)(1)", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2")],
             ["Value cap", "New taxable value = prior taxable value + max(0, FMV − (prior taxable "
                           "value + allowance)). For transfers 2025-02-16 to 2027-02-15 the "
-                          "allowance is " + F.usd_full(1_044_586) + ".",
+                          "allowance is " + F.usd_exact(1_044_586) + ".",
              src("BOE LTA 2025/009", "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf")],
             ["Exclusion removed", "When the heir stops being eligible for the homeowners' "
                                   "exemption, a new base year value is enrolled.",
@@ -1433,7 +1444,7 @@ entirely a creature of state constitutional law.</p>
             {"2pct_to_2045": "Allowance grows 2%/yr (roughly the CPI cap)",
              "3pct_to_2045": "Allowance grows 3%/yr",
              "4p5pct_to_2045": "Allowance grows 4.5%/yr"}[name],
-            F.usd_full(allow),
+            F.usd_exact(allow),
             F.usd_full(first.assessed_value),
             F.usd_full(sum(x.property_tax for x in a.ledger if x.offset >= 0)),
             F.usd_full(a.terminal_net_worth - b.terminal_net_worth),
@@ -1450,7 +1461,7 @@ that the capped exclusion protects only a sliver of it.</p>
 
 <p class="lead">Proposition&nbsp;19 does not let the heir keep the parent's base year value. It
 lets them keep it <em>plus the inflation-adjusted allowance</em> —
-{F.usd_full(1_044_586)} for transfers through February 2027. Everything above that is added back
+<span class="exact">{F.usd_exact(1_044_586)}</span> for transfers through February 2027. Everything above that is added back
 to the assessment. By 2045 the house is worth far more than base plus allowance, so most of the
 value is reassessed either way. <strong>The protection is a cap on reassessment, not an exemption
 from it.</strong></p>
@@ -1468,7 +1479,7 @@ from it.</strong></p>
 
 <p class="lead">Claiming the exclusion is worth <strong>{F.usd(ctx.prop19["difference"])}</strong>
 — real money, worth having, and it costs one form and one year of occupancy. But it is
-<strong>only about {F.pct(ctx.prop19["difference"] / gap, 0)}</strong> of the gap between holding
+<strong>only about {F.pct(ctx.prop19["difference"] / gap, 1)}</strong> of the gap between holding
 and selling. It is roughly the cost of a mid-range kitchen renovation, not a life-changing
 number.</p>
 
