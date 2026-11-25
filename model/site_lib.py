@@ -217,7 +217,10 @@ FOOT = ('<p class="footnote">Built as a decision workspace, not advice. Every fi
         "in the household's offline folder. Values with no official source are left blank and flagged "
         "rather than estimated. Rule data verified <b>" + ASOF + "</b>; next scheduled recheck <b>" +
         NEXT_CHECK + "</b>. <a href=\"sources.html\">Source register</a> &middot; "
-        '<a href="flagged.html">Flagged for review</a> &middot; <a href="glossary.html">Glossary</a>.</p>')
+        '<a href="flagged.html">Flagged for review</a> &middot; <a href="glossary.html">Glossary</a>. '
+        'This workspace is one of two treatments of the same question in this repository: the other '
+        'is the <a href="../index.html">dashboard at the site root</a>, built by an earlier session '
+        'from its own inputs - the two do not share numbers, and neither is a revision of the other.</p>')
 
 
 def page(active, title, body, blurb=""):

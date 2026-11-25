@@ -1,85 +1,90 @@
-# TinoDash4 — inherited-property decision workspace
+# Inheritance decision dashboard
 
-A decision model and a static site for one question: *what should be done with the inherited
-Cupertino house (Property A), given the household already owns a three-unit building in San
-Francisco (Property B)?* The transfer is modelled at 2045. Twelve paths — live in it, rent it,
-sell it at the death, sell it later, move into B, stage the proceeds — are scored on the same
-assumptions, and every number on the site is generated from those assumptions rather than typed.
+Two generated sites live in this repository, both published by the same Pages workflow. They were
+built by different sessions from the same brief and were never reconciled, so read them as two
+independent treatments of one question rather than as one product.
 
-Nothing here is financial or legal advice. It is a workspace that makes the assumptions, the
-governing rules and the open questions explicit enough to be argued with.
+| Site | Where | How it is built |
+| --- | --- | --- |
+| Dashboard (root) | `index.html`, `pages/`, `assets/`, `data/` | `tools/build_site.py` from `data/model_outputs.json` |
+| Decision workspace | `decision-workspace/` | `model/build.py` then `model/site.py` (20 pages) |
 
-## Run it
+Both hold the household's figures only as rounded, anonymized output: every published dollar figure
+is rounded to the nearest $10, and no address, parcel number or account number appears anywhere.
 
-No dependencies beyond CPython 3.11+ (standard library only) and no network access at run time.
+## Dashboard (repository root)
 
-```bash
-python3 model/build.py    # model -> data/*.json (privacy-scrubbed, safe to publish)
-python3 model/site.py     # data + prose -> *.html and assets/data.js (20 pages)
-open index.html           # or: python3 -m http.server -d . 8000
+A privacy-first GitHub Pages site comparing paths for an inherited home (Property A) with an owned
+rental (Property B): sell, park and phase in, rent, or live. Household figures are held internally
+and never published; the site shows placeholders and results rounded to the nearest $10.
+
+**Start here:** the dashboard is `index.html` (served at the repository's GitHub Pages address). A
+printable one-page brief is `brief.pdf`; the print-ready HTML version is `brief.html`.
+
+```
+python3 model/model.py            # needs private/raw_inputs.json (gitignored, internal only)
+python3 tools/build_site.py       # site from data/model_outputs.json and tools/content.py
+python3 tools/build_brief_pdf.py  # brief.pdf (needs reportlab)
+python3 tools/check_site.py       # privacy scan, row-link check, rounding, links; must pass before publishing
 ```
 
-Both scripts are deterministic: the 1,200-simulation Monte Carlo is seeded, so the same tree
-always produces the same site. `model/site.py` runs the engine itself; it does not read
-`data/*.json`, which is why the JSON is a by-product rather than an input.
+The site build does not need the private inputs. `check_site.py` scans every published file (including
+`brief.pdf`) for household values, zip codes, and location labels. It fails the build if any are found.
 
-## Layout
+## Decision workspace (`decision-workspace/`)
 
-| Path | What it is |
-| --- | --- |
-| `model/inputs.py` | every constant, rate, threshold and source key |
-| `model/engine.py` | the twelve path definitions, the year-by-year walk, taxes, Monte Carlo |
-| `model/projections.py` | projections, Prop 19 comparison, carrying costs, rent diagnostics |
-| `model/registers.py` | the non-numeric registers: laws, deadlines, criteria, open questions, flags, glossary |
-| `model/history.py` | the 1928-2025 annual return series used by the risk pages |
-| `model/build.py` | writes `data/*.json` |
-| `model/site.py` | writes the site |
-| `model/site_lib.py` | page chrome, formatters, the source-link renderer, the privacy filter |
-| `model/site_pages.py`, `model/site_pages2.py` | the page builders |
-| `assets/` | the stylesheet and the (deliberately small) scripts the built site loads |
-| `data/` | generated JSON, published so a reviewer can check a number without running anything |
+The same question modelled end to end: twelve paths (live / rent / sell / eight mixed) scored on one
+set of assumptions, a 1,200-path block bootstrap over the 1928-2025 annual record, Prop 19 against
+Prop 13 carry against full reassessment, and the open-questions, suggestions, flagged, comparables
+and sources registers.
 
-`*.html` at the root and `assets/data.js` are build output and are not committed. The published
-site is rebuilt in CI — see `.github/workflows/pages.yml` — and served from the `site` branch.
+```
+python3 model/build.py    # model -> decision-workspace/data/*.json
+python3 model/site.py     # data + prose -> decision-workspace/*.html and assets/data.js
+```
 
-## The three rules this project is built on
+Standard library only, no network at run time, and deterministic: the Monte Carlo is seeded, so the
+same tree always produces the same site. `model/site.py` runs the engine itself; the JSON is a
+by-product, not an input. `decision-workspace/index.html` is the entry point (on Pages:
+`/TinoDash4/decision-workspace/`).
 
-**1. Privacy is mechanical, not careful.** Every published dollar figure that belongs to the
-household is rounded to $10 by `r10()`, and a string-level scrubber rewrites any amount of three
-or more digits found anywhere in the payload (notes, captions, register text) so that no prose
-can leak an exact figure either. Published *rate cards* — a per-CCF water charge, a per-$500
-transfer-tax tier, a recorder's fee schedule line — are deliberately left exact, because they are
-public rates and not the household's numbers. The build asserts both of these.
+### The three rules it is built on
 
-**2. A row without a source does not get published.** `simple_table()` adds a Source column to any
-table that did not build its own, so the invariant is enforced by the renderer. Links carry the
-document's short key and its verification status (`official`, `academic`, `owner-supplied`,
-`unverified`). A figure that could not be read from an official document in this pass is shown as
-`not verified` rather than estimated; there are no placeholders.
+**1. Privacy is mechanical, not careful.** Every household figure is rounded by `r10()`, and a
+string-level scrubber rewrites any amount of three or more digits anywhere in the payload (notes,
+captions, register text), so prose cannot leak an exact figure either. Published *rate cards* - a
+per-CCF water charge, a per-$500 transfer-tax tier, a recorder's fee line - are left exact on
+purpose, because they are public rates and not the household's numbers. `model/build.py` asserts both
+directions at build time.
 
-**3. Narrative lives in code, not in HTML.** Every sentence that quotes a number builds that
-number from the model at write time, so the prose and the tables cannot drift apart. To change a
-statement, change the constant and rebuild.
+**2. A row without a source does not get published.** `simple_table()` appends a Source column to any
+table whose builder did not declare one, so the invariant is enforced by the renderer rather than
+remembered by the author. Links carry the document's short key and its verification status (`official`,
+`academic`, `owner-supplied`, `unverified`). A figure with no official document behind it is shown as
+`not verified`, never estimated.
 
-## Conventions worth knowing before editing
+**3. Narrative lives in code, not in HTML.** Every sentence quoting a number builds that number from the
+model at write time, so the prose and the tables cannot drift apart. To change a statement, change the
+constant and rebuild.
 
-- Three tax systems are kept separate and never mixed in one table: estate tax at death, income
-  tax on the gain, property tax on the assessment.
-- No mortgage is modelled (open question Q-16). Adding one means adding a debt schedule to
-  `engine.py`, not a new column.
-- Rental losses are treated as suspended against rental income for a same-filing two-owner
-  household, not as a current-year offset.
-- Marginal rates used: CA ordinary 50.3% including the 1% mental-health surtax; federal LTCG
-  23.8% including NIIT; §1250 recapture 28.8% plus NIIT.
-- Prop 19's factored base year value is set **once**, at the distribution of the estate, and then
-  grows at ≤2% a year. It is not re-capped each year — that mistake inflates the saving.
-- Vacancy is 5%; the discount rate is 3.5% real; `FINANCE_SPREAD = 0` because no financing is
-  modelled.
-- The Black-Swan and phased-investing pages are computed from the 1928-2025 annual record, so they
-  change every January when the record gains a year.
+### Conventions worth knowing before editing
 
-## Recheck cadence
+- Three tax systems are kept separate and never mixed in one table: estate tax at death, income tax on
+  the gain, property tax on the assessment.
+- No mortgage is modelled (open question Q-16). Adding one means a debt schedule in `engine.py`, not a
+  new column.
+- Rental losses are treated as suspended against rental income for a same-filing two-owner household.
+- Marginal rates: CA ordinary 50.3% including the 1% mental-health surtax; federal LTCG 23.8% with NIIT;
+  §1250 recapture 28.8% plus NIIT.
+- Prop 19's factored base year value is set **once**, at the distribution of the estate, then grows at
+  ≤2% a year. Re-capping it annually inflates the saving.
+- Vacancy 5%; discount rate 3.5% real; `FINANCE_SPREAD = 0` because no financing is modelled.
+- The Black-Swan and phased-investing pages are computed from the annual return record, so they move
+  every January when the record gains a year.
 
-`recheck.html` lists the ten documents that must be re-read, with what each one moves. Until
-Property A's own tax bill, deed and preliminary title report are read, the values carried here are
-derived from the household's memory of the bills, and the flagged register says so.
+## Coordination
+
+See `COORDINATION.md` for the task board, handoff log, and verification record. Open items and
+irregularities are on the *Flagged for Review* page of either site.
+
+Not legal or tax advice.
