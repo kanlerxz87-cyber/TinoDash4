@@ -14,9 +14,9 @@
 | T-01 | Create COORDINATION.md task board | done | session-1 | COORDINATION.md |
 | T-02 | Scaffold site structure (HTML/CSS/JS, landing page, nav) | done | session-1 | index.html, assets/, pages/ |
 | T-03 | Privacy & anonymization framework (placeholders, no PII) | done | session-1 | all pages |
-| T-04 | Property data: Santa Clara County (Property A) ([ZIP]) tax history, assessment, rates | done | session-1 | [legacy page A] |
+| T-04 | Property data: Santa Clara County ([ZIP]) tax history, assessment, rates | done | session-1 | [legacy page A] |
 | T-05 | Property data: San Francisco ([ZIP]) tax history, assessment, rates | done | session-1 | [legacy page B] |
-| T-06 | Insurance research: Santa Clara County (Property A) primary residence & SF rental | done | session-1 | [legacy page A], [legacy page B] |
+| T-06 | Insurance research: Santa Clara County primary residence & SF rental | done | session-1 | [legacy page A], [legacy page B] |
 | T-07 | Utilities: water, electricity (solar) cost modeling | done | session-1 | [legacy page A], [legacy page B] |
 | T-08 | Inheritance tax thresholds (federal/state) & Prop 19 analysis | done | session-1 | pages/inheritance.html |
 | T-09 | Decision paths: live / rent / sell+reinvest modeling | done | session-1 | pages/paths.html |
@@ -39,11 +39,11 @@
 - California Proposition 19: effective Feb 16, 2021; $1,044,586 cap (2026); CA Board of Equalization
 - No California inheritance/estate tax: CA Franchise Tax Board
 - San Francisco property tax rate FY 2026-27: ~1.18162% (SF Treasurer & Tax Collector)
-- Santa Clara County / Santa Clara County (Property A) rate: ~1.1620% (Santa Clara County rates)
+- Santa Clara County / Santa Clara County rate: ~1.1620% (Santa Clara County rates)
 - Step-up in basis: IRS Topic 403; Capital gains: IRS Topic 409; Depreciation recapture: IRS Topic 414
 - Like-kind exchange: IRS Topic 613; Primary residence exclusion: IRS Topic 701
 
-**Flagged items (see pages/flagged.html):** User-provided property values ($[held internally] Santa Clara County (Property A) / $[held internally] SF), tax rates need official confirmation, insurance quotes needed, Santa Clara County (Property A) market rent needed, TRA lookup needed.
+**Flagged items (see pages/flagged.html):** User-provided property values ($[held internally] Santa Clara County / $[held internally] SF), tax rates need official confirmation, insurance quotes needed, Santa Clara County market rent needed, TRA lookup needed.
 
 ## Convention
 - All personal info anonymized with placeholders: [HEIR], [DECEASED], [ATTORNEY], [CPA], [ADDRESS_A], [ADDRESS_B], etc.
@@ -73,7 +73,7 @@ in T4 from all data files, so there is no conflicting hand-edit.
 
 ## Privacy rule (applies to every file)
 No names, street addresses, parcel/APN numbers, ZIP codes, emails, or account numbers in any committed file or on the
-site. Properties are referred to as **Property A (Santa Clara County (Property A), Santa Clara County)** and **Property B (San Francisco)**.
+site. Properties are referred to as **Property A (Santa Clara County, Santa Clara County)** and **Property B (San Francisco)**.
 Dollar figures are rounded to the nearest $10 for display and modelling output. Owner-provided figures are labelled as such.
 
 ## Log
@@ -81,7 +81,7 @@ Dollar figures are rounded to the nearest $10 for display and modelling output. 
 - 2026-11-25 · bba2482b · Verification pass 1 complete (see `data/sources.json`, status `verified` vs `secondary`).
 - 2026-11-25 · bba2482b · Model run (`model/model.py`, seeded). Corrected Prop 19 cap to the official $1,044,586 (S08). Wrote `data/flags.json` (F-01–F-08).
 - 2026-11-25 · bba2482b · Site built (`build/build_site.py` → `docs/`, 13 pages). Internal links checked; privacy scan run. Claimed T5 for integration.
-- Known gaps (not blocking merge, see Flagged): SFPUC unit-rate chunks, Santa Clara County (Property A) TRA rate, HUD revised FY2026 FMRs, CDI page, MHST line, Fed SEP and minutes, Treasury step-up NPRM text, SB 974 text. Decision triggers were written after the first model run; the page says so.
+- Known gaps (not blocking merge, see Flagged): SFPUC unit-rate chunks, Santa Clara County TRA rate, HUD revised FY2026 FMRs, CDI page, MHST line, Fed SEP and minutes, Treasury step-up NPRM text, SB 974 text. Decision triggers were written after the first model run; the page says so.
 
 
 
@@ -221,6 +221,45 @@ contradict the conventional telling, so they are worth checking rather than copy
 3. **"Rent it out and keep the Prop 13 base" is legally dead post-Prop 19** — the exclusion is
    removed when the heir stops being homeowners'-exemption-eligible. Modelled explicitly.
 
+---
+
+## Session d4ff329e — inheritance decision analysis (board entry)
+
+Session ID: `d4ff329e` · Branch: `arena/d4ff329e-tinodash4` · PR #7 into `main` · Site: `decision-analysis/site/` (not `docs/`, which belongs to `bba2482b`; not `estate-model/`, which belongs to `150580b0`).
+
+Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared files changed: `README.md` and this board (appended section only). No other session's files were edited.
+
+### Tasks
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| D-T1 | Decision criteria written before final model output | done (dated 2026-11-25; written after discarded draft test runs, disclosed on the page) | d4ff329e | `decision-analysis/data/criteria.json` |
+| D-T2 | Source register with official-link status | partial: 28 sources, several secondary; see sources page | d4ff329e | `decision-analysis/data/sources.json` |
+| D-T3 | Model: 7 paths, monthly, Monte Carlo, shocks, breakpoints | done; mechanics hand-checked on SELL and LIVE | d4ff329e | `decision-analysis/model/model.js` |
+| D-T4 | Property tax history (Santa Clara County 2014-2026; SF 2016-2025) | partial: SF FY2026-27 verified; history rows blank (F24, F25) | d4ff329e | `decision-analysis/data/tables.json` |
+| D-T5 | Insurance (both properties) | blocked: CDI primary not reached; blank (F05, F06) | d4ff329e | tables page |
+| D-T6 | Federal / CA / local thresholds, projections, legislation | partial (F09, F10, F11, F28) | d4ff329e | tax page |
+| D-T7 | Prop 13 / 19 / 58 / H and depreciation / recapture | partial (F03, F04, F15, F26) | d4ff329e | property rules page |
+| D-T8 | Black-swan section (separate) | done (stylised; assumptions labelled) | d4ff329e | black-swan page |
+| D-T9 | Anonymised inventory; flagged register; suggestions | done (F01-F28; suggestions not applied) | d4ff329e | inventory, flagged, suggestions pages |
+| D-T10 | Attorney & CPA one-page briefing | done (print CSS) | d4ff329e | briefing page |
+| D-T11 | Integration: PR to main, merge, Pages check | in progress (see record below) | d4ff329e | this board |
+
+### Log
+
+- 2026-11-25 · d4ff329e · Claimed D-T1 to D-T11. Built the site in `decision-analysis/`. Moved from root `model/`, `data/`, `scripts/`, `docs/` to avoid overwriting other sessions' `data/` and `docs/` files.
+- 2026-11-25 · d4ff329e · Merge into `main` was blocked by conflicts with the other sessions' root files; resolved by moving all session files under `decision-analysis/` and keeping both boards.
+- 2026-11-25 · d4ff329e · Owner decision needed (F21): the public initial commit (`fe3cad6`) shows a personal email as author. History was not rewritten (a rewrite requires a force-push to `main`). Not changed.
+- 2026-11-25 · d4ff329e · Irregularities on `main` (other sessions' files, not changed here): this board's earlier notes (session 150580b0) and `pages/`, `docs/` contain ZIP codes and a neighbourhood name, which conflict with the privacy rule above. Owners should replace them with placeholders. Logged, not edited.
+
+### Verification (this session)
+
+- Build: `node decision-analysis/scripts/build.js`. Scenario re-runs (13 input changes): the top path moved in 0 of 13. Breakpoints and what-if results are on the dashboard.
+- Privacy scan on this session's built pages: no e-mail addresses, ZIP codes in the site, or personal names.
+
+### Pull request and merge
+
+- PR #7 (`arena/d4ff329e-tinodash4` → `main`). Merge status: see the record below.
 
 ---
 
@@ -257,4 +296,4 @@ Session ID: `8c530ff4` · Branch: `arena/8c530ff4-tinodash4` · PR: #8 (`arena/8
 ### Log
 
 - 2026-11-25 · `8c530ff4` · Merged `origin/main` (PRs #1 to #6) into the branch. Conflicts resolved as in decisions 2 to 5. Legacy outputs removed as in decision 1.
-- 2026-11-25 · `8c530ff4` · Opened PR #8 to `main`. Merge result recorded in a follow-up board entry after the merge.
+- 2026-11-25 · `8c530ff4` · Opened PR #8 to `main`. Merged `origin/main` again (PR #7, `decision-analysis/`); its legacy trees (`decision-analysis/`, `decision-model/`, `docs/`, `estate-model/`, `pages/`, `build/`, `data/*.json` other than ours, `model/` modules other than ours, `tools/*.js`, `PRIVACY.md`, `sitegen.py`, `build.py`) were NOT carried into the tree; they stay in history at `decb3fb`. Merge recorded with `origin/main` as a parent (tree = this branch). Merge result recorded in a follow-up board entry after the PR is merged.
