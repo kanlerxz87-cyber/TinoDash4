@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Property rules · Inheritance decision analysis</title>
+<link rel="stylesheet" href="style.css">
+</head><body class="">
+<header class="site"><div class="brand">Inheritance decision analysis</div>
+<nav><a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="criteria.html">Criteria</a><a href="tables.html">Tables</a><a href="tax.html">Tax</a><a href="property-rules.html" class="on">Property rules</a><a href="blackswan.html">Black swan</a><a href="timeline.html">Timeline</a><a href="glossary.html">Glossary</a><a href="inventory.html">Inventory</a><a href="briefing.html">Attorney &amp; CPA briefing</a><a href="flagged.html">Flagged for review</a><a href="suggestions.html">Suggestions</a><a href="sources.html">Sources</a></nav></header>
+<main>
+<h1>Property rules: Prop 13, Prop 19, Prop 58, Prop H, depreciation and recapture</h1>
+<section class="card"><h2>Property A and B: tax rules, Prop 13, Prop 19, Prop 58, Prop H</h2><div class="scroll"><table class=""><thead><tr><th>Rule</th><th>Summary</th><th>Source</th><th>Status</th></tr></thead><tbody><tr><td>Prop 13 base and reassessment</td><td>Base-year value; reassessed to market value on change of ownership</td><td><a href="https://ballotpedia.org/Article_XIII_A,_California_Constitution" rel="noopener">Ballotpedia</a> <span class="tag tag-secondary">secondary</span></td><td>secondary summary; primary text to check</td></tr><tr><td>Prop 13 annual inflation factor</td><td>Not to exceed 2% per year</td><td><a href="https://ballotpedia.org/Article_XIII_A,_California_Constitution" rel="noopener">Ballotpedia</a> <span class="tag tag-secondary">secondary</span></td><td>secondary summary; primary text to check</td></tr><tr><td>Prop 19 family home (heir)</td><td>Heir must occupy as principal residence within 1 year to keep the parent's base (plus allowance)</td><td><a href="https://asr.santaclaracounty.gov/faq/faq-prop19-3-58-60-90" rel="noopener">County of Santa Clara Assessor</a> <span class="tag tag-primary">primary</span></td><td>chunk 0 read; occupancy timing and rental treatment to confirm (F04)</td></tr><tr><td>Prop 19 added-value allowance</td><td>$1,044,586 (period 2/16/2025-2/15/2027)</td><td><a href="https://asr.santaclaracounty.gov/faq/faq-prop19-3-58-60-90" rel="noopener">County of Santa Clara Assessor</a> <span class="tag tag-primary">primary</span></td><td>unverified (F03)</td></tr><tr><td>Prop 58 parent-child exclusion</td><td>Scope for non-family-home property to be confirmed; not assumed in model</td><td><a href="https://asr.santaclaracounty.gov/faq/faq-prop19-3-58-60-90" rel="noopener">County of Santa Clara Assessor</a> <span class="tag tag-primary">primary</span></td><td>not fully read</td></tr><tr><td>SF Prop H parcel tax (effective Jul 1, 2027)</td><td>Single-family base $129 plus per-sq-ft steps; caps for multifamily and non-residential</td><td><a href="https://media.api.sf.gov/" rel="noopener">City and County of San Francisco / news</a> <span class="tag tag-secondary">secondary</span></td><td>preliminary (F15); legal text not read</td></tr><tr><td>Depreciation of rental building</td><td>27.5-year straight line (residential); 80% building share assumed</td><td><a href="https://www.irs.gov/pub/irs-pdf/p544.pdf" rel="noopener">IRS</a> <span class="tag tag-primary">primary</span></td><td>statutory; building share is an assumption (F26)</td></tr><tr><td>Depreciation recapture</td><td>Unrecaptured §1250 gain up to 25% federal</td><td><a href="https://www.irs.gov/pub/irs-pdf/p544.pdf" rel="noopener">IRS</a> <span class="tag tag-primary">primary</span></td><td>statutory; chapter not read (F26)</td></tr></tbody></table></div></section>
+<section class="card">
+<h2>Property A: model treatment</h2>
+<ul>
+  <li><strong>Live path:</strong> base carried over only if the parent's base is known (blank here). Without it, the base equals the market value at transfer, so the Prop 19 benefit shows as zero (lower bound).</li>
+  <li><strong>Rent or sell:</strong> reassessed to market value at transfer; basis for income tax is the date-of-death value (step-up).</li>
+  <li><strong>Depreciation:</strong> 80% building share (assumption) over 27.5 years; unrecaptured §1250 gain taxed at up to 25% federal plus NIIT and CA ordinary rates.</li>
+  <li><strong>Transfer costs at sale:</strong> agent commission 2.5% and title 0.5% (assumptions); county documentary transfer tax 0.11%; recording $92; Measure E 0 for Cupertino (confirm).</li>
+</ul>
+</section>
+<section class="card">
+<h2>Property B (San Francisco): reference only</h2>
+<p>Held constant across all paths. The rent roll, water, electricity and insurance are internal owner figures. The Prop H parcel tax (preliminary) and SF transfer-tax tiers are flagged; no SF tax is modelled against Property B.</p>
+</section></main>
+<footer class="site">Built 2026-11-25 from official sources listed on each row. Values rounded to the nearest $10. Model estimates, not tax, legal or investment advice. Blank cells are unverified and listed on the Flagged for Review page. Personal information is excluded from this site.</footer>
+
+</body></html>

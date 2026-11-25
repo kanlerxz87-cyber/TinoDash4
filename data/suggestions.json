@@ -1,0 +1,12 @@
+[
+  {"id": "S01", "text": "Obtain a licensed appraisal of Property A (date-of-death value will matter for basis)."},
+  {"id": "S02", "text": "Identify the decedent's Prop 13 base-year value from the Assessor (drives the Prop 19 benefit)."},
+  {"id": "S03", "text": "Ask an estate attorney to confirm trust terms, probate status and whether a Form 706 is needed."},
+  {"id": "S04", "text": "Get landlord and homeowners insurance quotes for Property A (blank in the model)."},
+  {"id": "S05", "text": "Collect 6-12 months of water, electricity and solar bills for Property A (enter in the inputs)."},
+  {"id": "S06", "text": "Collect comparable rentals for a Cupertino house of similar size; set the rent multiple."},
+  {"id": "S07", "text": "Confirm the decedent's total gross estate is below $15,000,000 (2026 basic exclusion). Keep figures internal."},
+  {"id": "S08", "text": "Decide whether the household will occupy Property A (the single biggest driver; see Criteria)."},
+  {"id": "S09", "text": "Consider a rebuild of the Git history to replace the public author email (requires owner approval; see F21)."},
+  {"id": "S10", "text": "Review the staged path (M3) against a 2008-type entry before choosing it; it is a timing bet, not a guarantee."}
+]
