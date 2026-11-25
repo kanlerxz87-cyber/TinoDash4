@@ -524,10 +524,13 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | add/add on `COORDINATION.md` | Main's append-only board kept in full; this session's section appended at the end (same pattern as prior sessions). |
 | 2026-11-25 | Two Pages deploy workflows would race (`deploy.yml` path `.` vs this session's `pages.yml` path `site/`) | This session's `pages.yml` deleted; `deploy.yml` (whole-repo artifact, so root site + `site/` + workspaces all publish) kept as the single deployer; `verify.yml` added for build+smoke-test only. |
 | 2026-11-25 | Official CSD ordinance URL contains the city name in the domain | Kept: dropping an official source would violate the official-sources rule. Logged as an irregularity of the same class as `decision-model/` identifiers — prose throughout this session's files uses Property A/B labels instead. |
+| 2026-11-25 | Root `deploy.yml` (Actions Pages deploy) fails on push because the repository's Pages source is the legacy branch build (previously logged by session `9ca44509`); switching `build_type` via API returned 404 (no admin scope in this session). | Retired `deploy.yml` (the fix pre-authorized in that log: "either the workflow should be deleted or Pages should be switched"). Publishing continues via the legacy `pages build and deployment` job (`main` /), which is green; `verify.yml` keeps CI green for model+site checks. |
 
 ### Merge / deploy log (this session)
 
 | Date | PR | Merge result | Pages URL |
 |------|----|--------------|-----------|
 | 2026-11-25 | #15 arena/65b70013-tinodash4 → main | merged at `924e2a1` (add/add conflicts resolved: .gitignore union, COORDINATION append-only, single deploy workflow) | `https://kanlerxz87-cyber.github.io/TinoDash4/` root dashboard (legacy branch build, status `built` at `924e2a1`); this session's site: `https://kanlerxz87-cyber.github.io/TinoDash4/site/` (fetched after publish: exec summary, cards, source links all render) |
-| 2026-11-25 | follow-up polish PR (prose after privacy scrub) | see next row after merge | Pages rebuilds from main automatically |
+| 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
+| 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
+| 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
