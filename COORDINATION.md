@@ -139,4 +139,7 @@ Pages source: unchanged (`main` `/`). No Pages setting was changed by this sessi
 
 ### Pull request and merge
 
-- PR #4 (`arena/150580b0-tinodash4` → `main`): see the record below once merged.
+- PR #4 (`arena/150580b0-tinodash4` → `main`): **merged** 2026-11-25 13:41:43 UTC (merge commit `ac7c182`). Merge method: merge commit. Merge was not waited on for review; flagged items do not block.
+- Pages: legacy build for `ac7c182` reported `built` at 13:41:45 UTC. Site live and checked by fetch: `https://kanlerxz87-cyber.github.io/TinoDash4/estate-model/` (index page returns the first-screen content).
+- Actions workflow `Deploy to GitHub Pages` (from session 702ed805) reports `failure` for `ac7c182` and for earlier merges (`7e22e3e`, `16e66b6`); the `pages build and deployment` run for `ac7c182` succeeded. The workflow failure is not caused by this session's files and is logged for its owner.
+- Board entry for this record: PR #5 (follow-up, board only).
