@@ -259,7 +259,15 @@ Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared fi
 
 ### Pull request and merge
 
-- PR #7 (`arena/d4ff329e-tinodash4` → `main`). Merge status: see the record below.
+- PR #7 (`arena/d4ff329e-tinodash4` → `main`): **merged** 2026-11-25 13:48:20 UTC, merge commit `decb3fb` (merge commit, not waited on for review; flagged items do not block).
+- Pages: legacy build from `main` `/` for `decb3fb` reported `built`. Site checked by fetch: `https://kanlerxz87-cyber.github.io/TinoDash4/decision-analysis/site/` returns the first-screen content. No Pages setting was changed by this session.
+- Board record: PR #9 (board only), see the log below.
+
+### Log (after merge)
+
+- 2026-11-25 · d4ff329e · Merged PR #7 (`decb3fb`). The first merge attempt failed on conflicts with other sessions' files (PR #6 landed mid-session); resolved by moving all session files under `decision-analysis/`.
+- 2026-11-25 · d4ff329e · A conflict-marker commit to COORDINATION.md (`e7217e2`) was pushed during the second merge; fixed in `dced5dc` before the PR merged. The board on `main` has no markers.
+- Open items after merge (not blocking): F21 history scrub (owner decision); flagged F01–F28 (blank or preliminary values); session-owner fixes for ZIP codes and neighbourhood names found in other sessions' files (logged above, not edited here).
 
 ---
 
@@ -297,4 +305,4 @@ Session ID: `8c530ff4` · Branch: `arena/8c530ff4-tinodash4` · PR: #8 (`arena/8
 
 - 2026-11-25 · `8c530ff4` · Merged `origin/main` (PRs #1 to #6) into the branch. Conflicts resolved as in decisions 2 to 5. Legacy outputs removed as in decision 1.
 - 2026-11-25 · `8c530ff4` · Opened PR #8 to `main`.
-- 2026-11-25 · `8c530ff4` · Merged `origin/main` at `589952a` (PRs #1–#10 and later) keeping this branch's tree; legacy trees from other sessions were not carried into the tree and remain in history. Merged `origin/main` again (PR #7, `decision-analysis/`); its legacy trees (`decision-analysis/`, `decision-model/`, `docs/`, `estate-model/`, `pages/`, `build/`, `data/*.json` other than ours, `model/` modules other than ours, `tools/*.js`, `PRIVACY.md`, `sitegen.py`, `build.py`) were NOT carried into the tree; they stay in history at `decb3fb`. Merge recorded with `origin/main` as a parent (tree = this branch). Merge result recorded in a follow-up board entry after the PR is merged.
+- 2026-11-25 · `8c530ff4` · Merged `origin/main` at `75595d3` (PRs #1–#10 and later) keeping this branch's tree; legacy trees from other sessions were not carried into the tree and remain in history.
