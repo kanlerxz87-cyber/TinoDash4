@@ -260,3 +260,5 @@ Scope: `decision-analysis/` only (model, data, scripts, site, README). Shared fi
 ### Pull request and merge
 
 - PR #7 (`arena/d4ff329e-tinodash4` → `main`). Merge status: see the record below.
+- 2026-11-25 · 6d864338 · **T24 done.** PR #6 → `main` (merge `0ad9993`), PR #10 → `main` (merge `589952a`). Pages build `589952a` reports `built`; `decision-model/` is present on `main` and the published build carries the corrected statutory figures. Pages URL: https://kanlerxz87-cyber.github.io/TinoDash4/decision-model/
+- 2026-11-25 · 6d864338 · Corrections made after review of the rendered site, not before: statutory figures (the Prop 19 allowance) were passing through the $10 privacy rounding and printing $1,044,590 next to a link to a PDF saying $1,044,586 — a tax threshold is a fact, so `Fmt.usd_exact` now bypasses rounding for those; and the "share of the gap" figure was rounded to 0 dp, reading 2% where the computed value is 2.5%.
