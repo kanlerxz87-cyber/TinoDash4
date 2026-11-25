@@ -685,7 +685,7 @@ def model(ctx):
     ]) + "</ul>")
     body.append("<h2>Reproducing it</h2>")
     body.append("<pre>cd model\n"
-                "python3 build.py     # model -&gt; ../data/*.json  (rounded + scrubbed)\n"
+                "python3 build.py     # model -&gt; decision-workspace/data/*.json  (rounded + scrubbed)\n"
                 "python3 site.py      # data -&gt; ../ *.html and assets/data.js\n"
                 "python3 engine.py    # prints the run summary, no files written</pre>")
     body.append(note("The Monte Carlo is seeded (seed " + str(E.SEED) + ", " + str(E.N_SIMS) +

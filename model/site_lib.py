@@ -11,6 +11,10 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+# The published site lives in its own directory so it cannot collide with the other site this
+# repository also publishes (the root index.html belongs to an earlier session). Everything the
+# builders write goes here: pages, stylesheet, scripts and the browser data file.
+OUT = os.path.join(ROOT, "decision-workspace")
 sys.path.insert(0, HERE)
 
 from build import scrub_str  # noqa: E402
@@ -224,7 +228,7 @@ def page(active, title, body, blurb=""):
 
 
 def write(name, html):
-    path = os.path.join(ROOT, name)
+    path = os.path.join(OUT, name)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as f:
         f.write(html)

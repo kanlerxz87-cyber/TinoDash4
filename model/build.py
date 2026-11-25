@@ -1,9 +1,9 @@
 """
-build.py — run the model, write data/*.json for the site.
+build.py — run the model, write decision-workspace/data/*.json for the site.
 
 Run from anywhere:  python3 model/build.py
 Nothing here talks to the network, and every dollar that leaves is rounded to $10 by r10(),
-so data/*.json is safe to publish. The unrounded values never get written anywhere.
+so the published JSON is safe to publish. The unrounded values never get written anywhere.
 """
 import json
 import os
@@ -12,7 +12,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-OUT = os.path.join(ROOT, "data")
+OUT = os.path.join(ROOT, "decision-workspace", "data")
 sys.path.insert(0, HERE)
 
 import inputs as I           # noqa: E402
