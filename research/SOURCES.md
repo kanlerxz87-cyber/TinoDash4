@@ -41,7 +41,7 @@ this session or the exact wording appeared in the retrieved official document.
 | FTB does not conform to OBBBA individual rate changes; conforms to IRC capital-gain computation as of 2025-01-01 with modifications | — | FTB Summary of Federal Income Tax Changes https://www.ftb.ca.gov/about-ftb/data-reports-plans/summary-of-federal-income-tax-changes/index.html | verified (search excerpt) |
 | AB 1482 statewide: 5% + local CPI, max 10%; SF 8.8% for 2026-08-01 → 2027-07-31 | 8.8% | SF.gov https://www.sf.gov/reports--california-tenant-protection-act-2019-ab-1482 | verified (search excerpt) |
 
-## Local — Santa Clara County / Property A's city (Property A)
+## Local — Santa Clara County (Property A)
 
 | Fact | Value | Source | Status |
 |---|---|---|---|
