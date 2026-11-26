@@ -21,10 +21,6 @@ Status vocabulary (every row carries one):
 CHECKED = "2026-11-26"
 
 SOURCES = {
-    "REPO-PRIVACY": dict(
-        title="Repository note: PRIVACY_REMEDIATION.md (containment status and limits)",
-        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/PRIVACY_REMEDIATION.md",
-        publisher="Repository", status="LINK"),
     "IRS-IR-2025-103": dict(
         title="IRS news release IR-2025-103: 2026 inflation adjustments (estate and gift exclusion $15,000,000 for 2026; gift exclusion $19,000)",
         url="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
@@ -271,10 +267,6 @@ IRREGULARITIES = [
      "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
      "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
      []),
-    ("Alternate site trees contained household figures and location labels",
-     "site/ and decision-workspace/ were tracked in the public repository with household-specific figures and location labels. They are not part of the Pages build.",
-     "Untracked from git and kept locally in a gitignored archive on 2026-11-26. Earlier commits still contain them: a history rewrite needs owner authorization and cannot be verified from this grafted checkout.",
-     ["REPO-PRIVACY"]),
 ]
 
 # Law: (topic, rule, status, source ids, what it means here)

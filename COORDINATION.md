@@ -781,3 +781,37 @@ Verification record for G-01 through G-03 (2026-11-26): official BOE page and LT
 - Irregularity added: "Alternate site trees contained household figures and location labels" (source `REPO-PRIVACY`).
 
 **Owner / next-session request (not done here, owned by other sessions):** with the private file present, the strict raw-figure scan in `tools/check_site.py` flags rounded owner figures (for example $1,500 insurance guess, $7,150 rent, $3,100,000 and $1,800,000 values) in `decision-model/`, `model/`, `research/` and this board. CI cannot run that scan (no private file), so CI passes. Action: the owner decides whether these source and log files should keep rounded household figures or be scrubbed; the check exempts model/ and research/ only if the owner adopts that rule (it was in this session's version of the checker and was overwritten by a merge with `main`).
+---
+
+---
+
+
+---
+
+
+---
+
+---
+
+
+---
+
+## Session arena/c3f30db8 — estate-tax headline and decision caveats
+
+| Task | Status | Owner | File scope |
+|---|---|---|---|
+| Review headline estate-tax/decision claims against known missing estate inventory; correct unsupported certainty and rerun tests | done (this scoped pass) | arena/c3f30db8 | `model/build_model.py`, `site/js/site.js`, `site/index.html`, `site/dashboard.html`, `site/blackswan.html`, `site/briefing.html`, `site/data.html`, `site/suggestions.html`, `site/css/site.css`, generated `site/data/*.json`, `COORDINATION.md` |
+
+The branch name is fixed by Arena as `arena/c3f30db8-tinodash4`; it is not being renamed or switched to the suggested `session-...` naming convention. Existing files for other site treatments are outside this task scope. Historical public-exposure remediation requires a separate history/visibility decision; the checkout is shallow and cannot establish all prior commits from local Git data.
+
+### Session arena/c3f30db8 — verification / unresolved privacy item (2026-11-26)
+
+- Corrected the executive card from an unsupported `$0` estate-tax conclusion to **UNKNOWN**. The first-screen trigger now asks for gross-estate assets, taxable gifts, marital/ownership facts, deductions, and portability/DSUE; current-year exclusion is explicitly not projected to 2040–2050.
+- Changed the sell-vs-live/rent headline and staged-entry language to conditional scenario findings, not recommendations. Clarified that the staged return comparison has four complete selected 10-year windows; the 2020 window ends at five years and lags in the rebound. Added foregone-growth and reinvestment risk, and prominently surfaced the tax incompleteness and input gaps.
+- Added high-severity F15 for pre-tax portfolio/rental and missing estate-tax treatment; added F16/S11 for the public-history audit. Repository API: <https://api.github.com/repos/kanlerxz87-cyber/TinoDash4> (queried 2026-11-26: `isPrivate=false`). Pages API: `status=built`, `public=true`, source `main` `/` (queried 2026-11-26). The linked API is an official GitHub endpoint.
+- Historical remediation is **not done**: this checkout is shallow (`git rev-parse --is-shallow-repository` = true), so this pass cannot inspect every prior commit. No visibility change or claim of full containment was made; those actions need coordinated preservation, full-history scanning, and a deployment decision. See public Flagged for Review F16 and proposed S11.
+- Rebuilt with `python3 model/build_model.py`; `node model/check_site.js` passed all 11 page renderers, initial what-if, and source-link checks. Additional local checker passed all 11 `site/*.html` internal links/anchors, validated all 16 unique flag IDs and source references (household/unverified rows remain explicitly non-official), and confirmed stale estate-tax/phasing headline strings are absent. `git diff --check` passed.
+- Legal/tax source contents already in the source registry were not independently re-fetched in this pass; their displayed review date remains 2026-11-25. Only GitHub repository/Pages metadata was newly checked on 2026-11-26. Open official-source checks remain on the existing Flagged page.
+- Rebase conflicts: `COORDINATION.md` had concurrent append-only records from privacy-containment sessions `arena-bc2ed56c` (PRs #19/#22/#28) and `arena-e5c3fe3a` (PRs #20/#25), followed by `arena/407d3840` PR #24. Their complete records were preserved; no other-session work was discarded. Rebased through `b1fa5ba`, `4ded1c8`, `538b398`, `d286163`, `f63485f`, and latest `e12d205`; conflicts are resolved. PR #26's first merge attempt was blocked because `main` advanced; this branch is now rebased and the PR head must be pushed again. This change set modifies the alternate `site/` treatment, which current `_config.yml` excludes from the root Pages artifact; the published root dashboard remains the deployed product.
+- Root build follow-up: `python3 tools/build_site.py` initially recreated `.nojekyll`, which would bypass the Jekyll exclusions. Before this branch's latest rebase, concurrent PR #22 from `arena-bc2ed56c` independently removed the writer; retained that incoming fix (no duplicate `tools/build_site.py` change in this PR). Rebuild now leaves `.nojekyll` absent. Request for follow-up: make `tools/check_site.py` fail if `.nojekyll` exists while privacy exclusions are expected; its current check only validates the missing-file/Jekyll-config case, and this pass did not edit the other session's scoped checker. Validation on 2026-11-26: `python3 tools/build_site.py` (18 pages), `test ! -e .nojekyll`, `python3 tools/check_site.py` (202/202 rows linked; $10 rounding passes; exact private-value scan SKIPPED because `private/raw_inputs.json` is absent), model build and JS renderer smoke tests, internal-link/anchor and flag-source checker, `git diff --check` all passed.
+- Latest parallel handoff: `main` advanced to `f63485f` via PR #24 and then `e12d205` via PR #28 while PR #26 was open; merge attempts reported conflicts. Rebased onto latest main and preserved `407d3840`'s source-verification/Pages-gate record plus `bc2ed56c`'s final containment record. Root `tools/build_site.py` and privacy checks are covered by merged work; this PR does not claim to deploy its excluded `site/` files.

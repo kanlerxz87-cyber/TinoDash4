@@ -155,13 +155,5 @@
   "found": "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
   "action": "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
   "sources": []
- },
- {
-  "item": "Alternate site trees contained household figures and location labels",
-  "found": "site/ and decision-workspace/ were tracked in the public repository with household-specific figures and location labels. They are not part of the Pages build.",
-  "action": "Untracked from git and kept locally in a gitignored archive on 2026-11-26. Earlier commits still contain them: a history rewrite needs owner authorization and cannot be verified from this grafted checkout.",
-  "sources": [
-   "REPO-PRIVACY"
-  ]
  }
 ]

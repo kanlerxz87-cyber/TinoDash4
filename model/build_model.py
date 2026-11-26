@@ -74,6 +74,7 @@ SOURCES = {
   "cpuc-nbt": {"t": "CPUC Decision D.22-12-056 — Net Billing Tariff (NEM 3.0), eff. 2023-04-15", "u": "https://docs.cpuc.ca.gov/", "o": "CA Public Utilities Commission", "k": "gov", "v": None},
   # Household
   "household": {"t": "Household-provided figures (rounded to $10) — not independently verified", "u": None, "o": "Household", "k": "household", "v": TODAY},
+  "repo-public": {"t": "GitHub repository metadata — visibility and Pages publication state", "u": "https://api.github.com/repos/kanlerxz87-cyber/TinoDash4", "o": "GitHub REST API", "k": "official", "v": "2026-11-26"},
 }
 
 # ----------------------------------------------------------------------------
@@ -597,7 +598,8 @@ def tables():
     for T in (10_000_000, 16_000_000, 25_000_000, 40_000_000):
         tax = max(T - BEA_2026, 0) * ESTATE_RATE
         estate_rows.append({"taxable_estate": r10(T), "bea_2026": r10(BEA_2026),
-                            "federal_estate_tax": r10(tax), "effective_rate_on_excess": pct(ESTATE_RATE,0)})
+                            "federal_estate_tax": r10(tax), "effective_rate_on_excess": pct(ESTATE_RATE,0),
+                            "src": ["irs-rp2532", "irs-706"]})
     cost_rows = [
       {"item": "Property A insurance (household estimate)", "value": r10(1500), "unit": "$/yr", "src": "household", "status": "Unverified — CA DOI statewide averages are higher; obtain quotes"},
       {"item": "Property B insurance (household estimate)", "value": r10(1500), "unit": "$/yr", "src": "household", "status": "Unverified — obtain landlord/DP-3 quotes"},
@@ -655,10 +657,10 @@ def timeline():
 
 def questions():
     return [
-      {"id":"Q1","q":"How much cash (and other assets) does the inheritance include?","why":"Drives estate-tax exposure, investment paths, and whether the house decision even matters financially.","status":"MISSING — modeled as $0 / $2M / $5M / $15M / $25M scenarios only","how":"Executor's preliminary inventory; no personal figures enter this site."},
-      {"id":"Q2","q":"Will the decedent's estate exceed the federal exclusion (projected ~$15M+ indexed) in the year of death?","why":"40% federal tax above the exclusion is paid by the estate before distribution.","status":"PARTIAL — 2026 rules verified; year-of-death exclusion unknown","how":"Attorney's estate projection; ask about portability election and prior taxable gifts (Form 709 history)."},
-      {"id":"Q3","q":"Are there prior taxable lifetime gifts?","why":"Reduces the available basic exclusion (anti-clawback protects prior use at the higher exemption).","status":"MISSING","how":"Ask executor/counsel for gift-tax returns filed since 1977."},
-      {"id":"Q4","q":"Will the heir occupy Property A as a principal residence long-term (and file within 1 year)?","why":"This single fact decides Prop 19 treatment: occupancy keeps a capped base; non-occupancy triggers full reassessment at FMV.","status":"DECISION PENDING — see dashboard","how":"Household agreement in writing before transfer (see Suggestions)."},
+      {"id":"Q1","q":"What is the date-of-death gross estate inventory, including non-probate assets and life insurance?","why":"Estate-tax exposure cannot be calculated from the inherited house alone. Include real estate, cash, investments, retirement accounts, business interests, jointly owned assets, and includible insurance; subtract debts only under applicable rules.","status":"MISSING — no estate total is available; the model's $0 cash baseline is not a household fact","how":"Ask the executor and estate attorney for a confidential inventory. Keep exact figures offline; the public model needs only an approved rounded range."},
+      {"id":"Q2","q":"What taxable gifts, prior spouse portability (DSUE), trust ownership, and marital deductions apply?","why":"These items can materially change the exclusion available at death; the current-year federal exclusion alone does not establish whether estate tax is due.","status":"MISSING — no gift history, marital/ownership facts, or portability record supplied","how":"Attorney/CPA to review prior Forms 709 and 706, trust documents, ownership/title, and any DSUE election before estimating tax."},
+      {"id":"Q3","q":"What federal estate-tax exclusion will apply in the actual year of death?","why":"The applicable exclusion and law may change before the expected inheritance window; the current-year amount is not a future guarantee.","status":"UNKNOWN — current law is a reference point only","how":"Re-check enacted federal law and IRS inflation adjustments each year and at the date of death; model the estate against low/base/high legal scenarios."},
+      {"id":"Q4","q":"Does the heir intend to occupy Property A as a principal residence, and will they file the claim within 1 year?","why":"Prop 19 eligibility and filing are legal tests; separately, the household's genuine long-term occupancy plan determines whether choosing the living path is practical and consistent with its priorities.","status":"DECISION PENDING — legal eligibility and household intent are both open","how":"Before transfer, review the current BOE rules with the assessor/adviser and write down occupancy intent, duration assumptions, alternative housing costs, and the deadline; do not claim the exclusion if ineligible."},
       {"id":"Q5","q":"What is Property A's tax rate area (TRA) number, and what rate does the county publish for it?","why":"All property-tax projections hinge on the actual all-in TRA rate (household bill implies ~1.34%).","status":"MISSING — APN/TRA not held (privacy)","how":"Read TRA off any prior tax bill; look up in county tax rate book."},
       {"id":"Q6","q":"Why does Property B's bill imply ~2.14% when the official SF base rate is 1.18162%?","why":"Direct levies/parcel taxes explain part of the gap; errors are possible.","status":"FLAGGED","how":"Request parcel breakdown from SF Treasurer; compare to published direct-levy schedule."},
       {"id":"Q7","q":"What is the actual insurance premium (Property A and B) — and is Property B insured as a rental (DP-3/LL policy)?","why":"Household estimates (~$1,500) sit below CA DOI statewide averages; underinsurance is a tail risk.","status":"MISSING — quotes required","how":"Two broker quotes each; also pull ZIP-level CDI report figures for both property ZIPs (internal)."},
@@ -707,6 +709,7 @@ def suggestions():
       {"id":"S8","priority":"Medium","title":"Pre-agree the black-swan rule","body":"Decide now: if markets fall >30% within 12 months of selling, do we pause the phase-in, speed it up, or hold to schedule? Write it down.","owner":"Household","status":"Proposed"},
       {"id":"S9","priority":"Low","title":"Extend the model to monthly granularity","body":"Annual data smooths crashes; monthly series would sharpen the 1929/2008 entry tests.","owner":"Site maintainer","status":"Proposed"},
       {"id":"S10","priority":"Low","title":"Add per-TRA lookup helper","body":"Once the household shares a TRA number (not the address), pin the published rate into the data table with the county source link.","owner":"Household","status":"Proposed"},
+      {"id":"S11","priority":"High","title":"Contain and audit the public GitHub history before claiming privacy is restored","body":"The repository and Pages are currently public; this shallow checkout cannot verify prior commits. First preserve an authorized backup, complete an offline scan of every historical commit and public artifact, agree whether to take the repository/site private or replace it with a clean sanitized history, then coordinate the history rewrite and check forks/caches. Do not force-rewrite shared main as an isolated session action.","owner":"Repository administrator + privacy reviewer","status":"Proposed — high urgency; not implemented"},
     ]
 
 def flags():
@@ -725,12 +728,15 @@ def flags():
       {"id":"F12","severity":"Low","item":"NEM 3.0 decision PDF not re-opened","detail":"Decision number D.22-12-056 and dates cross-checked via multiple secondary sources; confirm at cpuc.ca.gov.","src":"cpuc-nbt"},
       {"id":"F13","severity":"Low","item":"Third-unit rent for Property B left at $0 in base runs","detail":"Vacant-but-livable unit income unknown; add via what-if slider when comps exist.","src":None},
       {"id":"F14","severity":"Medium","item":"Property B depreciation history unknown (recapture exposure)","detail":"No placed-in-service dates, basis, or prior Form 4562 records held. Recapture table on the Data page is an illustration at assumed depreciation amounts only; obtain the depreciation schedule from the CPA before any sale of B.","src":None},
+      {"id":"F15","severity":"High","item":"Path ranking is not tax-complete","detail":"SELL-path portfolio returns are pre-personal-income-tax and rental income tax is not netted; estate tax is not estimated because the full estate, prior gifts and portability facts are missing. These asymmetries may bias the apparent winner. Treat every ranking as provisional and obtain CPA/attorney calculations before relying on it.","src":["irs-i8960","ftb-capgain","irs-706"]},
+      {"id":"F16","severity":"High","item":"Public repository and prior Git history not fully privacy-audited","detail":"GitHub reports this repository as public and the Pages site as built/public. This checkout is shallow, so prior commits cannot be inspected comprehensively here; a current-file scan does not scrub previous public commit objects, forks, caches, or third-party copies. No claim of historical scrubbing or complete containment is made. A coordinated history-rewrite/visibility decision and post-change verification are required before calling this resolved.","src":"repo-public"},
     ]
 
 def questions_answers_front():
     """What would change the answer — first-screen content."""
     return [
-      {"lever":"Cash size of the inheritance","current":"Unknown — scenarios only","changes":"If liquid assets ≫ house value, the house decision shrinks; if the estate approaches the federal exclusion, estate tax and liquidity planning dominate every other choice."},
+      {"lever":"Full gross estate, taxable gifts and portability","current":"Unknown — no complete estate inventory or Form 709/706 history","changes":"This can reverse the current estate-tax headline. Include all probate and non-probate property, cash, investments, insurance, debts, marital deductions and any DSUE; the current-year exclusion is not a future threshold guarantee."},
+      {"lever":"Cash and other inherited assets","current":"Unknown — model runs only illustrative cash scenarios","changes":"If liquid assets are large, the house decision is a smaller share of the estate; if the taxable estate exceeds the applicable year-of-death exclusion, tax and nine-month liquidity planning become central."},
       {"lever":"Will you occupy Property A long-term?","current":"Open decision","changes":"Occupancy + filing within 1 year preserves a capped Prop 19 base (saves roughly the cap amount × tax rate each year, ~$20k+/yr at 2045 values); not occupying triggers full FMV reassessment."},
       {"lever":"Real market rent for Property A","current":"FMR floor only","changes":"If comps come in well above the floor, RENT path climbs; if below, SELL/LIVE strengthen."},
       {"lever":"Where markets start when the house is sold","current":"Unknowable","changes":"A 1929-style entry destroys lump-sum proceeds; a V-shaped crash (2008) punishes slow phasing. This is why the phased-Treasury path exists."},

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>TinoDash4 · Dashboard &amp; What-if lab</title>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body data-page="dashboard">
+<div class="wrap">
+  <nav class="side" id="nav"></nav>
+  <main>
+    <h1>Dashboard &amp; What-if lab</h1>
+    <p class="lede">Baseline path comparison (inherit 2045), sensitivity matrix, Monte-Carlo distributions,
+      and live what-if controls. Risk, debt (none assumed — F-flagged), occupancy, capital costs and liquidity are shown beside each staging headline.</p>
+
+    <h2>Path comparison — same transfer date, same horizons</h2>
+    <div id="cmp-table"></div>
+    <div id="cmp-details"></div>
+    <div class="chart" id="chart-nw"></div>
+    <div class="flag"><b>Do not treat these net-worth rankings as a recommendation.</b> They omit personal income tax on portfolio returns and do not net income tax on rents; estate tax is not estimated because total estate assets, prior taxable gifts and portability are unknown. Debt is set to zero pending a title/lien search, and rents, insurance, maintenance and tax rates contain unverified inputs. These omissions can change the ranking. Resolve them in <a href="questions.html">Questions</a> before relying on the output.</div>
+    <div class="note"><b>Debt:</b> none assumed on either property (Q10 — title report will confirm; any lien reduces every net-worth figure dollar-for-dollar).
+      <b>Cash flows:</b> cumulative across both properties (rents − taxes − operating costs − maintenance − imputed rent where occupied).
+      <b>Taxes:</b> income taxes and estate taxes require case-specific CPA/attorney calculations; the current comparison is not tax-complete.
+      <b>Liquidity / capital costs:</b> per-path liquidity and reinvestment-risk notes under the table; exit friction is assumption-based and must be replaced with documented quotes/fees.</div>
+
+    <h2>Sensitivity matrix — stocks × homes (inherit 2045, inflation 2.5%)</h2>
+    <div id="sens-table"></div>
+    <div id="stock-stats" class="note"></div>
+    <div class="note">Lead = SELL − LIVE net worth within this simplified pre-tax baseline. Although SELL leads the nine tested growth-rate cells at 30 years, this grid is not decision-complete: portfolio income tax, estate tax, actual debt and several cost and rent inputs are missing or simplified. Treat the ranking as provisional; see the <a href="questions.html">discovery checklist</a> and <a href="flagged.html">review flags</a> before using it.
+      The displayed estate-tax scenarios are illustrations at 2026 law, not an estimate of the household's estate.</div>
+
+    <h2 id="reinvest">Reinvestment risk — staged headlines vs reality</h2>
+    <div id="reinvest-box"></div>
+    <div id="bs-note"></div>
+
+    <h2>Monte-Carlo distribution (1,000 sims, seed 42)</h2>
+    <div id="mc-table"></div>
+    <div class="chart" id="chart-mc"></div>
+
+    <h2>What-if lab — change any input, recompute instantly</h2>
+    <p class="lede">Client-side port of the model (deterministic). Move a slider: the winner, tax gap, and paths update.
+      Reset returns to the published baseline.</p>
+    <div id="whatif"></div>
+
+    <div class="foot">Baseline inputs: stocks 8.5% · bills 2.5% · homes 3.5% · inflation 2.5% · park 24 mo · imputed rent = FMR floor $3,604 ·
+      sell cost 5.5% (assumption F9) · transfer 0.11% + $110 recording. See <a href="data.html#sens">data tables</a>.</div>
+  </main>
+</div>
+<script src="js/site.js"></script>
+</body>
+</html>

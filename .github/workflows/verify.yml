@@ -13,13 +13,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # site/ and decision-workspace/ were untracked (archived locally, gitignored) on 2026-11-26.
-      # Their regeneration and smoke-test steps were removed.
       - name: Rebuild root dashboard (deterministic from data/model_outputs.json)
         run: python3 tools/build_site.py
       - name: Fail if rebuild changed tracked root site (must be committed in sync)
         run: git diff --exit-code -- '*.html' assets data/irregularities.json
       - name: Pre-publish gate (privacy, rounding, row links, internal links, Pages containment)
-        run: python3 tools/check_site.py --allow-missing-private
+        run: python3 tools/check_site.py
+      - name: Regenerate site/ model data (deterministic)
+        run: python3 model/build_model.py
+      - name: Fail if regeneration changed tracked data (data must be committed in sync)
+        run: git diff --exit-code -- site/data
+      - name: Headless smoke test of all site renderers
+        run: node model/check_site.js
+      - name: Build the public root dashboard
+        run: python3 tools/build_site.py
+      - name: Check root Pages artifact privacy, sources, rounding, and links
+        run: python3 tools/check_site.py
       - name: Ensure Jekyll exclusions stay enabled
         run: test ! -e .nojekyll
