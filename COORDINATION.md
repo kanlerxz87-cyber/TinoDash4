@@ -534,3 +534,17 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+---
+
+## Session arena-2d00b06b — final privacy and integration pass
+
+Session ID: `arena-2d00b06b` · Branch: `arena/2d00b06b-tinodash4` (fixed by Arena) · Base: `b7825dc5eaa7cf10252dae5e8a56f10174e7a7b5`.
+
+### Task claim
+
+| ID | Task | Status | Owner | File scope | Claimed (UTC) |
+|---|---|---|---|---|---|
+| T20 | Final integration privacy containment: remove precise location identifiers from the current public tree, ensure source inputs are rounded before commit, make the privacy preflight usable without private files, and record history-remediation limits | in progress | arena-2d00b06b | `COORDINATION.md`, `README.md`, `tools/check_site.py`, `model/inputs.py`, `decision-model/README.md`, `decision-model/src/`, `decision-model/site/` | 2026-11-26 |
+
+The public site has multiple legacy sub-sites. This is the final integration pass because all earlier task boards mark their work complete. No private input file is added to the repository. The pre-rounding values seen in tracked source and identifiers in the prior public tree are being treated as a privacy incident; a normal PR can remove them from the current tree but cannot erase ancestor commits from GitHub history. See the completion/flagged record below for that remaining host-history action.
