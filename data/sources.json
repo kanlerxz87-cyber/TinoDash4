@@ -1,0 +1,190 @@
+{
+  "_meta": {
+    "accessed": "2026-11-26",
+    "legend": {
+      "fetched": "Official document fetched and read in this session",
+      "snippet": "Found in search results from an official domain; the document itself was not fetched",
+      "secondary": "Third-party summary only; not an official source",
+      "not_verified": "No official source reached; value left unverified"
+    },
+    "note": "Academic data (NYU Stern) is labelled academic, not official. Every table row on the site cites one of these ids."
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "publisher": "IRS",
+      "title": "Rev. Proc. 2025-32 (2026 inflation adjustments)",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+      "status": "fetched",
+      "used_for": "2026 annual gift exclusion $19,000 (section 4.42); 2026 tax tables and capital-gain thresholds (section 4.03)"
+    },
+    {
+      "id": "S02",
+      "publisher": "IRS",
+      "title": "Instructions for Form 706 (Rev. July 2026)",
+      "url": "https://www.irs.gov/pub/irs-pdf/i706.pdf",
+      "status": "partial",
+      "used_for": "Basic exclusion amount $15,000,000 for decedents dying in 2026; basic credit $5,945,800; 2% installment threshold $1,940,000; filing threshold; DSUE portability election"
+    },
+    {
+      "id": "S03",
+      "publisher": "California State Board of Equalization",
+      "title": "Letter to Assessors 2025/009: Intergenerational Transfer Exclusion, adjustment of the $1 million amount",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+      "status": "fetched",
+      "used_for": "$1,044,586 allowance for transfers 16 Feb 2025 to 15 Feb 2027; $1,022,600 for 2023-2025; next adjustment Feb 2027"
+    },
+    {
+      "id": "S04",
+      "publisher": "Franchise Tax Board (CA)",
+      "title": "2025 Form 540-ES instructions, Behavioral Health Services Tax worksheet",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.pdf",
+      "status": "partial",
+      "used_for": "1% Behavioral Health Services Tax on taxable income above $1,000,000 (worksheet lines A-E); the $1,000,000 threshold is printed as a fixed amount"
+    },
+    {
+      "id": "S05",
+      "publisher": "Franchise Tax Board (CA)",
+      "title": "2025 Instructions for Form 540 (resident)",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html",
+      "status": "fetched",
+      "used_for": "Form 540 structure and filing dates (intro chunk only; rate schedule not reached)"
+    },
+    {
+      "id": "S06",
+      "publisher": "Franchise Tax Board (CA)",
+      "title": "Capital gains and losses",
+      "url": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html",
+      "status": "not_verified",
+      "used_for": "California has no lower capital-gain rate; all capital gains are taxed as ordinary income (page not fetched; CA capital-gain rule not confirmed)"
+    },
+    {
+      "id": "S07",
+      "publisher": "IRS",
+      "title": "Publication 551 (Rev. Dec 2025), Basis of Assets",
+      "url": "https://www.irs.gov/pub/irs-pdf/p551.pdf",
+      "status": "partial",
+      "used_for": "Inherited property basis rules (chapter 'Inherited Property', p.15); section 1014(f) basis consistency note"
+    },
+    {
+      "id": "S08",
+      "publisher": "IRS",
+      "title": "Publication 523 (2025), Selling Your Home",
+      "url": "https://www.irs.gov/pub/irs-pdf/p523.pdf",
+      "status": "partial",
+      "used_for": "Main-home gain exclusion of $250,000 ($500,000 joint) and the eligibility test"
+    },
+    {
+      "id": "S09",
+      "publisher": "IRS",
+      "title": "Publication 544 (2025), Sales and Other Dispositions of Assets",
+      "url": "https://www.irs.gov/pub/irs-pdf/p544.pdf",
+      "status": "snippet",
+      "used_for": "Unrecaptured section 1250 gain (depreciation on real property) taxed at a maximum 25%. The fetched chunk did not reach the rate passage; rate taken from search snippets quoting this publication, so re-check on the PDF"
+    },
+    {
+      "id": "S10",
+      "publisher": "County of Santa Clara Controller-Treasurer",
+      "title": "Compilation of Tax Rates and Information, FY 2025-26",
+      "url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+      "status": "partial",
+      "used_for": "1% maximum levy plus voter-approved bonds; assessed value rises by the lesser of CPI or 2% a year; 1st installment due 1 Nov, delinquent after 10 Dec; 2nd due 1 Feb, delinquent after 10 Apr; 10% penalty; 1.5% a month redemption penalty; supplemental bills after a change of ownership (chunk 0 read; tax-rate-area tables not read)"
+    },
+    {
+      "id": "S11",
+      "publisher": "County of Santa Clara Controller-Treasurer",
+      "title": "Compilation of Tax Rates, FY 2024-25 (TRA 013-000 total 1.04120)",
+      "url": "https://files.santaclaracounty.gov/exjcpb1531/2024-11/tax-rate-book-2024-2025-final.pdf",
+      "status": "snippet",
+      "used_for": "Rate-area total of 1.04120% before voter bonds for the city tax-rate area 013-000 (search snippet). The owner's own rate-area number is not known (open question)"
+    },
+    {
+      "id": "S12",
+      "publisher": "City and County of San Francisco, Office of the Treasurer and Tax Collector",
+      "title": "Secured Property Taxes",
+      "url": "https://sftreasurer.org/property/secured-property-taxes",
+      "status": "snippet",
+      "used_for": "FY 2026-27 secured property tax rate 1.18162182%; 1st installment delinquent after 10 Dec; supplemental assessment after change in ownership"
+    },
+    {
+      "id": "S13",
+      "publisher": "State of California (Revenue and Taxation Code section 11911)",
+      "title": "Documentary transfer tax, county rate $1.10 per $1,000",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=11911",
+      "status": "snippet",
+      "used_for": "County documentary transfer tax of $0.55 per $500 (= $1.10 per $1,000). Secondary tables disagree on whether some cities add a city rate; the city rate is unverified"
+    },
+    {
+      "id": "S14",
+      "publisher": "Congressional Budget Office",
+      "title": "The Economic Outlook for 2026 to 2036 (February 2026 slides)",
+      "url": "https://www.cbo.gov/system/files/2026-02/62052-Economic-Outlook-Slides.pdf",
+      "status": "snippet",
+      "used_for": "Range of PCE inflation 1.7% to 3.7% and 10-year Treasury 3.5% to 4.8% (CBO stated uncertainty). PCE returns to 2.0% by 2030"
+    },
+    {
+      "id": "S15",
+      "publisher": "Congressional Budget Office",
+      "title": "Testimony: CBO Budget and Economic Outlook baseline, 2026",
+      "url": "https://www.cbo.gov/system/files/2026-03/62154-baseline-testimony-sfc.pdf",
+      "status": "snippet",
+      "used_for": "CPI 2.3% in 2028-2036 (baseline table); 10-year Treasury 4.1% in 2026 rising to 4.3% in 2027"
+    },
+    {
+      "id": "S16",
+      "publisher": "Los Angeles County Assessor (official press release)",
+      "title": "2026 Assessment Roll: maximum 2% Proposition 13 inflation factor applied",
+      "url": "https://lacounty.gov/2026/07/14/la-county-property-values-surpass-2-2-trillion/",
+      "status": "snippet",
+      "used_for": "Not used for any figure (LA County page, not Santa Clara or San Francisco)"
+    },
+    {
+      "id": "S17",
+      "publisher": "NYU Stern (A. Damodaran), academic dataset",
+      "title": "Historical Returns on Stocks, Bonds and Bills: 1928-2025 (updated 5 Jan 2026)",
+      "url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html",
+      "status": "fetched",
+      "used_for": "S&P 500 total return and 3-month T-bill annual returns, 1928-2025 (data/returns_1928_2025.csv). Academic, not official. Transcription checked against the source's own $100 cumulative values (within 0.04%)"
+    },
+    {
+      "id": "S18",
+      "publisher": "City and County of San Francisco, Rent Board",
+      "title": "Allowable annual rent increase, 1 Mar 2026 to 28 Feb 2027",
+      "url": "https://sf.gov/departments/rent-board",
+      "status": "not_verified",
+      "used_for": "Secondary sites report 1.6%; official Rent Board page not reached. Not used in the model"
+    },
+    {
+      "id": "S19",
+      "publisher": "IRS",
+      "title": "Form 8960 and instructions (net investment income tax, 3.8%)",
+      "url": "https://www.irs.gov/forms-pubs/about-form-8960",
+      "status": "not_verified",
+      "used_for": "3.8% NIIT is applied as a modelling assumption; the primary document was not fetched"
+    },
+    {
+      "id": "S20",
+      "publisher": "Franchise Tax Board (CA)",
+      "title": "2025 Form 540 tax rate schedule (top bracket)",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html",
+      "status": "not_verified",
+      "used_for": "Top California ordinary rate not read. Model uses a labelled range instead"
+    },
+    {
+      "id": "S21",
+      "publisher": "California Department of Insurance",
+      "title": "Homeowners insurance consumer information",
+      "url": "https://www.insurance.ca.gov/01-consumers/",
+      "status": "not_verified",
+      "used_for": "No official premium data was read. Insurance is an owner estimate only"
+    },
+    {
+      "id": "S23",
+      "publisher": "Congressional Budget Office",
+      "title": "The Budget and Economic Outlook: 2026 to 2036, By the Numbers (February 2026)",
+      "url": "https://www.cbo.gov/system/files/2026-02/61882-By-the-Numbers.pdf",
+      "status": "fetched",
+      "used_for": "Inflation: CPI 2.8% (2026), 2.4% (2027), 2.3% (2028 onward). PCE 2.7%, 2.3%, 2.1%, 2.0%. 3-month Treasury bills 3.3% (2026), 3.2% (2027-2030), 3.1% (2031-2036). 10-year Treasury 4.1% (2026), 4.3% (2027-2030), 4.4% (2031-2036)"
+    }
+  ]
+}

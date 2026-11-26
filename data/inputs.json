@@ -1,0 +1,63 @@
+{
+  "_meta": {
+    "note": "Owner-supplied household figures, rounded to the nearest $10 before any use (privacy rule). Status of every figure is 'owner-supplied, not independently verified' unless a source_id is given. No address, ZIP, parcel or account number is held in this repository.",
+    "rounding": "nearest $10 (half up)",
+    "valuation_date": "2026-11",
+    "accessed": "2026-11-26"
+  },
+  "property_a": {
+    "label": "Property A - single-family house, Santa Clara County, CA (inherited by trust)",
+    "value_estimate": {"value": 3100000, "status": "owner-supplied, not independently verified", "basis": "owner estimate, Nov 2026"},
+    "history": [
+      {"year": 2026, "tax": null, "tax_change": null, "assessed": 550540, "assessed_change": "+2%"},
+      {"year": 2025, "tax": 7210, "tax_change": "+2.9%", "assessed": 539740, "assessed_change": "+2%"},
+      {"year": 2024, "tax": 7000, "tax_change": "+1.2%", "assessed": 529160, "assessed_change": "+2%"},
+      {"year": 2023, "tax": 6920, "tax_change": "+2.4%", "assessed": 518790, "assessed_change": "+2%"},
+      {"year": 2022, "tax": 6760, "tax_change": "+1.4%", "assessed": 508610, "assessed_change": "+2%"},
+      {"year": 2021, "tax": 6660, "tax_change": "+1.5%", "assessed": 498640, "assessed_change": "+1%"},
+      {"year": 2020, "tax": 6570, "tax_change": null, "assessed": 493530, "assessed_change": "+2%"},
+      {"year": 2019, "tax": 6570, "tax_change": "+2.8%", "assessed": 483850, "assessed_change": "+2%"},
+      {"year": 2018, "tax": 6380, "tax_change": null, "assessed": 474370, "assessed_change": "+2%"},
+      {"year": 2017, "tax": 6380, "tax_change": "-0.5%", "assessed": 465070, "assessed_change": "+2%"},
+      {"year": 2016, "tax": 6410, "tax_change": "+4.6%", "assessed": 455950, "assessed_change": "+1.5%"},
+      {"year": 2015, "tax": 6130, "tax_change": "+2.8%", "assessed": 449100, "assessed_change": "+2%"},
+      {"year": 2014, "tax": 5970, "tax_change": null, "assessed": 440310, "assessed_change": "+0.5%"}
+    ],
+    "insurance_annual_owner_estimate": 1500,
+    "water_monthly_range": [100, 150],
+    "solar_credit_monthly_range": [10, 20],
+    "electricity_monthly": 0,
+    "units": 1,
+    "occupancy_plan": "not decided"
+  },
+  "property_b": {
+    "label": "Property B - three-unit building, San Francisco County, CA (owned by [HEIR])",
+    "value_estimate": {"value": 1800000, "status": "owner-supplied, not independently verified", "basis": "owner estimate, Nov 2026"},
+    "history": [
+      {"year": 2025, "tax": 2440, "tax_change": "+5.3%", "assessed": 114250, "assessed_change": "+2%"},
+      {"year": 2024, "tax": 2320, "tax_change": "+6.2%", "assessed": 112010, "assessed_change": "+2%"},
+      {"year": 2023, "tax": 2180, "tax_change": "+3.4%", "assessed": 109810, "assessed_change": "+2%"},
+      {"year": 2022, "tax": 2110, "tax_change": "+2%", "assessed": 107660, "assessed_change": "+2%"},
+      {"year": 2021, "tax": 2070, "tax_change": "-5.9%", "assessed": 105600, "assessed_change": "+1%"},
+      {"year": 2020, "tax": 2200, "tax_change": "+3%", "assessed": 104510, "assessed_change": "+2%"},
+      {"year": 2019, "tax": 2130, "tax_change": "+3.5%", "assessed": 102470, "assessed_change": "+2%"},
+      {"year": 2018, "tax": 2060, "tax_change": "+18.4%", "assessed": 100460, "assessed_change": "+2%"},
+      {"year": 2017, "tax": 1740, "tax_change": "+3.9%", "assessed": 98490, "assessed_change": "+2%"},
+      {"year": 2016, "tax": 1680, "tax_change": "+1.6%", "assessed": 96560, "assessed_change": "+1.5%"}
+    ],
+    "units_total": 3,
+    "units_rented": 2,
+    "rent_monthly_total": 7150,
+    "water_monthly_range": [330, 400],
+    "electricity_monthly_range": [30, 70],
+    "insurance_annual_owner_estimate": 1500
+  },
+  "household": {
+    "transfer_years_modelled": [2040, 2050],
+    "horizons_years": [10, 20],
+    "living_commitment_in_writing": false,
+    "verified_rental_comparables_for_A": 0,
+    "other_estate_assets_known": false,
+    "estate_tax_known_real_estate_total": 4900000
+  }
+}
