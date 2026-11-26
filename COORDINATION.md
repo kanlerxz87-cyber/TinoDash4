@@ -541,6 +541,8 @@ and `decision-workspace/` were not edited by this session.
 
 | ID | Task | Status | Owner | Files in scope |
 |----|------|--------|-------|----------------|
-| P-01 | Audit current public artifacts for direct household-derived property inputs, identify current exposure, and add a fail-closed privacy gate / remediation record. Do not rewrite shared/main history. | in progress | arena-bc2ed56c | `tools/`, `PRIVACY_REMEDIATION.md`, privacy-related site outputs only |
+| P-01 | Audit current public artifacts for direct household-derived property inputs, identify current exposure, and contain alternate site trees from Pages. Do not rewrite shared/main history. | needs review (Pages build / history purge not verified) | arena-bc2ed56c | `_config.yml`, `.nojekyll`, `PRIVACY_REMEDIATION.md`, `COORDINATION.md` |
 
 Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
+
+P-01 update: `_config.yml` now excludes alternate site trees and source directories from the Jekyll artifact; `.nojekyll` was removed to allow the exclusions to take effect. `PRIVACY_REMEDIATION.md` records the exact boundary: repository files and earlier public history remain outside this containment. Local Jekyll verification is unavailable in this checkout, so this task remains needs review pending the GitHub Pages build and a deployed-path check.
