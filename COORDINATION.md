@@ -534,3 +534,24 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+---
+
+## Session 75bcd077 — privacy containment, history audit, source verification (claim)
+
+Session ID: `75bcd077` · Branch: `arena/75bcd077-tinodash4` (fixed for this session) · Base: `b7825dc` (main, PR #18).
+Claimed 2026-11-26 (UTC). Scope is deliberately narrower than the full brief: the brief's 50-plus items already have
+owners on this board, so this session takes the items that are **privacy-urgent** or **unverified**, and nothing else.
+
+| # | Task | Status | Files in scope |
+|---|------|--------|----------------|
+| P-1 | Contain public exposure on the published `decision-model/` site: remove ZIP codes, the neighbourhood label and city-plus-ZIP combinations; use placeholders | in progress | `decision-model/**` (site, src, README) |
+| P-2 | Privacy checker for `decision-model/`: forbidden-identifier scan that stores hashes, not the literal identifiers | in progress | `decision-model/src/tools/check_site.py` |
+| P-3 | Git history audit (report only, no rewrite): commit IDs carrying ZIPs, city labels, exact household figures, and author metadata | in progress (findings on this board and on `decision-model/flagged.html`) | `COORDINATION.md`, `decision-model/src/data/facts.json` |
+| V-1 | Official-source verification: FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; federal 2026 exclusion; Prop 19 2026-27 allowance | in progress | `decision-model/src/data/facts.json` |
+| B-1 | Rebuild `decision-model/`, run its checks, and confirm the rebuilt pages are clean | pending | `decision-model/site/**` |
+| I-1 | Integration: PR `arena/75bcd077-tinodash4` → `main`, merge, GitHub Pages check | pending | `COORDINATION.md` |
+
+Not claimed (owned or done elsewhere, not touched here): root `index.html`/`pages/`/`data/` (session 1), `decision-workspace/`
+(9ca44509), `site/` and `model/` (arena-65b70013), `docs/` and `estate-model/` (bba2482b, 150580b0). The brief's other
+items are open items for a future session and are listed under "Open after 75bcd077" below.
