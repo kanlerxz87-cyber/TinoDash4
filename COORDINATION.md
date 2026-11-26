@@ -961,3 +961,10 @@ Session ID: `241e462c` · Branch: `arena/241e462c-tinodash4` (fixed for this ses
 
 - 2026-11-26 · 241e462c · Found `main` had moved to `2c212dc`. A first attempt removed the alternate trees; reverted before push because they are claimed (see conflict log). Root-scope changes reapplied against current `main`.
 - 2026-11-26 · 241e462c · Public gate passes. Owner gate not run (no owner inputs in this checkout).
+
+### Integration record (241e462c)
+
+- PR: https://github.com/kanlerxz87-cyber/TinoDash4/pull/35 · merged with a merge commit (`gh pr merge 35 --merge`) on 2026-11-26 20:05:47 UTC · merge commit `b3cb4ac`.
+- Checks before merge: `Verify model + site` success on head `b024601` (the PR's final head). Public gate `tools/check_site.py` passes.
+- Pages: build for `b3cb4ac` reports `built`. Live `brief.html` shows the statutory allowance **$1,044,586** (fetched 2026-11-26).
+- Not done, carried forward: owner-mode gate not run (no owner inputs in this checkout); model outputs not regenerated with the corrected constant (needs owner inputs); the handback of the alternate trees (`site/`, `decision-workspace/`, `model/`, `decision-model/`) is open for the claim holders or the owner; the history rewrite is an owner decision; the five exact values quoted in `75bcd077`'s P-3 row remain in `COORDINATION.md`, which Pages does not publish.
