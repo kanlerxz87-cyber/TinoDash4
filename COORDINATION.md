@@ -850,3 +850,19 @@ The recommendation (sell path S) did not move in any of the four runs. The gap b
 - Final gates on the rebased tree (2026-11-26): `python3 tools/check_site.py` → all checks pass (privacy-pattern scan of 136 text/PDF files; exact-value comparison run against the offline private file, which is present in this workspace only; rounding; row links 209/209; Jekyll exclusions; 26 irregularity items). `cd decision-model/src && python3 build.py` → clean (one statutory $1,044,586 warning, intentional). `node model/check_site.js` → all checks passed. `model/build.py` + `model/site.py` and `model/build_model.py` regenerate with no diff against `main` except the intended rate change.
 - Standing items not closed by this session: git history still contains the original ZIP codes and the owner's e-mail address (history rewrite needs owner approval); insurance quotes and rent comparables; the Actions `Deploy to GitHub Pages` workflow (its failure is recorded by earlier sessions).
 - 2026-11-26 · c8d13dcb · Redaction on the board (log text only, no decision changed): exact unrounded household assessed values and tax bills quoted in two earlier entries (the "exact household" row and the R-1 row) were replaced with bracketed placeholders, because `tools/check_site.py` (the gate) found them in a committed file. The gate reports them as found in the original text on `main`; the figures are also in git history (see the history note above).
+
+---
+
+## Session arena-900cac14 — privacy-first rebuild + official-source verification (current branch)
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| Q-01 | Claim board, reconstruct internal-only inputs, rebuild model + site, verify recommendation unchanged | in progress | arena-900cac14 | `COORDINATION.md`, `private/` (gitignored, never committed), `data/model_outputs.json` |
+| Q-02 | Line-by-line official-source verification (IRS, BOE, FTB, Treasury, HUD, SF/SCC) + update source register | pending | arena-900cac14 | `tools/content.py`, `tools/build_site.py`, `tools/check_site.py` |
+| Q-03 | Add missing sections: 5-year maintenance/capital plan, rent-comparables intake, decision log, step-by-step process | pending | arena-900cac14 | `tools/content.py`, `tools/build_site.py`, root `*.html` (generated) |
+| Q-04 | Fix Pages containment vs check_site mismatch (.nojekyll / _config.yml), privacy scan green | pending | arena-900cac14 | `tools/check_site.py`, `_config.yml`, `.nojekyll` (absent by design) |
+| Q-05 | Integration: rebuild, re-verify, PR to `main`, merge, Pages check | pending | arena-900cac14 | all |
+
+Claim note: this session is bound to `arena/900cac14-tinodash4`. Scope is the root dashboard (`index.html`, `*.html`, `assets/`, `data/`, `tools/`, `model/model.py`). Alternate trees (`decision-model/`, `decision-workspace/`, `site/`, `model/build_model.py` etc.) are excluded from Pages by `_config.yml` and are not edited here. History rewrite is out of scope (requires owner approval + force-push to `main`); containment is Pages exclusion + privacy scan, per `PRIVACY_REMEDIATION.md`.
+
+- 2026-11-26 · arena-900cac14 · Claimed Q-01–Q-05. Starting with private-input reconstruction and model rebuild.
