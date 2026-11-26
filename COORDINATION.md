@@ -981,7 +981,7 @@ Scope: privacy-first publication of the root dashboard only. No alternate/legacy
 | V-2 | Confirm `.nojekyll` is absent so `_config.yml` Pages exclusions (`decision-model`, `decision-workspace`, `site`, `model`, `research`, `tools`, `private`) serve the anonymized root dashboard only | confirmed — main already removed `.nojekyll` (489c6ce); `.nojekyll` absent | 7cdb8a85 | `.nojekyll`, `_config.yml` |
 | V-3 | Rebuild root site (`build_site.py` → 18 navigation pages) and regenerate one-page Attorney & CPA Briefing Sheet (`brief.pdf`, 1 page) | done | 7cdb8a85 | root `*.html`, `assets/`, `data/`, `brief.pdf` |
 | V-4 | Run pre-publish gate `python3 tools/check_site.py` | all structural checks pass: privacy scan 136 files, rounding 1,934/$10, row links 214/214, Pages exclusions present, irregularities 29 | 7cdb8a85 | `tools/check_site.py` |
-| V-5 | Push branch, clear GitHub stale mergeability state, merge PR #30, confirm Pages deploys, record PR link + result | in progress | 7cdb8a85 | PR #30 → main |
+| V-5 | Push branch, clear GitHub stale mergeability state, merge PR #30, confirm Pages deploys, record PR link + result | done | 7cdb8a85 | PR #30 → main |
 
 Verification record (2026-11-26):
 - `python3 tools/check_site.py` → structural checks all PASS: 136 text/PDF files scanned; 1,934 money values multiples of $10; 214/214 table rows linked; `_config.yml` Jekyll exclusions present for the seven alternate/source trees; `.nojekyll` absent; 29 irregularities tracked on Flagged for Review.
@@ -989,5 +989,8 @@ Verification record (2026-11-26):
 - Household PII remains ONLY in `private/raw_inputs.json` (gitignored, never published). Legacy/alternate trees hold rounded household figures but are excluded from the Pages artifact by `_config.yml`; none is served by GitHub Pages.
 - Public repo/history exposure remains: repository and Pages are public; exact/rounded household figures exist in legacy trees and git history. Not claimed as scrubbed. History rewrite (owner decision) is out of scope for this session.
 
-Publishing plan: push `arena/7cdb8a85-tinodash4`, then merge PR #30 (`arena/7cdb8a85-tinodash4` → `main`). After merge, confirm GitHub Pages `pages-build-deployment` succeeds and record the Pages URL and merge result here. Address `verify.yml` (runs `python3 model/build_model.py`) if it is a required status check before merging.
+Publishing result: branch pushed and PR #30 (`arena/7cdb8a85-tinodash4` → `main`) merged via `gh pr merge 30 --merge` as merge commit `3714656` on 2026-11-26. `main` is now `3714656` and contains commit `b49ca73` (this session). PR link: https://github.com/kanlerxz87-cyber/TinoDash4/pull/30.
+- GitHub Pages `pages-build-deployment` for `3714656`: build `1406520807` status `built`, error null (~38 s). Live site: https://kanlerxz87-cyber.github.io/TinoDash4/ — serves the anonymized root dashboard (placeholders only; no household PII, zip codes, or personal names; all figures $10-rounded; every table row carries an official-source link).
+- `verify.yml` (runs `python3 model/build_model.py`) was not gating the merge (no required-status failure reported); it remains a follow-up if the owner enables it as a required check.
+- Session 7cdb8a85 complete: privacy-first publication of the root dashboard; no PII on the website; PII internal-only in gitignored `private/raw_inputs.json`.
 
