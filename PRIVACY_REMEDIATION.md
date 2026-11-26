@@ -31,3 +31,8 @@ PR #19 was merged to `main`; the GitHub Pages Jekyll build and deploy completed 
 4. For future household calculations, store raw inputs only in an offline or access-controlled private inventory and generate a publication export from synthetic/ranged inputs. Run a privacy scan on the final Pages artifact before every release.
 
 This note intentionally avoids restating the exposed household values or exact property identifiers.
+
+
+## Final deployment record (2026-11-26)
+
+PR #22 merged to `main` at `538b398ac349faa2d2af97732e9e176a643122ac`. Its CI verification passed. The first post-merge Pages run was cancelled during deployment when a concurrent main update started a replacement; replacement build/deploy run `45886856976` succeeded and the Pages API reported `built`. The root dashboard and Flagged for Review page were fetched successfully. Fetch attempts for excluded legacy paths were unavailable; the Actions artifact download was blocked by the sandbox's external blob host. This does not change the key limitation: the public repository and prior history remain outside Pages-only containment.
