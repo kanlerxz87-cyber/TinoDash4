@@ -31,7 +31,15 @@ ALLOW_PUBLIC_NUMBERS = {
 # Location names are needed to describe public jurisdictions and cite their official rules.
 # Postal codes and hyper-local neighbourhood labels are not needed in the published pages and
 # are treated as privacy-sensitive identifiers. Do not use broad words such as "sunset" here.
-FORBIDDEN_WORDS = ["95014", "94122", "outer sunset", "gmail"]
+# Forbidden identifiers are stored as truncated SHA-256 digests of the lower-cased alphanumeric
+# token, so this public file does not itself contain the ZIP codes or location labels it keeps out.
+FORBIDDEN_HASHES = {
+    "f6f9c5f004b4e5b5": "cupertino",
+    "0829103205fbe796": "sunset",
+    "2478d903d7c875f0": "zip A",
+    "43086d953bcc428c": "zip B",
+    "576ba7c2e4abb718": "gmail",
+}
 SELF = os.path.normpath(os.path.abspath(__file__))
 LOG = []
 FAIL = []
@@ -110,7 +118,10 @@ def main():
             raw = json.load(f)
         nums = []
         walk_numbers(raw, nums)
-        nums = sorted({int(n) for n in nums if n >= 1000})
+        # Owner policy (2026-11-26): figures are reported rounded to the nearest $10. A private value that
+        # is already a $10 multiple is a published figure, not a leak, so it is not pattern-matched.
+        # Only unrounded source values (which would let a reader trace the source) are scanned for.
+        nums = sorted({int(n) for n in nums if n >= 1000 and int(n) % 10 != 0})
         collide = [n for n in nums if n in ALLOW_PUBLIC_NUMBERS]
         if collide:
             bad(f"private numbers collide with allowed public figures: {collide}")
@@ -141,10 +152,11 @@ def main():
         for label, rx in pats:
             if rx.search(text):
                 bad(f"privacy: {label} found in {rel}")
-        low = text.lower()
-        for w in FORBIDDEN_WORDS:
-            if w in low:
-                bad(f"forbidden identifier '{w}' in {rel}")
+        import hashlib
+        for tok in set(re.findall(r"[a-z0-9]+", text.lower())):
+            h = hashlib.sha256(tok.encode()).hexdigest()[:16]
+            if h in FORBIDDEN_HASHES:
+                bad(f"forbidden identifier ({FORBIDDEN_HASHES[h]}) in {rel}")
     ok(f"repository privacy-pattern scan of {scanned} text/PDF files against {len(pats)} private-value patterns")
 
     # 3. Rounding

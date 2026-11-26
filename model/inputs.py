@@ -37,9 +37,9 @@ SOURCES = {
     "BOE-P19": ("California State Board of Equalization, Proposition 19 "
                 "(comparison charts, filing periods, $1M indexed amount table)",
                 "https://www.boe.ca.gov/prop19/", "official"),
-    "BOE-LTA25015": ("BOE Letter to Assessors 2025/015 (Prop 19 intergenerational "
-                     "exclusion, $1,044,586 for 2/16/2025-2/15/2027)",
-                     "https://boe.ca.gov/proptaxes/pdf/lta25015.pdf", "official"),
+    "BOE-LTA25009": ("BOE Letter to Assessors 2025/009, March 7, 2025 (Prop 19 intergenerational "
+                     "exclusion, $1,044,586 for 2/16/2025-2/15/2027; fetched and read 2026-11-26)",
+                     "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf", "official"),
     "BOE-PUB801": ("BOE Publication 801, Proposition 19 Fact Sheet",
                    "https://www.boe.ca.gov/pdf/pub801.pdf", "official"),
     "SCC-RATEBOOK": ("County of Santa Clara, Compilation of Tax Rates & Information, "

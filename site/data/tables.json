@@ -513,7 +513,7 @@
  "rates": [
   {
    "item": "Property A implied all-in rate (household bill)",
-   "value": "1.335%",
+   "value": "1.336%",
    "src": "household",
    "status": "Flagged \u2014 exceeds typical published TRA rates"
   },
