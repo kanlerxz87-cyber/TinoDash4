@@ -534,3 +534,17 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+---
+
+## Session arena-65c8db99 — privacy-first integration review
+
+Session ID: `arena-65c8db99` · Branch: `arena/65c8db99-tinodash4` · Base: `b7825dc5eaa7cf10252dae5e8a56f10174e7a7b5`.
+
+### Claim (in progress)
+
+| Task | Status | Owner | File scope |
+|---|---|---|---|
+| Audit current published surfaces and privacy/history exposure; converge the public entry point on one clearly linked decision-support site; close verified gaps in first-screen decision cues, sources, and accessibility; rebuild and run privacy/link/model checks | in progress | `arena-65c8db99` | `COORDINATION.md`, `index.html`, `README.md`, `tools/`, `.github/workflows/verify.yml`, `site/` (only if tests identify a concrete change); no edits to the legacy model workspaces unless a gap is logged here first |
+
+No other active claims were present when this task was claimed. This session is on the Arena-fixed branch; it will not create or switch branches. Historical exposure will be assessed separately from current-tree privacy because ordinary PR merges cannot rewrite public commits already reachable from `main`.
