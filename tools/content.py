@@ -21,6 +21,26 @@ Status vocabulary (every row carries one):
 CHECKED = "2026-11-25"
 
 SOURCES = {
+    "IRS-ESTATE-TAX": dict(
+        title="IRS: Estate tax page (filing threshold for 2026 year of death: $15,000,000)",
+        url="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+        publisher="IRS", status="FETCHED"),
+    "FTB-540-BOOKLET": dict(
+        title="FTB: 2022 Form 540 booklet (line 62, Mental Health / Behavioral Health Services Tax: 1% of taxable income over $1,000,000)",
+        url="https://www.ftb.ca.gov/forms/2022/2022-540-booklet.html",
+        publisher="California FTB", status="EXCERPT"),
+    "REPO-PRIVACY": dict(
+        title="Repository note: PRIVACY_REMEDIATION.md (containment status and limits)",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/PRIVACY_REMEDIATION.md",
+        publisher="Repository", status="LINK"),
+    "REPO-CHECK": dict(
+        title="Repository file: tools/check_site.py (publish gate)",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/tools/check_site.py",
+        publisher="Repository", status="LINK"),
+    "REPO-VERIFY": dict(
+        title="Repository file: .github/workflows/verify.yml (CI gate)",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/.github/workflows/verify.yml",
+        publisher="Repository", status="LINK"),
     "IRS-IR-2025-103": dict(
         title="IRS news release IR-2025-103: 2026 inflation adjustments (estate and gift exclusion $15,000,000 for 2026; gift exclusion $19,000)",
         url="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
@@ -263,6 +283,26 @@ IRREGULARITIES = [
      "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
      "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
      []),
+    ("Alternate site trees contained household figures and location labels",
+     "decision-model/, decision-workspace/ and site/ were tracked in the public repository and contained household-specific figures and location labels. They are not part of the Pages build.",
+     "Untracked from git and moved to private/archive/ (gitignored) on 2026-11-26. Earlier commits still contain them: a history rewrite needs owner authorization and cannot be verified from this grafted checkout.",
+     ["REPO-PRIVACY"]),
+    ("Behavioral Health Services Tax (the 1% above $1 million) is verified; the model treatment is a simplification",
+     "FTB Form 540 instructions (line 62): 1% of California taxable income over $1,000,000, added to regular tax. It is enacted law (renamed from the Mental Health Services Tax). The model applies a flat 13.3% marginal rate to gains, which is the combined marginal rate, not the surcharge on the excess above $1M only.",
+     "Owner to review the what-if tax treatment of large-gain years. Separate proposals (for example a billionaire tax) are not verified in this session and are not modeled.",
+     ["FTB-540-BOOKLET"]),
+    ("Federal 2026 filing threshold confirmed on the IRS page",
+     "IRS Estate tax page: filing threshold for 2026 year of death is $15,000,000 (the figure in the earlier registers is consistent with it).",
+     "None required for 2026. Re-check annually.",
+     ["IRS-ESTATE-TAX"]),
+    ("Raw-figure privacy scan skips values already rounded to $10",
+     "The scan in tools/check_site.py targets unrounded owner figures, because the owner's policy publishes figures rounded to $10. Rounded owner figures are allowed only in model/ and research/ source notes, never in published pages.",
+     "Owner to decide whether the scan should also cover rounded owner figures in source notes.",
+     ["REPO-CHECK"]),
+    ("CI workflow regenerated the archived site tree",
+     ".github/workflows/verify.yml regenerated and checked site/data, which is now archived.",
+     "Workflow now builds the root site and runs the publish gate only (tools/check_site.py --allow-missing-private). The full raw-figure scan must be run locally by the owner.",
+     ["REPO-VERIFY"]),
 ]
 
 # Law: (topic, rule, status, source ids, what it means here)

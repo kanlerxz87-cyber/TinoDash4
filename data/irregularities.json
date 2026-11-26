@@ -160,15 +160,15 @@
   "found": "decision-model/, decision-workspace/ and site/ were tracked in the public repository and contained household-specific figures and location labels. They are not part of the Pages build.",
   "action": "Untracked from git and moved to private/archive/ (gitignored) on 2026-11-26. Earlier commits still contain them: a history rewrite needs owner authorization and cannot be verified from this grafted checkout.",
   "sources": [
-   "PRIVACY_REMEDIATION.md"
+   "REPO-PRIVACY"
   ]
  },
  {
-  "item": "Behavioral Health Services Tax (the '1% above $1 million') is verified; the model's treatment is a simplification",
+  "item": "Behavioral Health Services Tax (the 1% above $1 million) is verified; the model treatment is a simplification",
   "found": "FTB Form 540 instructions (line 62): 1% of California taxable income over $1,000,000, added to regular tax. It is enacted law (renamed from the Mental Health Services Tax). The model applies a flat 13.3% marginal rate to gains, which is the combined marginal rate, not the surcharge on the excess above $1M only.",
   "action": "Owner to review the what-if tax treatment of large-gain years. Separate proposals (for example a billionaire tax) are not verified in this session and are not modeled.",
   "sources": [
-   "https://www.ftb.ca.gov/forms/2022/2022-540-booklet.html"
+   "FTB-540-BOOKLET"
   ]
  },
  {
@@ -176,23 +176,23 @@
   "found": "IRS Estate tax page: filing threshold for 2026 year of death is $15,000,000 (the figure in the earlier registers is consistent with it).",
   "action": "None required for 2026. Re-check annually.",
   "sources": [
-   "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax"
+   "IRS-ESTATE-TAX"
   ]
  },
  {
   "item": "Raw-figure privacy scan skips values already rounded to $10",
-  "found": "tools/check_site.py scans unrounded owner figures only, because the owner's policy publishes figures rounded to $10. Rounded values that match an owner figure are not caught by the scan.",
-  "action": "Owner to decide whether the scan should also cover rounded owner figures. Rounded figures are still reviewed manually.",
+  "found": "The scan in tools/check_site.py targets unrounded owner figures, because the owner's policy publishes figures rounded to $10. Rounded owner figures are allowed only in model/ and research/ source notes, never in published pages.",
+  "action": "Owner to decide whether the scan should also cover rounded owner figures in source notes.",
   "sources": [
-   "tools/check_site.py"
+   "REPO-CHECK"
   ]
  },
  {
   "item": "CI workflow regenerated the archived site tree",
-  "found": ".github/workflows/verify.yml ran model/build_model.py and checked site/data, which is now archived.",
-  "action": "Workflow now runs the publish gate only (tools/check_site.py --allow-missing-private). The full raw-figure scan must be run locally by the owner.",
+  "found": ".github/workflows/verify.yml regenerated and checked site/data, which is now archived.",
+  "action": "Workflow now builds the root site and runs the publish gate only (tools/check_site.py --allow-missing-private). The full raw-figure scan must be run locally by the owner.",
   "sources": [
-   ".github/workflows/verify.yml"
+   "REPO-VERIFY"
   ]
  }
 ]
