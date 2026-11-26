@@ -120,7 +120,7 @@ B_AV_2025    = r10(114_250)
 B_TAX_2025   = r10(2_440)
 A_TAX_2025   = r10(7_210)
 A_RATE_IMPL  = 7210 / 539740             # implied all-in from household bill (flagged; inputs rounded to $10)
-B_RATE_IMPL  = 2439 / 114248
+B_RATE_IMPL  = 0.02135  # rounded implied rate; exact source values remain private
 SF_RATE_2627 = 0.0118162182              # official
 SC_TYPICAL   = 0.011488                  # official typical TRA example (booklet)
 
