@@ -639,7 +639,7 @@
         "rent_pass_through": "Owners of rent-controlled units may pass through up to 50% of the tax, capped at $65 per unit, if base rent set before June 1, 2027",
         "inflation": "adjusted annually for inflation"
       },
-      "note": "Apply this to Property B (the SF 3-unit building). A 3-unit building is a multifamily residential parcel: base $249 for the first 5,000 sq ft plus $0.195/sq ft over 5,000, capped at $50,000. For a typical Outer Sunset 3-unit of roughly 3,500-4,500 sq ft, the tax is $249/yr. That is negligible — but the rent pass-through of up to $65/unit materially interacts with the rent-controlled tenancies, and the senior exemption may apply if the owner is 65+ and occupying."
+      "note": "Apply this to Property B (the SF 3-unit building). A 3-unit building is a multifamily residential parcel: base $249 for the first 5,000 sq ft plus $0.195/sq ft over 5,000, capped at $50,000. For a typical local 3-unit of roughly 3,500-4,500 sq ft, the tax is $249/yr. That is negligible — but the rent pass-through of up to $65/unit materially interacts with the rent-controlled tenancies, and the senior exemption may apply if the owner is 65+ and occupying."
     },
     {
       "id": "CA-SF-RENT-ORDINANCE",
@@ -758,7 +758,7 @@
     },
     {
       "id": "HH-CUPERTINO-VALUE",
-      "label": "Cupertino (95014) estimated market value, November 2026",
+      "label": "Cupertino () estimated market value, November 2026",
       "value": 3100000,
       "unit": "USD",
       "jurisdiction": "Household input",
@@ -796,7 +796,7 @@
     },
     {
       "id": "HH-SF-VALUE",
-      "label": "San Francisco (94122) estimated market value, November 2026",
+      "label": "San Francisco () estimated market value, November 2026",
       "value": 1800000,
       "unit": "USD",
       "jurisdiction": "Household input",
@@ -804,7 +804,7 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "HOUSEHOLD ESTIMATE. This is a 3-unit building in the Outer Sunset; a 3-unit is valued on gross rent multiplier and comparable 3-unit sales, not on the single-family per-square-foot metric. Obtain a broker opinion of value for a 3-unit specifically."
+      "flag": "HOUSEHOLD ESTIMATE. This is a 3-unit building in the local jurisdiction; a 3-unit is valued on gross rent multiplier and comparable 3-unit sales, not on the single-family per-square-foot metric. Obtain a broker opinion of value for a 3-unit specifically."
     },
     {
       "id": "HH-SF-RENT",
@@ -816,7 +816,7 @@
       "instrument": "leases",
       "url": "",
       "status": "unverified",
-      "flag": "Household figure, unverified. $85,800/yr gross on a $1.8M building is a 4.77% gross yield — plausible for a long-held Outer Sunset 3-unit with below-market tenancies. The third unit is vacant/unrented, which is either a big opportunity (reset to market) or a warning (unrentable as configured). MUST be resolved: is the third unit legal, habitable, and rentable? That single question moves Property B's value by several hundred thousand dollars.",
+      "flag": "Household figure, unverified. $85,800/yr gross on a $1.8M building is a 4.77% gross yield — plausible for a long-held local three-unit with below-market tenancies. The third unit is vacant/unrented, which is either a big opportunity (reset to market) or a warning (unrentable as configured). MUST be resolved: is the third unit legal, habitable, and rentable? That single question moves Property B's value by several hundred thousand dollars.",
       "note": "Two units rented, one not. If the owner occupies the third unit, Property B is also a principal residence — which changes the § 121 analysis, the Prop 19 analysis if it is ever inherited onward, and the rent-control treatment (owner-occupancy of one unit in a 3-unit building is permitted under SF law; a 3-unit is not covered by the SF condo-conversion lottery in the same way as larger buildings — flagged unverified)."
     },
     {
@@ -863,7 +863,7 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "The household guessed ~$1,500. That is almost certainly too low for a $3.1M replacement-cost dwelling in Santa Clara County in the current admitted/non-admitted market. There is no official published rate for a specific parcel. Modelled as a $1,500-$4,500/yr range with the midpoint used for the headline, and flagged. ACTION: get three real quotes. California FAIR Plan exposure and wildfire/brush zone status should be checked; the 95014 foothills west of the city are in a higher fire severity zone than the flatlands.",
+      "flag": "The household guessed ~$1,500. That is almost certainly too low for a $3.1M replacement-cost dwelling in Santa Clara County in the current admitted/non-admitted market. There is no official published rate for a specific parcel. Modelled as a $1,500-$4,500/yr range with the midpoint used for the headline, and flagged. ACTION: get three real quotes. California FAIR Plan exposure and wildfire/brush zone status should be checked; the foothills west of the city are in a higher fire severity zone than the flatlands.",
       "note": "Do NOT treat $1,500 as a fact."
     },
     {
@@ -889,7 +889,7 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "No official source. A 3-unit pre-war Outer Sunset building carries more maintenance per dollar than a single-family house: three kitchens, three baths, shared systems, seismic, and rent-controlled tenants whose repair requests cannot be declined. Banded higher than Property A for that reason."
+      "flag": "No official source. A 3-unit pre-war local building carries more maintenance per dollar than a single-family house: three kitchens, three baths, shared systems, seismic, and rent-controlled tenants whose repair requests cannot be declined. Banded higher than Property A for that reason."
     }
   ]
 }

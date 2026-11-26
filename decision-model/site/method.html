@@ -15,7 +15,7 @@
     <span class="brandmark">IH</span>
     <span class="brandtext">
       <strong>Inherited-Home Decision Model</strong>
-      <small>Cupertino 95014 &middot; San Francisco 94122 &middot; anonymised</small>
+      <small>Property A &middot; Property B &middot; identifying postal codes withheld</small>
     </span>
   </div>
   <nav class="topnav">
@@ -48,7 +48,7 @@
 <div class="navgroup"><div class="navlabel">The process</div><ul>
 <li><a href="inheritance.html">Inheritance, step by step</a></li>
 <li><a href="deadlines.html">Deadlines as a timeline</a></li>
-<li><a href="property-b.html">Property B (the San Francisco building)</a></li>
+<li><a href="property-b.html">Property B (existing three-unit building)</a></li>
 <li><a href="decision.html">Pre-commitment agreement</a></li>
 <li><a href="decision-log.html">Decision log</a></li>
 </ul></div>
@@ -60,8 +60,7 @@
 </ul></div>
 <div class="navgroup privacy">
   <div class="navlabel">Privacy</div>
-  <p>All figures are rounded to the nearest 10 dollar as requested. Parcel-unique
-  assessed values are banded by construction. No personal information is on this site.
+  <p>Owner-supplied and modelled amounts use the requested $10 rounding step; legal thresholds remain exact where needed. Parcel-unique assessed values are banded. No direct names, street addresses, parcel IDs, or postal codes are shown, but property estimates and local-law references can still be correlated.
   <a href="method.html">Method &amp; privacy</a></p>
 </div>
 </aside>
@@ -131,17 +130,14 @@ liquidity constraint, not as a cash-flow asset with its own ledger. That is a re
 free plan. The household's stated highest priority was that no personal information appear in the
 final product. The measures taken:</p>
 <ul>
-<li>No names, addresses, parcel numbers, account numbers or dates of death appear anywhere in
-this repository or on this site. None were collected.</li>
-<li>All dollar figures on this site are rounded to the nearest 10 dollar, as
-requested.</li>
+<li>No household names, street addresses, parcel numbers, account numbers, dates of death, or tenant identities are intentionally stored in the working files. Commit metadata and public source/history still require separate privacy review.</li>
+<li>Owner-supplied estimates and modelled dollar outputs use the requested $10 rounding step. Statutory thresholds and source rates are left exact when rounding would misstate the law.</li>
 <li><strong>Parcel-unique assessed values are banded by construction, not by rounding.</strong>
 A $10 band on a tax-assessed value is still unique to one parcel; so those two values are carried
 as $10,000 bands in the model and never rendered at full precision.</li>
 <li>No analytics, no cookies, no third-party scripts, no fonts loaded from a CDN, and no forms
 that post anywhere. A visitor cannot be profiled and their inputs are never transmitted.</li>
-<li>The <code>.gitignore</code> blocks <code>private/</code>, <code>*.private.json</code> and
-<code>inventory.local.*</code> so that exact figures cannot be committed by accident.</li>
+<li><code>.gitignore</code> excludes local private-input paths, but does not make the tracked model source or published estimates private. Do not place exact inventories or documents in this repository.</li>
 </ul>
 <p><strong>The honest limitation:</strong> rounding protects against casual discovery and search
 indexing. It does not protect against a reader who already knows the household. If that is a
@@ -149,12 +145,8 @@ realistic threat, do not publish — run <code>python3 sitegen.py --out site-pri
 and keep the output off the internet. See <code>PRIVACY.md</code> in the repository.</p>
 </div>
 
-<h3>Git history</h3>
-<p>The repository was created with a single initial commit containing an 11-byte README. No
-personal data has ever been committed, so there is no pre-rounding history to scrub — the first
-version of every data file is already the rounded, banded version. The rule going forward is that
-a private figure must never be committed even transiently, because git history is permanent and a
-<code>git rm</code> commit does not remove it from history.</p>
+<h3>Git history and prior exposure</h3>
+<p>This checkout is shallow and does not contain enough earlier commits to audit the full public history. The merge-base commit metadata contains a personal email identifier, and the current branch cannot remove it from the default branch's history. A normal cleanup commit does not erase old Git objects. A repository-wide rewrite and cache purge have not been performed; do not treat this site as a completed history scrub.</p>
 </section>
 
 <section>
