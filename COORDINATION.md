@@ -906,3 +906,9 @@ The recommendation (sell path S) did not move in any of the four runs. The gap b
 ### Rebase conflict / additional data minimization — arena-bc2ed56c — 2026-11-26
 - `main` advanced to `7584aef` through a parallel privacy-containment merge while this documentation follow-up was pending. Kept the full incoming task record; in the public coordination note, replaced two exact owner-input scenario labels with non-numeric descriptions while preserving the ranking results and verification record.
 - PR #33 and Pages deployment results were appended above. No historical Git objects or earlier copies were altered by this edit.
+
+### P-02 merge record (2026-11-26)
+
+- PR #21 (`arena/10df03a3-tinodash4` → `main`): merged, merge commit `f89c619`. `Verify model + site` on the merge commit: success.
+- Pages: latest build `built` at `d417fb8`; `https://kanlerxz87-cyber.github.io/TinoDash4/` returns the dashboard (fetched after the build).
+- Not done here and left for the owners: untracking `site/` and `decision-workspace/` and `decision-model/` (other sessions active on them); rounded model constants (regenerate `site/data`); history rewrite (owner authorization).
