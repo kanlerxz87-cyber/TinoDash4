@@ -1,5 +1,29 @@
 [
  {
+  "item": "Prop 19 allowance was printed with a rounded value",
+  "found": "The root site printed $1,044,590 for the Prop 19 allowance. That is a $10 rounding of a statutory amount. BOE Letter 2025/009 sets $1,044,586, and the household rounding rule does not apply to statutes. Corrected in the root site, the brief and the model constant (2026-11-26).",
+  "action": "The model outputs in data/model_outputs.json were produced with the old constant. Regenerate them from the owner's private inputs. The difference is a few dollars in the cap, so no rounded result should move by more than $10.",
+  "sources": [
+   "BOE-LTA-2025-009"
+  ]
+ },
+ {
+  "item": "'Prop H' read as SF Measure H (November 3, 2026)",
+  "found": "The request's 'Prop H' is read as San Francisco Measure H, a Muni parcel tax. The official preliminary results show 74.42% yes. Measure I (transfer tax on sales over $10 million) shows 48.38% yes and did not pass.",
+  "action": "Confirm the reading. Certification is pending, so the result is preliminary.",
+  "sources": [
+   "SF-ELECTIONS-2026"
+  ]
+ },
+ {
+  "item": "Claimed alternate trees still hold exact household figures; removal handed back to their owners",
+  "found": "At 2c212dc the owner gate found exact household figures in the tracked trees site/, decision-workspace/, model/ and decision-model/ (the public gate does not, because Pages excludes them). decision-model/ was reported scrubbed on main by c8d13dcb; the others were not re-checked on the current main. Removing trees was considered and not done: their owners hold open items on the board.",
+  "action": "Owners of those trees, or the owner, to decide: scrub, band, or remove. See the board entry for session 241e462c.",
+  "sources": [
+   "REPO-PRIVACY-NOTE"
+  ]
+ },
+ {
   "item": "Prop 19 letter number corrected (2025/009, not 2025/015)",
   "found": "An earlier build cited BOE Letter to Assessors 2025/015 for the $1,044,586 allowance. The letter the BOE published on March 7, 2025 that sets this amount is No. 2025/009 (read in full on 2026-11-26). The citation and link are corrected in the source register and in the decision workspace. The figure itself was already correct.",
   "action": "No action on the figure. Keep the 2025/009 link. Check the next adjustment letter in February 2027.",

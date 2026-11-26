@@ -42,7 +42,7 @@ A_AV_2025 = r10(_A["tax_assessment"]["2025"])        # USER assessment history
 A_AV_2026 = r10(_A["tax_assessment"]["2026"])        # USER projection row
 A_TAX_2025 = r10(_A["property_tax"]["2025"])         # USER property tax
 EFF_RATE = A_TAX_2025 / A_AV_2025               # DERIVED effective rate (tax / assessed value)
-ALLOW_2026 = 1044590                            # SECONDARY BOE allowance $1,044,586, rounded to $10
+ALLOW_2026 = 1044586                            # FETCHED BOE LTA 2025/009: $1,044,586 (statutory, not rounded)
 PROP13_FACTOR = 0.02                            # SECONDARY 2026-27 inflation factor 1.02 (cap is 2%)
 CPI = 0.02                                      # EXCERPT: CBO PCE inflation 2.0% by 2030
 
