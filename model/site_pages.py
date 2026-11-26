@@ -211,7 +211,7 @@ def index(ctx):
          ["Prior factored base year value (Prop 13 base, grown at the 2% cap)", m(p19["fbyv_T"]),
           srclink("SCC-RATEBOOK")],
          ["Prop 19 indexed allowance, carried forward from the published amount", m(p19["allowance_T"]),
-          srclink("BOE-LTA25015")],
+          srclink("BOE-LTA25009")],
          ["Cap: base + allowance", m(p19["cap_T"]), srclink("model")],
          ["Excess over the cap - the part that reassesses", m(p19["excess_T"]), srclink("model")],
          ["New taxable value <b>with</b> the exclusion (heir occupies)", m(p19["base_excluded"]),

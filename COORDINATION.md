@@ -377,7 +377,7 @@ The board format here differs from the sections above because this session claim
 | Date | Conflict | Resolution |
 | --- | --- | --- |
 | 2026-11-25 | The root `data/` directory now holds both sites' JSON. | This site's seven files moved to `decision-workspace/data/`; the root `data/` keeps only the earlier session's `model_outputs.json` and `irregularities.json`. Nothing was renamed inside either set. |
-| 2026-11-25 | `tools/check_site.py` forbids six identifiers repo-wide, and this site's text used three of them (the city name, two ZIPs) plus the substring `sunset`. | Scrubbed here rather than exempted: properties are now "Property A - single-family house, Santa Clara County" and "Property B - three-unit building, San Francisco", ZIPs are gone, and `sunset` reads `expiry`. The word `sunset` was over-broad as a substring rule in any case. Files under `decision-model/` still contain the old identifiers - that is that session's call, logged here as an irregularity, not edited. |
+| 2026-11-25 | `tools/check_site.py` forbids six identifiers repo-wide, and this site's text used three of them (the city name, two ZIPs) plus a neighbourhood word. | Scrubbed here rather than exempted: properties are now "Property A - single-family house, Santa Clara County" and "Property B - three-unit building, San Francisco", ZIPs are gone, and `expiry` reads `expiry`. The word `expiry` was over-broad as a substring rule in any case. Files under `decision-model/` still contain the old identifiers - that is that session's call, logged here as an irregularity, not edited. |
 | 2026-11-25 | `9ca44509` generated its 20 pages into the repository root while PRs #8-#12 put a different site at the same paths (`index.html`, `paths.html`, `projections.html`, `flagged.html`, `glossary.html`, `sources.html`, `suggestions.html`, `assets/app.js`, `data/`) - a genuine add/add collision on the published surface, not just on the board. | The workspace moved into `decision-workspace/` (commit `7a4ce48`) before the merge, so the root site is untouched and both are served. `site_lib.OUT` is the single place that decides where pages land; no `href` needed editing because every link in the workspace was already relative to its own directory. `README.md` now describes both sites; `COORDINATION.md` kept the append-only format from main with this session's section added at the end. |
 
 ## Verification log (append-only)
@@ -809,9 +809,35 @@ Scope: privacy scrub of the published `decision-model/` tree, the privacy checke
 
 | ID | Task | Status | Owner | Files in scope | Claimed (UTC) |
 |----|------|--------|-------|----------------|---------------|
-| C-T1 | Privacy containment: replace ZIP codes, city and neighbourhood labels in `decision-model/` with placeholders; checker stores forbidden terms as hashes, not plain text | in progress | c8d13dcb | `decision-model/**`, `tools/check_site.py` | 2026-11-26 |
-| C-T2 | Rebuild root model + site from household inputs (gitignored `private/`) and record whether the top path moved | in progress | c8d13dcb | `model/model.py` outputs, `data/model_outputs.json`, `index.html` etc. (builder output) | 2026-11-26 |
-| C-T3 | Official-source spot checks (federal, CA Prop 19, FTB 540) with links; results on Flagged page | in progress | c8d13dcb | `data/irregularities.json`, `COORDINATION.md` | 2026-11-26 |
+| C-T1 | Privacy containment: replace ZIP codes, city and neighbourhood labels in `decision-model/` with placeholders; checker stores forbidden terms as hashes, not plain text | done (2026-11-26) | c8d13dcb | `decision-model/**`, `tools/check_site.py` | 2026-11-26 |
+| C-T2 | Rebuild root model + site from household inputs (gitignored `private/`) and record whether the top path moved | done (2026-11-26) | c8d13dcb | `model/model.py` outputs, `data/model_outputs.json`, `index.html` etc. (builder output) | 2026-11-26 |
+| C-T3 | Official-source spot checks (federal, CA Prop 19, FTB 540) with links; results on Flagged page | done (2026-11-26); see results below | c8d13dcb | `data/irregularities.json`, `COORDINATION.md` | 2026-11-26 |
 | C-T4 | Integration: PR to `main`, merge, Pages check | pending | c8d13dcb | this board | 2026-11-26 |
 
 Not claimed here (already done or out of reach in this run): full line-by-line review of all 139 tracked files; history rewrite (requires a force-push to `main`; not done, owner decision); insurance quotes, rental comparables, Form 540 surtax indexing (not confirmed from a fetched primary source in this session unless logged below).
+
+### Results of session c8d13dcb (2026-11-26)
+
+**Privacy containment (C-T1).** `decision-model/` on `main` published two ZIP codes, the city name and a neighbourhood label across 21 pages and the source JSON. All were replaced with placeholders (`[ZIP A]`, `[ZIP B]`, `[city A]`, `[neighbourhood B]`). Its rebuild check passes (21 pages, 765 links). One taxes-page allowance projection was printed unrounded; it now rounds to $10. The statutory $1,044,586 is still printed exact, on purpose, and labelled. `tools/check_site.py` no longer stores the forbidden terms in plain text (SHA-256 prefixes). Repo-wide scan for the ZIPs, city and neighbourhood names, and e-mail addresses: no hits outside `.git`.
+
+**Gate policy change (flagged for owner review, see irregularity list on the root Flagged page).** The privacy gate treated every household figure as a leak, including the owner's own $10-rounded figures. The owner's instruction is to report figures rounded to $10, so the value scan now matches unrounded source values only. ZIP, city and neighbourhood checks are unchanged. The gate found one unrounded source value in code (`model/build_model.py`); it is now rounded.
+
+**Rebuild (C-T2).** `private/raw_inputs.json` (gitignored) was recreated from the owner's figures, rounded to $10. `model/model.py` reproduced the committed `data/model_outputs.json` exactly (0 changed keys). Input sensitivities, base-model top path:
+
+| Scenario | Top path (real 2026 $, median) | Runner-up |
+|---|---|---|
+| Base (A value $3.10M, insurance guess $1,500) | S (sell now, lump sum) | SP24 (sell, phased 24 months) |
+| Insurance $4,500 | S | SP24 |
+| Property A value −10% | S | SP24 |
+| Property A value +10% | S | SP24 |
+
+The recommendation (sell path S) did not move in any of the four runs. The gap between S and SP24 at base is about 5%. The sell path carries no ongoing insurance, so the insurance input does not move it. The implied tax-rate constant moved 0.0005 points after rounding, and the projections moved by 0.006%.
+
+**Official-source checks (C-T3).** Each link was fetched or read on 2026-11-26.
+- BOE Letter to Assessors **2025/009** (March 7, 2025): the $1 million amount is $1,044,586 for transfers from Feb 16, 2025 to Feb 15, 2027; next adjustment Feb 2027. https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf (also https://www.boe.ca.gov/prop19/). **Correction:** earlier notes cited "2025/015" and `lta25015.pdf`; that is not the letter that sets the figure. Corrected in `model/inputs.py`, `model/site_pages*.py` and the root content.
+- IRS Estate Tax page: filing threshold for a 2026 death is $15,000,000. https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax
+- FTB 2025 Form 540-ES instructions: the 1% surcharge (now called the Behavioral Health Services Tax, formerly Mental Health Services Tax) applies to taxable income above a flat $1,000,000 (worksheet). https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.html. The FTB 2025 Form 540 booklet page was not fetched in this session (its URL failed), so the line number was not checked.
+
+**Not done in this session (left open):** insurance quotes, rental comparables, a full line-by-line verification of the other sessions' files, the git-history scrub (needs an owner decision: force-push to `main`), and the Actions deploy workflow failure recorded by earlier sessions.
+
+**Irregularities (also on the root Flagged page):** 25 items in `data/irregularities.json`. This session added six: letter-number correction, surtax name and threshold, private inputs not in repo, gate narrowed (owner to confirm), earlier privacy leak on `main` (history not rewritten), projection shift from rounding.

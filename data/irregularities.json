@@ -1,5 +1,53 @@
 [
  {
+  "item": "Prop 19 letter number corrected (2025/009, not 2025/015)",
+  "found": "An earlier build cited BOE Letter to Assessors 2025/015 for the $1,044,586 allowance. The letter the BOE published on March 7, 2025 that sets this amount is No. 2025/009 (read in full on 2026-11-26). The citation and link are corrected in the source register and in the decision workspace. The figure itself was already correct.",
+  "action": "No action on the figure. Keep the 2025/009 link. Check the next adjustment letter in February 2027.",
+  "sources": [
+   "BOE-LTA-2025-009"
+  ]
+ },
+ {
+  "item": "Form 540 surtax: name and threshold verified",
+  "found": "The 1% surcharge on California taxable income above $1,000,000 is now called the Behavioral Health Services Tax (formerly Mental Health Services Tax). The 2025 FTB instructions read on 2026-11-26 apply it to taxable income above a flat $1,000,000 with no indexing.",
+  "action": "Use the flat $1,000,000 in the model. Recheck the FTB instructions each January.",
+  "sources": [
+   "FTB-540ES-2025"
+  ]
+ },
+ {
+  "item": "Private inputs are not in the repository",
+  "found": "The model reads household figures from private/raw_inputs.json, which is gitignored. A reader without that file cannot reproduce the results. On 2026-11-26 the file was rebuilt from the owner's figures (rounded to $10). The rebuilt model reproduced the committed outputs exactly.",
+  "action": "Owner keeps a copy of the private file. Nothing in it is published.",
+  "sources": [
+   "HOUSEHOLD"
+  ]
+ },
+ {
+  "item": "Privacy gate narrowed to unrounded source figures",
+  "found": "Owner policy: figures are reported rounded to the nearest $10. The gate used to flag every household figure, including rounded ones. It now flags only unrounded source values and still flags ZIP codes, the city and neighbourhood names, and the forbidden terms (stored as hashes).",
+  "action": "Owner to confirm this policy. Revert the change in tools/check_site.py if the rule is that no household figure may be published.",
+  "sources": [
+   "HOUSEHOLD"
+  ]
+ },
+ {
+  "item": "Earlier privacy leak on main: ZIP codes and city names in a published site",
+  "found": "The decision-model site published on main carried two ZIP codes, the city name and a neighbourhood label. They were replaced with placeholders on 2026-11-26. The decision-model build check passes. Git history still contains the original text (before 2026-11-26).",
+  "action": "Owner decision: history rewrite (a force-push to main) is not done here. Decide whether to rewrite history.",
+  "sources": [
+   "HOUSEHOLD"
+  ]
+ },
+ {
+  "item": "Projection shift from rounding the implied tax rate",
+  "found": "The implied all-in tax rate in model/build_model.py was recomputed from inputs rounded to the nearest $10 (tax and assessed value, both to $10). The rate moves from 1.3353% to 1.3358%. The 30-year projection moves by about $1,020 (0.006%). The decision-workspace output did not change.",
+  "action": "None. Recorded so the change is traceable.",
+  "sources": [
+   "MODEL"
+  ]
+ },
+ {
   "item": "Household tax-history record: repeated values",
   "found": "The internal tax-history record repeats some year-by-year values. Details are held internally and not published.",
   "action": "Check the repeated years against the county bills before relying on the history.",
