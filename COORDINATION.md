@@ -534,3 +534,21 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+---
+
+## Session 6bc138f6 — audit, privacy scrub, re-verification, gap fill (this session)
+
+Session ID: `6bc138f6` · Branch: `arena/6bc138f6-tinodash4` · Base: `b7825dc` (main).
+Scope claimed by this session (non-overlapping with prior sessions' closed tasks):
+
+| # | Task | Status | Files in scope |
+|---|---|---|---|
+| T1 | Privacy scrub: remove ZIP codes + city name from `decision-model/` published site + sources, rebuild, verify | in progress | `decision-model/src/**`, `decision-model/site/**`, `decision-model/README.md` |
+| T2 | Official-source re-verification (IRS/BOE/FTB/SF/SCC/HUD/CPUC/FRED) + `research/SOURCES.md` update; fix any wrong values in `model/build_model.py` | in progress | `research/SOURCES.md`, `model/build_model.py`, `site/data/**` (via rebuild) |
+| T3 | Fill `site/` gaps: 5-year maintenance/capital plan, like-kind exchange, estate inventory, comparables protocol, decision log, process steps, imputed-rent explainer, MC 70/30 disclosure, Prop 19 cap-index flag, Prop H status fix | in progress | `model/build_model.py`, `site/js/site.js`, `site/*.html`, `site/data/**` (via rebuild) |
+| T4 | Rebuild model + site; confirm whether recommendation moved; run all checks (build, smoke, links, privacy, rounding) | unclaimed | — |
+| T5 | Integration: PR to `main`, merge, Pages verified, record here | unclaimed | — |
+
+Rules for this session: small frequent commits; `git pull --rebase` before push; never edit another session's claimed files (all prior tasks are `done`, so no live claims to conflict with); flagged/unverified items do not block merge; history is NOT rewritten (personal e-mail in pre-existing history is logged as an irregularity for household decision, per prior sessions).
+
