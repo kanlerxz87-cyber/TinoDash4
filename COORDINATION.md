@@ -799,3 +799,19 @@ The branch name is fixed by Arena as `arena/c3f30db8-tinodash4`; it is not being
 - Important scope: current `_config.yml` excludes the modified `site/` treatment from the root Pages artifact. This merge corrects the alternate treatment and model source; it does not change the live root dashboard. The root dashboard's own privacy, tax, and projection records are separately tracked in the merged sessions above.
 - Remaining high-priority privacy limit: public Git history was not rewritten or completely audited. The exact private-value comparison is still skipped without offline `private/raw_inputs.json`; do not claim full historical containment.
 - PR #34 merge attempt was interrupted because `main` advanced to `582145d` through PR #31 and then to `2e0a798` through PR #33. Rebased the current branch, preserving the full G-04 closeout and PR #33 privacy-wording records; PR #34 needs its updated head pushed and CI rechecked before merge.
+
+
+
+## Session c8d13dcb — privacy containment, rebuild, verification, integration (branch `arena/c8d13dcb-tinodash4`)
+
+Session ID: `c8d13dcb` · Branch: `arena/c8d13dcb-tinodash4` · Base: `b7825dc` (`main`) · PR: to be recorded below.
+Scope: privacy scrub of the published `decision-model/` tree, the privacy checker, the household-input rebuild of the root model/site, flagged-register entries, this board. No other session's model logic is rewritten.
+
+| ID | Task | Status | Owner | Files in scope | Claimed (UTC) |
+|----|------|--------|-------|----------------|---------------|
+| C-T1 | Privacy containment: replace ZIP codes, city and neighbourhood labels in `decision-model/` with placeholders; checker stores forbidden terms as hashes, not plain text | in progress | c8d13dcb | `decision-model/**`, `tools/check_site.py` | 2026-11-26 |
+| C-T2 | Rebuild root model + site from household inputs (gitignored `private/`) and record whether the top path moved | in progress | c8d13dcb | `model/model.py` outputs, `data/model_outputs.json`, `index.html` etc. (builder output) | 2026-11-26 |
+| C-T3 | Official-source spot checks (federal, CA Prop 19, FTB 540) with links; results on Flagged page | in progress | c8d13dcb | `data/irregularities.json`, `COORDINATION.md` | 2026-11-26 |
+| C-T4 | Integration: PR to `main`, merge, Pages check | pending | c8d13dcb | this board | 2026-11-26 |
+
+Not claimed here (already done or out of reach in this run): full line-by-line review of all 139 tracked files; history rewrite (requires a force-push to `main`; not done, owner decision); insurance quotes, rental comparables, Form 540 surtax indexing (not confirmed from a fetched primary source in this session unless logged below).
