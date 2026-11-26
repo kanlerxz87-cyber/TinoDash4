@@ -581,3 +581,29 @@ P-01 update: `_config.yml` excludes alternate site trees and source directories 
 - PR #20 (`arena/e5c3fe3a-tinodash4` → `main`) merged at `4ded1c801870e2b0c83a3b4432e3646b289e7219` on 2026-11-26.
 - Post-merge verification: `Verify model + site` run `45886619624` succeeded; GitHub Pages `pages-build-deployment` run `45886618931` succeeded (build, deploy, report-build-status); latest Pages build status is `built` for the merge SHA. Published root: `https://kanlerxz87-cyber.github.io/TinoDash4/`.
 - This records successful deployment of the Jekyll privacy-exclusion configuration. It does not remove public Git objects or complete the exact-value scan; those limitations remain above.
+---
+
+## Session 407d3840 — root-site privacy gate + source re-verification (current branch)
+
+Session ID: `407d3840` · Branch: `arena/407d3840-tinodash4` (fixed for this session) · Original base: `b1fa5ba`; rebased onto `538b398` (`main`).
+Scope of this session (non-overlapping with other sessions' trees): root dashboard only —
+`tools/check_site.py`, `tools/build_site.py`, `tools/content.py`, `.github/workflows/verify.yml`,
+rebuilt root `*.html` + `assets/` + `data/irregularities.json`, and this board entry.
+Alternate trees (`site/`, `decision-model/`, `decision-workspace/`, `model/`, `research/`) are NOT edited.
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| G-01 | Fix pre-publish gate: `check_site.py` must run without `private/` and must enforce the `_config.yml` Pages exclusion (no `.nojekyll` bypass) | done (local checks pass) | 407d3840 | `tools/check_site.py`, `tools/build_site.py`, `_config.yml` (read-only check) |
+| G-02 | Re-verify key official figures line-by-line (IRS exclusion, Prop 19 cap, SF rate, FTB 540 line 62, CBO) and correct source URLs/statuses | done (FTB line 62 located; future-year figures remain flagged) | 407d3840 | `tools/content.py` |
+| G-03 | Wire root build + gate into CI (`verify.yml`) so a broken site cannot merge | done (workflow updated; GitHub run pending) | 407d3840 | `.github/workflows/verify.yml` |
+| G-04 | Rebuild root site, run gate, verify links/rounding/privacy, PR to `main`, merge, confirm Pages | in progress (pending PR/CI/deploy) | 407d3840 | rebuilt `*.html`, `brief.pdf`, `assets/`, `data/` |
+
+Claim note: this session is bound to `arena/407d3840-tinodash4`; no additional branch/worktree is created.
+History rewrite is out of scope (needs owner approval + force-push to `main`); see `PRIVACY_REMEDIATION.md`.
+
+Verification record for G-01 through G-03 (2026-11-26): official BOE page and LTA 2025/009 PDF fetched directly; official IRS IR-2025-103 fetched; SF Treasurer secured-tax page fetched (FY2026-27 rate 1.18162182%); FTB 2025 Form 540 instructions fetched at chunk 4, which explicitly states Line 62 is 1% of taxable income over $1,000,000. CBO Feb 2026 outlook fetched. Source URLs and statuses corrected in `tools/content.py`; values requiring 2027 updates remain flagged. `python3 tools/build_site.py`, `python3 tools/check_site.py`, `python3 model/build_model.py`, `git diff --exit-code -- site/data`, and `node model/check_site.js` all passed. Gate output after rebase: 136 repository text/PDF files scanned for identifier patterns (private exact-value scan visibly skipped); 1,934 money values all rounded to $10; 204/204 table rows linked; `.nojekyll` absent and all configured Pages exclusions present. `brief.pdf` rebuilt as one page with ReportLab in temporary ignored venv (venv removed). Repo-level exposure/history rewrite remains unresolved; no claim is made that repository contents or old history are private. Next: push, PR/CI, merge only after checks, verify deployment; check `.github/workflows/deploy.yml` discrepancy noted by prior session.
+
+### Rebase / conflict log — session 407d3840 — 2026-11-26
+- Before the merge attempt, `main` advanced from `4ded1c8` to `538b398` (PR #22). Rebased current branch as required before push. Append-only `COORDINATION.md` conflicted; both main's privacy audit and this session's work log were retained. Shared `tools/check_site.py`, `tools/content.py`, `tools/build_site.py`, and generated root pages conflicted because the merged privacy work touched them too.
+- Resolution retained main's newer repository-wide privacy-pattern scanner and its candid `SKIP` behavior, then layered this session's official source updates and a stricter check that `.nojekyll` is forbidden and all six alternate trees are excluded. Main's partial-containment wording and privacy edits remain intact.
+- Rebuilt the site after resolution. `python3 tools/build_site.py` and `python3 tools/check_site.py` pass; checker sees 136 repository files, 204/204 linked rows, 1,934 rounded model outputs. `node model/check_site.js` and deterministic `model/build_model.py` checks also passed before the rebase; rerunning in the latest rebased checkout is pending.

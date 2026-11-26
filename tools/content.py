@@ -18,7 +18,7 @@ Status vocabulary (every row carries one):
   UNVERIFIED - no reliable source found; the value is left blank
 """
 
-CHECKED = "2026-11-25"
+CHECKED = "2026-11-26"
 
 SOURCES = {
     "IRS-IR-2025-103": dict(
@@ -34,8 +34,8 @@ SOURCES = {
         url="https://www.irs.gov/newsroom",
         publisher="IRS (newsroom index; figures from secondary sources)", status="SECONDARY"),
     "IRS-RP-2025-32": dict(
-        title="IRS Revenue Procedure 2025-32 (2026 inflation adjustments; capital gains brackets)",
-        url="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf", publisher="IRS", status="LINK"),
+        title="IRS Revenue Procedure 2025-32 (2026 inflation adjustments; $15,000,000 basic exclusion confirmed via IR-2025-103)",
+        url="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf", publisher="IRS", status="EXCERPT"),
     "IRS-PUB-523": dict(
         title="IRS Publication 523: Selling Your Home (section 121: $250,000 single / $500,000 joint; 2-of-5-year tests)",
         url="https://www.irs.gov/publications/p523", publisher="IRS", status="SECONDARY"),
@@ -66,19 +66,23 @@ SOURCES = {
         title="FTB: 2025 Instructions for Form 540-ES (Behavioral Health Services Tax: 1% of taxable income over $1,000,000)",
         url="https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.pdf",
         publisher="California FTB", status="FETCHED"),
+    "FTB-540-2025": dict(
+        title="FTB: 2025 Instructions for Form 540, line 62 (Behavioral Health Services Tax: 1% of taxable income over $1,000,000; R&TC 17043)",
+        url="https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html",
+        publisher="California FTB", status="FETCHED"),
     "FTB-FORMS": dict(
         title="FTB forms index (Form 540 and schedules, 2026 rate schedule to be checked)",
         url="https://www.ftb.ca.gov/forms/index.html", publisher="California FTB", status="LINK"),
     "BOE-PROP19-INTRO": dict(
-        title="BOE: Introduction to Proposition 19 (family home; 1-year residence and homeowners' exemption; value limit)",
-        url="https://www.boe.ca.gov/pdf/Introduction-to-Prop-19-042023.pdf",
-        publisher="California BOE", status="LINK"),
+        title="BOE: Proposition 19 page (family home; homeowners exemption within 1 year; claim within 3 years; value limit = factored base + $1M as adjusted; RTC 63.2)",
+        url="https://www.boe.ca.gov/prop19/",
+        publisher="California BOE", status="FETCHED"),
     "BOE-19P": dict(
         title="BOE-19-P claim for the parent-child exclusion (filing window stated as 3 years; check on BOE page)",
         url="https://www.boe.ca.gov/proptaxes/", publisher="California BOE", status="SECONDARY"),
     "BOE-LTA-2025-009": dict(
-        title="BOE Letter to Assessors 2025/009: Prop 19 allowance for transfers Feb 16, 2025 to Feb 15, 2027 (figure from secondary sources)",
-        url="https://www.boe.ca.gov/proptaxes/", publisher="California BOE", status="SECONDARY"),
+        title="BOE Letter to Assessors 2025/009: allowance $1,044,586 for transfers Feb 16, 2025 to Feb 15, 2027 (next adjustment Feb 2027)",
+        url="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf", publisher="California BOE", status="FETCHED"),
     "BOE-LTA-2026-002": dict(
         title="BOE Letter to Assessors 2026/002: 2026-27 Prop 13 inflation factor 1.02 (figure from secondary sources)",
         url="https://www.boe.ca.gov/proptaxes/", publisher="California BOE", status="SECONDARY"),
@@ -105,8 +109,8 @@ SOURCES = {
         url="https://www.sfelections.org/results/20261103/index.html",
         publisher="SF Department of Elections", status="FETCHED"),
     "SF-TREASURER": dict(
-        title="SF Office of the Treasurer & Tax Collector (documentary transfer tax schedule; page not reachable in this session)",
-        url="https://sftreasurer.org/", publisher="City and County of San Francisco", status="LINK"),
+        title="SF Treasurer: secured property-tax rate FY2026-27 1.18162182% (official schedule)",
+        url="https://sftreasurer.org/property/secured-property-taxes", publisher="City and County of San Francisco", status="FETCHED"),
     "SCC-RECORDER": dict(
         title="Santa Clara County Clerk-Recorder (documentary transfer tax; $1.10 per $1,000 from secondary sources)",
         url="https://www.sccgov.org/sites/clerk-recorder", publisher="Santa Clara County", status="SECONDARY"),
@@ -148,8 +152,8 @@ PROPERTY_A_FACTS = [
      "Derived from household bills. Confirm the rate for the tax rate area with the county assessor."),
     ("Prop 13 inflation factor, 2026-27", "1.02 (2.0% cap)", "SECONDARY", ["BOE-LTA-2026-002"],
      "Factor applied to the assessed value each year under Prop 13 (cap 2%)."),
-    ("Prop 19 allowance (transfers Feb 16, 2025 to Feb 15, 2027)", "$1,044,590", "SECONDARY", ["BOE-LTA-2025-009", "BOE-PROP19-INTRO"],
-     "BOE figure $1,044,586, rounded to the nearest $10. Adjusted every two years."),
+    ("Prop 19 allowance (transfers Feb 16, 2025 to Feb 15, 2027)", "$1,044,590", "FETCHED", ["BOE-LTA-2025-009", "BOE-PROP19-INTRO"],
+     "BOE figure $1,044,586, rounded to the nearest $10. Adjusted every two years; next adjustment Feb 2027."),
     ("City transfer tax", "", "UNVERIFIED", ["SCC-RECORDER"],
      "Left blank. Confirm with the city and the escrow company whether a city tax applies."),
     ("Water (household range)", "held internally", "USER", ["SJW-AL628"],
@@ -236,9 +240,9 @@ IRREGULARITIES = [
      "Counsel to confirm which reading applies.",
      ["CA-RTC-63.2"]),
     ("California '1% tax above $1 million' is the Behavioral Health Services Tax",
-     "It is 1% of taxable income over $1,000,000 (FTB instructions). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
+     "It is 1% of taxable income over $1,000,000 (Form 540, line 62; R&TC 17043). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
      "CPA to confirm the state rate on large gains for the transfer year.",
-     ["FTB-540ES-2025"]),
+     ["FTB-540-2025", "FTB-540ES-2025"]),
     ("Public Git history contains a personal e-mail address",
      "The base commit on main lists a personal e-mail address as the author. The repository is public. History was NOT rewritten.",
      "Decide whether to rewrite history (requires a force-push to main and your explicit approval), or set the e-mail to private for future commits.",
@@ -304,8 +308,8 @@ LAW_ROWS = [
      ["IRS-PUB-527"],
      "Applies if Property A is rented. Land is not depreciable; the land share is needed."),
     ("California tax on capital gains",
-     "Gains are taxed as ordinary income; 1% Behavioral Health Services Tax on taxable income over $1,000,000", "ENACTED",
-     ["FTB-540ES-2025", "FTB-FORMS"],
+     "Gains are taxed as ordinary income; 1% Behavioral Health Services Tax on taxable income over $1,000,000 (Form 540, line 62)", "ENACTED",
+     ["FTB-540-2025", "FTB-540ES-2025"],
      "Large gains in one year can reach the 1% surcharge."),
     ("Prop 13 (property tax)",
      "Assessed value is reset at change in ownership; then rises by at most 2% a year", "ENACTED (constitution)",

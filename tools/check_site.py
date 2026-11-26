@@ -212,8 +212,9 @@ def main():
             bad(f"'{needle}' missing from {fn}")
     nojekyll = os.path.join(ROOT, ".nojekyll")
     jekyll_config = os.path.join(ROOT, "_config.yml")
-    if not os.path.exists(nojekyll):
-        if os.path.exists(jekyll_config):
+    if os.path.exists(nojekyll):
+        bad(".nojekyll present: it bypasses Jekyll, so _config.yml exclusions may not apply")
+    elif os.path.exists(jekyll_config):
             config = open(jekyll_config, encoding="utf-8").read()
             required_excludes = ("decision-model", "decision-workspace", "site", "model", "research", "tools", "private")
             missing = [name for name in required_excludes
@@ -222,8 +223,8 @@ def main():
                 ok("GitHub Pages Jekyll config present; alternate site/source trees are explicitly excluded")
             else:
                 bad(".nojekyll missing and _config.yml lacks Pages exclusions: " + ", ".join(missing))
-        else:
-            bad(".nojekyll missing and no _config.yml configures GitHub Pages")
+    else:
+        bad(".nojekyll missing and no _config.yml configures GitHub Pages")
     irr = os.path.join(ROOT, "data", "irregularities.json")
     if not os.path.exists(irr):
         bad("data/irregularities.json missing")
