@@ -1074,7 +1074,7 @@ Scope: root dashboard only. No alternate trees edited. No PII introduced; all ho
 | C-4 | Black swan phased-investing path, reinvestment risk, real-economic-regime explanation | done; crash sizes remain stylized assumptions | arena/34783ce5 | tools/build_site.py, tools/content.py, blackswan.html, sources.html | 2026-11-26 |
 | C-5 | Dated decision log; separates provisional model results from household choice | done | arena/34783ce5 | tools/build_site.py, decision-rules.html, DECISION_RULES.md | 2026-11-26 |
 | C-6 | Clarify Measure H/Measure I preliminary status and enacted-vs-proposed split | done; certification pending | arena/34783ce5 | tools/content.py, tools/build_site.py, tools/build_brief_pdf.py, inputs.html, property-tax.html, legislation.html, flagged.html, brief.html | 2026-11-26 |
-| C-7 | Rebuild, re-verify, commit, push, open PR, merge, confirm Pages deployment | in progress | arena/34783ce5 | all touched files | 2026-11-26 |
+| C-7 | Rebuild, re-verify, commit, push, open PR, merge, confirm Pages deployment | done | arena/34783ce5 | all touched files | 2026-11-26 |
 
 ### Verification and source record
 - Baseline and final root build: `python3 tools/build_site.py` — 18 navigation pages generated.
@@ -1083,3 +1083,9 @@ Scope: root dashboard only. No alternate trees edited. No PII introduced; all ho
 - Macroeconomic context sources fetched: NBER US business-cycle chronology (last updated 2023) and BLS CPI series via FRED through October 2026; these are context, not return forecasts.
 - Official election page last updated Nov 23, 2026: preliminary Measure H tally 74.42% yes; Measure I 48.38% yes / 51.62% no. Both remained preliminary on Nov 26. Neither is treated as enacted or modelled.
 - History-cleanup limitation: public Git history still contains prior pre-rounding exposure and personal metadata noted on Flagged for Review. No history rewrite/force-push was performed; explicit owner authorization and coordinated remediation are required. History is not claimed scrubbed.
+
+### Publishing result
+- PR #47: https://github.com/kanlerxz87-cyber/TinoDash4/pull/47 — merged via merge commit `a245da2f17558ab625a3258bb6bfca20badb366b` on 2026-11-26 22:14 UTC.
+- PR verification: `Verify model + site` succeeded (run `45903460169`). Main-branch post-merge `Verify model + site` succeeded (run `45903501989`).
+- GitHub Pages deployment run `45903501982` completed successfully; Pages build `1406779202` is `built` with no error. Published root dashboard: https://kanlerxz87-cyber.github.io/TinoDash4/.
+- Documentation follow-up will merge the PR #47 publication record into this board; PR #47 itself contains the full sources, verification summary, and flagged limits.
