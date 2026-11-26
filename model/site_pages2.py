@@ -19,7 +19,7 @@ def srclink_note(key):
     """One line on what each source is used for, so the table answers 'why is this here?'."""
     notes = {
         "BOE-P19": "the exclusion formula, the occupancy and filing conditions, the indexed amount",
-        "BOE-LTA25015": "the published allowance and its effective window",
+        "BOE-LTA25009": "the published allowance and its effective window",
         "BOE-PUB801": "the plain-language fact sheet used to sanity-check the formula",
         "SCC-RATEBOOK": "the 1% levy, the factoring rule, the bond lines, the due dates and penalties",
         "SCC-RATEBOOK-PAGE": "proves FY 2025-26 is the newest edition, so nothing here is labelled 2026-27",
