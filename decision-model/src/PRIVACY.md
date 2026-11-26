@@ -19,7 +19,7 @@ The checked-in output is a static site. Its what-if controls run in the browser;
 
 The checked-out repository is shallow at the current integration commit. It does not contain enough prior commits to verify the statement that the public Git history is free of pre-rounding inputs. This checkout also cannot remove data from earlier public commits, forks, caches, screenshots, or search indexes. A history-wide audit and any GitHub-side purge require a separately authorized repository-history operation; a normal follow-up commit cannot erase old objects.
 
-The current public Pages configuration serves the repository tree, so source files and old generated sub-sites may also be reachable. This privacy pass removes postal codes and hyper-local neighborhood labels from the legacy `decision-model` site, but does not claim that all public source history or all property-linked estimates are private.
+The current branch includes a Jekyll configuration that excludes alternate generated sites and source directories from the Pages artifact; its deployed effect is still pending verification by the integration owner. Repository source files and history remain public on GitHub. This privacy pass removes postal codes and hyper-local neighborhood labels from the legacy `decision-model` site, but does not claim that all public source history or all property-linked estimates are private.
 
 ## Before adding or publishing new data
 
