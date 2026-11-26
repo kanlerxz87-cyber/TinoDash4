@@ -5,9 +5,9 @@
   var grid = JSON.parse(el.textContent);
   var labels = {S:'Sell in transfer year, invest lump sum',SP24:'Sell, park 24 months, then phase in',SP36:'Sell, park 36 months, then phase in',
     L2S:'Mixed: live 2 years, then sell',R10S:'Mixed: rent 10 years, then sell',R:'Rent long-term, sell at horizon',
-    L5S:'Mixed: live 5 years, then sell',L5R_A:'Mixed: live 5 years, then rent (reading A)',L5R_B:'Mixed: live 5 years, then rent (reading B)',
+    L5S:'Mixed: live 5 years, then sell',L5R_B:'Mixed: live 5 years, then rent (Prop 19 base reset on move-out)',
     L:'Live long-term, sell at horizon'};
-  var order = ['S','SP24','SP36','L2S','R10S','R','L5S','L5R_A','L5R_B','L'];
+  var order = ['S','SP24','SP36','L2S','R10S','R','L5S','L5R_B','L'];
   function v(id){ return document.getElementById(id).value; }
   function money(x){ return '$' + (Math.round(x/10)*10).toLocaleString('en-US'); }
   function render(){

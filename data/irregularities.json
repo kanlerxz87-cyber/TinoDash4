@@ -1,58 +1,26 @@
 [
  {
-  "item": "Prop 19 letter number corrected (2025/009, not 2025/015)",
-  "found": "An earlier build cited BOE Letter to Assessors 2025/015 for the $1,044,586 allowance. The letter the BOE published on March 7, 2025 that sets this amount is No. 2025/009 (read in full on 2026-11-26). The citation and link are corrected in the source register and in the decision workspace. The figure itself was already correct.",
-  "action": "No action on the figure. Keep the 2025/009 link. Check the next adjustment letter in February 2027.",
-  "sources": [
-   "BOE-LTA-2025-009"
-  ]
- },
- {
-  "item": "Form 540 surtax: name and threshold verified",
-  "found": "The 1% surcharge on California taxable income above $1,000,000 is now called the Behavioral Health Services Tax (formerly Mental Health Services Tax). The 2025 FTB instructions read on 2026-11-26 apply it to taxable income above a flat $1,000,000 with no indexing.",
-  "action": "Use the flat $1,000,000 in the model. Recheck the FTB instructions each January.",
-  "sources": [
-   "FTB-540ES-2025"
-  ]
- },
- {
-  "item": "Private inputs are not in the repository",
-  "found": "The model reads household figures from private/raw_inputs.json, which is gitignored. A reader without that file cannot reproduce the results. On 2026-11-26 the file was rebuilt from the owner's figures (rounded to $10). The rebuilt model reproduced the committed outputs exactly.",
-  "action": "Owner keeps a copy of the private file. Nothing in it is published.",
-  "sources": [
-   "HOUSEHOLD"
-  ]
- },
- {
-  "item": "Privacy gate narrowed to unrounded source figures",
-  "found": "Owner policy: figures are reported rounded to the nearest $10. The gate used to flag every household figure, including rounded ones. It now flags only unrounded source values and still flags ZIP codes, the city and neighbourhood names, and the forbidden terms (stored as hashes).",
-  "action": "Owner to confirm this policy. Revert the change in tools/check_site.py if the rule is that no household figure may be published.",
-  "sources": [
-   "HOUSEHOLD"
-  ]
- },
- {
-  "item": "Earlier privacy leak on main: ZIP codes and city names in a published site",
-  "found": "The decision-model site published on main carried two ZIP codes, the city name and a neighbourhood label. They were replaced with placeholders on 2026-11-26. The decision-model build check passes. Git history still contains the original text (before 2026-11-26).",
-  "action": "Owner decision: history rewrite (a force-push to main) is not done here. Decide whether to rewrite history.",
-  "sources": [
-   "HOUSEHOLD"
-  ]
- },
- {
-  "item": "Projection shift from rounding the implied tax rate",
-  "found": "The implied all-in tax rate in model/build_model.py was recomputed from inputs rounded to the nearest $10 (tax and assessed value, both to $10). The rate moves from 1.3353% to 1.3358%. The 30-year projection moves by about $1,020 (0.006%). The decision-workspace output did not change.",
-  "action": "None. Recorded so the change is traceable.",
-  "sources": [
-   "MODEL"
-  ]
- },
- {
   "item": "Household tax-history record: repeated values",
   "found": "The internal tax-history record repeats some year-by-year values. Details are held internally and not published.",
   "action": "Check the repeated years against the county bills before relying on the history.",
   "sources": [
    "HOUSEHOLD"
+  ]
+ },
+ {
+  "item": "Property A tax rate area and published rate not verified",
+  "found": "BOE's official TRA map exists, but the parcel/location detail needed to identify the applicable area is intentionally not present in this public workspace.",
+  "action": "Keep the rate blank. A household member or assessor can privately match the parcel to the TRA and current rate schedule; do not publish parcel details.",
+  "sources": [
+   "BOE-TRA-SCC"
+  ]
+ },
+ {
+  "item": "Future Prop 19 allowance is unknown",
+  "found": "The published $1,044,586 allowance applies only to transfers Feb 16, 2025-Feb 15, 2027. Later amounts depend on subsequent California HPI calculations.",
+  "action": "Site uses an explicitly labeled 2% annual proxy in future projections; replace it with each BOE update as published.",
+  "sources": [
+   "BOE-LTA-2025-009"
   ]
  },
  {
@@ -148,19 +116,19 @@
   ]
  },
  {
-  "item": "Prop 19 loss after the heir moves out: two readings",
-  "found": "The model keeps two readings (A: the Prop 19 base carries on; B: the base resets to value at transfer). The rule is not settled in the sources reviewed.",
-  "action": "Counsel to confirm which reading applies.",
+  "item": "Prop 19 after eligible transferee moves out: current BOE guidance identified",
+  "found": "BOE Letter to Assessors 2025/015 says the exclusion is removed; as of the following lien date, the base year value established at the transfer date, adjusted annually, is enrolled.",
+  "action": "Model the reset-to-transfer-value reading; counsel should confirm the rule and the trust's specific facts at the time.",
   "sources": [
+   "BOE-LTA-2025-015",
    "CA-RTC-63.2"
   ]
  },
  {
-  "item": "California '1% tax above $1 million' is the Behavioral Health Services Tax",
-  "found": "It is 1% of taxable income over $1,000,000 (Form 540, line 62; R&TC 17043). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
-  "action": "CPA to confirm the state rate on large gains for the transfer year.",
+  "item": "California gain tax remains a simplified sensitivity",
+  "found": "The 2025 Form 540 instructions confirm the 1% Behavioral Health Services Tax applies to resident taxable income above $1,000,000. The model now applies it only to modeled taxable gain above that threshold, before considering other income.",
+  "action": "CPA must rerun using filing status, other taxable income, 2040-2050 rates, depreciation, NIIT and any applicable exclusions.",
   "sources": [
-   "FTB-540-2025",
    "FTB-540ES-2025"
   ]
  },
@@ -191,17 +159,11 @@
   ]
  },
  {
-  "item": "Federal 2027 exclusion from secondary sources",
-  "found": "The 2027 figures ($15,480,000 estate and gift exclusion; $20,000 annual gift exclusion) come from secondary reports.",
-  "action": "Confirm on the IRS release before relying on them.",
+  "item": "2027 federal exclusion is verified for 2027 only",
+  "found": "IRS IR-2026-133 and Rev. Proc. 2026-35 state the 2027 basic estate-tax exclusion is $15,480,000 and the annual per-donee gift exclusion is $20,000.",
+  "action": "These figures are current-law inputs only; they are not a forecast for a transfer in 2040-2050.",
   "sources": [
    "IRS-NEWS-2027"
   ]
- },
- {
-  "item": "Repository privacy containment is partial",
-  "found": "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
-  "action": "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
-  "sources": []
  }
 ]
