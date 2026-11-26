@@ -1039,3 +1039,14 @@ Publishing result: branch pushed and PR #30 (`arena/7cdb8a85-tinodash4` → `mai
 - **Already true in the build (checked):** no "prior repository" figures, no P.L. 119-21 reference, no CRFB reference, S22 removed, S06 `not_verified`, and no "withdrawn" wording in the decision log.
 - **Still open (not blocking; flagged):** Rev. Proc. 2025-32 chunks 1, 3, 6; SCC FY 2025-26 rate book; 2008 T-bill check; T-bill column +0.034% (F-13). The live Pages URL could not be fetched from the sandbox; the Pages build status is `built`.
 - **Process note.** PR #41 was merged before these items were fixed, and the owner-inputs move (PR #43) was made after the merge. This entry records the order of events.
+
+---
+
+## Session arena/b717f898 — decision-readiness safeguards
+
+### Claim (scope; no overlapping active claim found)
+| ID | Task | Status | Owner | Files |
+|---|---|---|---|---|
+| BR-1 | Put decision readiness, missing evidence, and model reproducibility limits ahead of the provisional ranking on the public landing page and one-page brief | in progress | arena/b717f898-tinodash4 | `tools/build_site.py`, `tools/build_brief_pdf.py`, generated root HTML/PDF, `COORDINATION.md` |
+
+Claim note: no private values, identifying property details, or new model assumptions will be added. The working tree has no private input file, so no new model run or exact-input comparison can be claimed. Existing source register and flagged items remain the evidence of record.
