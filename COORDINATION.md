@@ -912,3 +912,10 @@ The recommendation (sell path S) did not move in any of the four runs. The gap b
 - PR #21 (`arena/10df03a3-tinodash4` → `main`): merged, merge commit `f89c619`. `Verify model + site` on the merge commit: success.
 - Pages: latest build `built` at `d417fb8`; `https://kanlerxz87-cyber.github.io/TinoDash4/` returns the dashboard (fetched after the build).
 - Not done here and left for the owners: untracking `site/` and `decision-workspace/` and `decision-model/` (other sessions active on them); rounded model constants (regenerate `site/data`); history rewrite (owner authorization).
+
+### Integration record (C-T4, session c8d13dcb)
+
+- PR #27 (`arena/c8d13dcb-tinodash4` → `main`): **merged** 2026-11-26 20:00:03 UTC, merge commit `7584aef`. Merge method: merge commit. Merge was not waited on for review. Flagged items do not block.
+- The PR was re-based onto `main` five times while other sessions merged (PR #24, #25, #26, #28, #29, #31, #32, #34). Each re-base kept both sides' board entries. Generated outputs were regenerated and re-checked before each push. Redaction of exact household figures in two earlier board entries was needed for the gate to pass (see redaction log line above).
+- Pages: the build for `7584aef` reported `errored` (superseded by later pushes; no error text). Builds for `f89c619` (20:01:10 UTC) and `38ed586` (20:03:19 UTC, current `main`) reported `built`. Live Flagged page fetched at `https://kanlerxz87-cyber.github.io/TinoDash4/flagged.html?v=38ed586`: the six items from this session are present with their source links.
+- Not fixed in this session and still open: the Actions workflow `deploy.yml` (see earlier entries); git history with original ZIP codes and an owner e-mail address (owner decision); owner confirmation of the $10 gate policy.
