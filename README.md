@@ -83,6 +83,29 @@ constant and rebuild.
 - The Black-Swan and phased-investing pages are computed from the annual return record, so they move
   every January when the record gains a year.
 
+## Privacy and historical exposure (read before publishing)
+
+This repository has several independently built dashboards and a long history of prior public
+commits. The published pages are not the only exposure surface: Git retains prior versions of files,
+and deletion or rounding in a newer commit does **not** remove earlier content from clones, forks,
+caches, or Git history. This checkout is shallow, so a complete historical scan cannot be performed
+from it. No claim that the pre-rounding history has been scrubbed or that all prior public exposure
+has been contained is justified by the checks in this repository.
+
+Do not add names, exact addresses, parcel identifiers, contact details, account identifiers, or
+unrounded household financial/property figures to tracked files, issues, commit messages, or site
+assets. Keep any exact private inputs in an encrypted, access-controlled location outside this
+repository. Before attempting any history rewrite, an authorized repository owner must coordinate
+with collaborators and forks, confirm the sensitive data and its reach, arrange a force-push/cache
+cleanup plan, and consider whether affected credentials or identifiers need rotation. History
+rewriting is intentionally **not** performed by this branch.
+
+The root dashboard, `decision-workspace/`, `site/`, and older published treatments have independent
+inputs/content and may disagree. Treat every projection as a provisional scenario, not a
+recommendation; resolve the mismatches and flagged inputs before relying on rankings. Existing build
+checks establish rendering/source-link invariants only, not legal advice, a complete privacy audit,
+or confirmation that every linked source remains current.
+
 ## Coordination
 
 See `COORDINATION.md` for the task board, handoff log, and verification record. Open items and
