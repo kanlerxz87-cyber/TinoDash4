@@ -18,9 +18,13 @@ Status vocabulary (every row carries one):
   UNVERIFIED - no reliable source found; the value is left blank
 """
 
-CHECKED = "2026-11-25"
+CHECKED = "2026-11-26"
 
 SOURCES = {
+    "REPO-PRIVACY-NOTE": dict(
+        title="PRIVACY_REMEDIATION.md (repository note on partial containment and the history limit)",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/PRIVACY_REMEDIATION.md",
+        publisher="This repository", status="LINK"),
     "IRS-IR-2025-103": dict(
         title="IRS news release IR-2025-103: 2026 inflation adjustments (estate and gift exclusion $15,000,000 for 2026; gift exclusion $19,000)",
         url="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
@@ -34,8 +38,8 @@ SOURCES = {
         url="https://www.irs.gov/newsroom",
         publisher="IRS (newsroom index; figures from secondary sources)", status="SECONDARY"),
     "IRS-RP-2025-32": dict(
-        title="IRS Revenue Procedure 2025-32 (2026 inflation adjustments; capital gains brackets)",
-        url="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf", publisher="IRS", status="LINK"),
+        title="IRS Revenue Procedure 2025-32 (2026 inflation adjustments; $15,000,000 basic exclusion confirmed via IR-2025-103)",
+        url="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf", publisher="IRS", status="EXCERPT"),
     "IRS-PUB-523": dict(
         title="IRS Publication 523: Selling Your Home (section 121: $250,000 single / $500,000 joint; 2-of-5-year tests)",
         url="https://www.irs.gov/publications/p523", publisher="IRS", status="SECONDARY"),
@@ -66,19 +70,23 @@ SOURCES = {
         title="FTB: 2025 Instructions for Form 540-ES (Behavioral Health Services Tax: 1% of taxable income over $1,000,000)",
         url="https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.pdf",
         publisher="California FTB", status="FETCHED"),
+    "FTB-540-2025": dict(
+        title="FTB: 2025 Instructions for Form 540, line 62 (Behavioral Health Services Tax: 1% of taxable income over $1,000,000; R&TC 17043)",
+        url="https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html",
+        publisher="California FTB", status="FETCHED"),
     "FTB-FORMS": dict(
         title="FTB forms index (Form 540 and schedules, 2026 rate schedule to be checked)",
         url="https://www.ftb.ca.gov/forms/index.html", publisher="California FTB", status="LINK"),
     "BOE-PROP19-INTRO": dict(
-        title="BOE: Introduction to Proposition 19 (family home; 1-year residence and homeowners' exemption; value limit)",
-        url="https://www.boe.ca.gov/pdf/Introduction-to-Prop-19-042023.pdf",
-        publisher="California BOE", status="LINK"),
+        title="BOE: Proposition 19 page (family home; homeowners exemption within 1 year; claim within 3 years; value limit = factored base + $1M as adjusted; RTC 63.2)",
+        url="https://www.boe.ca.gov/prop19/",
+        publisher="California BOE", status="FETCHED"),
     "BOE-19P": dict(
         title="BOE-19-P claim for the parent-child exclusion (filing window stated as 3 years; check on BOE page)",
         url="https://www.boe.ca.gov/proptaxes/", publisher="California BOE", status="SECONDARY"),
     "BOE-LTA-2025-009": dict(
-        title="BOE Letter to Assessors 2025/009: Prop 19 allowance for transfers Feb 16, 2025 to Feb 15, 2027 (figure from secondary sources)",
-        url="https://www.boe.ca.gov/proptaxes/", publisher="California BOE", status="SECONDARY"),
+        title="BOE Letter to Assessors 2025/009: allowance $1,044,586 for transfers Feb 16, 2025 to Feb 15, 2027 (next adjustment Feb 2027)",
+        url="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf", publisher="California BOE", status="FETCHED"),
     "BOE-LTA-2026-002": dict(
         title="BOE Letter to Assessors 2026/002: 2026-27 Prop 13 inflation factor 1.02 (figure from secondary sources)",
         url="https://www.boe.ca.gov/proptaxes/", publisher="California BOE", status="SECONDARY"),
@@ -105,8 +113,8 @@ SOURCES = {
         url="https://www.sfelections.org/results/20261103/index.html",
         publisher="SF Department of Elections", status="FETCHED"),
     "SF-TREASURER": dict(
-        title="SF Office of the Treasurer & Tax Collector (documentary transfer tax schedule; page not reachable in this session)",
-        url="https://sftreasurer.org/", publisher="City and County of San Francisco", status="LINK"),
+        title="SF Treasurer: secured property-tax rate FY2026-27 1.18162182% (official schedule)",
+        url="https://sftreasurer.org/property/secured-property-taxes", publisher="City and County of San Francisco", status="FETCHED"),
     "SCC-RECORDER": dict(
         title="Santa Clara County Clerk-Recorder (documentary transfer tax; $1.10 per $1,000 from secondary sources)",
         url="https://www.sccgov.org/sites/clerk-recorder", publisher="Santa Clara County", status="SECONDARY"),
@@ -148,8 +156,8 @@ PROPERTY_A_FACTS = [
      "Derived from household bills. Confirm the rate for the tax rate area with the county assessor."),
     ("Prop 13 inflation factor, 2026-27", "1.02 (2.0% cap)", "SECONDARY", ["BOE-LTA-2026-002"],
      "Factor applied to the assessed value each year under Prop 13 (cap 2%)."),
-    ("Prop 19 allowance (transfers Feb 16, 2025 to Feb 15, 2027)", "$1,044,590", "SECONDARY", ["BOE-LTA-2025-009", "BOE-PROP19-INTRO"],
-     "BOE figure $1,044,586, rounded to the nearest $10. Adjusted every two years."),
+    ("Prop 19 allowance (transfers Feb 16, 2025 to Feb 15, 2027)", "$1,044,586", "FETCHED", ["BOE-LTA-2025-009", "BOE-PROP19-INTRO"],
+     "Statutory amount, so it is published exactly, not rounded (BOE LTA 2025/009, read 2026-11-26). Adjusted every two years; next adjustment Feb 2027."),
     ("City transfer tax", "", "UNVERIFIED", ["SCC-RECORDER"],
      "Left blank. Confirm with the city and the escrow company whether a city tax applies."),
     ("Water (household range)", "held internally", "USER", ["SJW-AL628"],
@@ -183,6 +191,42 @@ PROPERTY_B_FACTS = [
 
 # Irregularities and open flags. (item, what we found, action, source ids)
 IRREGULARITIES = [
+    ("Prop 19 allowance was printed with a rounded value",
+     "The root site printed $1,044,590 for the Prop 19 allowance. That is a $10 rounding of a statutory amount. BOE Letter 2025/009 sets $1,044,586, and the household rounding rule does not apply to statutes. Corrected in the root site, the brief and the model constant (2026-11-26).",
+     "The model outputs in data/model_outputs.json were produced with the old constant. Regenerate them from the owner's private inputs. The difference is a few dollars in the cap, so no rounded result should move by more than $10.",
+     ["BOE-LTA-2025-009"]),
+    ("'Prop H' read as SF Measure H (November 3, 2026)",
+     "The request's 'Prop H' is read as San Francisco Measure H, a Muni parcel tax. The official preliminary results show 74.42% yes. Measure I (transfer tax on sales over $10 million) shows 48.38% yes and did not pass.",
+     "Confirm the reading. Certification is pending, so the result is preliminary.",
+     ["SF-ELECTIONS-2026"]),
+    ("Claimed alternate trees still hold exact household figures; removal handed back to their owners",
+     "At 2c212dc the owner gate found exact household figures in the tracked trees site/, decision-workspace/, model/ and decision-model/ (the public gate does not, because Pages excludes them). decision-model/ was reported scrubbed on main by c8d13dcb; the others were not re-checked on the current main. Removing trees was considered and not done: their owners hold open items on the board.",
+     "Owners of those trees, or the owner, to decide: scrub, band, or remove. See the board entry for session 241e462c.",
+     ["REPO-PRIVACY-NOTE"]),
+    ("Prop 19 letter number corrected (2025/009, not 2025/015)",
+     "An earlier build cited BOE Letter to Assessors 2025/015 for the $1,044,586 allowance. The letter the BOE published on March 7, 2025 that sets this amount is No. 2025/009 (read in full on 2026-11-26). The citation and link are corrected in the source register and in the decision workspace. The figure itself was already correct.",
+     "No action on the figure. Keep the 2025/009 link. Check the next adjustment letter in February 2027.",
+     ["BOE-LTA-2025-009"]),
+    ("Form 540 surtax: name and threshold verified",
+     "The 1% surcharge on California taxable income above $1,000,000 is now called the Behavioral Health Services Tax (formerly Mental Health Services Tax). The 2025 FTB instructions read on 2026-11-26 apply it to taxable income above a flat $1,000,000 with no indexing.",
+     "Use the flat $1,000,000 in the model. Recheck the FTB instructions each January.",
+     ["FTB-540ES-2025"]),
+    ("Private inputs are not in the repository",
+     "The model reads household figures from private/raw_inputs.json, which is gitignored. A reader without that file cannot reproduce the results. On 2026-11-26 the file was rebuilt from the owner's figures (rounded to $10). The rebuilt model reproduced the committed outputs exactly.",
+     "Owner keeps a copy of the private file. Nothing in it is published.",
+     ["HOUSEHOLD"]),
+    ("Privacy gate narrowed to unrounded source figures",
+     "Owner policy: figures are reported rounded to the nearest $10. The gate used to flag every household figure, including rounded ones. It now flags only unrounded source values and still flags ZIP codes, the city and neighbourhood names, and the forbidden terms (stored as hashes).",
+     "Owner to confirm this policy. Revert the change in tools/check_site.py if the rule is that no household figure may be published.",
+     ["HOUSEHOLD"]),
+    ("Earlier privacy leak on main: ZIP codes and city names in a published site",
+     "The decision-model site published on main carried two ZIP codes, the city name and a neighbourhood label. They were replaced with placeholders on 2026-11-26. The decision-model build check passes. Git history still contains the original text (before 2026-11-26).",
+     "Owner decision: history rewrite (a force-push to main) is not done here. Decide whether to rewrite history.",
+     ["HOUSEHOLD"]),
+    ("Projection shift from rounding the implied tax rate",
+     "The implied all-in tax rate in model/build_model.py was recomputed from inputs rounded to the nearest $10 (tax and assessed value, both to $10). The rate moves from 1.3353% to 1.3358%. The 30-year projection moves by about $1,020 (0.006%). The decision-workspace output did not change.",
+     "None. Recorded so the change is traceable.",
+     ["MODEL"]),
     ("Household tax-history record: repeated values",
      "The internal tax-history record repeats some year-by-year values. Details are held internally and not published.",
      "Check the repeated years against the county bills before relying on the history.",
@@ -236,9 +280,9 @@ IRREGULARITIES = [
      "Counsel to confirm which reading applies.",
      ["CA-RTC-63.2"]),
     ("California '1% tax above $1 million' is the Behavioral Health Services Tax",
-     "It is 1% of taxable income over $1,000,000 (FTB instructions). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
+     "It is 1% of taxable income over $1,000,000 (Form 540, line 62; R&TC 17043). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
      "CPA to confirm the state rate on large gains for the transfer year.",
-     ["FTB-540ES-2025"]),
+     ["FTB-540-2025", "FTB-540ES-2025"]),
     ("Public Git history contains a personal e-mail address",
      "The base commit on main lists a personal e-mail address as the author. The repository is public. History was NOT rewritten.",
      "Decide whether to rewrite history (requires a force-push to main and your explicit approval), or set the e-mail to private for future commits.",
@@ -259,6 +303,10 @@ IRREGULARITIES = [
      "The 2027 figures ($15,480,000 estate and gift exclusion; $20,000 annual gift exclusion) come from secondary reports.",
      "Confirm on the IRS release before relying on them.",
      ["IRS-NEWS-2027"]),
+    ("Repository privacy containment is partial",
+     "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
+     "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
+     []),
 ]
 
 # Law: (topic, rule, status, source ids, what it means here)
@@ -300,8 +348,8 @@ LAW_ROWS = [
      ["IRS-PUB-527"],
      "Applies if Property A is rented. Land is not depreciable; the land share is needed."),
     ("California tax on capital gains",
-     "Gains are taxed as ordinary income; 1% Behavioral Health Services Tax on taxable income over $1,000,000", "ENACTED",
-     ["FTB-540ES-2025", "FTB-FORMS"],
+     "Gains are taxed as ordinary income; 1% Behavioral Health Services Tax on taxable income over $1,000,000 (Form 540, line 62)", "ENACTED",
+     ["FTB-540-2025", "FTB-540ES-2025"],
      "Large gains in one year can reach the 1% surcharge."),
     ("Prop 13 (property tax)",
      "Assessed value is reset at change in ownership; then rises by at most 2% a year", "ENACTED (constitution)",

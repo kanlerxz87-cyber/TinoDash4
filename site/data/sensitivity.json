@@ -1,0 +1,354 @@
+{
+ "runs": [
+  {
+   "scenario": "low",
+   "home_g": 1.0,
+   "stock_g": 6.0,
+   "infl": 1.5,
+   "nw30": {
+    "LIVE in Property A (Prop 19 claimed)": 6112380,
+    "RENT Property A (full reassessment)": 9318710,
+    "SELL Property A \u2192 lump-sum stocks": 27200650,
+    "SELL Property A \u2192 24-mo Treasury park, then phase 24 mo": 25008990,
+    "MIXED: live 5 years \u2192 sell": 20950410
+   },
+   "nw": {
+    "LIVE in Property A (Prop 19 claimed)": 6112380,
+    "RENT Property A (full reassessment)": 9318710,
+    "SELL Property A \u2192 lump-sum stocks": 27200650,
+    "SELL Property A \u2192 24-mo Treasury park, then phase 24 mo": 25008990,
+    "MIXED: live 5 years \u2192 sell": 20950410
+   }
+  },
+  {
+   "scenario": "base",
+   "home_g": 3.5,
+   "stock_g": 8.5,
+   "infl": 2.5,
+   "nw30": {
+    "LIVE in Property A (Prop 19 claimed)": 19673040,
+    "RENT Property A (full reassessment)": 22028340,
+    "SELL Property A \u2192 lump-sum stocks": 81864720,
+    "SELL Property A \u2192 24-mo Treasury park, then phase 24 mo": 70748050,
+    "MIXED: live 5 years \u2192 sell": 59974760
+   },
+   "nw": {
+    "LIVE in Property A (Prop 19 claimed)": 19673040,
+    "RENT Property A (full reassessment)": 22028340,
+    "SELL Property A \u2192 lump-sum stocks": 81864720,
+    "SELL Property A \u2192 24-mo Treasury park, then phase 24 mo": 70748050,
+    "MIXED: live 5 years \u2192 sell": 59974760
+   }
+  },
+  {
+   "scenario": "high",
+   "home_g": 5.5,
+   "stock_g": 12.0,
+   "infl": 4.5,
+   "nw30": {
+    "LIVE in Property A (Prop 19 claimed)": 51635430,
+    "RENT Property A (full reassessment)": 52463150,
+    "SELL Property A \u2192 lump-sum stocks": 295868690,
+    "SELL Property A \u2192 24-mo Treasury park, then phase 24 mo": 235729640,
+    "MIXED: live 5 years \u2192 sell": 189417590
+   },
+   "nw": {
+    "LIVE in Property A (Prop 19 claimed)": 51635430,
+    "RENT Property A (full reassessment)": 52463150,
+    "SELL Property A \u2192 lump-sum stocks": 295868690,
+    "SELL Property A \u2192 24-mo Treasury park, then phase 24 mo": 235729640,
+    "MIXED: live 5 years \u2192 sell": 189417590
+   }
+  }
+ ],
+ "grid": [
+  {
+   "scenario": "low",
+   "home_g": 1.0,
+   "stock_g": 6.0,
+   "infl": 1.5,
+   "10y": {
+    "sell": 9808970,
+    "live": 5718670,
+    "rent": 6559110,
+    "phase": 9261230,
+    "sell_minus_live": 4090300,
+    "sell_minus_rent": 3249860
+   },
+   "20y": {
+    "sell": 16241760,
+    "live": 5859410,
+    "rent": 7722340,
+    "phase": 15119190,
+    "sell_minus_live": 10382350,
+    "sell_minus_rent": 8519420
+   },
+   "30y": {
+    "sell": 27200650,
+    "live": 6112380,
+    "rent": 9318710,
+    "phase": 25008990,
+    "sell_minus_live": 21088270,
+    "sell_minus_rent": 17881940
+   }
+  },
+  {
+   "scenario": "base",
+   "home_g": 3.5,
+   "stock_g": 8.5,
+   "infl": 2.5,
+   "10y": {
+    "sell": 19170470,
+    "live": 11451000,
+    "rent": 12133880,
+    "phase": 17295730,
+    "sell_minus_live": 7719470,
+    "sell_minus_rent": 7036590
+   },
+   "20y": {
+    "sell": 39098400,
+    "live": 14883450,
+    "rent": 16326120,
+    "phase": 34426750,
+    "sell_minus_live": 24214950,
+    "sell_minus_rent": 22772280
+   },
+   "30y": {
+    "sell": 81864720,
+    "live": 19673040,
+    "rent": 22028340,
+    "phase": 70748050,
+    "sell_minus_live": 62191680,
+    "sell_minus_rent": 59836380
+   }
+  },
+  {
+   "scenario": "high",
+   "home_g": 5.5,
+   "stock_g": 12.0,
+   "infl": 4.5,
+   "10y": {
+    "sell": 36862680,
+    "live": 19919230,
+    "rent": 20391860,
+    "phase": 31155290,
+    "sell_minus_live": 16943450,
+    "sell_minus_rent": 16470820
+   },
+   "20y": {
+    "sell": 102090020,
+    "live": 31708720,
+    "rent": 32505190,
+    "phase": 83204600,
+    "sell_minus_live": 70381300,
+    "sell_minus_rent": 69584830
+   },
+   "30y": {
+    "sell": 295868690,
+    "live": 51635430,
+    "rent": 52463150,
+    "phase": 235729640,
+    "sell_minus_live": 244233260,
+    "sell_minus_rent": 243405540
+   }
+  }
+ ],
+ "matrix": [
+  {
+   "stocks": 0.06,
+   "home": 0.01,
+   "infl": 0.025,
+   "at10": 4092470,
+   "sell10": 9804990,
+   "live10": 5712520,
+   "rent10": 6552950,
+   "phase10": 9257250,
+   "at20": 10391840,
+   "sell20": 16224340,
+   "live20": 5832500,
+   "rent20": 7695430,
+   "phase20": 15101780,
+   "at30": 21112410,
+   "sell30": 27156360,
+   "live30": 6043950,
+   "rent30": 9250280,
+   "phase30": 24964700,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.06,
+   "home": 0.035,
+   "infl": 0.025,
+   "at10": 4598170,
+   "sell10": 16049170,
+   "live10": 11451000,
+   "rent10": 12133880,
+   "phase10": 15177530,
+   "at20": 12137390,
+   "sell20": 27020840,
+   "live20": 14883450,
+   "rent20": 16326120,
+   "phase20": 25234450,
+   "at30": 25893840,
+   "sell30": 45566880,
+   "live30": 19673040,
+   "rent30": 22028340,
+   "phase30": 42079180,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.06,
+   "home": 0.055,
+   "infl": 0.025,
+   "at10": 4150630,
+   "sell10": 24083330,
+   "live10": 19932700,
+   "rent10": 20405330,
+   "phase10": 22829410,
+   "at20": 10439610,
+   "sell20": 42213800,
+   "live20": 31774190,
+   "rent20": 32570660,
+   "phase20": 39643940,
+   "at30": 21892980,
+   "sell30": 73714440,
+   "live30": 51821460,
+   "rent30": 52649170,
+   "phase30": 68697110,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.085,
+   "home": 0.01,
+   "infl": 0.025,
+   "at10": 6053890,
+   "sell10": 11766410,
+   "live10": 5712520,
+   "rent10": 6552950,
+   "phase10": 10588320,
+   "at20": 17981350,
+   "sell20": 23813850,
+   "live20": 5832500,
+   "rent20": 7695430,
+   "phase20": 20878200,
+   "at30": 43921880,
+   "sell30": 49965830,
+   "live30": 6043950,
+   "rent30": 9250280,
+   "phase30": 42980150,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.085,
+   "home": 0.035,
+   "infl": 0.025,
+   "at10": 7719470,
+   "sell10": 19170470,
+   "live10": 11451000,
+   "rent10": 12133880,
+   "phase10": 17295730,
+   "at20": 24214950,
+   "sell20": 39098400,
+   "live20": 14883450,
+   "rent20": 16326120,
+   "phase20": 34426750,
+   "at30": 62191680,
+   "sell30": 81864720,
+   "live30": 19673040,
+   "rent30": 22028340,
+   "phase30": 70748050,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.085,
+   "home": 0.055,
+   "infl": 0.025,
+   "at10": 8640860,
+   "sell10": 28573560,
+   "live10": 19932700,
+   "rent10": 20405330,
+   "phase10": 25876610,
+   "at20": 27814090,
+   "sell20": 59588280,
+   "live20": 31774190,
+   "rent20": 32570660,
+   "phase20": 52867760,
+   "at30": 74110160,
+   "sell30": 125931620,
+   "live30": 51821460,
+   "rent30": 52649170,
+   "phase30": 109939450,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.12,
+   "home": 0.01,
+   "infl": 0.025,
+   "at10": 9678540,
+   "sell10": 15391060,
+   "live10": 5712520,
+   "rent10": 6552950,
+   "phase10": 12897960,
+   "at20": 36565440,
+   "sell20": 42397940,
+   "live20": 5832500,
+   "rent20": 7695430,
+   "phase20": 34148420,
+   "at30": 118206260,
+   "sell30": 124250210,
+   "live30": 6043950,
+   "rent30": 9250280,
+   "phase30": 97980310,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.12,
+   "home": 0.035,
+   "infl": 0.025,
+   "at10": 13487560,
+   "sell10": 24938560,
+   "live10": 11451000,
+   "rent10": 12133880,
+   "phase10": 20971170,
+   "at20": 53788730,
+   "sell20": 68672180,
+   "live20": 14883450,
+   "rent20": 16326120,
+   "phase20": 55544310,
+   "at30": 180404080,
+   "sell30": 200077120,
+   "live30": 19673040,
+   "rent30": 22028340,
+   "phase30": 158272530,
+   "lead30": "SELL"
+  },
+  {
+   "stocks": 0.12,
+   "home": 0.055,
+   "infl": 0.025,
+   "at10": 16938690,
+   "sell10": 36871390,
+   "live10": 19932700,
+   "rent10": 20405330,
+   "phase10": 31164010,
+   "at20": 70358210,
+   "sell20": 102132400,
+   "live20": 31774190,
+   "rent20": 32570660,
+   "phase20": 83246970,
+   "at30": 244167620,
+   "sell30": 295989080,
+   "live30": 51821460,
+   "rent30": 52649170,
+   "phase30": 235850030,
+   "lead30": "SELL"
+  }
+ ],
+ "stock_stats": {
+  "mean_arith_pct": 11.86,
+  "sd_pct": 19.3,
+  "bill_mean_pct": 3.42,
+  "n": 98,
+  "src": "damodaran"
+ }
+}

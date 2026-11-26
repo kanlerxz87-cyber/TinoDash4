@@ -19,6 +19,7 @@ import random
 from decimal import Decimal, ROUND_HALF_UP
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+DASH = ROOT / "dashboard"
 SEED = 20261126
 N_MC = 2000          # Monte Carlo draws for the headline ranking
 N_GRID = 200         # draws per sensitivity variant (smaller, same seed)
@@ -53,11 +54,11 @@ def pct(x, dp=2):
 
 
 def load_inputs():
-    return json.loads((ROOT / "data/inputs.json").read_text())
+    return json.loads((DASH / "data/inputs.json").read_text())
 
 
 def load_returns():
-    rows = list(csv.DictReader((ROOT / "data/returns_1928_2025.csv").open()))
+    rows = list(csv.DictReader((DASH / "data/returns_1928_2025.csv").open()))
     years = [int(r["year"]) for r in rows]
     eq = [float(r["sp500_total_return_pct"]) / 100 for r in rows]
     bill = [float(r["tbill_3m_avg_pct"]) / 100 for r in rows]
@@ -598,8 +599,8 @@ def main():
                    "headroom_for_other_assets_before_debts_and_expenses": headroom,
                    "federal_rate_above_exclusion_pct": 40},
     }
-    (ROOT / "data/model_outputs.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
-    print("wrote data/model_outputs.json")
+    (DASH / "data/model_outputs.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
+    print("wrote dashboard/data/model_outputs.json")
     for key in picks:
         print(key, picks[key]["choice"], "| leader:", picks[key]["unconstrained_leader"], "| moved variants:",
               [r["id"] for r in grid if r["picks"][key]["choice"] != picks[key]["choice"]])

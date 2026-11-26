@@ -13,17 +13,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Regenerate model outputs (seeded, deterministic)
-        run: python3 tools/model.py
-      - name: Fail if model outputs differ from the committed file
-        run: git diff --exit-code -- data/model_outputs.json
-      - name: Rebuild the site
+      - name: Rebuild root dashboard (deterministic from data/model_outputs.json)
         run: python3 tools/build_site.py
-      - name: Fail if the built site differs from the committed site
-        run: git diff --exit-code -- index.html pages assets
-      - name: Structural checks (rounding, row markers, links, source register)
-        run: python3 tools/check_site.py --structural
+      - name: Fail if rebuild changed tracked root site (must be committed in sync)
+        run: git diff --exit-code -- '*.html' assets data/irregularities.json
+      - name: Pre-publish gate (privacy, rounding, row links, internal links, Pages containment)
+        run: python3 tools/check_site.py
+      - name: Regenerate site/ model data (deterministic)
+        run: python3 model/build_model.py
+      - name: Fail if regeneration changed tracked data (data must be committed in sync)
+        run: git diff --exit-code -- site/data
+      - name: Headless smoke test of all site renderers
+        run: node model/check_site.js
+      - name: Build the public root dashboard
+        run: python3 tools/build_site.py
+      - name: Check root Pages artifact privacy, sources, rounding, and links
+        run: python3 tools/check_site.py
+      - name: Ensure Jekyll exclusions stay enabled
+        run: test ! -e .nojekyll

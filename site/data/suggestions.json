@@ -1,0 +1,90 @@
+[
+ {
+  "id": "S1",
+  "priority": "High",
+  "title": "Lock the occupancy decision in writing BEFORE the transfer",
+  "body": "Draft a one-page household policy: which path triggers under which conditions (cash size, market level, occupancy intent). Prevents reverse-engineering the answer from a single projection.",
+  "owner": "Household + attorney",
+  "status": "Proposed"
+ },
+ {
+  "id": "S2",
+  "priority": "High",
+  "title": "Obtain independent valuations and rent comps",
+  "body": "Date-of-death appraisal (for basis and Prop 19), plus three rent comparables for Property A. Until then every 'rent' number on this site is a floor.",
+  "owner": "Executor / appraiser",
+  "status": "Proposed"
+ },
+ {
+  "id": "S3",
+  "priority": "High",
+  "title": "Insurance audit for both properties",
+  "body": "Replace the ~$1,500 household guesses with quoted premiums (HO-3 for A; DP-3/landlord for B). Check CDI ZIP-level report for both property ZIPs (internal) context.",
+  "owner": "Household + broker",
+  "status": "Proposed"
+ },
+ {
+  "id": "S4",
+  "priority": "High",
+  "title": "Estate liquidity plan if the estate may exceed the exclusion",
+  "body": "Identify cash/liquid assets covering potential 40% tax within 9 months; discuss \u00a76166 and life-insurance options with counsel.",
+  "owner": "Attorney + CPA",
+  "status": "Proposed"
+ },
+ {
+  "id": "S5",
+  "priority": "Medium",
+  "title": "Sign an investment policy statement for the proceeds now",
+  "body": "Write the allocation, phasing rules (24\u201336-month Treasury park), rebalancing, and drawdown limits BEFORE any money arrives.",
+  "owner": "Household",
+  "status": "Proposed"
+ },
+ {
+  "id": "S6",
+  "priority": "Medium",
+  "title": "Annual re-run calendar",
+  "body": "Every January: re-run this model; every February 16: check BOE's new Prop 19 cap; every November: check ballot measures; annually verify insurance and rents.",
+  "owner": "Household",
+  "status": "Proposed"
+ },
+ {
+  "id": "S7",
+  "priority": "Medium",
+  "title": "Add a 'Flagged for Review' triage routine",
+  "body": "When any flagged item is resolved (e.g., TRA found, comps obtained), update research/SOURCES.md, re-run model/build_model.py, and redeploy.",
+  "owner": "Site maintainer",
+  "status": "Proposed"
+ },
+ {
+  "id": "S8",
+  "priority": "Medium",
+  "title": "Pre-agree the black-swan rule",
+  "body": "Decide now: if markets fall >30% within 12 months of selling, do we pause the phase-in, speed it up, or hold to schedule? Write it down.",
+  "owner": "Household",
+  "status": "Proposed"
+ },
+ {
+  "id": "S9",
+  "priority": "Low",
+  "title": "Extend the model to monthly granularity",
+  "body": "Annual data smooths crashes; monthly series would sharpen the 1929/2008 entry tests.",
+  "owner": "Site maintainer",
+  "status": "Proposed"
+ },
+ {
+  "id": "S10",
+  "priority": "Low",
+  "title": "Add per-TRA lookup helper",
+  "body": "Once the household shares a TRA number (not the address), pin the published rate into the data table with the county source link.",
+  "owner": "Household",
+  "status": "Proposed"
+ },
+ {
+  "id": "S11",
+  "priority": "High",
+  "title": "Contain and audit the public GitHub history before claiming privacy is restored",
+  "body": "The repository and Pages are currently public; this shallow checkout cannot verify prior commits. First preserve an authorized backup, complete an offline scan of every historical commit and public artifact, agree whether to take the repository/site private or replace it with a clean sanitized history, then coordinate the history rewrite and check forks/caches. Do not force-rewrite shared main as an isolated session action.",
+  "owner": "Repository administrator + privacy reviewer",
+  "status": "Proposed \u2014 high urgency; not implemented"
+ }
+]

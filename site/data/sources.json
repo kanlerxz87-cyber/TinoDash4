@@ -1,0 +1,289 @@
+{
+ "irs-rp2532": {
+  "t": "IRS Rev. Proc. 2025-32 (2026 inflation adjustments; $15M basic exclusion; LTCG brackets)",
+  "u": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "irs-obbb": {
+  "t": "IRS \u2014 One, Big, Beautiful Bill provisions (PL 119-21)",
+  "u": "https://www.irs.gov/newsroom/one-big-beautiful-bill-provisions-individuals-and-workers",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "irs-706": {
+  "t": "IRS Instructions for Form 706 (07/2026) \u2014 $15M, 9-month due date",
+  "u": "https://www.irs.gov/instructions/i706",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "irs-estgift": {
+  "t": "IRS \u2014 What's new: Estate and gift tax (portability, DSUE)",
+  "u": "https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "irs-p523": {
+  "t": "IRS Publication 523 \u2014 Selling Your Home (step-up basis, \u00a7121)",
+  "u": "https://www.irs.gov/publications/p523",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "irs-1040d": {
+  "t": "IRS Instructions for Schedule D / Capital Gains",
+  "u": "https://www.irs.gov/instructions/i1040sd",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": null
+ },
+ "irs-i8960": {
+  "t": "IRS Instructions for Form 8960 (3.8% NIIT, IRC \u00a71411)",
+  "u": "https://www.irs.gov/instructions/i8960",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": null
+ },
+ "usc-121": {
+  "t": "26 U.S.C. \u00a7121 (incl. (d)(11) inherited-home rule) \u2014 OLRC",
+  "u": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section121",
+  "o": "Office of the Law Revision Counsel",
+  "k": "gov",
+  "v": null
+ },
+ "irs-p544": {
+  "t": "IRS Publication 544 \u2014 Sales and Other Dispositions (recapture)",
+  "u": "https://www.irs.gov/publications/p544",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": null
+ },
+ "congress-hr601": {
+  "t": "H.R.601 \u2014 Estate Tax Rate Reduction Act (119th Congress, in committee)",
+  "u": "https://www.congress.gov/bill/119th-congress/house-bill/601",
+  "o": "Congress.gov",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "boe-prop19": {
+  "t": "California BOE \u2014 Proposition 19 (value cap, filing windows, $1,044,586)",
+  "u": "https://www.boe.ca.gov/prop19/",
+  "o": "CA State Board of Equalization",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "boe-lta25009": {
+  "t": "BOE Letter to Assessors 2025/009 \u2014 $1M amount adjustment",
+  "u": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+  "o": "CA State Board of Equalization",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "leginfo-13302": {
+  "t": "R&T Code \u00a713302 \u2014 CA estate tax keyed to federal credit (collects $0)",
+  "u": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13302",
+  "o": "CA Legislative Information",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "leginfo-aca11": {
+  "t": "ACA 11 (Proposition 19 text)",
+  "u": "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=201920200ACA11",
+  "o": "CA Legislative Information",
+  "k": "gov",
+  "v": null
+ },
+ "ftb-capgain": {
+  "t": "FTB \u2014 Capital gains and losses (CA taxes gains as ordinary income)",
+  "u": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html",
+  "o": "CA Franchise Tax Board",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "ftb-540i": {
+  "t": "FTB 2025 Instructions for Form 540 \u2014 line 62: 1% over $1,000,000",
+  "u": "https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html",
+  "o": "CA Franchise Tax Board",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "ftb-taxnews26": {
+  "t": "FTB Tax News March 2026 \u2014 Behavioral Health Services Act rename; OBBBA non-conformity",
+  "u": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/2026/03.html",
+  "o": "CA Franchise Tax Board",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "ftb-fedchanges": {
+  "t": "FTB \u2014 Summary of Federal Income Tax Changes (capital-gain conformity)",
+  "u": "https://www.ftb.ca.gov/about-ftb/data-reports-plans/summary-of-federal-income-tax-changes/index.html",
+  "o": "CA Franchise Tax Board",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "sf-ab1482": {
+  "t": "SF.gov \u2014 California Tenant Protection Act (AB 1482), SF rate 8.8% (Aug 2026\u2013Jul 2027)",
+  "u": "https://www.sf.gov/reports--california-tenant-protection-act-2019-ab-1482",
+  "o": "City & County of San Francisco",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "ag-init250035": {
+  "t": "CA Attorney General Title & Summary \u2014 Initiative 25-0035 (60+ property tax exemption)",
+  "u": "https://oag.ca.gov/system/files/initiatives/pdfs/Title%20and%20Summary%20(25-0035).pdf",
+  "o": "CA Attorney General",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "scc-recorder": {
+  "t": "SCC Clerk-Recorder \u2014 recording fees & transfer tax ($0.55/$500; city tax only SJ/PA/MV)",
+  "u": "https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-document-fees/record-fees",
+  "o": "Santa Clara County",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "scc-assessor": {
+  "t": "SCC Assessor \u2014 2026 Assessment Information Booklet (800+ TRAs; typical 1.1488%; $7,000 exemption)",
+  "u": "https://files.santaclaracounty.gov/exjcpb1521/2026-04/assessment-information-2026-booklet-english-3-23-26-web.pdf",
+  "o": "Santa Clara County Assessor",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "scc-aab": {
+  "t": "SCC Assessment Appeals Board \u2014 July 2\u2013Sept 15 window (BOE-305-AH)",
+  "u": "https://www.santaclaracounty.gov/your-government/departments/assessor",
+  "o": "Santa Clara County",
+  "k": "gov",
+  "v": null
+ },
+ "csd-ord135": {
+  "t": "Special district (Property A) Ordinance 135 \u2014 sewer rates FY2025-26 ($802/yr SFR)",
+  "u": "https://cupertinosanitarydistrict.org/i/u/10207194/f/Agendas/2025-05-21_Agenda_Packet.pdf",
+  "o": "Special district (Property A)",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "sf-treasurer": {
+  "t": "SF Treasurer & Tax Collector \u2014 secured property tax rate FY2026-27: 1.18162182%",
+  "u": "https://sftreasurer.org/property/secured-property-taxes",
+  "o": "City & County of San Francisco",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "sf-recorder": {
+  "t": "SF Assessor-Recorder \u2014 recording fees & transfer-tax rate table (Art. 12-C)",
+  "u": "https://www.sf.gov/reports--march-2024--fees-record-document-san-francisco",
+  "o": "City & County of San Francisco",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "sf-proph-text": {
+  "t": "SF Prop H official legal text \u2014 Stronger Muni For All Ordinance (\u00a7\u00a71804\u20131806)",
+  "u": "https://media.api.sf.gov/documents/Legal_Text_3X0F1JU.pdf",
+  "o": "City & County of San Francisco",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "sf-vip": {
+  "t": "SF Voter Information Pamphlet, Nov 3 2026 \u2014 Prop H summary ($129/$249/$799, 15 yrs, CPI)",
+  "u": "https://media.api.sf.gov/documents/N26_EN_VIP.pdf",
+  "o": "City & County of San Francisco",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "sf-results": {
+  "t": "SF election results Nov 3 2026 (pre-certification; cert. due Dec 3 2026)",
+  "u": "https://www.sf.gov/past-election-results",
+  "o": "SF Dept. of Elections (index) / press tallies",
+  "k": "media",
+  "v": "2026-11-25"
+ },
+ "sfpuc-rates": {
+  "t": "SFPUC rate schedules FY2026-27 (water W-1A, sewer Sch. A, stormwater)",
+  "u": "https://www.sfpuc.gov/sites/default/files/accounts-and-services/Rates_Schedule_Water_Sewer_2026-7.pdf",
+  "o": "San Francisco PUC",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "sfrb": {
+  "t": "SF Rent Board \u2014 Rent Ordinance allowable annual increase (Mar 2026\u2013Feb 2027: 1.6%)",
+  "u": "https://sfrb.org/",
+  "o": "SF Rent Board",
+  "k": "gov",
+  "v": null
+ },
+ "damodaran": {
+  "t": "Damodaran (NYU Stern) \u2014 Historical annual returns, stocks/bonds/bills 1928\u20132025 (academic)",
+  "u": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html",
+  "o": "NYU Stern (academic)",
+  "k": "academic",
+  "v": "2026-11-25"
+ },
+ "bls-cpi": {
+  "t": "BLS Monthly Labor Review \u2014 inflation 1979 11.3%, 1980 13.5%, 1981 10.3%",
+  "u": "https://www.bls.gov/opub/mlr/2016/article/the-monthly-labor-review-at-100-part-iii.htm",
+  "o": "Bureau of Labor Statistics",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "nber": {
+  "t": "NBER Business Cycle Dating Committee \u2014 U.S. recession chronology",
+  "u": "https://www.nber.org/research/business-cycle-dating",
+  "o": "NBER",
+  "k": "academic",
+  "v": "2026-11-25"
+ },
+ "fred-cpi": {
+  "t": "FRED CPIAUCSL \u2014 Consumer Price Index (all urban consumers)",
+  "u": "https://fred.stlouisfed.org/series/CPIAUCSL",
+  "o": "Federal Reserve Bank of St. Louis",
+  "k": "gov",
+  "v": null
+ },
+ "fhfa-hpi": {
+  "t": "FHFA House Price Index \u2014 California (2025Q4: 1-yr \u22120.83%, 5-yr +28.88%)",
+  "u": "https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2025q4",
+  "o": "FHFA",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "hud-fmr": {
+  "t": "HUD FY2026 Fair Market Rents \u2014 San Francisco County 2-BR $3,604 (voucher floor only)",
+  "u": "https://www.huduser.gov/portal/datasets/fmr.html",
+  "o": "U.S. HUD",
+  "k": "gov",
+  "v": null
+ },
+ "cdi-report": {
+  "t": "CA Dept. of Insurance \u2014 Residential Property Insurance Report (ZIP-level, 2018\u20132023)",
+  "u": "https://www.insurance.ca.gov/0400-news/0200-studies-reports/0250-homeowners-study/",
+  "o": "CA Department of Insurance",
+  "k": "gov",
+  "v": "2026-11-25"
+ },
+ "cpuc-nbt": {
+  "t": "CPUC Decision D.22-12-056 \u2014 Net Billing Tariff (NEM 3.0), eff. 2023-04-15",
+  "u": "https://docs.cpuc.ca.gov/",
+  "o": "CA Public Utilities Commission",
+  "k": "gov",
+  "v": null
+ },
+ "household": {
+  "t": "Household-provided figures (rounded to $10) \u2014 not independently verified",
+  "u": null,
+  "o": "Household",
+  "k": "household",
+  "v": "2026-11-25"
+ },
+ "repo-public": {
+  "t": "GitHub repository metadata \u2014 visibility and Pages publication state",
+  "u": "https://api.github.com/repos/kanlerxz87-cyber/TinoDash4",
+  "o": "GitHub REST API",
+  "k": "official",
+  "v": "2026-11-26"
+ }
+}
