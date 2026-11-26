@@ -39,7 +39,7 @@ def bullets(items, style=base):
 def build():
     facts = [
         ["Property A (Santa Clara County): value, Nov 2026", "held internally (household estimate; not an appraisal)"],
-        ["Property A: Prop 19 allowance", "$1,044,590 (BOE, secondary)"],
+        ["Property A: Prop 19 allowance", "$1,044,586 (BOE LTA 2025/009, read)"],
         ["Property A: Prop 13 factor", "1.02 a year (BOE, secondary)"],
         ["Property B (San Francisco): units", "three livable units; two rented; owner occupancy possible"],
         ["Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)"],

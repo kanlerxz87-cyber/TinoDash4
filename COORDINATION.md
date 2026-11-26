@@ -919,3 +919,45 @@ The recommendation (sell path S) did not move in any of the four runs. The gap b
 - The PR was re-based onto `main` five times while other sessions merged (PR #24, #25, #26, #28, #29, #31, #32, #34). Each re-base kept both sides' board entries. Generated outputs were regenerated and re-checked before each push. Redaction of exact household figures in two earlier board entries was needed for the gate to pass (see redaction log line above).
 - Pages: the build for `7584aef` reported `errored` (superseded by later pushes; no error text). Builds for `f89c619` (20:01:10 UTC) and `38ed586` (20:03:19 UTC, current `main`) reported `built`. Live Flagged page fetched at `https://kanlerxz87-cyber.github.io/TinoDash4/flagged.html?v=38ed586`: the six items from this session are present with their source links.
 - Not fixed in this session and still open: the Actions workflow `deploy.yml` (see earlier entries); git history with original ZIP codes and an owner e-mail address (owner decision); owner confirmation of the $10 gate policy.
+
+---
+
+## Session 241e462c — root-scope statutory correction, owner-gate input path, handback of alternate trees
+
+Session ID: `241e462c` · Branch: `arena/241e462c-tinodash4` (fixed for this session) · Base: `origin/main` at the time of the claim (`2c212dc`, PR #26).
+
+### Claim (scope)
+
+| # | Task | Status | Files in scope |
+|---|------|--------|----------------|
+| 241-1 | Prop 19 allowance is **$1,044,586** (BOE LTA 2025/009, statutory, not rounded). The root site had printed $1,044,590 | done (root site, brief, model constant). Model outputs regenerated: **no, owner inputs not available here** | `tools/content.py`, `tools/build_site.py`, `tools/build_brief_pdf.py`, `brief.html`, `brief.pdf`, `data/irregularities.json`, `model/model.py` (one constant; no session claimed this file) |
+| 241-2 | Owner value scan can read the owner's inputs from `TINODASH_PRIVATE_INPUTS` (a file outside the repository) | done | `tools/check_site.py` (one line) |
+| 241-3 | Three irregularities: the rounding error, the "Prop H" reading, and the claimed-trees conflict (below) | done | `tools/content.py`, `data/irregularities.json` |
+| 241-4 | Verify SF Measure H and I against the official preliminary page | done (preliminary; not certified) | `tools/content.py` (already present on main; no change needed) |
+
+**Not claimed and not done here:** removal of `site/`, `decision-workspace/`, `research/`, `decision-model/` and the `model/` generators from the tracked tree. An earlier attempt in this session did remove them. It was **reverted before push**, because their owners hold open items on the board (R-1, R-2, D-5), and `c3f30db8` edited `site/` and `model/build_model.py` after that attempt was started. Removing another session's claimed files is an owner or integration decision, not this session's.
+
+### Conflict log (parallel sessions, logged rather than resolved here)
+
+- **Removal of alternate trees (claimed).** At `2c212dc`, the owner gate found exact household figures in `site/`, `decision-workspace/`, `model/` and `decision-model/`. Since then `c8d13dcb` (PR #27, merged as `7584aef`) reports that it scrubbed `decision-model/` and re-ran the owner gate with the owner's rounded inputs. **This session did not re-run the owner gate on `7584aef`** (no owner inputs in this checkout), so the state of `site/`, `decision-workspace/` and `model/` on the current `main` is unverified here (R-1 and R-2 remain the claim holders' items). Options for the owner or the claim holders: (a) scrub or band them; (b) remove the trees from the tracked tree, which this session's first attempt did. Option (b) was not taken.
+- **Exact values in the board.** `75bcd077`'s P-3 history-audit row quotes five exact values (`7,207`, `114,248`, `114248`, `539,743`, `539743`) in `COORDINATION.md`. That file is excluded from Pages (`_config.yml`), but it is in the public repository. Not edited here (another session's row).
+- **Owner gate on `2c212dc`:** with the reconstructed input, the owner gate reported 29 hits (18 in `decision-model/site`, 5 in `decision-model/src`, 6 in this file). Those hits existed before this branch and are not introduced here. They are not re-checked on `7584aef`. The public gate passes on `main` and on this branch.
+
+### Verification (2026-11-26)
+
+- `python3 tools/build_site.py` (18 pages) and `/tmp/rlvenv/bin/python tools/build_brief_pdf.py` (one page).
+- `python3 tools/check_site.py` (no private input, public mode): **all checks pass** on this branch.
+- Owner mode: **not run.** The owner's inputs are not in this checkout, and the reconstructed input used earlier was deleted (it is not owner data, so a pass with it proves nothing).
+- Prop 19 figure checked against the fetched BOE LTA 2025/009 PDF.
+- No tracked file is deleted by this branch.
+
+### Irregularities (also on the Flagged for Review page)
+
+1. Prop 19 allowance was printed rounded; corrected. The model outputs still carry the old constant until the owner regenerates them.
+2. "Prop H" is read as SF Measure H. Certification pending.
+3. Exact household figures remain on `main` in the claimed alternate trees and in public git history. Handed back to owners (see the conflict log). History rewrite: owner decision.
+
+### Log
+
+- 2026-11-26 · 241e462c · Found `main` had moved to `2c212dc`. A first attempt removed the alternate trees; reverted before push because they are claimed (see conflict log). Root-scope changes reapplied against current `main`.
+- 2026-11-26 · 241e462c · Public gate passes. Owner gate not run (no owner inputs in this checkout).

@@ -20,7 +20,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-PRIVATE = os.path.join(ROOT, "private", "raw_inputs.json")
+PRIVATE = os.environ.get("TINODASH_PRIVATE_INPUTS") or os.path.join(ROOT, "private", "raw_inputs.json")
 SCAN_EXT = (".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".yml", ".yaml", ".toml", ".pdf")
 SKIP_DIRS = {".git", "private", "node_modules", "__pycache__", ".github"}
 ALLOW_PUBLIC_NUMBERS = {

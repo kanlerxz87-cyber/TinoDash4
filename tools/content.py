@@ -21,6 +21,10 @@ Status vocabulary (every row carries one):
 CHECKED = "2026-11-26"
 
 SOURCES = {
+    "REPO-PRIVACY-NOTE": dict(
+        title="PRIVACY_REMEDIATION.md (repository note on partial containment and the history limit)",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/PRIVACY_REMEDIATION.md",
+        publisher="This repository", status="LINK"),
     "IRS-IR-2025-103": dict(
         title="IRS news release IR-2025-103: 2026 inflation adjustments (estate and gift exclusion $15,000,000 for 2026; gift exclusion $19,000)",
         url="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
@@ -152,8 +156,8 @@ PROPERTY_A_FACTS = [
      "Derived from household bills. Confirm the rate for the tax rate area with the county assessor."),
     ("Prop 13 inflation factor, 2026-27", "1.02 (2.0% cap)", "SECONDARY", ["BOE-LTA-2026-002"],
      "Factor applied to the assessed value each year under Prop 13 (cap 2%)."),
-    ("Prop 19 allowance (transfers Feb 16, 2025 to Feb 15, 2027)", "$1,044,590", "FETCHED", ["BOE-LTA-2025-009", "BOE-PROP19-INTRO"],
-     "BOE figure $1,044,586, rounded to the nearest $10. Adjusted every two years; next adjustment Feb 2027."),
+    ("Prop 19 allowance (transfers Feb 16, 2025 to Feb 15, 2027)", "$1,044,586", "FETCHED", ["BOE-LTA-2025-009", "BOE-PROP19-INTRO"],
+     "Statutory amount, so it is published exactly, not rounded (BOE LTA 2025/009, read 2026-11-26). Adjusted every two years; next adjustment Feb 2027."),
     ("City transfer tax", "", "UNVERIFIED", ["SCC-RECORDER"],
      "Left blank. Confirm with the city and the escrow company whether a city tax applies."),
     ("Water (household range)", "held internally", "USER", ["SJW-AL628"],
@@ -187,6 +191,18 @@ PROPERTY_B_FACTS = [
 
 # Irregularities and open flags. (item, what we found, action, source ids)
 IRREGULARITIES = [
+    ("Prop 19 allowance was printed with a rounded value",
+     "The root site printed $1,044,590 for the Prop 19 allowance. That is a $10 rounding of a statutory amount. BOE Letter 2025/009 sets $1,044,586, and the household rounding rule does not apply to statutes. Corrected in the root site, the brief and the model constant (2026-11-26).",
+     "The model outputs in data/model_outputs.json were produced with the old constant. Regenerate them from the owner's private inputs. The difference is a few dollars in the cap, so no rounded result should move by more than $10.",
+     ["BOE-LTA-2025-009"]),
+    ("'Prop H' read as SF Measure H (November 3, 2026)",
+     "The request's 'Prop H' is read as San Francisco Measure H, a Muni parcel tax. The official preliminary results show 74.42% yes. Measure I (transfer tax on sales over $10 million) shows 48.38% yes and did not pass.",
+     "Confirm the reading. Certification is pending, so the result is preliminary.",
+     ["SF-ELECTIONS-2026"]),
+    ("Claimed alternate trees still hold exact household figures; removal handed back to their owners",
+     "At 2c212dc the owner gate found exact household figures in the tracked trees site/, decision-workspace/, model/ and decision-model/ (the public gate does not, because Pages excludes them). decision-model/ was reported scrubbed on main by c8d13dcb; the others were not re-checked on the current main. Removing trees was considered and not done: their owners hold open items on the board.",
+     "Owners of those trees, or the owner, to decide: scrub, band, or remove. See the board entry for session 241e462c.",
+     ["REPO-PRIVACY-NOTE"]),
     ("Prop 19 letter number corrected (2025/009, not 2025/015)",
      "An earlier build cited BOE Letter to Assessors 2025/015 for the $1,044,586 allowance. The letter the BOE published on March 7, 2025 that sets this amount is No. 2025/009 (read in full on 2026-11-26). The citation and link are corrected in the source register and in the decision workspace. The figure itself was already correct.",
      "No action on the figure. Keep the 2025/009 link. Check the next adjustment letter in February 2027.",
