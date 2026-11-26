@@ -534,3 +534,49 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+## Session arena-99f55b2f — verification pass and repo review (branch `arena/99f55b2f-tinodash4`)
+
+Claimed before work started. Scope files are listed per task; no other session's files are edited in this pass.
+
+| # | Task | Status | Owner | Scope (files) |
+|---|------|--------|-------|---------------|
+| 1 | Claim and board entry | done | arena-99f55b2f | COORDINATION.md |
+| 2 | Official-source verification of federal, CA, SCC, SF, macro, and insurance inputs | done (partial; open items listed in the verification file) | arena-99f55b2f | research/VERIFICATION_2026-11-26.md |
+| 3 | Repo review and irregularity log | done (see log below) | arena-99f55b2f | COORDINATION.md (log only) |
+| 4 | Privacy scrub of `decision-model/` and `decision-workspace/` | **not started**: scope needs an owner decision (see Suggestions in the verification file) | — | — |
+| 5 | Site content changes and PR to main | **not started**: reserved for the final integration session | — | — |
+
+### Verification log (arena-99f55b2f, 2026-11-26)
+
+| Date | Item | Verified against | Result |
+|------|------|------------------|--------|
+| 2026-11-26 | Federal basic exclusion 2026 $15M; filing threshold $15M; annual gift exclusion $19,000; 2026 LTCG brackets | IRS Rev. Proc. 2025-32 (fetched §2–§4); IRS estate tax page (fetched) | verified |
+| 2026-11-26 | CA Behavioral Health Services Tax: 1% on taxable income over $1,000,000, Form 540 line 62 | FTB 2025 Form 540 booklet, line 62 (fetched) | verified for TY2025; the name differs from the "MHST" label used in secondary sites |
+| 2026-11-26 | Civil Code §1947.12 rent cap and exemptions (certificate of occupancy within 15 years; individual owner exemption) | leginfo §1947.12 (fetched) | verified; §1946.2 notice text not opened |
+| 2026-11-26 | Prop 19 cap $1,044,586 (rounded $1,044,590) for 2025-02-16 to 2027-02-15 | BOE LTA 2025/009 (fetched) | verified |
+| 2026-11-26 | SF secured rate FY2026-27 1.18162182% | SF Treasurer page (search excerpt) | verified |
+| 2026-11-26 | SCC 1% levy, retirement levy 0.03880, 816 tax rate areas for 2025-26 | County Tax Rate Book 2025-26 (search excerpt, official host) | verified; Property A's TRA total not retrieved |
+| 2026-11-26 | SFPUC FY2026-27 water schedule | SFPUC official PDF (search excerpt) | verified for table; conflicts with secondary tier figures |
+| 2026-11-26 | Treasury par yields 2026-11-25 | Treasury daily par yield curve (fetched) | verified |
+| 2026-11-26 | SSA 2025 Trustees intermediate CPI-W 2.4%, real interest 2.3% | SSA II.C and V.B (fetched) | verified |
+| 2026-11-26 | Treasury basis step-up $3M proposal (May 2026) | Secondary only | **unverified**: Federal Register citation not found |
+| 2026-11-26 | CDI homeowners average and FAIR Plan rate change | Secondary only | **unverified** (primary CDI not opened) |
+
+### Repo review — irregularities (arena-99f55b2f)
+
+| ID | Irregularity | Evidence | Action |
+|----|--------------|----------|--------|
+| R-01 | P-01 claims `_config.yml` and `PRIVACY_REMEDIATION.md` were added, and that `.nojekyll` was removed. Neither file exists, and `.nojekyll` is present but empty. | `git ls-tree` on HEAD b1fa5ba; working tree check | Flagged. The P-01 containment is not treated as verified. Owner to confirm intent. |
+| R-02 | Personal location terms (ZIP codes, city, neighbourhood) remain in `decision-model/` and `decision-workspace/`, which the privacy checker does not scan. | `git grep` on HEAD | Flagged as privacy priority. Scope decision needed before any edit. |
+| R-03 | The rule that dollar figures round to $10 is not met in several older files (for example $1,044,586 and $7,912 appear unrounded). | `git grep` on HEAD | Flagged. Not edited in this pass. |
+| R-04 | The Form 540 surcharge is labelled "MHST" with line 17 or 62 in secondary sites. The official 2025 booklet says Behavioral Health Services Tax, line 62. | FTB booklet | Flagged. Update the name and cite line 62 in the next content pass. |
+| R-05 | SFPUC water tiers conflict between the official table and secondary summaries. | SFPUC PDF vs. secondary sites | Official table used. Flagged. |
+| R-06 | A personal e-mail address remains in base-history commit fe3cad6 (not rewritten). | Earlier session log | Owner decision pending (history rewrite is out of scope for an agent without approval). |
+| R-07 | The Treasury step-up proposal and CDI averages are cited without primary sources. | Verification file | Marked unverified. Do not publish as official. |
+
+### Ship log — arena-99f55b2f
+
+| Date | What | Result |
+|------|------|--------|
+| 2026-11-26 | Verification file `research/VERIFICATION_2026-11-26.md` added; this board section added | committed to `arena/99f55b2f-tinodash4`; pushed after `git pull --rebase` (see git log) |
