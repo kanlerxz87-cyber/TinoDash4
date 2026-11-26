@@ -548,3 +548,13 @@ Session ID: `arena-65c8db99` · Branch: `arena/65c8db99-tinodash4` · Base: `b78
 | Audit current published surfaces and privacy/history exposure; converge the public entry point on one clearly linked decision-support site; close verified gaps in first-screen decision cues, sources, and accessibility; rebuild and run privacy/link/model checks | in progress | `arena-65c8db99` | `COORDINATION.md`, `index.html`, `README.md`, `tools/`, `.github/workflows/verify.yml`, `site/` (only if tests identify a concrete change); no edits to the legacy model workspaces unless a gap is logged here first |
 
 No other active claims were present when this task was claimed. This session is on the Arena-fixed branch; it will not create or switch branches. Historical exposure will be assessed separately from current-tree privacy because ordinary PR merges cannot rewrite public commits already reachable from `main`.
+
+### Privacy remediation addendum (claimed after the audit)
+
+The existing pre-publish checker was exercised with an empty, temporary internal-input manifest (no household values were created or stored). It failed on 96 location-identifier matches across 23 current-tree files; the match categories were ZIP codes, locality/neighbourhood labels, and an over-broad substring rule. It also stops before scanning when the optional internal file is absent. These failures are logged without repeating the identifiers here.
+
+| Task | Status | Owner | File scope |
+|---|---|---|---|
+| Remove location-specific identifiers from current public prose/generated output, fix privacy checking so it is safe without raw household input, and make the public entry point and supporting-site status unambiguous; re-run build, privacy, links, and smoke tests | in progress | `arena-65c8db99` | `COORDINATION.md`, `README.md`, `index.html`, `tools/check_site.py`, `.github/workflows/verify.yml`, `decision-model/src/`, `decision-model/site/`, `site/`, `research/SOURCES.md`, `model/build_model.py` only where a confirmed privacy or provenance gap requires it |
+
+No active claim was present for the completed historical workspaces. Official-authority URLs will be retained where needed to source legal or local-rule rows; generic authority names/URLs are not household identifiers. The checker will distinguish these public citations from actual household location fields.
