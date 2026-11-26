@@ -581,3 +581,22 @@ P-01 update: `_config.yml` excludes alternate site trees and source directories 
 - PR #20 (`arena/e5c3fe3a-tinodash4` → `main`) merged at `4ded1c801870e2b0c83a3b4432e3646b289e7219` on 2026-11-26.
 - Post-merge verification: `Verify model + site` run `45886619624` succeeded; GitHub Pages `pages-build-deployment` run `45886618931` succeeded (build, deploy, report-build-status); latest Pages build status is `built` for the merge SHA. Published root: `https://kanlerxz87-cyber.github.io/TinoDash4/`.
 - This records successful deployment of the Jekyll privacy-exclusion configuration. It does not remove public Git objects or complete the exact-value scan; those limitations remain above.
+---
+
+## Session 407d3840 — root-site privacy gate + source re-verification (current branch)
+
+Session ID: `407d3840` · Branch: `arena/407d3840-tinodash4` (fixed for this session) · Base: `b1fa5ba` (`main`).
+Scope of this session (non-overlapping with other sessions' trees): root dashboard only —
+`tools/check_site.py`, `tools/build_site.py`, `tools/content.py`, `.github/workflows/verify.yml`,
+rebuilt root `*.html` + `assets/` + `data/irregularities.json`, and this board entry.
+Alternate trees (`site/`, `decision-model/`, `decision-workspace/`, `model/`, `research/`) are NOT edited.
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| G-01 | Fix pre-publish gate: `check_site.py` must run without `private/` and must enforce the `_config.yml` Pages exclusion (no `.nojekyll` bypass) | in progress | 407d3840 | `tools/check_site.py`, `tools/build_site.py`, `_config.yml` (read-only check) |
+| G-02 | Re-verify key official figures line-by-line (IRS exclusion, Prop 19 cap, SF rate, FTB 540 line 62, CBO) and correct source URLs/statuses | in progress | 407d3840 | `tools/content.py` |
+| G-03 | Wire root build + gate into CI (`verify.yml`) so a broken site cannot merge | in progress | 407d3840 | `.github/workflows/verify.yml` |
+| G-04 | Rebuild root site, run gate, verify links/rounding/privacy, PR to `main`, merge, confirm Pages | in progress | 407d3840 | rebuilt `*.html`, `assets/`, `data/` |
+
+Claim note: this session is bound to `arena/407d3840-tinodash4`; no additional branch/worktree is created.
+History rewrite is out of scope (needs owner approval + force-push to `main`); see `PRIVACY_REMEDIATION.md`.
