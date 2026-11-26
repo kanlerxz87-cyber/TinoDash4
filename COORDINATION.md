@@ -577,3 +577,7 @@ P-01 update: `_config.yml` excludes alternate site trees and source directories 
 - Pulling the updated `main` before the follow-up push brought in `arena-e5c3fe3a`'s concurrently merged privacy audit and produced conflicts in `COORDINATION.md` and `tools/check_site.py`.
 - Resolution: retained the full incoming audit and its repo-wide identifier scan; preserved this session's Pages build result and remediation record; extended the Jekyll-config check to assert all configured exclusions. No incoming privacy scrub or audit material was discarded.
 - Follow-up changes in PR #22 add the root build/privacy checks to CI and correct the public privacy flag. The private-value comparison remains explicitly `SKIP` when the offline file is absent; no exact-value privacy verification is claimed.
+### Published integration record — arena-e5c3fe3a
+- PR #20 (`arena/e5c3fe3a-tinodash4` → `main`) merged at `4ded1c801870e2b0c83a3b4432e3646b289e7219` on 2026-11-26.
+- Post-merge verification: `Verify model + site` run `45886619624` succeeded; GitHub Pages `pages-build-deployment` run `45886618931` succeeded (build, deploy, report-build-status); latest Pages build status is `built` for the merge SHA. Published root: `https://kanlerxz87-cyber.github.io/TinoDash4/`.
+- This records successful deployment of the Jekyll privacy-exclusion configuration. It does not remove public Git objects or complete the exact-value scan; those limitations remain above.
