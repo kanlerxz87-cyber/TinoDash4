@@ -1024,3 +1024,9 @@ Publishing result: branch pushed and PR #30 (`arena/7cdb8a85-tinodash4` → `mai
 - `verify.yml` (runs `python3 model/build_model.py`) was not gating the merge (no required-status failure reported); it remains a follow-up if the owner enables it as a required check.
 - Session 7cdb8a85 complete: privacy-first publication of the root dashboard; no PII on the website; PII internal-only in gitignored `private/raw_inputs.json`.
 
+
+### Session b422acd0 — correction after merge (PR #41, merge `f13370c`)
+- **Owner inputs moved out of the published folder.** `dashboard/data/inputs.json` had been merged in PR #41 and would have been published by Pages. It is now `private/dashboard_inputs.json` (gitignored), and it is removed from git. `tools/dashboard_model.py` and `tools/dashboard_build.py` read that path. Model output hash is unchanged (`957771a5…`), and the rebuild produces no page differences.
+- **Guard added.** `tools/dashboard_check.py` fails if an owner-inputs file is under `dashboard/` (both modes). `verify-dashboard.yml` fails if one is tracked. CI runs `--structural` only, because it cannot reach `private/`; the full reproduction (model, build, diff, privacy scan) is a local step before each publish.
+- **Still in git history.** `inputs.json` remains in earlier commits (`b2adcf4`, `ecca04c`, and the merge history). History is not rewritten; rewriting needs owner approval.
+- **Open:** Pages publishes `dashboard/` from `main`. Live-URL confirmation could not be done from the sandbox (outbound access is limited to GitHub and package hosts); the Pages build for `f13370c` shows `built`. Owner should confirm `dashboard/data/inputs.json` returns 404 on the live site.

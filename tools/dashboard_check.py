@@ -196,9 +196,23 @@ def required_content():
         ok("required content: summary, flagged, briefing, glossary, suggestions and questions pages present")
 
 
+def inputs_not_published():
+    # Owner figures must never sit under dashboard/ (Pages publishes that folder).
+    bad_paths = []
+    for dp, _, files in os.walk(os.path.join(ROOT, "dashboard")):
+        for f in files:
+            if f == "inputs.json" or f.endswith("_inputs.json"):
+                bad_paths.append(os.path.relpath(os.path.join(dp, f), ROOT))
+    if bad_paths:
+        bad("owner inputs found under dashboard/: " + ", ".join(bad_paths))
+    else:
+        ok("no owner-inputs file under dashboard/ (Pages publishes that folder)")
+
+
 def main():
     structural = "--structural" in sys.argv
     privacy_scan(structural)
+    inputs_not_published()
     rounding_check()
     table_rows_check()
     links_check()

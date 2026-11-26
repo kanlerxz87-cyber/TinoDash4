@@ -2,7 +2,7 @@
 """Decision model: Property A (inherited) under eight paths, with Property B as context.
 
 Standard library only, deterministic (seeded). Reads:
-  data/inputs.json               owner figures, already rounded to $10
+  private/dashboard_inputs.json  owner figures, already rounded to $10 (gitignored; not published)
   data/returns_1928_2025.csv     annual S&P 500 total return and 3-month T-bill (academic record)
 Writes:
   data/model_outputs.json        every published number (rounded to $10 or shown as a rate)
@@ -54,7 +54,7 @@ def pct(x, dp=2):
 
 
 def load_inputs():
-    return json.loads((DASH / "data/inputs.json").read_text())
+    return json.loads((ROOT / "private/dashboard_inputs.json").read_text())  # owner figures: private, never published
 
 
 def load_returns():
@@ -83,7 +83,7 @@ def base_params(inp):
     solar_mid = sum(a["solar_credit_monthly_range"]) / 2
     cpi = 0.023                                # CBO baseline CPI (S15)
     return {
-        # --- owner-supplied (rounded to $10 in data/inputs.json)
+        # --- owner-supplied (rounded to $10 in private/dashboard_inputs.json)
         "mv0": a["value_estimate"]["value"],
         "av0": av_2026,                       # factored base for Prop 19 / Prop 13 (2026 roll)
         "ins0": a["insurance_annual_owner_estimate"],

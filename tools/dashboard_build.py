@@ -2,7 +2,7 @@
 """Builds the static decision site served by GitHub Pages from the repository root.
 
 Reads (all public, all figures rounded to the nearest $10 or statutory), under dashboard/:
-    data/inputs.json          owner-supplied property figures (rounded to $10)
+    private/dashboard_inputs.json  owner-supplied property figures (rounded to $10; gitignored)
     data/sources.json         source register (S01-S23) with status
     data/model_outputs.json   results from tools/model.py
 Writes:
@@ -18,7 +18,7 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DASH = ROOT / "dashboard"
-INP = json.loads((DASH / "data/inputs.json").read_text())
+INP = json.loads((ROOT / "private/dashboard_inputs.json").read_text())  # owner figures: private, never published
 SRC_LIST = json.loads((DASH / "data/sources.json").read_text())["sources"]
 SRC = {s["id"]: s for s in SRC_LIST}
 MO = json.loads((DASH / "data/model_outputs.json").read_text())
