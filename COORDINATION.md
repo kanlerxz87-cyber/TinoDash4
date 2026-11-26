@@ -534,3 +534,13 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+---
+
+## Session arena-bc2ed56c — privacy containment audit (current branch)
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| P-01 | Audit current public artifacts for direct household-derived property inputs, identify current exposure, and add a fail-closed privacy gate / remediation record. Do not rewrite shared/main history. | in progress | arena-bc2ed56c | `tools/`, `PRIVACY_REMEDIATION.md`, privacy-related site outputs only |
+
+Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
