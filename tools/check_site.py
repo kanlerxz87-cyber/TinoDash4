@@ -28,9 +28,11 @@ ALLOW_PUBLIC_NUMBERS = {
     15000000, 15480000, 19000, 20000, 194000, 201000, 250000, 500000, 1000000, 1044590, 1044586,
     400000, 129, 177000000, 10000000, 2026, 2027,
 }
-FORBIDDEN_WORDS = [
-    "cupertino", "outer sunset", "95014", "94122", "gmail",
-]
+# Location names are needed to describe public jurisdictions and cite their official rules.
+# Postal codes and hyper-local neighbourhood labels are not needed in the published pages and
+# are treated as privacy-sensitive identifiers. Do not use broad words such as "sunset" here.
+FORBIDDEN_WORDS = ["95014", "94122", "outer sunset", "gmail"]
+ROUNDED_OK_IN = ("model" + os.sep, "research" + os.sep, "model/", "research/")
 SELF = os.path.normpath(os.path.abspath(__file__))
 LOG = []
 FAIL = []
@@ -99,43 +101,36 @@ def published_files():
 
 
 def main():
-    allow_missing = "--allow-missing-private" in sys.argv
-    if not os.path.exists(PRIVATE):
-        if not allow_missing:
-            bad("private/raw_inputs.json missing: privacy scan cannot run (it is required in the working copy)")
-            return finish()
-        # CI has no private inputs. The raw-figure scan is skipped there; the identifier, rounding,
-        # link and required-content checks still run. The owner runs the full scan locally.
-        LOG.append("SKIP  raw-figure privacy scan (private/raw_inputs.json absent; --allow-missing-private)")
-        raw = {}
-    else:
-        raw = json.load(open(PRIVATE, encoding="utf-8"))
-
-    # 1. Privacy scan values
-    nums = []
-    walk_numbers(raw, nums)
-    # Values already rounded to $10 are published under the owner's rounding rule; the scan targets
-    # unrounded raw figures, which are the ones that can be traced back to the source documents.
-    nums = sorted({int(n) for n in nums if n >= 1000 and int(n) % 10 != 0})
-    collide = [n for n in nums if n in ALLOW_PUBLIC_NUMBERS]
-    if collide:
-        bad(f"private numbers collide with allowed public figures: {collide}")
+    # Exact-value scanning is possible only when an offline private inventory is present. It is
+    # intentionally not checked in. Missing input is a visible SKIP, not a successful privacy
+    # verification and not a reason to skip the independent site-integrity checks below.
+    raw = None
     pats = []
-    for n in nums:
-        comma = f"{n:,}"
-        pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9])")))
-        if n >= 10000:  # plain digits only for 5+ digit values (avoids chance matches such as counts)
-            s = str(n)
-            pats.append(("value " + s, re.compile(r"(?<![0-9.,])" + re.escape(s) + r"(?![0-9])")))
-    # small private numbers that appear in ranges (water, solar, etc.)
-    strs = []
-    walk_strings(raw, strs)
-    for s in strs:
-        if len(s) >= 6 and s.lower() not in ("property", "estimate", "property a", "property b"):
-            pats.append(("text '" + s[:24] + "...'", re.compile(re.escape(s), re.IGNORECASE)))
-    # zip codes (any digits in the private zip list)
-    for z in raw.get("zip_codes_internal_only", []):
-        pats.append(("zip " + str(z), re.compile(r"(?<![0-9])" + re.escape(str(z)) + r"(?![0-9])")))
+    if os.path.exists(PRIVATE):
+        with open(PRIVATE, encoding="utf-8") as f:
+            raw = json.load(f)
+        nums = []
+        walk_numbers(raw, nums)
+        nums = sorted({int(n) for n in nums if n >= 1000})
+        collide = [n for n in nums if n in ALLOW_PUBLIC_NUMBERS]
+        if collide:
+            bad(f"private numbers collide with allowed public figures: {collide}")
+        for n in nums:
+            comma = f"{n:,}"
+            pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9])"), n))
+            if n >= 10000:  # plain digits only for 5+ digit values (avoids chance matches such as counts)
+                s = str(n)
+                pats.append(("value " + s, re.compile(r"(?<![0-9.,])" + re.escape(s) + r"(?![0-9])"), n))
+        strs = []
+        walk_strings(raw, strs)
+        for s in strs:
+            if len(s) >= 6 and s.lower() not in ("property", "estimate"):
+                pats.append(("text '" + s[:24] + "...'", re.compile(re.escape(s), re.IGNORECASE), None))
+        for z in raw.get("zip_codes_internal_only", []):
+            pats.append(("zip " + str(z), re.compile(r"(?<![0-9])" + re.escape(str(z)) + r"(?![0-9])"), None))
+    else:
+        LOG.append("SKIP  private-value comparison: private/raw_inputs.json is not present (no exact-value privacy claim)")
+
     scanned = 0
     for fp in published_files():
         scanned += 1
@@ -144,15 +139,18 @@ def main():
         if fp.endswith(".pdf"):
             text += "\n".join(pdf_streams(raw_bytes))
         rel = os.path.relpath(fp, ROOT)
-        for label, rx in pats:
+        for label, rx, val in pats:
+            # Rounded owner figures are allowed in source and research notes (not published pages)
+            # under the owner's $10-rounding rule. They are never allowed in published output.
+            if val is not None and val % 10 == 0 and rel.startswith(ROUNDED_OK_IN):
+                continue
             if rx.search(text):
                 bad(f"privacy: {label} found in {rel}")
-        # Official source URLs are kept verbatim (manual review needs them); identifiers are checked elsewhere.
-        low = re.sub(r"https?://\S+", " ", text).lower()
+        low = text.lower()
         for w in FORBIDDEN_WORDS:
             if w in low:
                 bad(f"forbidden identifier '{w}' in {rel}")
-    ok(f"privacy scan of {scanned} files against {len(pats)} patterns")
+    ok(f"repository privacy-pattern scan of {scanned} text/PDF files against {len(pats)} private-value patterns")
 
     # 3. Rounding
     dat = json.load(open(os.path.join(ROOT, "data", "model_outputs.json"), encoding="utf-8"))
@@ -217,8 +215,17 @@ def main():
             bad(f"required page missing: {fn}")
         elif needle not in open(path, encoding="utf-8").read():
             bad(f"'{needle}' missing from {fn}")
-    if not os.path.exists(os.path.join(ROOT, ".nojekyll")) and not os.path.exists(os.path.join(ROOT, "_config.yml")):
-        bad("neither .nojekyll nor _config.yml present (GitHub Pages build config)")
+    nojekyll = os.path.join(ROOT, ".nojekyll")
+    jekyll_config = os.path.join(ROOT, "_config.yml")
+    if not os.path.exists(nojekyll):
+        if os.path.exists(jekyll_config):
+            config = open(jekyll_config, encoding="utf-8").read()
+            if "exclude:" in config and "decision-model" in config and "decision-workspace" in config:
+                ok("GitHub Pages Jekyll config present; alternate site/source trees are explicitly excluded")
+            else:
+                bad(".nojekyll missing and _config.yml does not declare the expected privacy exclusions")
+        else:
+            bad(".nojekyll missing and no _config.yml configures GitHub Pages")
     irr = os.path.join(ROOT, "data", "irregularities.json")
     if not os.path.exists(irr):
         bad("data/irregularities.json missing")
