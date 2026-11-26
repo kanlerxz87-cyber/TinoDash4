@@ -38,10 +38,9 @@ SHORT = {
     "L2S": "Mixed: live 2 years, then sell",
     "L5S": "Mixed: live 5 years, then sell",
     "R10S": "Mixed: rent 10 years, then sell",
-    "L5R_B": "Mixed: live 5 years, then rent (reading B)",
-    "L5R_A": "Mixed: live 5 years, then rent (reading A)",
+    "L5R_B": "Mixed: live 5 years, then rent (Prop 19 base reset on move-out)",
 }
-ORDER = ["S", "SP24", "SP36", "L2S", "R10S", "R", "L5S", "L5R_A", "L5R_B", "L"]
+ORDER = ["S", "SP24", "SP36", "L2S", "R10S", "R", "L5S", "L5R_B", "L"]
 # Official sources for each path's row (every row links to at least one)
 PATH_SOURCES = {
     "S": ["TREASURY-YIELD", "IRS-FORM-706", "IRS-PUB-523"],
@@ -52,8 +51,7 @@ PATH_SOURCES = {
     "L2S": ["IRS-PUB-523", "BOE-PROP19-INTRO"],
     "L5S": ["IRS-PUB-523", "BOE-PROP19-INTRO"],
     "R10S": ["IRS-PUB-527", "BOE-PROP19-INTRO"],
-    "L5R_A": ["CA-RTC-63.2", "BOE-PROP19-INTRO"],
-    "L5R_B": ["CA-RTC-63.2", "BOE-PROP19-INTRO"],
+    "L5R_B": ["CA-RTC-63.2", "BOE-LTA-2025-015"],
 }
 NAV = [
     ("Decide", [("index.html", "Dashboard"), ("paths.html", "Paths and what-if"),
@@ -267,6 +265,7 @@ def build_index():
 <li>Base case: transfer in 2045, 20-year horizon, real 2026 dollars, no imputed rent credit. Sell and invest: <strong>{money(BASE['S'])}</strong>. Phased over 24 months: <strong>{money(BASE['SP24'])}</strong>. Rent then sell: <strong>{money(BASE['R'])}</strong>. Live with no rent credit: <strong>{money(BASE['L'])}</strong>.</li>
 <li>Living in Property A ties with selling only if the household values avoided rent at about <strong>{pct(BE_CREDIT, 0)}</strong> of market rent.</li>
 <li>Phasing is an insurance choice: in the base-case grid it gives up about <strong>{pct(GRID_PHASE_COST, 0)}</strong> of the 20-year value if no crash comes (stylised no-crash test: about {pct(NOCRASH_PHASE_COST, 0)}), and it protects against an early 1929- or 2008-type fall.</li>
+<li><strong>Property B is already owned</strong> and has rental activity plus an unoccupied livable unit (household-supplied). The model holds B's cash flow and costs constant; it does not yet compare living in B versus Property A or fully price B's repairs/lease rules. That gap could change the answer.</li>
 <li>Evidence gap: {UNVER} input(s) are UNVERIFIED and left blank. Household inputs are held internally and shown only as placeholders.</li>
 </ul>""", "lean")
     change = card("What would change the answer", f"""
@@ -275,7 +274,7 @@ def build_index():
 <li><strong>Renting</strong> ties with selling if Property A's appreciation reaches about <strong>{pct(BE_APP_RENT)}</strong> a year (base {pct(DATA['meta']['base_case'].get('appreciation', 0.025))}), or stock returns fall to about <strong>{pct(BE_EQ_RENT)}</strong> a year.</li>
 <li><strong>Phasing in</strong> gives up about <strong>{pct(GRID_PHASE_COST, 0)}</strong> of the base-case 20-year value if no crash comes, and reduces entry risk if a 1929- or 2008-type fall starts while the money is parked.</li>
 <li><strong>Prop 19</strong>: if the heir does not live in Property A, the property is reassessed to market on transfer. In 2045 terms (base assumptions), the property tax on the reassessed value is about <strong>{money(PROJ45['property_tax_if_rented'])}</strong> a year, against about <strong>{money(PROJ45['property_tax_if_living'])}</strong> if the Prop 19 base applies.</li>
-<li><strong>Unknowns that could move the answer:</strong> the valuation at date of death, Property A's market rent, insurance quotes, estate size against the federal exclusion, and the heir's occupancy plan.</li>
+<li><strong>Unknowns that could move the answer:</strong> the valuation at date of death, Property A's market rent, insurance quotes, estate size against the federal exclusion, debt/payoffs, and the heir's occupancy plan—especially whether the currently unoccupied unit in already-owned Property B meets housing needs without reducing rent.</li>
 </ul>""", "")
     risk = card("Reinvestment risk (beside every headline)", f"""
 <p>Sell and invest: the 10th-percentile outcome is <strong>{money(MC['S']['p10'])}</strong> and the 90th is <strong>{money(MC['S']['p90'])}</strong> (simulated, base distribution).</p>
@@ -321,7 +320,7 @@ def build_paths():
         [e("L"), e(PATHS["L"]), "primary residence", links(PATH_SOURCES["L"])],
         [e("L2S / L5S"), "Mixed: live 2 or 5 years, then sell", "2 or 5 years", links(PATH_SOURCES["L2S"])],
         [e("R10S"), "Mixed: rent 10 years, then sell", "rented", links(PATH_SOURCES["R10S"])],
-        [e("L5R_A / L5R_B"), "Mixed: live 5 years, then rent", "5 years, then rented", links(PATH_SOURCES["L5R_A"])],
+        [e("L5R_B"), "Mixed: live 5 years, then rent; Prop 19 taxable base resets to value at transfer after move-out", "5 years, then rented", links(PATH_SOURCES["L5R_B"])],
     ])
     rows = []
     for T in (2040, 2045, 2050):
@@ -331,13 +330,13 @@ def build_paths():
             rows.append([str(T), str(H)] + [money(r[p]) for p in ORDER] + [money(rc["L"]), links(["MODEL", "TREASURY-YIELD", "IRS-PUB-523"])])
     combos = table(["Transfer", "Horizon"] + [SHORT[p] for p in ORDER] + ["Live with full rent credit", "Sources"], rows)
     be_rows = [
-        [e("Imputed rent credit at which living ties with selling"), pct(BE_CREDIT, 1), links(["MODEL"])],
-        [e("Property A appreciation at which renting ties with selling"), pct(BE_APP_RENT, 2), links(["MODEL", "IRS-PUB-527"])],
+        [e("Imputed rent credit at which living ties with selling"), pct(BE_CREDIT, 1), links(["MODEL", "HUD-FMR", "BOE-PROP19-INTRO"])],
+        [e("Property A appreciation at which renting ties with selling"), pct(BE_APP_RENT, 2), links(["MODEL", "IRS-PUB-527", "HUD-FMR"])],
         [e("Stock return at which renting ties with selling"), pct(BE_EQ_RENT, 2), links(["MODEL", "TREASURY-YIELD"])],
-        [e("Property A appreciation at which living (0% credit) ties with selling"), pct(BE_APP_LIVE0, 2), links(["MODEL", "BOE-PROP19-INTRO"])],
+        [e("Property A appreciation at which living (0% credit) ties with selling"), pct(BE_APP_LIVE0, 2), links(["MODEL", "BOE-PROP19-INTRO", "BOE-LTA-2026-002"])],
     ]
     be = table(["Break-even", "Value", "Sources"], be_rows)
-    mcrows = [[e(SHORT[p]), money(MC[p]["p10"]), money(MC[p]["p50"]), money(MC[p]["p90"]), money(MC[p]["mean"]), links(["MODEL"])] for p in ORDER]
+    mcrows = [[e(SHORT[p]), money(MC[p]["p10"]), money(MC[p]["p50"]), money(MC[p]["p90"]), money(MC[p]["mean"]), links(PATH_SOURCES[p] + ["MODEL"])] for p in ORDER]
     mc = table(["Path", "10th percentile", "Median", "90th percentile", "Mean", "Sources"], mcrows)
     body = (
         controls
@@ -363,17 +362,24 @@ def build_projections():
     chart = svg_lines(series, xs, "Property A projection (base case, transfer 2045)")
     rows = []
     for r in PROJ:
-        if r["year"] % 5 == 0 or r["year"] in (2027, 2045):
-            rows.append([str(r["year"]), money(r["market_value"]), money(r["assessed_no_transfer"]),
-                         money(r["taxable_if_living_prop19"]), money(r["taxable_if_rented"]),
-                         money(r["property_tax_if_living"]), money(r["property_tax_if_rented"]),
-                         links(["BOE-LTA-2026-002", "BOE-PROP19-INTRO", "MODEL"])])
+        rows.append([str(r["year"]), money(r["market_value"]), money(r["assessed_no_transfer"]),
+                     money(r["taxable_if_living_prop19"]), money(r["taxable_if_rented"]),
+                     money(r["property_tax_if_living"]), money(r["property_tax_if_rented"]),
+                     links(["BOE-LTA-2026-002", "BOE-PROP19-INTRO", "MODEL"])])
     tbl = table(["Year", "Market value", "Assessed (no transfer)", "Taxable if living (Prop 19)", "Taxable if rented",
                  "Property tax if living", "Property tax if rented", "Sources"], rows)
+    plan_rows = []
+    for property_label in ("Property A", "Property B"):
+        for year in range(2027, 2032):
+            plan_rows.append([property_label, str(year), "blank (UNVERIFIED)", "blank (UNVERIFIED)",
+                              "inspection + written bids required", links(["CSLB-LICENSE"])])
+    plan_table = table(["Building", "Year", "Work item / timing", "Cost range", "Next evidence", "Source"], plan_rows)
     body = (
-        "<p>Base case: transfer in 2045, appreciation 2.5%, Prop 13 factor 2% a year. The Prop 19 line applies if the heir lives in Property A and qualifies; the reassessed line applies if the property is rented. Costs of insurance, water, and maintenance are not shown here because they are household figures held internally.</p>"
+        "<p>Base case: transfer in 2045, appreciation 2.5%, Prop 13 factor 2% a year. The Prop 19 line applies if the heir lives in Property A and qualifies; the reassessed line applies if the property is rented. Future Prop 19 allowance is not known: the model uses a 2% annual growth proxy only (BOE resets the allowance every two years using California HPI). It is not a legal carryforward forecast. Tax dollars use an internally derived effective rate from household history, not Property A's published tax-rate-area rate; that TRA/rate remains blank and flagged. Costs of insurance, water, and maintenance are not shown because no verified quote/history was available for publication.</p>"
         + f'<div class="chartbox">{chart}</div>'
-        + card("Property A, every five years", tbl)
+        + card("Property A, year-by-year projections", tbl)
+        + card("Five-year maintenance and capital plan template (not estimated)",
+               "<p>All work items and cost ranges remain blank because no inspections, contractor bids, or recent repair invoices are available. This is intentionally not a made-up allowance schedule. Obtain written inspections and bids; verify contractor status with CSLB before relying on them.</p>" + plan_table)
         + card("Property B (already owned by the heir)",
                "<p>Property B is not inherited, but its cash flow affects the household's choice. It is held constant here. A year-by-year projection needs the leases and the Measure H tier for the building (see Facts).</p>")
     )
@@ -395,9 +401,9 @@ def build_inputs():
 def build_blackswan():
     base_rows = [
         ["Inflation (PCE)", "2.7% in 2026, falling to 2.0% by 2030", "2.0% long-run (model deflator)", links(["CBO-OUTLOOK-2026"])],
-        ["3-month Treasury, Nov 24, 2026", "4.36%", "3.5% after tax (parking, assumption)", links(["TREASURY-YIELD"])],
-        ["2-year Treasury, Nov 24, 2026", "4.63%", "parked money in the 3-month to 2-year range", links(["TREASURY-YIELD"])],
-        ["10-year Treasury, Nov 24, 2026", "4.91%; CBO projects about 4.4% in 2031-35", "4.4% bond return (CBO anchor)", links(["TREASURY-YIELD", "CBO-OUTLOOK-2026"])],
+        ["3-month Treasury, Nov 24, 2026", "4.36% par yield", "3.5% after tax (parking assumption; not a forecast)", links(["TREASURY-YIELD"])],
+        ["2-year Treasury, Nov 24, 2026", "4.63% par yield", "parked money in the 3-month to 2-year range", links(["TREASURY-YIELD"])],
+        ["10-year Treasury", "4.1% in 2026; 4.3% in 2027 (CBO near-term projections)", "4.4% bond return is a model assumption, not a sourced long-run forecast", links(["CBO-OUTLOOK-2026"])],
         ["Property A appreciation", "not sourced", "2.5% base; 0.0% low; 4.5% high", links(["MODEL"])],
         ["Stock returns (nominal)", "not sourced", "6.5% base; 4.0% low; 8.5% high", links(["MODEL"])],
     ]
@@ -445,17 +451,17 @@ def build_law_pages():
     law_page("estate-tax.html", "Estate tax",
              "Federal estate and gift tax: exclusion, portability and prior gifts. Estate size is unknown; the estate-tax module is not in the base model.",
              {"Federal estate and gift exclusion, deaths in 2026", "Federal exclusion, deaths in 2027",
-              "Annual gift exclusion", "Portability of unused exclusion"})
+              "California estate/inheritance tax (current deaths)", "Annual gift exclusion", "Portability of unused exclusion"})
     law_page("income-basis.html", "Income-tax basis",
              "Basis, sale gains, and income tax in the transfer year. Section 121, depreciation, and the state surcharge matter for a sale.",
              {"Basis at death (step-up)", "Capital gains rates (federal, 2026)", "Section 121 home-sale exclusion",
-              "Like-kind exchange (section 1031)", "Depreciation of rental property", "California tax on capital gains",
+              "Like-kind exchange (section 1031)", "Depreciation of rental property", "California tax on capital gains and 1% surcharge",
               "Trust and estate income tax", "Solar net billing (NEM 3.0)"})
     law_page("property-tax.html", "Property-tax assessment",
              "Prop 13 and Prop 19: how the assessed value changes at transfer and whether the heir's occupancy keeps the Prop 19 base.",
              {"Prop 13 (property tax)", "Prop 19 parent-child exclusion (family home)", "Prop 19 claim filing window",
               "Prop 19 after the heir moves out", "SB 974 (special needs trusts and Prop 19)",
-              "San Francisco documentary transfer tax", "Santa Clara County documentary transfer tax",
+              "San Francisco documentary transfer tax", "Santa Clara County documentary transfer tax and recording fee",
               "SF Measure H parcel tax (Muni)"})
     law_page("tax-law.html", "All enacted law",
              "Every row shows a status. ENACTED rows are current law as stated by the source. Secondary rows must be checked on the official link before use.",
@@ -491,10 +497,20 @@ def build_questions():
 
 def build_decision_rules():
     items = "".join(f'<li><strong>{e(a)}.</strong> {e(b)} <span class="note">Basis: {e(c)}</span></li>' for a, b, c in C.DECISION_RULES)
+    log_rows = [
+        ["Select Property A path (sell/live/rent/mixed/phased)", "NOT DECIDED", CHECKED,
+         "No household choice or signed pre-commitment was supplied. Model rankings are provisional and must not be treated as an accepted household decision.", links(["MODEL", "BOE-PROP19-INTRO"])],
+        ["Verify Property A TRA and published tax rate", "OPEN", CHECKED,
+         "Blank pending a private parcel-to-TRA match; public workspace intentionally omits the parcel/location identifier.", links(["BOE-TRA-SCC"])],
+        ["Contain public Git history", "NOT COMPLETED", CHECKED,
+         "History rewrite is not possible from this grafted checkout and requires a coordinated repository-administrator operation; see the privacy flag.", links(["MODEL"])],
+    ]
+    log = table(["Decision / action", "Status", "Recorded", "Reason / evidence", "Sources"], log_rows)
     body = (card("Status: DRAFT, not yet signed",
                  f"<p>Drafted {CHECKED} from preliminary figures. The rules are proposed until the household confirms or edits each one, records the date, and signs outside this public repository.</p>", "warn")
+            + card("Dated decision log", "<p>No path has been selected. This record prevents a provisional model result from being misread as a decision.</p>" + log)
             + card("Proposed decision rules", f'<ul class="bullets">{items}</ul>'))
-    page("decision-rules.html", "Decision rules", body)
+    page("decision-rules.html", "Decision rules and log", body)
 
 
 def build_suggestions():
@@ -510,8 +526,10 @@ def build_flagged():
     body = (card("Flagged for Review", "<p>These items do not block the site. Each has its source link so the household can review it and request a change.</p>", "warn")
             + table(["Item", "What we found", "Action needed", "Sources"], rows)
             + card("Repository and privacy", """<ul class="bullets">
-<li>The repository is public. Only placeholders and rounded results are published; raw household figures stay in an untracked folder.</li>
-<li>A privacy scan (tools/check_site.py) fails the build if a household figure, zip code, or parcel identifier appears in any published file.</li>
+<li>The repository is public. Raw household inputs are kept in an ignored local folder and are not included in the Pages artifact.</li>
+<li>Jekyll exclusions restrict the Pages artifact only. They do not hide excluded files or existing Git history from GitHub code browsing, clones, forks, or cached copies.</li>
+<li>The pre-rounding history has not been scrubbed. This checkout begins at a grafted commit, so older objects could not be inspected or safely rewritten here. See PRIVACY_REMEDIATION.md; do not interpret Pages containment as a history purge.</li>
+<li>The privacy gate checks every root dashboard page, published asset, data file, and printable brief against the internal input values before publishing.</li>
 </ul>"""))
     page("flagged.html", "Flagged for review", body)
 
@@ -519,10 +537,13 @@ def build_flagged():
 def build_brief():
     facts = [
         ("Property A (Santa Clara County): value, Nov 2026", "held internally (household estimate; not an appraisal)"),
-        ("Property A: Prop 19 allowance", "$1,044,590 (BOE, secondary)"),
-        ("Property A: Prop 13 factor", "1.02 a year (BOE, secondary)"),
+        ("Property A: Prop 19 allowance", "$1,044,590 (BOE, fetched; rounded from published amount)"),
+        ("Property A: Prop 13 factor", "1.02 for 2026-27 (BOE, fetched)"),
+        ("Property A: TRA/published property-tax rate", "blank (UNVERIFIED; requires private parcel lookup)"),
+        ("Santa Clara county DTT / recording", "$0.55 per $500; $25 first recording page + $3 per extra page (page count unknown)"),
         ("Property B (San Francisco): units", "three livable units; two rented; owner occupancy possible"),
-        ("Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)"),
+        ("Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; IRS)"),
+        ("California state/local estate or inheritance tax", "No death-triggered state or local tax; current SCO notes no estate return since 2005"),
         ("Measure H (SF parcel tax)", "passed, preliminary, 74.42% yes; certification due by Dec 3, 2026"),
         ("Base result, sell and invest (2045, 20 yr)", money(BASE["S"])),
         ("Base result, live with no rent credit", money(BASE["L"])),
@@ -531,7 +552,7 @@ def build_brief():
           "Is portability to be elected, and were prior taxable gifts made (Form 709)?",
           "Will the heir occupy Property A within one year; when is the homeowners' exemption filed?",
           "Who files the BOE-19-P claim, and when is it calendared?",
-          "Counsel to confirm the Prop 19 reading after a move-out (reading A or B)."]
+          "Counsel to confirm the BOE Prop 19 move-out rule on the trust/title facts."]
     qc = ["Basis at date of death and the transfer-year sale (step-up; section 121 if the heir lives there).",
           "Confirm the 1% Behavioral Health Services Tax and the state rate on large gains.",
           "Depreciation and recapture if Property A is rented; the land share is needed.",
@@ -546,9 +567,12 @@ def build_brief():
         "Property A (Santa Clara County): value, Nov 2026": ["HOUSEHOLD"],
         "Property A: Prop 19 allowance": ["BOE-LTA-2025-009"],
         "Property A: Prop 13 factor": ["BOE-LTA-2026-002"],
+        "Property A: TRA/published property-tax rate": ["BOE-TRA-SCC"],
+        "Santa Clara county DTT / recording": ["SCC-RECORDER"],
         "Property B (San Francisco): units": ["SF-RENT-BOARD"],
         "Federal exclusion, per person": ["IRS-IR-2025-103", "IRS-NEWS-2027"],
-        "Measure H (SF parcel tax)": ["SF-ELECTIONS-2026"],
+        "California state/local estate or inheritance tax": ["CA-SCO-ESTATE", "CA-RTC-13301"],
+        "Measure H (SF parcel tax)":  ["SF-ELECTIONS-2026"],
         "Base result, sell and invest (2045, 20 yr)": ["MODEL"],
         "Base result, live with no rent credit": ["MODEL"],
     }
@@ -561,17 +585,17 @@ def build_brief():
 <h3>1. Key facts (household figures held internally)</h3>
 <table class="brieftbl"><tbody>{frow}</tbody></table>
 <h3>2. Results (real 2026 $, transfer 2045, 20 years, rounded to $10)</h3>
-<p>Sell and invest {money(BASE['S'])}; phased over 24 months {money(BASE['SP24'])}; rent then sell {money(BASE['R'])}; live with no rent credit {money(BASE['L'])}. Living ties with selling only at a rent credit of about {pct(BE_CREDIT, 0)}. Provisional lean: sell in the transfer year. Not a decision.</p>
+<p>Sell and invest {money(BASE['S'])} (simulated 10th-90th: {money(MC['S']['p10'])} to {money(MC['S']['p90'])}); phased over 24 months {money(BASE['SP24'])} (simulated 10th-90th: {money(MC['SP24']['p10'])} to {money(MC['SP24']['p90'])}); rent then sell {money(BASE['R'])}; live with no rent credit {money(BASE['L'])}. Living ties with selling only at a rent credit of about {pct(BE_CREDIT, 0)}. Provisional model lean: sell in the transfer year. Not a household decision.</p>
 <h3>3. Deadlines</h3><ul>{''.join(f'<li>{e(x)}</li>' for x in dl)}</ul>
 </div>
 <div>
 <h3>4. Questions for counsel</h3><ul>{''.join(f'<li>{e(x)}</li>' for x in qa)}</ul>
 <h3>5. Questions for the CPA</h3><ul>{''.join(f'<li>{e(x)}</li>' for x in qc)}</ul>
 <h3>6. Law status</h3>
-<ul><li>Enacted: federal $15,000,000 exclusion (2026); Prop 19 family-home rules; 1% state surcharge over $1,000,000.</li>
+<ul><li>Enacted: federal exclusions (2026/2027); Prop 19 family-home rules; 1% state surcharge only above $1,000,000 taxable income.</li>
 <li>Proposed or reported, not enacted: federal estate-tax changes (not in the model).</li>
-<li>Secondary, to check: SF transfer-tax tiers (unverified); 2027 federal figures; SB 974.</li></ul>
-<h3>7. Flags</h3><ul><li>Property A market rent and insurance: unverified.</li><li>Historical tax records: check against bills.</li><li>Prop 19 move-out reading: counsel to confirm.</li></ul>
+<li>Current official sources checked: 2027 federal amounts, BOE 2025 Prop 19 allowance and move-out guidance, BOE 2026-27 factor, FTB Form 540 2025.</li></ul>
+<h3>7. Flags</h3><ul><li>Property A market rent, TRA rate, and insurance: unverified.</li><li>Historical tax records and debt: check against bills/statements.</li><li>Tax calculations are simplified; CPA must add household income and filing status.</li></ul>
 </div></div>
 <p class="foot">Sources: IRS IR-2025-103 and What's new (estate and gift tax); FTB Form 540-ES instructions; U.S. Treasury yield table; CBO Feb 2026 outlook; SF Department of Elections (Nov 3, 2026, preliminary). Full register: sources.html. Not legal or tax advice.</p>
 </section>"""
@@ -673,9 +697,9 @@ footer{max-width:1180px;margin:0 auto;padding:10px 20px 30px;color:var(--mut);fo
   var grid = JSON.parse(el.textContent);
   var labels = {S:'Sell in transfer year, invest lump sum',SP24:'Sell, park 24 months, then phase in',SP36:'Sell, park 36 months, then phase in',
     L2S:'Mixed: live 2 years, then sell',R10S:'Mixed: rent 10 years, then sell',R:'Rent long-term, sell at horizon',
-    L5S:'Mixed: live 5 years, then sell',L5R_A:'Mixed: live 5 years, then rent (reading A)',L5R_B:'Mixed: live 5 years, then rent (reading B)',
+    L5S:'Mixed: live 5 years, then sell',L5R_B:'Mixed: live 5 years, then rent (Prop 19 base reset on move-out)',
     L:'Live long-term, sell at horizon'};
-  var order = ['S','SP24','SP36','L2S','R10S','R','L5S','L5R_A','L5R_B','L'];
+  var order = ['S','SP24','SP36','L2S','R10S','R','L5S','L5R_B','L'];
   function v(id){ return document.getElementById(id).value; }
   function money(x){ return '$' + (Math.round(x/10)*10).toLocaleString('en-US'); }
   function render(){
@@ -723,7 +747,8 @@ def main():
     build_glossary()
     build_sources()
     write_irregularities_json()
-    open(os.path.join(ROOT, ".nojekyll"), "w").close()
+    # Keep .nojekyll absent: GitHub Pages must run Jekyll so _config.yml can exclude
+    # legacy trees and private/model source directories from the published artifact.
     print("site built:", len(PAGES_NAV), "navigation pages")
 
 

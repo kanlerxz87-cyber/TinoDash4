@@ -15,6 +15,7 @@ Rules set by the household (2026-11-25):
 Run:  python3 model/model.py   -> writes data/model_outputs.json. Standard library only.
 """
 import json
+import math
 import os
 import random
 
@@ -42,8 +43,9 @@ A_AV_2025 = r10(_A["tax_assessment"]["2025"])        # USER assessment history
 A_AV_2026 = r10(_A["tax_assessment"]["2026"])        # USER projection row
 A_TAX_2025 = r10(_A["property_tax"]["2025"])         # USER property tax
 EFF_RATE = A_TAX_2025 / A_AV_2025               # DERIVED effective rate (tax / assessed value)
-ALLOW_2026 = 1044590                            # SECONDARY BOE allowance $1,044,586, rounded to $10
-PROP13_FACTOR = 0.02                            # SECONDARY 2026-27 inflation factor 1.02 (cap is 2%)
+ALLOW_2026 = 1044590                            # BOE 2025/009 allowance $1,044,586, rounded to $10
+ALLOWANCE_GROWTH = 0.02                         # ASSUMPTION only; future BOE updates depend on CA FHFA HPI every 2 years
+PROP13_FACTOR = 0.02                            # BOE 2026/002 factor 1.02 for 2026-27
 CPI = 0.02                                      # EXCERPT: CBO PCE inflation 2.0% by 2030
 
 INSURANCE_A = _RAW["insurance_guess_annual_a"]  # USER guess, UNVERIFIED (no official figure found)
@@ -55,15 +57,18 @@ VACANCY = 0.05                     # ASSUMPTION
 MARGINAL_TAX = 0.40                # ASSUMPTION: combined rate on rental income and interest
 DEP_BUILDING_SHARE = 0.70          # ASSUMPTION: building share of value (no appraisal yet)
 DEP_YEARS = 27.5                   # SECONDARY IRS residential rental recovery period (Pub 527 to check)
-SELL_COMMISSION = 0.025            # ASSUMPTION (not a verified rate)
-SELL_ESCROW_TITLE = 0.005          # ASSUMPTION
-COUNTY_DTT = 1.10 / 1000           # SECONDARY: Santa Clara County $1.10 per $1,000
-FED_LTCG = 0.238                   # SECONDARY 20% + 3.8% NIIT (top rates; IRS Rev. Proc. 2025-32 to check)
-CA_RATE = 0.133                    # SECONDARY 12.3% + 1% Behavioral Health Services Tax (surcharge: FTB 540-ES, FETCHED)
-RECAPTURE_RATE = 0.25              # SECONDARY maximum rate on unrecaptured Sec. 1250 gain (IRS Pub 527 to check)
+SELL_COMMISSION = 0.025            # ASSUMPTION; negotiable, no quote obtained
+SELL_ESCROW_TITLE = 0.005          # ASSUMPTION; no escrow/title quote obtained
+COUNTY_DTT_PER_500 = 0.55         # Santa Clara County published documentary transfer tax per $500 or fraction
+RECORDING_FEE_MIN = 25.0           # Santa Clara County standard first-page recording fee; additional pages cost more
+FED_LTCG = 0.238                   # Simplified top federal long-term gain + NIIT sensitivity; household thresholds unknown
+CA_BASE_RATE = 0.123               # Simplified CA top ordinary income tax rate on gains; actual brackets/status unknown
+BHST_RATE = 0.01                   # FTB Form 540 line 62; applies above $1M resident taxable income
+BHST_THRESHOLD = 1000000
+RECAPTURE_RATE = 0.25              # Federal maximum unrecaptured section 1250 rate; NIIT may also apply
 SEC121_EXCLUSION = 250000          # SECONDARY single filer (MFJ: $500,000; IRS Pub 523 to check)
 EQUITY_W = 0.60                    # ASSUMPTION: 60/40 portfolio
-BOND_YIELD = 0.044                 # EXCERPT anchor: CBO 10-year Treasury 4.4% (2031-35)
+BOND_YIELD = 0.044                 # ASSUMPTION; not presented as CBO long-run forecast
 PARK_YIELD = 0.035                 # ASSUMPTION: 3M-2Y Treasury parking; spot 3M 4.36%, 2Y 4.63%
 EQUITY_TAX_DRAG = 0.005            # ASSUMPTION per year
 LIQUIDATION_TAX = 0.25             # ASSUMPTION: tax on embedded portfolio gains at liquidation
@@ -83,8 +88,7 @@ PATHS = {
     "L2S":    "Mixed: live 2 years, then sell",
     "L5S":    "Mixed: live 5 years, then sell",
     "R10S":   "Mixed: rent 10 years, then sell",
-    "L5R_B":  "Mixed: live 5 years, then rent (move-out reading B: base = value at transfer)",
-    "L5R_A":  "Mixed: live 5 years, then rent (move-out reading A: base = Prop 19 base carried)",
+    "L5R_B":  "Mixed: live 5 years, then rent (Prop 19 base resets to transfer value on move-out)",
 }
 PARK_MONTHS = {"SP24": 24, "SP36": 36}
 
@@ -97,21 +101,33 @@ def fbyv(years):
 def prop19_base(fmv_T, T):
     """Taxable value after a qualifying Prop 19 family-home transfer.
     New value = factored base + any market value above (factored base + allowance).
-    The allowance grows with the factor (ASSUMPTION; BOE adjusts it every two years)."""
+    Future allowance uses an explicitly assumed 2% annual growth proxy. BOE adjusts it
+    every two years using California FHFA HPI; future amounts are unknown and this proxy
+    is not a forecast or statutory carryforward."""
     y = T - BASE_YEAR
     base = fbyv(y)
-    limit = base + ALLOW_2026 * (1 + PROP13_FACTOR) ** y
+    limit = base + ALLOW_2026 * (1 + ALLOWANCE_GROWTH) ** y
     return base if fmv_T <= limit else base + (fmv_T - limit)
 
 
 def sale_tax(fmv_s, fmv_T, dep_accum, lived_last60):
-    """Net proceeds and tax on a sale. Basis = value at transfer (step-up, IRC 1014) less depreciation."""
-    net = fmv_s * (1 - SELL_COMMISSION - SELL_ESCROW_TITLE - COUNTY_DTT)
+    """Net proceeds/tax, using stepped-up basis less rental depreciation.
+
+    Sale transaction costs are assumptions; county DTT and the minimum first-page
+    recording fee are based on the county's published schedule. Debt/payoff is unknown
+    and not deducted. CA is a top-rate sensitivity; BHST is applied only above $1M
+    modeled taxable income (other income can change the threshold materially).
+    """
+    dtt = math.ceil(fmv_s / 500.0) * COUNTY_DTT_PER_500
+    net = fmv_s * (1 - SELL_COMMISSION - SELL_ESCROW_TITLE) - dtt - RECORDING_FEE_MIN
     gain = net - (fmv_T - dep_accum)
     recap = min(max(gain, 0.0), dep_accum)
     rest = max(gain - recap, 0.0)
     excl = min(rest, SEC121_EXCLUSION) if lived_last60 >= 24 else 0.0
-    tax = recap * (RECAPTURE_RATE + CA_RATE) + max(rest - excl, 0.0) * (FED_LTCG + CA_RATE)
+    taxable_capital = max(rest - excl, 0.0)
+    ca_taxable = recap + taxable_capital
+    ca_tax = CA_BASE_RATE * ca_taxable + BHST_RATE * max(ca_taxable - BHST_THRESHOLD, 0.0)
+    tax = recap * RECAPTURE_RATE + taxable_capital * FED_LTCG + ca_tax
     return net, tax
 
 
@@ -136,7 +152,6 @@ def simulate(path, T, H, g, mu, credit, yearly_g=None, yearly_mu=None):
         "L5S":   dict(live_to=60, sell_at=60, base=tv_p19, rent_from=None),
         "R10S":  dict(live_to=0, sell_at=120, base=tv_full, rent_from=0),
         "L5R_B": dict(live_to=60, sell_at=None, base=tv_full, rent_from=60),
-        "L5R_A": dict(live_to=60, sell_at=None, base=tv_p19, rent_from=60),
     }[path]
     live_to = months if sched["live_to"] is None else min(sched["live_to"], months)
     sell_at = sched["sell_at"]
@@ -410,7 +425,7 @@ def run_all():
     }
     return {
         "meta": {
-            "generated_for_date": "2026-11-25",
+            "generated_for_date": "2026-11-26",
             "transfer_years": TRANSFER_YEARS,
             "horizons_years": HORIZONS,
             "base_case": {"transfer_year": 2045, "horizon_years": 20,

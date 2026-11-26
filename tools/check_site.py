@@ -23,6 +23,12 @@ ROOT = os.path.abspath(os.path.join(HERE, ".."))
 PRIVATE = os.path.join(ROOT, "private", "raw_inputs.json")
 SCAN_EXT = (".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".yml", ".yaml", ".toml", ".pdf")
 SKIP_DIRS = {".git", "private", "node_modules", "__pycache__", ".github"}
+# The maintained root dashboard is the Pages product. _config.yml excludes legacy trees,
+# research, source and model directories; they are not part of the deployed artifact.
+# The public Git repository is a separate privacy surface (see PRIVACY_REMEDIATION.md).
+PUBLISHED_ROOT_DIRS = {"assets", "data"}
+PUBLISHED_ROOT_FILES = {"index.html", "brief.html", "brief.pdf"}
+
 ALLOW_PUBLIC_NUMBERS = {
     # public, sourced figures that are allowed to appear
     15000000, 15480000, 19000, 20000, 194000, 201000, 250000, 500000, 1000000, 1044590, 1044586,
@@ -90,12 +96,21 @@ def pdf_streams(data):
 
 
 def published_files():
-    for dp, dns, fns in os.walk(ROOT):
-        dns[:] = [d for d in dns if d not in SKIP_DIRS]
-        for fn in fns:
-            full = os.path.join(dp, fn)
-            if fn.endswith(SCAN_EXT) and os.path.normpath(full) != SELF:
-                yield full
+    """Yield the maintained root dashboard artifacts only (not excluded source/legacy trees)."""
+    root_html = [fn for fn in os.listdir(ROOT) if fn.endswith(".html")]
+    for fn in sorted(set(root_html) | PUBLISHED_ROOT_FILES):
+        full = os.path.join(ROOT, fn)
+        if os.path.isfile(full):
+            yield full
+    for folder in sorted(PUBLISHED_ROOT_DIRS):
+        base = os.path.join(ROOT, folder)
+        if not os.path.isdir(base):
+            continue
+        for dp, _, fns in os.walk(base):
+            for fn in fns:
+                full = os.path.join(dp, fn)
+                if fn.endswith(SCAN_EXT):
+                    yield full
 
 
 def main():
@@ -114,7 +129,7 @@ def main():
     pats = []
     for n in nums:
         comma = f"{n:,}"
-        pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9])")))
+        pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9.,])")))
         if n >= 10000:  # plain digits only for 5+ digit values (avoids chance matches such as counts)
             s = str(n)
             pats.append(("value " + s, re.compile(r"(?<![0-9.,])" + re.escape(s) + r"(?![0-9])")))
@@ -207,8 +222,14 @@ def main():
             bad(f"required page missing: {fn}")
         elif needle not in open(path, encoding="utf-8").read():
             bad(f"'{needle}' missing from {fn}")
-    if not os.path.exists(os.path.join(ROOT, ".nojekyll")):
-        bad(".nojekyll missing (GitHub Pages)")
+    # This repository intentionally omits .nojekyll: its presence would bypass Jekyll's
+    # _config.yml exclusions and expose alternate trees in the Pages artifact.
+    if os.path.exists(os.path.join(ROOT, ".nojekyll")):
+        bad(".nojekyll present: it bypasses the privacy exclusions in _config.yml")
+    cfg = open(os.path.join(ROOT, "_config.yml"), encoding="utf-8").read()
+    for excluded in ("decision-model", "decision-workspace", "model", "research", "site", "tools", "private"):
+        if excluded not in cfg:
+            bad(f"Pages exclusion missing from _config.yml: {excluded}")
     irr = os.path.join(ROOT, "data", "irregularities.json")
     if not os.path.exists(irr):
         bad("data/irregularities.json missing")

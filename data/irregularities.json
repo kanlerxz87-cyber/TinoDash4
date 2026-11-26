@@ -8,6 +8,22 @@
   ]
  },
  {
+  "item": "Property A tax rate area and published rate not verified",
+  "found": "BOE's official TRA map exists, but the parcel/location detail needed to identify the applicable area is intentionally not present in this public workspace.",
+  "action": "Keep the rate blank. A household member or assessor can privately match the parcel to the TRA and current rate schedule; do not publish parcel details.",
+  "sources": [
+   "BOE-TRA-SCC"
+  ]
+ },
+ {
+  "item": "Future Prop 19 allowance is unknown",
+  "found": "The published $1,044,586 allowance applies only to transfers Feb 16, 2025-Feb 15, 2027. Later amounts depend on subsequent California HPI calculations.",
+  "action": "Site uses an explicitly labeled 2% annual proxy in future projections; replace it with each BOE update as published.",
+  "sources": [
+   "BOE-LTA-2025-009"
+  ]
+ },
+ {
   "item": "Property A assessed value for 2026 is a projection",
   "found": "The 2026 figure is a 2% projection of the prior assessment, not a bill.",
   "action": "Use the county roll for the 2026-27 year when it is published.",
@@ -100,17 +116,18 @@
   ]
  },
  {
-  "item": "Prop 19 loss after the heir moves out: two readings",
-  "found": "The model keeps two readings (A: the Prop 19 base carries on; B: the base resets to value at transfer). The rule is not settled in the sources reviewed.",
-  "action": "Counsel to confirm which reading applies.",
+  "item": "Prop 19 after eligible transferee moves out: current BOE guidance identified",
+  "found": "BOE Letter to Assessors 2025/015 says the exclusion is removed; as of the following lien date, the base year value established at the transfer date, adjusted annually, is enrolled.",
+  "action": "Model the reset-to-transfer-value reading; counsel should confirm the rule and the trust's specific facts at the time.",
   "sources": [
+   "BOE-LTA-2025-015",
    "CA-RTC-63.2"
   ]
  },
  {
-  "item": "California '1% tax above $1 million' is the Behavioral Health Services Tax",
-  "found": "It is 1% of taxable income over $1,000,000 (FTB instructions). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
-  "action": "CPA to confirm the state rate on large gains for the transfer year.",
+  "item": "California gain tax remains a simplified sensitivity",
+  "found": "The 2025 Form 540 instructions confirm the 1% Behavioral Health Services Tax applies to resident taxable income above $1,000,000. The model now applies it only to modeled taxable gain above that threshold, before considering other income.",
+  "action": "CPA must rerun using filing status, other taxable income, 2040-2050 rates, depreciation, NIIT and any applicable exclusions.",
   "sources": [
    "FTB-540ES-2025"
   ]
@@ -142,9 +159,9 @@
   ]
  },
  {
-  "item": "Federal 2027 exclusion from secondary sources",
-  "found": "The 2027 figures ($15,480,000 estate and gift exclusion; $20,000 annual gift exclusion) come from secondary reports.",
-  "action": "Confirm on the IRS release before relying on them.",
+  "item": "2027 federal exclusion is verified for 2027 only",
+  "found": "IRS IR-2026-133 and Rev. Proc. 2026-35 state the 2027 basic estate-tax exclusion is $15,480,000 and the annual per-donee gift exclusion is $20,000.",
+  "action": "These figures are current-law inputs only; they are not a forecast for a transfer in 2040-2050.",
   "sources": [
    "IRS-NEWS-2027"
   ]
