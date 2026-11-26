@@ -593,10 +593,12 @@ Alternate trees (`site/`, `decision-model/`, `decision-workspace/`, `model/`, `r
 
 | ID | Task | Status | Owner | Files in scope |
 |----|------|--------|-------|----------------|
-| G-01 | Fix pre-publish gate: `check_site.py` must run without `private/` and must enforce the `_config.yml` Pages exclusion (no `.nojekyll` bypass) | in progress | 407d3840 | `tools/check_site.py`, `tools/build_site.py`, `_config.yml` (read-only check) |
-| G-02 | Re-verify key official figures line-by-line (IRS exclusion, Prop 19 cap, SF rate, FTB 540 line 62, CBO) and correct source URLs/statuses | in progress | 407d3840 | `tools/content.py` |
-| G-03 | Wire root build + gate into CI (`verify.yml`) so a broken site cannot merge | in progress | 407d3840 | `.github/workflows/verify.yml` |
-| G-04 | Rebuild root site, run gate, verify links/rounding/privacy, PR to `main`, merge, confirm Pages | in progress | 407d3840 | rebuilt `*.html`, `assets/`, `data/` |
+| G-01 | Fix pre-publish gate: `check_site.py` must run without `private/` and must enforce the `_config.yml` Pages exclusion (no `.nojekyll` bypass) | done (local checks pass) | 407d3840 | `tools/check_site.py`, `tools/build_site.py`, `_config.yml` (read-only check) |
+| G-02 | Re-verify key official figures line-by-line (IRS exclusion, Prop 19 cap, SF rate, FTB 540 line 62, CBO) and correct source URLs/statuses | done (FTB line 62 located; future-year figures remain flagged) | 407d3840 | `tools/content.py` |
+| G-03 | Wire root build + gate into CI (`verify.yml`) so a broken site cannot merge | done (workflow updated; GitHub run pending) | 407d3840 | `.github/workflows/verify.yml` |
+| G-04 | Rebuild root site, run gate, verify links/rounding/privacy, PR to `main`, merge, confirm Pages | in progress (pending PR/CI/deploy) | 407d3840 | rebuilt `*.html`, `brief.pdf`, `assets/`, `data/` |
 
 Claim note: this session is bound to `arena/407d3840-tinodash4`; no additional branch/worktree is created.
 History rewrite is out of scope (needs owner approval + force-push to `main`); see `PRIVACY_REMEDIATION.md`.
+
+Verification record for G-01 through G-03 (2026-11-26): official BOE page and LTA 2025/009 PDF fetched directly; official IRS IR-2025-103 fetched; SF Treasurer secured-tax page fetched (FY2026-27 rate 1.18162182%); FTB 2025 Form 540 instructions fetched at chunk 4, which explicitly states Line 62 is 1% of taxable income over $1,000,000. CBO Feb 2026 outlook fetched. Source URLs and statuses corrected in `tools/content.py`; values requiring 2027 updates remain flagged. `python3 tools/build_site.py`, `python3 tools/check_site.py`, `python3 model/build_model.py`, `git diff --exit-code -- site/data`, and `node model/check_site.js` all passed. Gate output: 24 published files; 1,934 money values all rounded to $10; 205/205 table rows linked; no `.nojekyll`; configured Pages exclusions present. `brief.pdf` rebuilt as one page with ReportLab in temporary ignored venv (venv removed). Repo-level exposure/history rewrite remains unresolved; no claim is made that repository contents or old history are private. Next: push, PR/CI, merge only after checks, verify deployment; check `.github/workflows/deploy.yml` discrepancy noted by prior session.

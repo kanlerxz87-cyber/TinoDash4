@@ -109,9 +109,10 @@
  },
  {
   "item": "California '1% tax above $1 million' is the Behavioral Health Services Tax",
-  "found": "It is 1% of taxable income over $1,000,000 (FTB instructions). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
+  "found": "It is 1% of taxable income over $1,000,000 (Form 540, line 62; R&TC 17043). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
   "action": "CPA to confirm the state rate on large gains for the transfer year.",
   "sources": [
+   "FTB-540-2025",
    "FTB-540ES-2025"
   ]
  },
