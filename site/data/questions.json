@@ -2,31 +2,31 @@
  "questions": [
   {
    "id": "Q1",
-   "q": "How much cash (and other assets) does the inheritance include?",
-   "why": "Drives estate-tax exposure, investment paths, and whether the house decision even matters financially.",
-   "status": "MISSING \u2014 modeled as $0 / $2M / $5M / $15M / $25M scenarios only",
-   "how": "Executor's preliminary inventory; no personal figures enter this site."
+   "q": "What is the date-of-death gross estate inventory, including non-probate assets and life insurance?",
+   "why": "Estate-tax exposure cannot be calculated from the inherited house alone. Include real estate, cash, investments, retirement accounts, business interests, jointly owned assets, and includible insurance; subtract debts only under applicable rules.",
+   "status": "MISSING \u2014 no estate total is available; the model's $0 cash baseline is not a household fact",
+   "how": "Ask the executor and estate attorney for a confidential inventory. Keep exact figures offline; the public model needs only an approved rounded range."
   },
   {
    "id": "Q2",
-   "q": "Will the decedent's estate exceed the federal exclusion (projected ~$15M+ indexed) in the year of death?",
-   "why": "40% federal tax above the exclusion is paid by the estate before distribution.",
-   "status": "PARTIAL \u2014 2026 rules verified; year-of-death exclusion unknown",
-   "how": "Attorney's estate projection; ask about portability election and prior taxable gifts (Form 709 history)."
+   "q": "What taxable gifts, prior spouse portability (DSUE), trust ownership, and marital deductions apply?",
+   "why": "These items can materially change the exclusion available at death; the current-year federal exclusion alone does not establish whether estate tax is due.",
+   "status": "MISSING \u2014 no gift history, marital/ownership facts, or portability record supplied",
+   "how": "Attorney/CPA to review prior Forms 709 and 706, trust documents, ownership/title, and any DSUE election before estimating tax."
   },
   {
    "id": "Q3",
-   "q": "Are there prior taxable lifetime gifts?",
-   "why": "Reduces the available basic exclusion (anti-clawback protects prior use at the higher exemption).",
-   "status": "MISSING",
-   "how": "Ask executor/counsel for gift-tax returns filed since 1977."
+   "q": "What federal estate-tax exclusion will apply in the actual year of death?",
+   "why": "The applicable exclusion and law may change before the expected inheritance window; the current-year amount is not a future guarantee.",
+   "status": "UNKNOWN \u2014 current law is a reference point only",
+   "how": "Re-check enacted federal law and IRS inflation adjustments each year and at the date of death; model the estate against low/base/high legal scenarios."
   },
   {
    "id": "Q4",
-   "q": "Will the heir occupy Property A as a principal residence long-term (and file within 1 year)?",
-   "why": "This single fact decides Prop 19 treatment: occupancy keeps a capped base; non-occupancy triggers full reassessment at FMV.",
-   "status": "DECISION PENDING \u2014 see dashboard",
-   "how": "Household agreement in writing before transfer (see Suggestions)."
+   "q": "Does the heir intend to occupy Property A as a principal residence, and will they file the claim within 1 year?",
+   "why": "Prop 19 eligibility and filing are legal tests; separately, the household's genuine long-term occupancy plan determines whether choosing the living path is practical and consistent with its priorities.",
+   "status": "DECISION PENDING \u2014 legal eligibility and household intent are both open",
+   "how": "Before transfer, review the current BOE rules with the assessor/adviser and write down occupancy intent, duration assumptions, alternative housing costs, and the deadline; do not claim the exclusion if ineligible."
   },
   {
    "id": "Q5",
@@ -101,9 +101,14 @@
  ],
  "front": [
   {
-   "lever": "Cash size of the inheritance",
-   "current": "Unknown \u2014 scenarios only",
-   "changes": "If liquid assets \u226b house value, the house decision shrinks; if the estate approaches the federal exclusion, estate tax and liquidity planning dominate every other choice."
+   "lever": "Full gross estate, taxable gifts and portability",
+   "current": "Unknown \u2014 no complete estate inventory or Form 709/706 history",
+   "changes": "This can reverse the current estate-tax headline. Include all probate and non-probate property, cash, investments, insurance, debts, marital deductions and any DSUE; the current-year exclusion is not a future threshold guarantee."
+  },
+  {
+   "lever": "Cash and other inherited assets",
+   "current": "Unknown \u2014 model runs only illustrative cash scenarios",
+   "changes": "If liquid assets are large, the house decision is a smaller share of the estate; if the taxable estate exceeds the applicable year-of-death exclusion, tax and nine-month liquidity planning become central."
   },
   {
    "lever": "Will you occupy Property A long-term?",

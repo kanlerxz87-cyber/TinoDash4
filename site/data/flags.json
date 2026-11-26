@@ -96,5 +96,23 @@
   "item": "Property B depreciation history unknown (recapture exposure)",
   "detail": "No placed-in-service dates, basis, or prior Form 4562 records held. Recapture table on the Data page is an illustration at assumed depreciation amounts only; obtain the depreciation schedule from the CPA before any sale of B.",
   "src": null
+ },
+ {
+  "id": "F15",
+  "severity": "High",
+  "item": "Path ranking is not tax-complete",
+  "detail": "SELL-path portfolio returns are pre-personal-income-tax and rental income tax is not netted; estate tax is not estimated because the full estate, prior gifts and portability facts are missing. These asymmetries may bias the apparent winner. Treat every ranking as provisional and obtain CPA/attorney calculations before relying on it.",
+  "src": [
+   "irs-i8960",
+   "ftb-capgain",
+   "irs-706"
+  ]
+ },
+ {
+  "id": "F16",
+  "severity": "High",
+  "item": "Public repository and prior Git history not fully privacy-audited",
+  "detail": "GitHub reports this repository as public and the Pages site as built/public. This checkout is shallow, so prior commits cannot be inspected comprehensively here; a current-file scan does not scrub previous public commit objects, forks, caches, or third-party copies. No claim of historical scrubbing or complete containment is made. A coordinated history-rewrite/visibility decision and post-change verification are required before calling this resolved.",
+  "src": "repo-public"
  }
 ]

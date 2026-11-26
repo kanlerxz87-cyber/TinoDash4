@@ -71,7 +71,7 @@ function buildNav() {
   const el = document.getElementById("nav");
   if (!el) return;
   let h = `<div class="brand">TinoDash4</div>
-    <div class="sub">Household decision model · estate &amp; property · as of 2026-11-25<br>Public data only · no personal data</div>`;
+    <div class="sub">Household decision model · regenerated 2026-11-26<br>Source snapshot: 2026-11-25 · rounded/anonymized inputs</div>`;
   for (const g of NAV) {
     h += `<div class="grp">${esc(g.group)}</div>`;
     for (const [key, label, href] of g.items)
@@ -294,9 +294,9 @@ function renderIndex() {
     <div class="card"><div class="k">Baseline winner · 30-year horizon</div>
       <div class="v" style="color:${COLORS[0]}">SELL ${moneyC(ls && ls.net_worth["30"])}</div>
       <div class="n">vs LIVE ${moneyC(live && live.net_worth["30"])} · RENT ${moneyC(rent && rent.net_worth["30"])} · phased ${moneyC(phase && phase.net_worth["30"])} (inherit 2045, stocks 8.5% / homes 3.5% / bills 2.5%)</div></div>
-    <div class="card"><div class="k">Federal estate tax</div>
-      <div class="v">$0 <span class="badge ok">exclusion $15M</span></div>
-      <div class="n">2026 basic exclusion ${money(mc && mc.BEA)} ${src("irs-rp2532")}; California estate tax $0 by statute (R&amp;T §13302) ${src("leginfo-13302")}</div></div>
+    <div class="card"><div class="k">Estate-tax exposure</div>
+      <div class="v" style="color:var(--warn)">UNKNOWN <span class="badge warn">inventory missing</span></div>
+      <div class="n">The 2026 federal basic exclusion is ${money(mc && mc.BEA)} ${src("irs-rp2532")}; no liability estimate is possible without the full gross estate, prior taxable gifts, ownership, marital deductions and any portability/DSUE. California currently has no separate estate tax ${src("leginfo-13302")}.</div></div>
     <div class="card"><div class="k">Prop 19 tax gap · first year</div>
       <div class="v">${money(live && live.property_tax_first_year)} <span style="font-size:14px;color:var(--muted)">vs</span> ${money(rent && rent.property_tax_first_year)}</div>
       <div class="n">occupy (capped base) vs full reassessment ≈ ${money((rent && rent.property_tax_first_year || 0) - (live && live.property_tax_first_year || 0))}/yr at transfer ${src("boe-prop19")}</div></div>
@@ -312,12 +312,12 @@ function renderIndex() {
   </div>
 
   <div class="hl">
-    <h3 style="margin-top:0">Decision at a glance <span class="pill">values rounded to $10 · model run 2026-11-25</span></h3>
+    <h3 style="margin-top:0">Decision at a glance <span class="pill">values rounded to $10 · model regenerated 2026-11-26 · source snapshot 2026-11-25</span></h3>
     <ul class="tight">
-      <li><b>Selling the inherited house (Property A) and reinvesting leads on projected net worth at every horizon in the baseline</b> (30y: ${moneyC(ls && ls.net_worth["30"])} vs ${moneyC(live && live.net_worth["30"])} holding) — property tax (≈1.335% implied) + 0.75%/yr maintenance + 5.5% exit cost drag a ${moneyC(mc && mc.A_VALUE_2026)} house vs a diversified portfolio at 8.5%.</li>
-      <li><b>Living in it (Prop 19 claim) beats renting it out</b>: first-year property tax ${money(live && live.property_tax_first_year)} vs ${money(rent && rent.property_tax_first_year)}, plus 8% management and vacancy on the rental path. You must live somewhere; both homes are owned outright in every path.</li>
-      <li><b>Phased Treasury entry (24–36 months in 3M–2Y bills, then 24-month phase into stocks) beat day-one lump-sum in 4 of 5 historical entries over 10 years</b> and cut the worst drawdowns from −65% → −34% (1929) and −37% → −4% (2008). It lags in V-shaped rebounds (2020). Recommended default for the proceeds <span class="pill">decision · 2026-11-25</span></li>
-      <li><b>No estate-tax problem today</b>: federal exclusion ${money(mc && mc.BEA)} (2026) ${src("irs-rp2532")}; CA collects $0 ${src("leginfo-13302")}. The 2026 repeal initiative failed to qualify (watch 2028) ${src("ag-init250035")}.</li>
+      <li><b>SELL leads only the current simplified baseline</b> (30y: ${moneyC(ls && ls.net_worth["30"])} vs ${moneyC(live && live.net_worth["30"])} LIVE) under the selected growth and cost inputs. This is not a household recommendation: the model excludes personal income tax on portfolio returns, does not have the full estate inventory or actual debt, and uses unverified rent, insurance, maintenance and tax-rate inputs.</li>
+      <li><b>LIVE leads RENT only under the current Prop 19 and occupancy assumptions</b>: first-year property tax ${money(live && live.property_tax_first_year)} vs ${money(rent && rent.property_tax_first_year)}. Eligibility, actual rate-area levies, rent comparables, operating costs and the household's occupancy choice remain open.</li>
+      <li><b>Phased Treasury entry is a risk-control candidate, not a return-maximizing recommendation</b>: it finished higher than lump sum in the four selected windows with complete 10-year data. The 2020 window has only five years of data and park+phase trails in that rebound. These selected episodes are not a probability sample; outcomes depend on start date, Treasury yield, taxes, and risk tolerance. Compare foregone-growth and reinvestment risk beside drawdown results on the <a href="blackswan.html">Black swan page</a>.</li>
+      <li><b>Estate-tax exposure is unknown</b>: the 2026 federal exclusion ${money(mc && mc.BEA)} is a current-law reference, not a future guarantee, and the inventory, prior taxable gifts and portability are missing ${src("irs-rp2532")}. California currently has no separate estate tax ${src("leginfo-13302")}.</li>
     </ul>
   </div>
 
@@ -325,7 +325,7 @@ function renderIndex() {
     <h3 style="margin-top:0">What would change the answer</h3>
     <ul class="tight">
       ${front.map(f => `<li><b>${esc(f.lever)}</b> — <span class="badge">${esc(f.current)}</span> ${esc(f.changes)}</li>`).join("")}
-      <li><b>Sensitivity matrix (stocks × homes, inherit 2045)</b>: SELL leads at 30y in all 9 tested combinations (stocks 6–12% × homes 1–5.5%) — the lead narrows to ~${moneyC(21e6)} at 6% stocks/5.5% homes and widens past ${moneyC(180e6)} at 8.5%/3.5%. The realistic flip risks are therefore <i>sequence/entry crashes</i> (handled by phasing), <i>cost assumptions</i> (5.5% sell cost, maintenance — flagged F9), and <i>future law</i>, not baseline growth rates. Full grid: <a href="data.html#sens">Data tables</a>.</li>
+      <li><b>Sensitivity matrix (stocks × homes, inherit 2045)</b>: SELL leads at 30y in the nine tested growth-rate cells, but this is a simplified pre-tax baseline—not evidence that the household should sell. The grid omits personal income tax on portfolio returns, estate tax, actual debt and several unverified costs; rent, occupancy, Prop 19 eligibility, the full estate and investment-policy inputs can also change the answer. See the <a href="data.html#sens">Data tables</a> and resolve the <a href="questions.html">open questions</a> before ranking paths.</li>
       <li><b>Same-year sale after inheritance</b>: basis = FMV at death → taxable gain ≈ $0 (income tax ≈ $0), but 5.5% selling cost + 0.11% transfer + $110 recording still leave ≈ ${moneyC(((Site.d.same_year_sale || [{}])[0].transfer_tax_sc_county || 0) + ((Site.d.same_year_sale || [{}])[0].recording_fees || 0) + ((Site.d.same_year_sale || [{}])[0].selling_costs || 0))} of friction — see <a href="data.html#same-year">same-year table</a>.</li>
     </ul>
   </div>`;
@@ -646,7 +646,7 @@ function renderData() {
     { k: "bea_2026", label: "2026 exclusion", num: true, render: r => money(r.bea_2026) },
     { k: "federal_estate_tax", label: "Federal estate tax", num: true, render: r => money(r.federal_estate_tax) },
     { k: "effective_rate_on_excess", label: "Eff. rate on excess", num: true, render: r => r.effective_rate_on_excess == null ? "—" : r.effective_rate_on_excess + "%" },
-  ], t.estate_tax_scenarios));
+  ], t.estate_tax_scenarios, true));
 
   put("prop19-table", renderTable([
     { k: "window", label: "Filing window" },
@@ -752,7 +752,7 @@ function renderFlagged() {
     <div class="flag"><b>${esc(f.id)} · ${esc(f.item)}</b> ${sevPill(f.severity)}
       <ul class="tight">
         <li>${esc(f.detail)}</li>
-        <li>Source: ${f.src ? src(f.src) : '<span class="pill">no official source</span>'}</li>
+        <li>Source: ${f.src ? srcCell(f.src) : '<span class="pill">no official source</span>'}</li>
       </ul></div>`).join("");
 }
 
@@ -760,7 +760,7 @@ function renderFlagged() {
 function renderSources() {
   const el = document.getElementById("sr");
   if (!el || !Site.d.sources) return;
-  const flagIds = new Set((Site.d.flags || []).map(f => f.src).filter(Boolean));
+  const flagIds = new Set((Site.d.flags || []).flatMap(f => Array.isArray(f.src) ? f.src : (f.src ? [f.src] : [])));
   const rows = Object.entries(Site.d.sources).map(([id, s]) => ({
     id, org: s.o || "",
     title: s.u ? `<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>` : esc(s.t),
@@ -792,9 +792,9 @@ function renderBriefing() {
   <div class="print-grid">
     <div class="card"><div class="k">Decision framed</div>
       <div class="n">Inherit Property A (single-family) ~$3.1M — occupy (Prop 19) / rent out / sell; already own Property B (three-unit) ~$1.8M, 2 units rented ~$7,150/mo. Model: inherit 2045, stocks 8.5% / homes 3.5% / bills 2.5%.</div></div>
-    <div class="card"><div class="k">Baseline result (30y)</div>
+    <div class="card"><div class="k">Simplified baseline result (30y; not a recommendation)</div>
       <div class="v" style="font-size:17px">SELL ${moneyC(ls && ls.net_worth["30"])} · LIVE ${moneyC(live && live.net_worth["30"])} · RENT ${moneyC(rent && rent.net_worth["30"])}</div>
-      <div class="n">Recommended entry: 24-mo Treasury park → 24-mo phase (beats lump-sum in 4/5 historical crash entries; −65%→−34% drawdown in 1929).</div></div>
+      <div class="n">Tax-incomplete scenario. Staging is only a candidate policy: park+phase beat lump sum in four selected 10-year windows; the 2020 window is five years and trails during rebound.</div></div>
   </div>
 
   <div class="print-grid">
@@ -802,7 +802,7 @@ function renderBriefing() {
       <ul class="tight" style="font-size:11.5px">
         <li>Confirm trust terms: who takes A, occupancy requirements, and any spendthrift/timing limits on sale.</li>
         <li>Prop 19: will heir occupy A as principal residence and file the homeowners' exclusion ≤1 year of transfer? (Decides ${money(live && live.property_tax_first_year)} vs ${money(rent && rent.property_tax_first_year)} yr-1 tax.)</li>
-        <li>Form 706 needed? Portability election? Prior taxable gifts (Form 709 history) that shrink the exclusion?</li>
+        <li>Obtain complete gross-estate inventory; confirm Forms 706/709, DSUE/portability, ownership, marital deductions, and year-of-death exclusion with counsel.</li>
         <li>§121 on inherited home: ownership-use tacking under §121(d)(11) — confirm statute text (flagged F6) and whether MFJ $500k applies.</li>
         <li>Any liens/debt on A? Ancillary probate for out-of-state heirs? §6166 liquidity if the estate is taxable?</li>
         <li>Date-of-death appraisal ordered? (basis + Prop 19 FBYV evidence)</li>
@@ -839,13 +839,14 @@ function renderBriefing() {
       </ul></div>
   </div>
 
-  <div class="card"><div class="k">Estate-tax quick reference (2026 rules)</div>
+  <div class="card"><div class="k">Illustrative estate-tax scenarios (2026 reference rules; not a household estimate)</div>
     ${renderTable([
       { k: "taxable_estate", label: "Taxable estate", num: true, render: r => money(r.taxable_estate) },
       { k: "bea_2026", label: "Exclusion", num: true, render: r => money(r.bea_2026) },
       { k: "federal_estate_tax", label: "Federal tax", num: true, render: r => money(r.federal_estate_tax) },
       { k: "effective_rate_on_excess", label: "Eff. rate", num: true, render: r => r.effective_rate_on_excess == null ? "—" : r.effective_rate_on_excess + "%" },
-    ], est)}
+    ], est, true)}
+    <p class="page-note">Illustrative federal scenarios only. Actual estate tax cannot be estimated until gross estate, deductions, prior taxable gifts, marital status/ownership, and portability are known; the applicable law at death may differ.</p>
   </div>
 
   <div class="card"><div class="k">Open items blocking a final decision (${openQ.length} questions · ${topFlags.length} high-severity flags)</div>

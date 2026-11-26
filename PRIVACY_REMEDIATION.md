@@ -36,3 +36,8 @@ This note intentionally avoids restating the exposed household values or exact p
 ## Final deployment record (2026-11-26)
 
 PR #22 merged to `main` at `538b398ac349faa2d2af97732e9e176a643122ac`. Its CI verification passed. The first post-merge Pages run was cancelled during deployment when a concurrent main update started a replacement; replacement build/deploy run `45886856976` succeeded and the Pages API reported `built`. The root dashboard and Flagged for Review page were fetched successfully. Fetch attempts for excluded legacy paths were unavailable; the Actions artifact download was blocked by the sandbox's external blob host. This does not change the key limitation: the public repository and prior history remain outside Pages-only containment.
+
+
+### Subsequent integration record — 2026-11-26
+
+PR #28 (`https://github.com/kanlerxz87-cyber/TinoDash4/pull/28`) merged at `e12d205f3ec3d4390cd1720bdf71fe09a6a8b9cf`; its verification passed. Pages deployment attempts `45887075841` and `45887139548` were cancelled by GitHub because higher-priority queued Pages requests superseded them. Replacement run `45887217990` completed successfully. A post-deploy reading revealed one inaccurate sentence on the public Flagged for Review page about the clean-checkout privacy checker; the generator is being corrected so the published wording matches the checker behavior.

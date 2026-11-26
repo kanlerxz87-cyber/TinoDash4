@@ -75,4 +75,20 @@ summary{cursor:pointer;font-weight:600}
   table{page-break-inside:avoid}
   .print-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .page-note{font-size:10.5px;color:#333}
+  @page{size:letter portrait;margin:.28in}
+  body[data-page="briefing"]{font-size:9px;line-height:1.24}
+  body[data-page="briefing"] main{padding:0;max-width:none}
+  body[data-page="briefing"] h1{font-size:15px;margin:0 0 3px}
+  body[data-page="briefing"] h2{font-size:11px;margin:5px 0 2px;padding-bottom:2px}
+  body[data-page="briefing"] h3{font-size:10px;margin:5px 0 2px}
+  body[data-page="briefing"] .lede{font-size:8.5px;margin-bottom:4px}
+  body[data-page="briefing"] .card{padding:5px 7px;border-radius:4px}
+  body[data-page="briefing"] .card .k{font-size:8px}
+  body[data-page="briefing"] .card .n,body[data-page="briefing"] .card li{font-size:8.2px!important;line-height:1.18}
+  body[data-page="briefing"] .tight{margin:2px 0;padding-left:14px}
+  body[data-page="briefing"] .tight li{margin:1px 0}
+  body[data-page="briefing"] table{font-size:8px;margin:3px 0 5px}
+  body[data-page="briefing"] th,body[data-page="briefing"] td{padding:2px 4px}
+  body[data-page="briefing"] .print-grid{gap:4px}
+  body[data-page="briefing"] .pill,body[data-page="briefing"] .badge{font-size:7px;padding:0 4px}
 }

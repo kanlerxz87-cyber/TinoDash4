@@ -380,25 +380,41 @@
    "taxable_estate": 10000000,
    "bea_2026": 15000000,
    "federal_estate_tax": 0,
-   "effective_rate_on_excess": 40.0
+   "effective_rate_on_excess": 40.0,
+   "src": [
+    "irs-rp2532",
+    "irs-706"
+   ]
   },
   {
    "taxable_estate": 16000000,
    "bea_2026": 15000000,
    "federal_estate_tax": 400000,
-   "effective_rate_on_excess": 40.0
+   "effective_rate_on_excess": 40.0,
+   "src": [
+    "irs-rp2532",
+    "irs-706"
+   ]
   },
   {
    "taxable_estate": 25000000,
    "bea_2026": 15000000,
    "federal_estate_tax": 4000000,
-   "effective_rate_on_excess": 40.0
+   "effective_rate_on_excess": 40.0,
+   "src": [
+    "irs-rp2532",
+    "irs-706"
+   ]
   },
   {
    "taxable_estate": 40000000,
    "bea_2026": 15000000,
    "federal_estate_tax": 10000000,
-   "effective_rate_on_excess": 40.0
+   "effective_rate_on_excess": 40.0,
+   "src": [
+    "irs-rp2532",
+    "irs-706"
+   ]
   }
  ],
  "operating_costs": [
