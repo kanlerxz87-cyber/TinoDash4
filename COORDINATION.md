@@ -546,3 +546,12 @@ and `decision-workspace/` were not edited by this session.
 Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
 
 P-01 update: `_config.yml` now excludes alternate site trees and source directories from the Jekyll artifact; `.nojekyll` was removed to allow the exclusions to take effect. `PRIVACY_REMEDIATION.md` records the exact boundary: repository files and earlier public history remain outside this containment. Local Jekyll verification is unavailable in this checkout, so this task remains needs review pending the GitHub Pages build and a deployed-path check.
+## Session arena-e5c3fe3a — privacy gate and publish verification
+
+### Claim
+- Session ID: `arena-e5c3fe3a`
+- Branch: `arena/e5c3fe3a-tinodash4` (fixed by Arena)
+- Task: audit the existing published dashboard for privacy/build-gate failures; make the privacy scan fail-safe (never silently call a skipped scan verified), run the existing site/model checks, and log remaining privacy/history irregularities.
+- Status: in progress
+- Scope: `tools/check_site.py`, `COORDINATION.md` only. No site pages or shared model outputs will be edited in this task.
+- Initial finding: `python3 tools/check_site.py` exits immediately because `private/raw_inputs.json` is absent, so the other published-site checks never run. `model/build_model.py` and `node model/check_site.js` currently pass.
