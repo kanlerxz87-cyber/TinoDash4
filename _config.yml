@@ -1,0 +1,18 @@
+# GitHub Pages is built from the repository root using Jekyll.
+# Keep only the maintained, anonymized root dashboard in the published artifact.
+# Alternate/legacy model implementations contain household-specific inputs and
+# are excluded from Pages while the repository-level privacy remediation is reviewed.
+exclude:
+  - .github
+  - COORDINATION.md
+  - DECISION_RULES.md
+  - README.md
+  - decision-model
+  - decision-workspace
+  - model
+  - research
+  - site
+  - tools
+  - private
+  - '*.py'
+  - '*.md'
