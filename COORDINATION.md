@@ -673,6 +673,7 @@ Claimed on the active branch `arena/f97bc99f-tinodash4` after reading the existi
 - Reconciled the updated root builder, source register, Pages exclusions, and main-branch CI with P-02. Restored a fail-closed default checker and a separate `--public-only` mode; CI calls the latter so no private baseline is committed.
 - Removed household-derived amounts from current review entries and hid Property B's detailed unit/lease inputs in the root facts and brief. Earlier commits and copies remain outside this current-tree change; no shared history was rewritten.
 - Local verification: 18 root pages rebuilt; public-only check passed (23 Pages files, 212/212 source-linked rows, $10 rounding, one-page PDF with 15 links, 25 irregularity items); model build left `site/data` unchanged and the renderer smoke test passed. Strict mode failed closed as expected because `private/raw_inputs.json` is absent. Artifact contents and exact private-input comparison remain unverified.
+- The normal push was rejected because the pre-rebase claim commit on the published branch was not an ancestor of the rebased branch. To avoid rewriting shared history, the claim-only tip was preserved as the second parent of an additive merge; no force push will be used.
 
 ## Session arena-bc2ed56c — privacy containment audit (current branch)
 
