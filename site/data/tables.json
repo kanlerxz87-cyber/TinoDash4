@@ -233,9 +233,15 @@
   },
   {
    "item": "\u00a7121 primary-residence exclusion",
-   "value": "$250,000 single / $500,000 MFJ; 2-of-5-year tests",
+   "value": "$250,000 single / $500,000 MFJ; 2-of-5-year tests (heir must meet own tests; former (d)(11) tacking repealed 2010)",
    "src": "irs-p523",
    "status": "Enacted"
+  },
+  {
+   "item": "Like-kind exchange (\u00a71031)",
+   "value": "Defers gain on exchange of investment property; inherited A has ~$0 gain after step-up, so generally pointless for A \u2014 take advice before selling",
+   "src": "irs-p523",
+   "status": "Enacted \u2014 decision pending (Q15)"
   },
   {
    "item": "Prop 13",
@@ -271,7 +277,7 @@
    "item": "SF Prop H parcel tax (Property B)",
    "value": "Multifamily \u22645,000 sqft: $249/yr from FY2027-28; CPI-adjusted from FY2028-29; expires 2042",
    "src": "sf-proph-text",
-   "status": "Enacted (passed 2026-11-03, 74.42%)"
+   "status": "Passed (preliminary 74.42% Yes; certification due 2026-12-03)"
   },
   {
    "item": "SF Prop I transfer-tax change",
@@ -463,7 +469,7 @@
    "value": null,
    "unit": "$/mo",
    "src": "hud-fmr",
-   "status": "UNVERIFIED \u2014 model uses HUD FMR floor $3,604 (SF County 2-BR) only; Property A comps required"
+   "status": "UNVERIFIED \u2014 model uses HUD FMR floor $3,483 (Santa Clara County 2-BR) only; Property A comps required"
   },
   {
    "item": "Property A maintenance",
@@ -492,6 +498,228 @@
    "unit": "$/yr",
    "src": "cdi-report",
    "status": "ZIP-level values in report \u2014 not extracted; look up both property ZIPs (internal)"
+  }
+ ],
+ "capex_plan": [
+  {
+   "item": "Roof inspection / repair / replacement",
+   "property": "A + B",
+   "timing": "Inspect yr 1; budget per quote",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 obtain contractor quote; model uses % of value (F9)"
+  },
+  {
+   "item": "HVAC service / replacement",
+   "property": "A + B",
+   "timing": "Service annually; replace per age",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 obtain quote"
+  },
+  {
+   "item": "Water heater",
+   "property": "A + B",
+   "timing": "Per age/condition",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 obtain quote"
+  },
+  {
+   "item": "Sewer lateral / plumbing",
+   "property": "A + B",
+   "timing": "Inspect yr 1",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 obtain quote"
+  },
+  {
+   "item": "Windows / exterior / paint",
+   "property": "A + B",
+   "timing": "Per condition",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 obtain quote"
+  },
+  {
+   "item": "Seismic / structural (B: 3-unit)",
+   "property": "B",
+   "timing": "Engineer assessment yr 1",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 obtain engineer report"
+  },
+  {
+   "item": "Solar inverter / battery (A)",
+   "property": "A",
+   "timing": "Per PToP age",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 confirm NEM version (Q11) + quote"
+  },
+  {
+   "item": "Appliances / kitchens / baths (B: 3 units)",
+   "property": "B",
+   "timing": "Per turnover",
+   "cost": null,
+   "src": null,
+   "status": "UNVERIFIED \u2014 obtain quote"
+  }
+ ],
+ "inventory": [
+  {
+   "category": "Real property",
+   "entry": "Property A \u2014 date-of-death FMV with appraiser name/report date",
+   "why": "Fixes step-up basis + Prop 19 evaluation",
+   "status": "NOT HELD \u2014 obtain appraisal"
+  },
+  {
+   "category": "Real property",
+   "entry": "Property A \u2014 factored base year value + TRA + itemised tax bill",
+   "why": "Explains implied 1.34% rate (F1)",
+   "status": "NOT HELD \u2014 read off tax bill"
+  },
+  {
+   "category": "Real property",
+   "entry": "Property B \u2014 assessed value + itemised bill + legal unit count",
+   "why": "Explains implied 2.14% rate (F2); unit count drives value",
+   "status": "NOT HELD \u2014 obtain bill + Planning record"
+  },
+  {
+   "category": "Trust / estate",
+   "entry": "Operative trust + amendments; pour-over will; certificates of trust",
+   "why": "Confirms A is in trust; needed to act",
+   "status": "NOT HELD \u2014 attorney to confirm"
+  },
+  {
+   "category": "Trust / estate",
+   "entry": "Prior Forms 709 (gifts) + any prior Form 706 (portability)",
+   "why": "Prior gifts shrink exclusion (Q3); portability is time-critical",
+   "status": "NOT HELD \u2014 ask executor/counsel"
+  },
+  {
+   "category": "Income-tax records",
+   "entry": "Capital improvements + depreciation schedules (if A ever rented)",
+   "why": "Basis + recapture exposure (F14)",
+   "status": "NOT HELD \u2014 CPA to collect"
+  },
+  {
+   "category": "Insurance",
+   "entry": "A: HO-3 declarations; B: DP-3/landlord + umbrella",
+   "why": "Replaces the household insurance guesses (F5)",
+   "status": "NOT HELD \u2014 obtain quotes"
+  },
+  {
+   "category": "Leases (B)",
+   "entry": "All leases + Rent Ordinance registration + rent history",
+   "why": "Income durability (Q9)",
+   "status": "NOT HELD \u2014 produce leases"
+  },
+  {
+   "category": "Operating records",
+   "entry": "A: 24-mo water bills + solar true-up/PToP; B: same per unit",
+   "why": "Replaces monthly estimates; NEM version (Q11)",
+   "status": "NOT HELD \u2014 collect bills"
+  },
+  {
+   "category": "Estate projections",
+   "entry": "Balance sheet at stated date + projected gross estate at death",
+   "why": "Compare to $15M exclusion (Q1/Q2)",
+   "status": "NOT HELD \u2014 attorney/CPA projection"
+  },
+  {
+   "category": "Household",
+   "entry": "Signed pre-commitment policy + ranked criteria",
+   "why": "Prevents reverse-engineering (S1/Q12)",
+   "status": "TO BE SIGNED \u2014 see Suggestions"
+  }
+ ],
+ "comparables": [
+  {
+   "step": "1. Date-of-death appraisal (A)",
+   "what": "Licensed appraisal at death date",
+   "why": "Basis + Prop 19 FBYV evidence",
+   "status": "OPEN \u2014 order at death"
+  },
+  {
+   "step": "2. Sale comps (A value)",
+   "what": "\u22653 closed sales, same tract/bed-bath",
+   "why": "Tests $3.1M household estimate",
+   "status": "OPEN \u2014 broker CMA minimum"
+  },
+  {
+   "step": "3. Rent comps (A)",
+   "what": "\u22655 listings + \u22655 recent leases, SFRs",
+   "why": "Replaces FMR floor; ranks RENT on evidence",
+   "status": "OPEN \u2014 property-manager survey"
+  },
+  {
+   "step": "4. BPO / rent analysis (A)",
+   "what": "Broker price opinion + manager rent opinion",
+   "why": "Independent check on steps 2\u20133",
+   "status": "OPEN"
+  },
+  {
+   "step": "5. B valuation (3-unit)",
+   "what": "Broker opinion with GRM + 3-unit sales",
+   "why": "3-units value on rent, not $/sqft SFR",
+   "status": "OPEN"
+  },
+  {
+   "step": "6. Third-unit test (B)",
+   "what": "Legal/habitable/rentable? Market rent?",
+   "why": "Moves B value by hundreds of $k (F13)",
+   "status": "OPEN \u2014 Planning + inspection"
+  }
+ ],
+ "decision_log": [
+  {
+   "date": "2026-11-25",
+   "decision": "Phased entry (24-mo Treasury park \u2192 24-mo phase) is the default for sale proceeds",
+   "why": "Beat lump-sum in 4/5 historical entries; cut worst drawdowns",
+   "status": "Adopted (model default)"
+  },
+  {
+   "date": "2026-11-25",
+   "decision": "Model same-year sale first, before any other path",
+   "why": "Step-up \u21d2 ~$0 gain; isolates friction (transfer + selling cost)",
+   "status": "Adopted (this site)"
+  },
+  {
+   "date": "2026-11-25",
+   "decision": "Claim Prop 19 only if heir will occupy A long-term",
+   "why": "Occupancy + \u22641yr filing preserves capped base; else full reassessment",
+   "status": "Adopted (rule; occupancy TBD Q4)"
+  },
+  {
+   "date": "2026-11-25",
+   "decision": "Rent path is a FLOOR until \u22653 comps exist",
+   "why": "FMR is a voucher benchmark, not market rent (F4)",
+   "status": "Adopted (rule)"
+  },
+  {
+   "date": "2026-11-26",
+   "decision": "FMR floor corrected to Santa Clara County ($3,483); SF $3,604 is context only",
+   "why": "Prior floor used wrong county for Property A",
+   "status": "Adopted (this session; re-run confirms SELL still leads)"
+  },
+  {
+   "date": "2026-11-26",
+   "decision": "\u00a7121(d)(11) tacking treated as repealed (2010); heir must meet own 2-of-5 tests",
+   "why": "IRS CCM 201429022; prior text implied current tacking",
+   "status": "Adopted (this session; no number change)"
+  },
+  {
+   "date": "\u2014",
+   "decision": "Occupancy of A (live vs rent vs sell)",
+   "why": "Blocked on Q4 + comps + TRA",
+   "status": "PENDING \u2014 do not decide yet"
+  },
+  {
+   "date": "\u2014",
+   "decision": "Like-kind exchange (\u00a71031) wanted?",
+   "why": "~$0 gain to defer on A; advice before selling",
+   "status": "PENDING \u2014 Q15"
   }
  ],
  "rates": [

@@ -67,7 +67,7 @@ Replace private figures with **household-supplied estimates**, clearly labelled:
 
 | Private figure | Published as | Label |
 |---|---|---|
-| Property A value Nov 2026 | `$3,100,000` | Household estimate — unverified |
+| Property A value Nov 2026 | `$3,000,000–$3,200,000` (banded) | Household estimate — unverified |
 | Property A assessed value 2026 | `$550,000–$560,000` band | From household series, banded |
 | Property A tax bill | **effective-rate range** `1.2%–1.4%` | Derived, banded |
 | SF value Nov 2026 | `$1,800,000` | Household estimate — unverified |

@@ -381,7 +381,7 @@ QUESTIONS = [
          q="Three written quotes for Property A (owner-occupied) and Property B (3-unit landlord policy), "
            "with the dwelling limit, the actual-cash-value vs replacement-cost choice, and the "
            "ordinance-or-law upgrade endorsement specified.",
-         why="The household's $1,500/yr guess is used as a placeholder. A $3,000/yr miss is $90,000 over "
+         why="The household insurance guess is used as a placeholder. A $3,000/yr miss is $90,000 over "
              "30 years before inflation, and it lands entirely in the live and rent paths, not the sell path.",
          status="OPEN", where="Independent broker; ask about FAIR Plan as a fallback", src="owner"),
     dict(id="Q-13", kind="fact", topic="Condition of both buildings",
@@ -523,7 +523,7 @@ FLAGS = [
          action="Read the TRA number off the bill and look it up in the county Tax Rate Book, Section III. "
                  "Model uses 1.334% until then.", srcs=["SCC-RATEBOOK"]),
     dict(id="F-3", severity="medium", item="Homeowners and landlord insurance premium is an owner guess",
-         detail="The $1,500/yr figure supplied for both properties was not confirmable from an official "
+         detail="The insurance figure supplied for both properties was not confirmable from an official "
                 "source. Published state-level averages for the 2025 experience year (California "
                 "Department of Insurance data call, as reported by secondary sources) are materially higher "
                 "for the homeowners market and higher again for FAIR Plan dwelling fire.",

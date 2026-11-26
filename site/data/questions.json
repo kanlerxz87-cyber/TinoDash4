@@ -45,7 +45,7 @@
   {
    "id": "Q7",
    "q": "What is the actual insurance premium (Property A and B) \u2014 and is Property B insured as a rental (DP-3/LL policy)?",
-   "why": "Household estimates (~$1,500) sit below CA DOI statewide averages; underinsurance is a tail risk.",
+   "why": "Household insurance estimates sit below CA DOI statewide averages; underinsurance is a tail risk.",
    "status": "MISSING \u2014 quotes required",
    "how": "Two broker quotes each; also pull ZIP-level CDI report figures for both property ZIPs (internal)."
   },
@@ -53,8 +53,8 @@
    "id": "Q8",
    "q": "What rent will Property A actually command?",
    "why": "Rent path ranking is a floor until real comparables exist; HUD FMR is a voucher benchmark only.",
-   "status": "MISSING \u2014 model uses FMR floor",
-   "how": "Three licensed-comp appraisals/BPOs or a property-manager rent analysis."
+   "status": "MISSING \u2014 model uses Santa Clara FMR floor $3,483",
+   "how": "Three licensed-comp appraisals/BPOs or a property-manager rent analysis (see comparables protocol)."
   },
   {
    "id": "Q9",
@@ -97,6 +97,34 @@
    "why": "Changes timelines and possibly state estate taxes (CA itself imposes none).",
    "status": "MISSING",
    "how": "Ask counsel about situs of assets and heir residences."
+  },
+  {
+   "id": "Q15",
+   "q": "Is a like-kind exchange (\u00a71031) wanted for Property A? Take advice before selling.",
+   "why": "Inherited A has ~$0 gain after step-up, so there is generally nothing to defer; 1031 only matters if A is held/rented and appreciates, or if B is exchanged.",
+   "status": "DECISION PENDING \u2014 take advice before selling",
+   "how": "Ask CPA/counsel whether any exchange is contemplated; document the answer before listing A."
+  },
+  {
+   "id": "Q16",
+   "q": "What will the five-year maintenance/capital plan cost (both buildings)?",
+   "why": "Model uses % of value (0.75%/1.00%); lumpy items (roof, seismic, sewer) can dominate a single year.",
+   "status": "MISSING \u2014 template only, no costs invented",
+   "how": "Contractor quotes + engineer report for B (see capex plan on Data page)."
+  },
+  {
+   "id": "Q17",
+   "q": "Is the private estate inventory complete (trust docs, bills, leases, insurance)?",
+   "why": "Missing items (TRA, leases, depreciation) are the top flagged unknowns (F1/F2/F14).",
+   "status": "MISSING \u2014 checklist on Data page",
+   "how": "Work the inventory checklist with executor/attorney; keep figures off this site."
+  },
+  {
+   "id": "Q18",
+   "q": "Have independent value + rent comps been obtained for Property A?",
+   "why": "Until then the rent path is a floor and the $3.1M value is a household estimate.",
+   "status": "MISSING \u2014 protocol on Data page",
+   "how": "Appraisal + \u22653 sale comps + \u22655 rent comps + BPO (see comparables protocol)."
   }
  ],
  "front": [
@@ -112,7 +140,7 @@
   },
   {
    "lever": "Real market rent for Property A",
-   "current": "FMR floor only",
+   "current": "Santa Clara FMR floor $3,483 only",
    "changes": "If comps come in well above the floor, RENT path climbs; if below, SELL/LIVE strengthen."
   },
   {

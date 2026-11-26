@@ -213,7 +213,7 @@ def capital_plan():
              why="Owner's stated range: 0.4%-0.8% of value per year, lighter than Property B.",
              src="owner", status="owner-supplied"),
         dict(building="A", item="Earthquake / water backup insurance uplift", trigger="at renewal",
-             cost=(r10(1_200), r10(4_000)), why="The $1,500 owner figure is one line, not a quote (F-3).",
+             cost=(r10(1_200), r10(4_000)), why="The owner insurance figure is one line, not a quote (F-3).",
              src=None, status="unverified"),
         dict(building="B", item="Unit 3 habitability / permit status", trigger="before any OMI or sale",
              cost=(None, None), why="If the third livable unit is unpermitted, the rent attributable to it "

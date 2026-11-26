@@ -30,7 +30,7 @@ const Site = { d: {} };
 Site.load = async function () {
   const files = ["sources", "tables", "projection", "sensitivity", "blackswan",
                  "mc", "model_constants", "same_year_sale", "timeline", "questions",
-                 "glossary", "suggestions", "flags"];
+                 "glossary", "suggestions", "flags", "process"];
   const out = {};
   await Promise.all(files.map(async f => {
     try { out[f] = await (await fetch(`data/${f}.json`)).json(); }
@@ -685,6 +685,35 @@ function renderData() {
     ], sens.matrix));
   }
 
+  put("capex-table", renderTable([
+    { k: "item", label: "Item" },
+    { k: "property", label: "Property" },
+    { k: "timing", label: "Timing" },
+    { k: "cost", label: "Cost", num: true, render: r => r.cost == null ? "—" : money(r.cost) },
+    { k: "status", label: "Status", render: r => statusBadge(r.status) },
+  ], t.capex_plan, true));
+
+  put("inventory-table", renderTable([
+    { k: "category", label: "Category" },
+    { k: "entry", label: "Item to hold (placeholders only)" },
+    { k: "why", label: "Why it matters" },
+    { k: "status", label: "Status", render: r => statusBadge(r.status) },
+  ], t.inventory, true));
+
+  put("comps-table", renderTable([
+    { k: "step", label: "Step" },
+    { k: "what", label: "What to obtain" },
+    { k: "why", label: "Why" },
+    { k: "status", label: "Status", render: r => statusBadge(r.status) },
+  ], t.comparables, true));
+
+  put("dlog-table", renderTable([
+    { k: "date", label: "Date" },
+    { k: "decision", label: "Decision" },
+    { k: "why", label: "Why" },
+    { k: "status", label: "Status", render: r => statusBadge(r.status) },
+  ], t.decision_log, true));
+
   const mc = Site.d.mc;
   if (mc) put("mc-note", `<p class="lede">Monte-Carlo: ${mc.sims.toLocaleString()} sims, seed ${mc.seed}, ${mc.horizon}-year horizon. Log-normal stocks (arithmetic mean ${Site.d.sensitivity && Site.d.sensitivity.stock_stats.mean_arith_pct}%, σ ${Site.d.sensitivity && Site.d.sensitivity.stock_stats.sd_pct}%), bills ~${Site.d.sensitivity && Site.d.sensitivity.stock_stats.bill_mean_pct}%, homes 3.5%±3%, inflation N(2.5%,1%). “Sell” = 70/30 after costs; “rental” = A rented − tax − maintenance − 8% mgmt; “live” = hold A (excludes imputed rent).</p>`);
 }
@@ -695,12 +724,22 @@ function renderTimeline() {
   if (!el || !Site.d.timeline) return;
   const kindPill = k => ({ deadline: '<span class="badge warn">deadline</span>', law: '<span class="badge acc">law</span>',
     decision: '<span class="badge ok">decision</span>', process: '<span class="pill">process</span>' }[k] || `<span class="pill">${esc(k)}</span>`);
-  el.innerHTML = renderTable([
+  let h = renderTable([
     { k: "when", label: "When" },
     { k: "kind", label: "Type", render: r => kindPill(r.kind) },
     { k: "what", label: "Action" },
     { k: "src", label: "Source", render: r => src(r.src) },
   ], Site.d.timeline);
+  if (Site.d.process) {
+    h += `<h2>Step-by-step inheritance process</h2>
+      <p class="lede">From death (~2040–2050) to a logged decision. Each step cites its authority; steps without a source are household process, not law.</p>` +
+      renderTable([
+        { k: "step", label: "Step" },
+        { k: "what", label: "Action" },
+        { k: "src", label: "Source", render: r => src(r.src) },
+      ], Site.d.process);
+  }
+  el.innerHTML = h;
 }
 
 /* ---------- page: questions ---------- */
@@ -803,7 +842,7 @@ function renderBriefing() {
         <li>Confirm trust terms: who takes A, occupancy requirements, and any spendthrift/timing limits on sale.</li>
         <li>Prop 19: will heir occupy A as principal residence and file the homeowners' exclusion ≤1 year of transfer? (Decides ${money(live && live.property_tax_first_year)} vs ${money(rent && rent.property_tax_first_year)} yr-1 tax.)</li>
         <li>Form 706 needed? Portability election? Prior taxable gifts (Form 709 history) that shrink the exclusion?</li>
-        <li>§121 on inherited home: ownership-use tacking under §121(d)(11) — confirm statute text (flagged F6) and whether MFJ $500k applies.</li>
+        <li>§121 on inherited home: former (d)(11) tacking repealed 2010 (IRS CCM 201429022) — heir must meet own 2-of-5 tests; confirm whether MFJ $500k applies (F6).</li>
         <li>Any liens/debt on A? Ancillary probate for out-of-state heirs? §6166 liquidity if the estate is taxable?</li>
         <li>Date-of-death appraisal ordered? (basis + Prop 19 FBYV evidence)</li>
       </ul></div>
@@ -826,7 +865,7 @@ function renderBriefing() {
         <li>A implied rate 1.335% vs SCC published 1.15–1.30% — <b>F1: get the TRA</b>.</li>
         <li>B implied 2.135% vs SF base 1.18162182% + parcels — <b>F2: get bill breakdown</b>.</li>
         <li>SCC transfer 0.11% + $110 record (verified) · sell cost 5.5% &amp; maintenance 0.75%/1.00% — <b>assumptions F9</b>.</li>
-        <li>Insurance ~$1,500 each — <b>F5: quotes; CDI ZIP data for both property ZIPs (internal)</b> · HUD FMR floor $3,604 — rent comps needed (F4).</li>
+        <li>Insurance (household estimate) each — <b>F5: quotes; CDI ZIP data for both property ZIPs (internal)</b> · HUD FMR floor $3,483 (Santa Clara County) — rent comps needed (F4).</li>
       </ul></div>
     <div class="card"><div class="k">4 · Documents to collect</div>
       <ul class="tight" style="font-size:11.5px">

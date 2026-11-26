@@ -362,7 +362,7 @@ reverse-engineered from one projection. If any of these hold, the ranking moves.
   <div class="flipcard">
     <div class="flipnum">2</div>
     <h3>The value estimate is wrong</h3>
-    <p>The $3,100,000 figure is a <strong>household estimate, not an appraisal</strong>.
+    <p>The $about $3.1 million figure is a <strong>household estimate, not an appraisal</strong>.
     A ±10% error moves the sell path by more than most of the policy variables in this
     model combined, because the sale price is also the tax basis, the Prop&nbsp;19
     arithmetic and the portfolio principal.</p>
@@ -936,7 +936,7 @@ hits this asset directly and hits a diversified portfolio only partly. The
 <div class="col"><h3>Insurance withdrawal</h3>
 <p>California's admitted market has contracted sharply in wildfire-exposed areas. A
 $3.1M house that cannot be insured at any reasonable price is a different asset. The model
-carries a $1,500–$4,500 range; the true downside is not a price, it is uninsurability.</p></div>
+carries a a low-to-mid four-figure range range; the true downside is not a price, it is uninsurability.</p></div>
 <div class="col"><h3>Legislative change</h3>
 <p>Proposition&nbsp;19 itself was a 2020 ballot measure that removed a benefit families had
 relied on for 35 years. A future ballot measure could restore it, narrow it further, or create
@@ -1271,7 +1271,7 @@ including &ldquo;a considerable amount of money&rdquo; on top of the properties.
         for tw in (2040, 2045, 2050):
             growth = 0.035
             yrs = tw - 2026
-            house = 3_100_000 * (1.035 ** yrs)
+            house = 3_100_000 * (1.035 ** yrs)  # internal estimate; published rounded
             build = 1_800_000 * (1.035 ** yrs)
             others = other * (1.035 ** yrs)
             gross = house + build + others
@@ -1366,7 +1366,8 @@ in a lower-income year, is worth more than almost any other lever in this file.<
 <h3>Worked example: the tax on selling the house in the year of death versus later</h3>
 """
 
-    b = 3_100_000
+    b = 3_100_000  # internal estimate; published as a band
+    b_pub = "about $3.1M (banded)"
     scenarios = [
         ("Sell in the year of death", b, b, True),
         ("Sell 3 years later, 3.5%/yr growth", b * 1.035 ** 3, b, False),
@@ -1380,7 +1381,7 @@ in a lower-income year, is worth more than almost any other lever in this file.<
         taxable = gain - excluded
         fed = taxable * 0.20 + taxable * 0.038
         ca = taxable * 0.133 if taxable > 1_000_000 else taxable * 0.105
-        trs.append([label, F.usd_full(price), F.usd_full(gain),
+        trs.append([label, b_pub if price == b else F.usd_full(price), F.usd_full(gain),
                     F.usd_full(excluded), F.usd_full(taxable),
                     F.usd_full(fed), F.usd_full(ca), f"<strong>{F.usd_full(fed+ca)}</strong>"])
     body += table(["Scenario", "Sale price", "Gain over basis", "§ 121 excluded",
@@ -1689,7 +1690,7 @@ blank on purpose, and each has an action attached on the
                        "and flags it. The cap is a legal ceiling, not a forecast.",
                        "SF Rent Board annual announcement"],
                       ["Homeowners insurance premium",
-                       "No official source prices a single parcel. The household's $1,500 guess "
+                       "No official source prices a single parcel. The household's insurance guess "
                        "is almost certainly low for a $3.1M replacement cost in Santa Clara County.",
                        "Three real quotes, and a FAIR Plan comparison"],
                       ["Market rent for the Property A",
@@ -1733,9 +1734,9 @@ change is auditable.</p>
     body += table(
         ["Was a round assumption", "Replaced with", "Why", "Status of the replacement"],
         [
-            ["$3,000,000 house value", "$3,100,000 household estimate, carried with a ±10% "
+            ["$3,000,000 house value", "$about $3.1 million household estimate, carried with a ±10% "
              "sensitivity and stated as unverified",
-             "The household gave $3,100,000; the round $3M was my simplification and it flattened "
+             "The household gave $about $3.1 million; the round $3M was my simplification and it flattened "
              "the arithmetic",
              '<span class="badge bad">unverified estimate</span>'],
             ["2% maintenance of value", "2.0% of <em>building</em> value, banded 1.25%–3.0%",
@@ -1746,8 +1747,8 @@ change is auditable.</p>
              "For the rent-controlled SF units the allowable increase is a legal ceiling, not a "
              "forecast",
              '<span class="badge warn">partly legal</span>'],
-            ["$1,500 insurance", "$1,500–$4,500 range, midpoint used for the headline",
-             "No official source prices a parcel; $1,500 is low for this replacement cost",
+            ["household insurance guess", "a low-to-mid four-figure range range, midpoint used for the headline",
+             "No official source prices a parcel; the guess is low for this replacement cost",
              '<span class="badge bad">unverified</span>'],
             ["5% selling costs", "5.0% commission + 1.0% other, banded",
              "The NAR settlement changed buyer-broker compensation disclosure in 2024",
@@ -2022,7 +2023,8 @@ everything else can be fixed late, at a price.</p>
 <section>
 <h2>Why the one-year occupancy deadline is the whole decision</h2>
 """
-    a = 3_100_000
+    a = 3_100_000  # internal estimate; published as a band
+    a_pub = "about $3.1M (banded)"
     body += table(
         ["If the heir&hellip;", "Assessed value at transfer", "Annual property tax at 1.3%",
          "30-year undiscounted property tax"],
@@ -2032,7 +2034,7 @@ everything else can be fixed late, at a price.</p>
              F.usd_full((552_500 + max(0, a - 552_500 - 1_044_586)) * 0.013),
              F.usd_full((552_500 + max(0, a - 552_500 - 1_044_586)) * 0.013 * 30)],
             ["Does not occupy within one year (full reassessment)",
-             f"~{F.usd_full(a)}", F.usd_full(a * 0.013), F.usd_full(a * 0.013 * 30)],
+             f"~{a_pub}", F.usd_full(a * 0.013), F.usd_full(a * 0.013 * 30)],
             ["<strong>Difference</strong>", f"~{F.usd_full(a - (552_500 + max(0, a - 552_500 - 1_044_586)))}",
              f"<strong>{F.usd_full((a - (552_500 + max(0, a - 552_500 - 1_044_586))) * 0.013)}</strong>",
              f"<strong>{F.usd_full((a - (552_500 + max(0, a - 552_500 - 1_044_586))) * 0.013 * 30)}</strong>"],
@@ -2065,7 +2067,7 @@ deadline-driven than it looks.</strong></p>
 QUESTIONS = [
     ("A", "Valuation — the number every path depends on", [
         ("q-value", "What is the Property A actually worth?",
-         "Nothing. $3,100,000 is a household estimate with no comparable-sales analysis behind it. "
+         "Nothing. $about $3.1 million is a household estimate with no comparable-sales analysis behind it. "
          "Every path in this model is denominated in this number: it is the sale price, the § 1014 "
          "basis, the Prop 19 test value, and the portfolio principal.",
          "A licensed appraisal, or at minimum a broker CMA using at least three closed Santa Clara County "
@@ -2144,8 +2146,8 @@ QUESTIONS = [
     ]),
     ("D", "Operating costs — the household's estimates are placeholders", [
         ("q-insurance", "What does homeowners insurance actually cost for the Property A?",
-         "The household guessed $1,500. The model carries $1,500–$4,500. For a $3,100,000 "
-         "replacement cost in Santa Clara County in the current admitted market, $1,500 is almost "
+         "The household guessed a low figure. The model carries a low-to-mid four-figure range. For a house of this value "
+         "replacement cost in Santa Clara County in the current admitted market, the guess is almost "
          "certainly too low, and there is no official source that prices a single parcel.",
          "Three real quotes for a replacement-cost policy with the correct dwelling limit, plus a "
          "California FAIR Plan comparison. Ask each broker whether the property is in a fire "
@@ -2435,9 +2437,9 @@ the only liquid asset is the inheritance itself.</li>
              "Landlord-paid or tenant-paid is unstated, and it changes the answer by about $4,300/yr."],
             ["Electricity", f"{F.usd_full(30)}–{F.usd_full(70)}/month",
              '<span class="badge bad">unverified</span>', "Same question."],
-            ["Insurance", f"{F.usd_full(1_500)}–{F.usd_full(6_500)}/year",
+            ["Insurance", f"{F.usd_full(P.B_INSURANCE_LOW)}–{F.usd_full(P.B_INSURANCE_HIGH)}/year",
              '<span class="badge bad">unverified</span>',
-             "Household guessed $1,500. A three-unit rental needs a different policy from a "
+             "Household guessed a low figure. A three-unit rental needs a different policy from a "
              "homeowner's policy; the low end is unlikely."],
             ["Prop H parcel tax from 2027", "≈ $249/year",
              '<span class="badge warn">secondary</span>',
@@ -2509,7 +2511,7 @@ looked wrong. Review it before relying on any conclusion.</p>
 <div class="callout danger">
 <h3>The three items that matter most</h3>
 <ol>
-<li><strong>The $3,100,000 valuation is unverified.</strong> It came from the household, not an
+<li><strong>The $about $3.1 million valuation is unverified.</strong> It came from the household, not an
 appraisal, and every path in the model is denominated in it.</li>
 <li><strong>Property B's effective tax rate looks wrong.</strong> About 2.1% of assessed value
 against a 1% constitutional base, with a tax bill that fell 5.9% in 2021 while the assessment
@@ -2599,7 +2601,7 @@ official canvass should be checked.</p>
 <h3>5. The Santa Clara County transfer tax rate is from secondary compilations</h3>
 <p>$1.10 per $1,000 of consideration is consistent across a 2019 California Lawyers Association
 compilation, several secondary sources, and Revenue & Taxation Code § 11911's base rate. I could
-not fetch an official Santa Clara County fee schedule in this session. On a $3,100,000 sale the
+not fetch an official Santa Clara County fee schedule in this session. On a $about $3.1 million sale the
 tax is about $3,410 — immaterial to the decision, which is why it was not pursued further, but it
 remains unverified.</p>
 </article>
@@ -2672,7 +2674,7 @@ SUGGESTIONS = [
      "value test, and Form 706 valuation. Cost roughly $600–$900. It is the highest-return "
      "dollar in this file.", "questions.html#q-value", "HIGH", "Appraiser"),
     ("S3", "Replace the insurance guess with three real quotes", "High value",
-     "The model carries $1,500–$4,500 and the household guessed the low end. In the current "
+     "The model carries a low-to-mid four-figure range and the household guessed the low end. In the current "
      "California market the true number may be higher and the real risk is uninsurability, which "
      "no quote will reveal until you ask.", "questions.html#q-insurance", "HIGH", "Broker"),
     ("S4", "Build the five-year capital plan", "High value",
@@ -3236,7 +3238,7 @@ No personal identifiers appear on this sheet.</p>
 <table class="brief-table">
 <tbody>
 <tr><th>Property A</th><td>Single-family house, Property A (Santa Clara County). <strong>To be inherited</strong> via a
-trust, expected distribution 2040–2050. Household estimate of value: {F.usd_full(P.A_VALUE_2026)}.
+trust, expected distribution 2040–2050. Household estimate of value: about $3.1 million (banded; exact figure internal).
 Factored base year value roughly {F.usd_full(545_000)}–{F.usd_full(560_000)}.</td></tr>
 <tr><th>Property B</th><td>Three-unit building, San Francisco. <strong>Already owned.</strong>
 Two of three units rented at about {F.usd_full(P.B_RENT_MONTHLY)}/month total. Household estimate

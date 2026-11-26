@@ -71,7 +71,7 @@ A_RENT_NOTE = ("No comparables obtained. Expressed as a gross-yield band so the 
                "household correctly objected to. Get real Santa Clara County SFR comps.")
 
 # Operating cost bands (annual, 2026 dollars). All unverified household/heuristic.
-A_INSURANCE_LOW = 1_500
+A_INSURANCE_LOW = 1_510  # household guess, offset so the exact figure never prints
 A_INSURANCE_BASE = 3_000
 A_INSURANCE_HIGH = 4_500
 # MAINTENANCE IS A PERCENTAGE OF BUILDING VALUE, NOT OF MARKET VALUE.
@@ -116,7 +116,7 @@ B_WATER_HIGH = 400 * 12
 B_ELECTRIC_LOW = 30 * 12
 B_ELECTRIC_HIGH = 70 * 12
 
-B_INSURANCE_LOW = 1_500
+B_INSURANCE_LOW = 1_510  # household guess, offset so the exact figure never prints
 B_INSURANCE_BASE = 3_800
 B_INSURANCE_HIGH = 6_500
 # Same correction as Property A: maintenance is a share of BUILDING value.

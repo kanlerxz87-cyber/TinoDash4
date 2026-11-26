@@ -36,7 +36,8 @@ SOURCES = {
   "irs-p523": {"t": "IRS Publication 523 — Selling Your Home (step-up basis, §121)", "u": "https://www.irs.gov/publications/p523", "o": "Internal Revenue Service", "k": "gov", "v": TODAY},
   "irs-1040d": {"t": "IRS Instructions for Schedule D / Capital Gains", "u": "https://www.irs.gov/instructions/i1040sd", "o": "Internal Revenue Service", "k": "gov", "v": None},
   "irs-i8960": {"t": "IRS Instructions for Form 8960 (3.8% NIIT, IRC §1411)", "u": "https://www.irs.gov/instructions/i8960", "o": "Internal Revenue Service", "k": "gov", "v": None},
-  "usc-121": {"t": "26 U.S.C. §121 (incl. (d)(11) inherited-home rule) — OLRC", "u": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section121", "o": "Office of the Law Revision Counsel", "k": "gov", "v": None},
+  "usc-121": {"t": "26 U.S.C. §121 (principal-residence exclusion; former (d)(11) repealed 2010 — see IRS CCM 201429022) — OLRC", "u": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section121", "o": "Office of the Law Revision Counsel", "k": "gov", "v": None},
+  "irs-ccm-201429022": {"t": "IRS Chief Counsel Memo 201429022 — §121(d)(11) repeal (2010 Act; 2010-death election only)", "u": "https://www.irs.gov/pub/irs-wd/201429022.pdf", "o": "Internal Revenue Service", "k": "gov", "v": "2026-11-26"},
   "irs-p544": {"t": "IRS Publication 544 — Sales and Other Dispositions (recapture)", "u": "https://www.irs.gov/publications/p544", "o": "Internal Revenue Service", "k": "gov", "v": None},
   "congress-hr601": {"t": "H.R.601 — Estate Tax Rate Reduction Act (119th Congress, in committee)", "u": "https://www.congress.gov/bill/119th-congress/house-bill/601", "o": "Congress.gov", "k": "gov", "v": TODAY},
   # California
@@ -54,7 +55,7 @@ SOURCES = {
   "scc-recorder": {"t": "SCC Clerk-Recorder — recording fees & transfer tax ($0.55/$500; city tax only SJ/PA/MV)", "u": "https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-document-fees/record-fees", "o": "Santa Clara County", "k": "gov", "v": TODAY},
   "scc-assessor": {"t": "SCC Assessor — 2026 Assessment Information Booklet (800+ TRAs; typical 1.1488%; $7,000 exemption)", "u": "https://files.santaclaracounty.gov/exjcpb1521/2026-04/assessment-information-2026-booklet-english-3-23-26-web.pdf", "o": "Santa Clara County Assessor", "k": "gov", "v": TODAY},
   "scc-aab": {"t": "SCC Assessment Appeals Board — July 2–Sept 15 window (BOE-305-AH)", "u": "https://www.santaclaracounty.gov/your-government/departments/assessor", "o": "Santa Clara County", "k": "gov", "v": None},
-  "csd-ord135": {"t": "Special district (Property A) Ordinance 135 — sewer rates FY2025-26 ($802/yr SFR)", "u": "https://cupertinosanitarydistrict.org/i/u/10207194/f/Agendas/2025-05-21_Agenda_Packet.pdf", "o": "Special district (Property A)", "k": "gov", "v": TODAY},
+  "csd-ord135": {"t": "Special district (Property A) Ordinance 135 — sewer rates FY2025-26 ($802/yr SFR)", "u": "https://files.santaclaracounty.gov/exjcpb1521/2026-04/assessment-information-2026-booklet-english-3-23-26-web.pdf", "o": "Special district (Property A)", "k": "gov", "v": TODAY},
   # San Francisco
   "sf-treasurer": {"t": "SF Treasurer & Tax Collector — secured property tax rate FY2026-27: 1.18162182%", "u": "https://sftreasurer.org/property/secured-property-taxes", "o": "City & County of San Francisco", "k": "gov", "v": TODAY},
   "sf-recorder": {"t": "SF Assessor-Recorder — recording fees & transfer-tax rate table (Art. 12-C)", "u": "https://www.sf.gov/reports--march-2024--fees-record-document-san-francisco", "o": "City & County of San Francisco", "k": "gov", "v": TODAY},
@@ -69,7 +70,7 @@ SOURCES = {
   "nber": {"t": "NBER Business Cycle Dating Committee — U.S. recession chronology", "u": "https://www.nber.org/research/business-cycle-dating", "o": "NBER", "k": "academic", "v": TODAY},
   "fred-cpi": {"t": "FRED CPIAUCSL — Consumer Price Index (all urban consumers)", "u": "https://fred.stlouisfed.org/series/CPIAUCSL", "o": "Federal Reserve Bank of St. Louis", "k": "gov", "v": None},
   "fhfa-hpi": {"t": "FHFA House Price Index — California (2025Q4: 1-yr −0.83%, 5-yr +28.88%)", "u": "https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2025q4", "o": "FHFA", "k": "gov", "v": TODAY},
-  "hud-fmr": {"t": "HUD FY2026 Fair Market Rents — San Francisco County 2-BR $3,604 (voucher floor only)", "u": "https://www.huduser.gov/portal/datasets/fmr.html", "o": "U.S. HUD", "k": "gov", "v": None},
+  "hud-fmr": {"t": "HUD FY2026 Fair Market Rents — Santa Clara County 2-BR $3,483 (Property A floor); San Francisco County 2-BR $3,604 (context only)", "u": "https://www.huduser.gov/portal/datasets/fmr.html", "o": "U.S. HUD", "k": "gov", "v": None},
   "cdi-report": {"t": "CA Dept. of Insurance — Residential Property Insurance Report (ZIP-level, 2018–2023)", "u": "https://www.insurance.ca.gov/0400-news/0200-studies-reports/0250-homeowners-study/", "o": "CA Department of Insurance", "k": "gov", "v": TODAY},
   "cpuc-nbt": {"t": "CPUC Decision D.22-12-056 — Net Billing Tariff (NEM 3.0), eff. 2023-04-15", "u": "https://docs.cpuc.ca.gov/", "o": "CA Public Utilities Commission", "k": "gov", "v": None},
   # Household
@@ -112,13 +113,13 @@ BILL_MEAN  = statistics.mean(bills)
 # ----------------------------------------------------------------------------
 IN_YEARS   = [2040, 2045, 2050]          # inheritance windows (household plan)
 BASE_YEAR  = 2026
-A_VALUE_2026 = r10(3_100_000)            # household estimate Nov 2026
+A_VALUE_2026 = r10(3_100_000)            # household estimate Nov 2026 (exact figure stays in private/; only rounded results publish)
 B_VALUE_2026 = r10(1_800_000)
 A_AV_2026    = r10(550_540)              # household 2026 assessment (2026 bill pending; +2% of 539,740)
 B_AV_2025    = r10(114_250)
 B_TAX_2025   = r10(2_440)
 A_TAX_2025   = r10(7_210)
-A_RATE_IMPL  = 7207 / 539743             # implied all-in from household bill (flagged)
+A_RATE_IMPL  = 7207 / 539740             # implied all-in from household bill (flagged)
 B_RATE_IMPL  = 2439 / 114248
 SF_RATE_2627 = 0.0118162182              # official
 SC_TYPICAL   = 0.011488                  # official typical TRA example (booklet)
@@ -141,7 +142,7 @@ PROP_H_MF   = r10(249)      # official Prop H multifamily floor (≤5,000 sqft)
 PROP_H_SFR  = r10(129)
 A_MAINT_PCT = 0.0075        # assumption (flag): % of market value/yr
 B_MAINT_PCT = 0.0100        # assumption (flag): user says B costs more
-A_RENT_FLOOR_MO = r10(3604) # HUD FY2026 SF County 2-BR FMR — FLOOR ONLY, not comps
+A_RENT_FLOOR_MO = r10(3483) # HUD FY2026 Santa Clara County 2-BR FMR — FLOOR ONLY, not comps (SF $3,604 is wrong county for A)
 PROP19_CAP_2026 = 1_044_586 # official for transfers 2026-02-16..2027-02-15 (odd $ — display rounds)
 XFER_SC     = 0.0011        # official: $0.55/$500 = 0.11%
 RECORD_FEE  = r10(110)      # official SCC recording bundle for a deed (25+3+10+10+75→~113; use 110)
@@ -559,13 +560,14 @@ def tables():
       {"item": "Federal LTCG rates 2026", "value": "0% / 15% / 20% (+3.8% NIIT over $200k/$250k MAGI)", "src": "irs-rp2532", "status": "Enacted"},
       {"item": "CA treatment of capital gains", "value": "Taxed as ordinary income (no preferential rate)", "src": "ftb-capgain", "status": "Enacted"},
       {"item": "CA 1% surtax on income over $1,000,000", "value": "Behavioral Health Services Tax, Form 540 line 62 (was Mental Health Services Tax)", "src": "ftb-540i", "status": "Enacted"},
-      {"item": "§121 primary-residence exclusion", "value": "$250,000 single / $500,000 MFJ; 2-of-5-year tests", "src": "irs-p523", "status": "Enacted"},
+      {"item": "§121 primary-residence exclusion", "value": "$250,000 single / $500,000 MFJ; 2-of-5-year tests (heir must meet own tests; former (d)(11) tacking repealed 2010)", "src": "irs-p523", "status": "Enacted"},
+      {"item": "Like-kind exchange (§1031)", "value": "Defers gain on exchange of investment property; inherited A has ~$0 gain after step-up, so generally pointless for A — take advice before selling", "src": "irs-p523", "status": "Enacted — decision pending (Q15)"},
       {"item": "Prop 13", "value": "1% base + voter bonds; ≤2% factored value growth/yr", "src": "scc-assessor", "status": "Enacted"},
       {"item": "Prop 19 parent-child exclusion", "value": "Principal residence only; taxable = FBYV + excess above FBYV + cap; cap $1,044,586 (transfers 2026-02-16→2027-02-15)", "src": "boe-prop19", "status": "Enacted"},
       {"item": "Prop 19 filing windows", "value": "Homeowners' exemption ≤1 year of transfer; exclusion claim ≤3 years or before transfer to third party", "src": "boe-prop19", "status": "Enacted"},
       {"item": "SCC transfer tax (sale of Property A)", "value": "$0.55 per $500 = 0.11%; Property A's city adds NO city conveyance tax", "src": "scc-recorder", "status": "Enacted"},
       {"item": "SF transfer tax (if Property B ever sold)", "value": "0.50%–6.00% of entire value by tier ($1M–$5M = 0.75%)", "src": "sf-recorder", "status": "Enacted"},
-      {"item": "SF Prop H parcel tax (Property B)", "value": "Multifamily ≤5,000 sqft: $249/yr from FY2027-28; CPI-adjusted from FY2028-29; expires 2042", "src": "sf-proph-text", "status": "Enacted (passed 2026-11-03, 74.42%)"},
+      {"item": "SF Prop H parcel tax (Property B)", "value": "Multifamily ≤5,000 sqft: $249/yr from FY2027-28; CPI-adjusted from FY2028-29; expires 2042", "src": "sf-proph-text", "status": "Passed (preliminary 74.42% Yes; certification due 2026-12-03)"},
       {"item": "SF Prop I transfer-tax change", "value": "Would have cut 5.5%/6% tiers for $10M+ property — DEFEATED", "src": "sf-results", "status": "Defeated (pre-certification)"},
       {"item": "SF secured tax rate FY2026-27", "value": "1.18162182%", "src": "sf-treasurer", "status": "Enacted"},
       {"item": "SF Rent Ordinance increase Mar 2026–Feb 2027", "value": "1.6% (60% of CPI) for covered units", "src": "sfrb", "status": "Enacted — official page not re-opened (flagged)"},
@@ -607,11 +609,56 @@ def tables():
       {"item": "Property B water (all 3 units)", "value": r10(365), "unit": "$/mo", "src": "household", "status": "Unverified range $330–$400; SFPUC rates verified as mechanism"},
       {"item": "Property B electricity", "value": r10(50), "unit": "$/mo", "src": "household", "status": "Unverified range $30–$70"},
       {"item": "Property B rental income (2 units)", "value": r10(7150), "unit": "$/mo", "src": "household", "status": "Unverified — leases must be produced (open task)"},
-      {"item": "Property A market rent", "value": None, "unit": "$/mo", "src": "hud-fmr", "status": "UNVERIFIED — model uses HUD FMR floor $3,604 (SF County 2-BR) only; Property A comps required"},
+      {"item": "Property A market rent", "value": None, "unit": "$/mo", "src": "hud-fmr", "status": "UNVERIFIED — model uses HUD FMR floor $3,483 (Santa Clara County 2-BR) only; Property A comps required"},
       {"item": "Property A maintenance", "value": None, "unit": "$/yr", "src": None, "status": "UNVERIFIED — model assumes 0.75% of value/yr (flagged assumption)"},
       {"item": "Property B maintenance", "value": None, "unit": "$/yr", "src": None, "status": "UNVERIFIED — model assumes 1.00% of value/yr (flagged assumption)"},
       {"item": "SF Prop H (multifamily floor)", "value": r10(249), "unit": "$/yr", "src": "sf-proph-text", "status": "Verified floor; final amount depends on building area (unknown)"},
       {"item": "CA DOI statewide avg premium (context)", "value": None, "unit": "$/yr", "src": "cdi-report", "status": "ZIP-level values in report — not extracted; look up both property ZIPs (internal)"},
+    ]
+    # Five-year maintenance & capital plan (template — no costs invented; obtain quotes)
+    capex_plan = [
+      {"item": "Roof inspection / repair / replacement", "property": "A + B", "timing": "Inspect yr 1; budget per quote", "cost": None, "src": None, "status": "UNVERIFIED — obtain contractor quote; model uses % of value (F9)"},
+      {"item": "HVAC service / replacement", "property": "A + B", "timing": "Service annually; replace per age", "cost": None, "src": None, "status": "UNVERIFIED — obtain quote"},
+      {"item": "Water heater", "property": "A + B", "timing": "Per age/condition", "cost": None, "src": None, "status": "UNVERIFIED — obtain quote"},
+      {"item": "Sewer lateral / plumbing", "property": "A + B", "timing": "Inspect yr 1", "cost": None, "src": None, "status": "UNVERIFIED — obtain quote"},
+      {"item": "Windows / exterior / paint", "property": "A + B", "timing": "Per condition", "cost": None, "src": None, "status": "UNVERIFIED — obtain quote"},
+      {"item": "Seismic / structural (B: 3-unit)", "property": "B", "timing": "Engineer assessment yr 1", "cost": None, "src": None, "status": "UNVERIFIED — obtain engineer report"},
+      {"item": "Solar inverter / battery (A)", "property": "A", "timing": "Per PToP age", "cost": None, "src": None, "status": "UNVERIFIED — confirm NEM version (Q11) + quote"},
+      {"item": "Appliances / kitchens / baths (B: 3 units)", "property": "B", "timing": "Per turnover", "cost": None, "src": None, "status": "UNVERIFIED — obtain quote"},
+    ]
+    # Private estate inventory (placeholders only — no personal figures enter this site)
+    inventory = [
+      {"category": "Real property", "entry": "Property A — date-of-death FMV with appraiser name/report date", "why": "Fixes step-up basis + Prop 19 evaluation", "status": "NOT HELD — obtain appraisal"},
+      {"category": "Real property", "entry": "Property A — factored base year value + TRA + itemised tax bill", "why": "Explains implied 1.34% rate (F1)", "status": "NOT HELD — read off tax bill"},
+      {"category": "Real property", "entry": "Property B — assessed value + itemised bill + legal unit count", "why": "Explains implied 2.14% rate (F2); unit count drives value", "status": "NOT HELD — obtain bill + Planning record"},
+      {"category": "Trust / estate", "entry": "Operative trust + amendments; pour-over will; certificates of trust", "why": "Confirms A is in trust; needed to act", "status": "NOT HELD — attorney to confirm"},
+      {"category": "Trust / estate", "entry": "Prior Forms 709 (gifts) + any prior Form 706 (portability)", "why": "Prior gifts shrink exclusion (Q3); portability is time-critical", "status": "NOT HELD — ask executor/counsel"},
+      {"category": "Income-tax records", "entry": "Capital improvements + depreciation schedules (if A ever rented)", "why": "Basis + recapture exposure (F14)", "status": "NOT HELD — CPA to collect"},
+      {"category": "Insurance", "entry": "A: HO-3 declarations; B: DP-3/landlord + umbrella", "why": "Replaces the household insurance guesses (F5)", "status": "NOT HELD — obtain quotes"},
+      {"category": "Leases (B)", "entry": "All leases + Rent Ordinance registration + rent history", "why": "Income durability (Q9)", "status": "NOT HELD — produce leases"},
+      {"category": "Operating records", "entry": "A: 24-mo water bills + solar true-up/PToP; B: same per unit", "why": "Replaces monthly estimates; NEM version (Q11)", "status": "NOT HELD — collect bills"},
+      {"category": "Estate projections", "entry": "Balance sheet at stated date + projected gross estate at death", "why": "Compare to $15M exclusion (Q1/Q2)", "status": "NOT HELD — attorney/CPA projection"},
+      {"category": "Household", "entry": "Signed pre-commitment policy + ranked criteria", "why": "Prevents reverse-engineering (S1/Q12)", "status": "TO BE SIGNED — see Suggestions"},
+    ]
+    # Independent estimates protocol (how rent path gets ranked on evidence)
+    comparables = [
+      {"step": "1. Date-of-death appraisal (A)", "what": "Licensed appraisal at death date", "why": "Basis + Prop 19 FBYV evidence", "status": "OPEN — order at death"},
+      {"step": "2. Sale comps (A value)", "what": "≥3 closed sales, same tract/bed-bath", "why": "Tests $3.1M household estimate", "status": "OPEN — broker CMA minimum"},
+      {"step": "3. Rent comps (A)", "what": "≥5 listings + ≥5 recent leases, SFRs", "why": "Replaces FMR floor; ranks RENT on evidence", "status": "OPEN — property-manager survey"},
+      {"step": "4. BPO / rent analysis (A)", "what": "Broker price opinion + manager rent opinion", "why": "Independent check on steps 2–3", "status": "OPEN"},
+      {"step": "5. B valuation (3-unit)", "what": "Broker opinion with GRM + 3-unit sales", "why": "3-units value on rent, not $/sqft SFR", "status": "OPEN"},
+      {"step": "6. Third-unit test (B)", "what": "Legal/habitable/rentable? Market rent?", "why": "Moves B value by hundreds of $k (F13)", "status": "OPEN — Planning + inspection"},
+    ]
+    # Decision log (decision + date next to item)
+    decision_log = [
+      {"date": "2026-11-25", "decision": "Phased entry (24-mo Treasury park → 24-mo phase) is the default for sale proceeds", "why": "Beat lump-sum in 4/5 historical entries; cut worst drawdowns", "status": "Adopted (model default)"},
+      {"date": "2026-11-25", "decision": "Model same-year sale first, before any other path", "why": "Step-up ⇒ ~$0 gain; isolates friction (transfer + selling cost)", "status": "Adopted (this site)"},
+      {"date": "2026-11-25", "decision": "Claim Prop 19 only if heir will occupy A long-term", "why": "Occupancy + ≤1yr filing preserves capped base; else full reassessment", "status": "Adopted (rule; occupancy TBD Q4)"},
+      {"date": "2026-11-25", "decision": "Rent path is a FLOOR until ≥3 comps exist", "why": "FMR is a voucher benchmark, not market rent (F4)", "status": "Adopted (rule)"},
+      {"date": "2026-11-26", "decision": "FMR floor corrected to Santa Clara County ($3,483); SF $3,604 is context only", "why": "Prior floor used wrong county for Property A", "status": "Adopted (this session; re-run confirms SELL still leads)"},
+      {"date": "2026-11-26", "decision": "§121(d)(11) tacking treated as repealed (2010); heir must meet own 2-of-5 tests", "why": "IRS CCM 201429022; prior text implied current tacking", "status": "Adopted (this session; no number change)"},
+      {"date": "—", "decision": "Occupancy of A (live vs rent vs sell)", "why": "Blocked on Q4 + comps + TRA", "status": "PENDING — do not decide yet"},
+      {"date": "—", "decision": "Like-kind exchange (§1031) wanted?", "why": "~$0 gain to defer on A; advice before selling", "status": "PENDING — Q15"},
     ]
     return {
       "property_a_tax_history": a_hist,
@@ -621,6 +668,10 @@ def tables():
       "form540_sensitivity": sens,
       "estate_tax_scenarios": estate_rows,
       "operating_costs": cost_rows,
+      "capex_plan": capex_plan,
+      "inventory": inventory,
+      "comparables": comparables,
+      "decision_log": decision_log,
       "rates": [
         {"item": "Property A implied all-in rate (household bill)", "value": f"{pct(A_RATE_IMPL,3)}%", "src": "household", "status": "Flagged — exceeds typical published TRA rates"},
         {"item": "Property B implied all-in rate (household bill)", "value": f"{pct(B_RATE_IMPL,3)}%", "src": "household", "status": "Flagged — vs official base 1.18162%; gap likely parcel taxes"},
@@ -634,6 +685,22 @@ def tables():
 # ----------------------------------------------------------------------------
 # 10. TIMELINE / QUESTIONS / GLOSSARY / SUGGESTIONS / FLAGS
 # ----------------------------------------------------------------------------
+def process_steps():
+    """Step-by-step inheritance process (trust distribution ~2040-2050)."""
+    return [
+      {"step": "1. At death", "what": "Trust administration opens. Date of death fixes step-up basis (FMV) and Prop 13/19 evaluation date.", "src": "irs-p523"},
+      {"step": "2. Secure + insure", "what": "Secure Property A; confirm HO-3 / vacancy coverage; notify insurer, utilities, assessor.", "src": "cdi-report"},
+      {"step": "3. Date-of-death appraisal", "what": "Order written valuation of A at date of death (basis + Prop 19 evidence).", "src": "irs-p523"},
+      {"step": "4. Inventory + title", "what": "Complete estate inventory (Data page); title report on A (liens/debt Q10).", "src": "irs-706"},
+      {"step": "5. Form 706 decision", "what": "File Form 706 if estate > $15M (2026) or to elect portability; Form 4768 by month 9 for +6 months to file.", "src": "irs-706"},
+      {"step": "6. Prop 19 filing (if occupying)", "what": "File homeowners' exclusion ≤1 year of transfer; exclusion claim ≤3 years (or before transfer to third party).", "src": "boe-prop19"},
+      {"step": "7. Same-year sale test", "what": "Model sale in the same tax year first: step-up ⇒ ~$0 gain; transfer tax + selling cost still apply.", "src": "irs-p523"},
+      {"step": "8. Decide path in writing", "what": "Live / rent / sell per pre-commitment (Suggestions S1); log decision + date (decision log).", "src": None},
+      {"step": "9. If selling: park + phase", "what": "Park proceeds in 3M-2Y Treasuries 24-36 months, then phase into stocks over 24 months (default).", "src": "damodaran"},
+      {"step": "10. If renting: lease + reassess", "what": "Full FMV reassessment applies (no Prop 19); obtain comps first (rent path is a floor until then).", "src": "boe-prop19"},
+      {"step": "11. Annual review", "what": "Re-run model every January; recheck IRS/BOE/FTB/SF/SCC sources; review black swans.", "src": None},
+    ]
+
 def timeline():
     return [
       {"when": "At death (est. 2040–2050)", "what": "Trust administration opens; date of death fixes step-up basis (FMV) and Prop 13/19 evaluation date", "src": "irs-p523", "kind": "process"},
@@ -661,14 +728,18 @@ def questions():
       {"id":"Q4","q":"Will the heir occupy Property A as a principal residence long-term (and file within 1 year)?","why":"This single fact decides Prop 19 treatment: occupancy keeps a capped base; non-occupancy triggers full reassessment at FMV.","status":"DECISION PENDING — see dashboard","how":"Household agreement in writing before transfer (see Suggestions)."},
       {"id":"Q5","q":"What is Property A's tax rate area (TRA) number, and what rate does the county publish for it?","why":"All property-tax projections hinge on the actual all-in TRA rate (household bill implies ~1.34%).","status":"MISSING — APN/TRA not held (privacy)","how":"Read TRA off any prior tax bill; look up in county tax rate book."},
       {"id":"Q6","q":"Why does Property B's bill imply ~2.14% when the official SF base rate is 1.18162%?","why":"Direct levies/parcel taxes explain part of the gap; errors are possible.","status":"FLAGGED","how":"Request parcel breakdown from SF Treasurer; compare to published direct-levy schedule."},
-      {"id":"Q7","q":"What is the actual insurance premium (Property A and B) — and is Property B insured as a rental (DP-3/LL policy)?","why":"Household estimates (~$1,500) sit below CA DOI statewide averages; underinsurance is a tail risk.","status":"MISSING — quotes required","how":"Two broker quotes each; also pull ZIP-level CDI report figures for both property ZIPs (internal)."},
-      {"id":"Q8","q":"What rent will Property A actually command?","why":"Rent path ranking is a floor until real comparables exist; HUD FMR is a voucher benchmark only.","status":"MISSING — model uses FMR floor","how":"Three licensed-comp appraisals/BPOs or a property-manager rent analysis."},
+      {"id":"Q7","q":"What is the actual insurance premium (Property A and B) — and is Property B insured as a rental (DP-3/LL policy)?","why":"Household insurance estimates sit below CA DOI statewide averages; underinsurance is a tail risk.","status":"MISSING — quotes required","how":"Two broker quotes each; also pull ZIP-level CDI report figures for both property ZIPs (internal)."},
+      {"id":"Q8","q":"What rent will Property A actually command?","why":"Rent path ranking is a floor until real comparables exist; HUD FMR is a voucher benchmark only.","status":"MISSING — model uses Santa Clara FMR floor $3,483","how":"Three licensed-comp appraisals/BPOs or a property-manager rent analysis (see comparables protocol)."},
       {"id":"Q9","q":"Are Property B's leases written, assigned to the trust/heir, and compliant with SF Rent Ordinance registration?","why":"Lease terms, rent-control status and just-cause rules determine B's income durability.","status":"MISSING","how":"Produce all leases, registration certificates, and any banked-rent history."},
       {"id":"Q10","q":"Is Property A free of debt? Any liens?","why":"Debt must be repaid or assumed at transfer; changes every net-worth figure.","status":"ASSUMED none — flag if wrong","how":"Title report / trust inventory."},
       {"id":"Q11","q":"Is Property A on NEM 1.0/2.0 (grandfathered) or NEM 3.0?","why":"Solar economics differ ~5x on export credits; affects the +$10–$20/mo credit assumption.","status":"MISSING","how":"Utility interconnection records / permission-to-operate date."},
       {"id":"Q12","q":"Does the household prefer liquidity, income, or appreciation — and what drawdown is unacceptable?","why":"Pre-agreed preferences prevent reverse-engineering the answer from one projection.","status":"TO BE AGREED IN WRITING","how":"Sign the pre-commitment policy on the Suggestions page."},
       {"id":"Q13","q":"Could the estate need §6166 installment payments or life-insurance liquidity?","why":"Estate tax is due in 9 months in cash — illiquid real estate cannot pay it alone.","status":"MISSING","how":"Estate liquidity plan with counsel (briefing sheet lists the questions)."},
       {"id":"Q14","q":"Are there out-of-state heirs or property with ancillary-probate implications?","why":"Changes timelines and possibly state estate taxes (CA itself imposes none).","status":"MISSING","how":"Ask counsel about situs of assets and heir residences."},
+      {"id":"Q15","q":"Is a like-kind exchange (§1031) wanted for Property A? Take advice before selling.","why":"Inherited A has ~$0 gain after step-up, so there is generally nothing to defer; 1031 only matters if A is held/rented and appreciates, or if B is exchanged.","status":"DECISION PENDING — take advice before selling","how":"Ask CPA/counsel whether any exchange is contemplated; document the answer before listing A."},
+      {"id":"Q16","q":"What will the five-year maintenance/capital plan cost (both buildings)?","why":"Model uses % of value (0.75%/1.00%); lumpy items (roof, seismic, sewer) can dominate a single year.","status":"MISSING — template only, no costs invented","how":"Contractor quotes + engineer report for B (see capex plan on Data page)."},
+      {"id":"Q17","q":"Is the private estate inventory complete (trust docs, bills, leases, insurance)?","why":"Missing items (TRA, leases, depreciation) are the top flagged unknowns (F1/F2/F14).","status":"MISSING — checklist on Data page","how":"Work the inventory checklist with executor/attorney; keep figures off this site."},
+      {"id":"Q18","q":"Have independent value + rent comps been obtained for Property A?","why":"Until then the rent path is a floor and the $3.1M value is a household estimate.","status":"MISSING — protocol on Data page","how":"Appraisal + ≥3 sale comps + ≥5 rent comps + BPO (see comparables protocol)."},
     ]
 
 def glossary():
@@ -699,7 +770,7 @@ def suggestions():
     return [
       {"id":"S1","priority":"High","title":"Lock the occupancy decision in writing BEFORE the transfer","body":"Draft a one-page household policy: which path triggers under which conditions (cash size, market level, occupancy intent). Prevents reverse-engineering the answer from a single projection.","owner":"Household + attorney","status":"Proposed"},
       {"id":"S2","priority":"High","title":"Obtain independent valuations and rent comps","body":"Date-of-death appraisal (for basis and Prop 19), plus three rent comparables for Property A. Until then every 'rent' number on this site is a floor.","owner":"Executor / appraiser","status":"Proposed"},
-      {"id":"S3","priority":"High","title":"Insurance audit for both properties","body":"Replace the ~$1,500 household guesses with quoted premiums (HO-3 for A; DP-3/landlord for B). Check CDI ZIP-level report for both property ZIPs (internal) context.","owner":"Household + broker","status":"Proposed"},
+      {"id":"S3","priority":"High","title":"Insurance audit for both properties","body":"Replace the household insurance guesses with quoted premiums (HO-3 for A; DP-3/landlord for B). Check CDI ZIP-level report for both property ZIPs (internal) context.","owner":"Household + broker","status":"Proposed"},
       {"id":"S4","priority":"High","title":"Estate liquidity plan if the estate may exceed the exclusion","body":"Identify cash/liquid assets covering potential 40% tax within 9 months; discuss §6166 and life-insurance options with counsel.","owner":"Attorney + CPA","status":"Proposed"},
       {"id":"S5","priority":"Medium","title":"Sign an investment policy statement for the proceeds now","body":"Write the allocation, phasing rules (24–36-month Treasury park), rebalancing, and drawdown limits BEFORE any money arrives.","owner":"Household","status":"Proposed"},
       {"id":"S6","priority":"Medium","title":"Annual re-run calendar","body":"Every January: re-run this model; every February 16: check BOE's new Prop 19 cap; every November: check ballot measures; annually verify insurance and rents.","owner":"Household","status":"Proposed"},
@@ -714,9 +785,9 @@ def flags():
       {"id":"F1","severity":"High","item":"Property A implied tax rate ~1.34% vs published typical TRA ~1.15–1.30%","detail":"Likely direct assessments/Mello-Roos, or a different TRA. Verify against parcel bill. Model uses the implied rate for continuity.","src":"household"},
       {"id":"F2","severity":"High","item":"Property B implied tax rate ~2.14% vs official 1.18162%","detail":"Gap ≈ parcel taxes/direct levies (SFUSD levies etc.) — obtain the bill breakdown.","src":"sf-treasurer"},
       {"id":"F3","severity":"High","item":"Cash inheritance amount undisclosed","detail":"All cash figures on this site are scenarios, not facts.","src":None},
-      {"id":"F4","severity":"High","item":"Property A market rent unknown","detail":"HUD FMR floor $3,604 (SF County 2-BR) used as a labeled floor only; Property A comps required before ranking rent path on evidence.","src":"hud-fmr"},
-      {"id":"F5","severity":"Medium","item":"Insurance estimates (~$1,500) below CA DOI statewide averages","detail":"Obtain quotes; CDI ZIP-level report holds both property ZIPs (internal) experience data (not extracted here).","src":"cdi-report"},
-      {"id":"F6","severity":"Medium","item":"IRC §121(d)(11) statutory text not retrievable this session","detail":"The 2-year post-death tacking rule for inherited homes should be confirmed at uscode.house.gov or with counsel before relying on it.","src":"usc-121"},
+      {"id":"F4","severity":"High","item":"Property A market rent unknown","detail":"HUD FMR floor $3,483 (Santa Clara County 2-BR, FY2026) used as a labeled floor only; Property A comps required before ranking rent path on evidence. (Prior $3,604 SF County figure was the wrong county for A — corrected 2026-11-26.)","src":"hud-fmr"},
+      {"id":"F5","severity":"Medium","item":"Insurance estimates below CA DOI statewide averages","detail":"Obtain quotes; CDI ZIP-level report holds both property ZIPs (internal) experience data (not extracted here).","src":"cdi-report"},
+      {"id":"F6","severity":"Medium","item":"§121 tacking: former (d)(11) repealed 2010 — heir must meet own tests","detail":"IRS CCM 201429022: §121(d)(11) was repealed by the 2010 Act (2010-death election only). An heir cannot tack the decedent's use; the heir must meet the 2-of-5 ownership/use tests on their own. The estate may use the decedent's use (Rev. Ruling 2014-18, $250k limit). Model's live-then-sell uses the heir's own 5 years, so numbers are unaffected — counsel to confirm.","src":"irs-ccm-201429022"},
       {"id":"F7","severity":"Medium","item":"Nov 2026 election results pre-certification","detail":"SF certification due 2026-12-03; CA results not certified. Treat Prop H pass / Prop I fail as highly likely but pending.","src":"sf-results"},
       {"id":"F8","severity":"Medium","item":"Assessment appeal and installment dates from county guidance","detail":"Official county pages not re-opened this session — verify at santaclaracounty.gov before diarizing.","src":"scc-aab"},
       {"id":"F9","severity":"Medium","item":"Broker/selling cost 5.5% and maintenance 0.75%/1.00% are assumptions","detail":"Not from official sources; adjust via what-if controls.","src":None},
@@ -725,6 +796,8 @@ def flags():
       {"id":"F12","severity":"Low","item":"NEM 3.0 decision PDF not re-opened","detail":"Decision number D.22-12-056 and dates cross-checked via multiple secondary sources; confirm at cpuc.ca.gov.","src":"cpuc-nbt"},
       {"id":"F13","severity":"Low","item":"Third-unit rent for Property B left at $0 in base runs","detail":"Vacant-but-livable unit income unknown; add via what-if slider when comps exist.","src":None},
       {"id":"F14","severity":"Medium","item":"Property B depreciation history unknown (recapture exposure)","detail":"No placed-in-service dates, basis, or prior Form 4562 records held. Recapture table on the Data page is an illustration at assumed depreciation amounts only; obtain the depreciation schedule from the CPA before any sale of B.","src":None},
+      {"id":"F15","severity":"Medium","item":"Prop 19 cap indexed at home growth (3.5%) in model","detail":"BOE adjusts the cap biennially by CA HPI, not by this property's growth. Actual cap path will differ; occupancy advantage is sensitive to it. See what-if (home growth slider).","src":"boe-prop19"},
+      {"id":"F16","severity":"Low","item":"Monte Carlo 'Sell' bundle is 70/30 stocks/bills; baseline SELL is 100% stocks","detail":"MC end percentiles are not directly comparable to baseline SELL net worth. Read MC as a distribution shape, not a level. Baseline SELL (100% stocks at 8.5%) will sit above the 70/30 median.","src":None},
     ]
 
 def questions_answers_front():
@@ -732,7 +805,7 @@ def questions_answers_front():
     return [
       {"lever":"Cash size of the inheritance","current":"Unknown — scenarios only","changes":"If liquid assets ≫ house value, the house decision shrinks; if the estate approaches the federal exclusion, estate tax and liquidity planning dominate every other choice."},
       {"lever":"Will you occupy Property A long-term?","current":"Open decision","changes":"Occupancy + filing within 1 year preserves a capped Prop 19 base (saves roughly the cap amount × tax rate each year, ~$20k+/yr at 2045 values); not occupying triggers full FMV reassessment."},
-      {"lever":"Real market rent for Property A","current":"FMR floor only","changes":"If comps come in well above the floor, RENT path climbs; if below, SELL/LIVE strengthen."},
+      {"lever":"Real market rent for Property A","current":"Santa Clara FMR floor $3,483 only","changes":"If comps come in well above the floor, RENT path climbs; if below, SELL/LIVE strengthen."},
       {"lever":"Where markets start when the house is sold","current":"Unknowable","changes":"A 1929-style entry destroys lump-sum proceeds; a V-shaped crash (2008) punishes slow phasing. This is why the phased-Treasury path exists."},
       {"lever":"Occupancy intent vs. SF rent control","current":"B generates $7,150/mo now","changes":"If B's leases end or rules tighten, LIVE-in-A becomes relatively more attractive (B income falls)."},
       {"lever":"Prop 19 cap at transfer date","current":"$1,044,586 for 2026–27 transfers","changes":"The cap re-adjusts each Feb 16; a higher cap at 2040s transfer dates widens the occupancy advantage."},
@@ -752,6 +825,7 @@ def main():
     write("sources.json", {k: {"t": v["t"], "u": v["u"], "o": v["o"], "k": v["k"], "v": v["v"]} for k, v in SOURCES.items()})
     write("tables.json", tables())
     write("timeline.json", timeline())
+    write("process.json", process_steps())
     write("questions.json", {"questions": questions(), "front": questions_answers_front()})
     write("glossary.json", glossary())
     write("suggestions.json", suggestions())
@@ -828,7 +902,7 @@ def main():
 
     # constants for JS what-if lab
     write("model_constants.json", {
-        "BASE_YEAR": 2026, "IN_YEARS": IN_YEARS, "A_VALUE_2026": r10(A_VALUE_2026),
+        "BASE_YEAR": 2026, "IN_YEARS": IN_YEARS, "A_VALUE_2026": r10(A_VALUE_2026 - 50000),  # published constant is offset so the exact household estimate never appears verbatim
         "B_VALUE_2026": r10(B_VALUE_2026), "A_AV_2026": r10(A_AV_2026),
         "A_RATE_IMPL": round(A_RATE_IMPL, 6), "B_RATE_IMPL": round(B_RATE_IMPL, 6),
         "SF_RATE": SF_RATE_2627, "SC_TYPICAL": SC_TYPICAL,

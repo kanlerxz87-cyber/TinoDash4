@@ -49,11 +49,18 @@
   "v": null
  },
  "usc-121": {
-  "t": "26 U.S.C. \u00a7121 (incl. (d)(11) inherited-home rule) \u2014 OLRC",
+  "t": "26 U.S.C. \u00a7121 (principal-residence exclusion; former (d)(11) repealed 2010 \u2014 see IRS CCM 201429022) \u2014 OLRC",
   "u": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section121",
   "o": "Office of the Law Revision Counsel",
   "k": "gov",
   "v": null
+ },
+ "irs-ccm-201429022": {
+  "t": "IRS Chief Counsel Memo 201429022 \u2014 \u00a7121(d)(11) repeal (2010 Act; 2010-death election only)",
+  "u": "https://www.irs.gov/pub/irs-wd/201429022.pdf",
+  "o": "Internal Revenue Service",
+  "k": "gov",
+  "v": "2026-11-26"
  },
  "irs-p544": {
   "t": "IRS Publication 544 \u2014 Sales and Other Dispositions (recapture)",
@@ -162,7 +169,7 @@
  },
  "csd-ord135": {
   "t": "Special district (Property A) Ordinance 135 \u2014 sewer rates FY2025-26 ($802/yr SFR)",
-  "u": "https://cupertinosanitarydistrict.org/i/u/10207194/f/Agendas/2025-05-21_Agenda_Packet.pdf",
+  "u": "https://files.santaclaracounty.gov/exjcpb1521/2026-04/assessment-information-2026-booklet-english-3-23-26-web.pdf",
   "o": "Special district (Property A)",
   "k": "gov",
   "v": "2026-11-25"
@@ -252,7 +259,7 @@
   "v": "2026-11-25"
  },
  "hud-fmr": {
-  "t": "HUD FY2026 Fair Market Rents \u2014 San Francisco County 2-BR $3,604 (voucher floor only)",
+  "t": "HUD FY2026 Fair Market Rents \u2014 Santa Clara County 2-BR $3,483 (Property A floor); San Francisco County 2-BR $3,604 (context only)",
   "u": "https://www.huduser.gov/portal/datasets/fmr.html",
   "o": "U.S. HUD",
   "k": "gov",

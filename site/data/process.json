@@ -1,0 +1,57 @@
+[
+ {
+  "step": "1. At death",
+  "what": "Trust administration opens. Date of death fixes step-up basis (FMV) and Prop 13/19 evaluation date.",
+  "src": "irs-p523"
+ },
+ {
+  "step": "2. Secure + insure",
+  "what": "Secure Property A; confirm HO-3 / vacancy coverage; notify insurer, utilities, assessor.",
+  "src": "cdi-report"
+ },
+ {
+  "step": "3. Date-of-death appraisal",
+  "what": "Order written valuation of A at date of death (basis + Prop 19 evidence).",
+  "src": "irs-p523"
+ },
+ {
+  "step": "4. Inventory + title",
+  "what": "Complete estate inventory (Data page); title report on A (liens/debt Q10).",
+  "src": "irs-706"
+ },
+ {
+  "step": "5. Form 706 decision",
+  "what": "File Form 706 if estate > $15M (2026) or to elect portability; Form 4768 by month 9 for +6 months to file.",
+  "src": "irs-706"
+ },
+ {
+  "step": "6. Prop 19 filing (if occupying)",
+  "what": "File homeowners' exclusion \u22641 year of transfer; exclusion claim \u22643 years (or before transfer to third party).",
+  "src": "boe-prop19"
+ },
+ {
+  "step": "7. Same-year sale test",
+  "what": "Model sale in the same tax year first: step-up \u21d2 ~$0 gain; transfer tax + selling cost still apply.",
+  "src": "irs-p523"
+ },
+ {
+  "step": "8. Decide path in writing",
+  "what": "Live / rent / sell per pre-commitment (Suggestions S1); log decision + date (decision log).",
+  "src": null
+ },
+ {
+  "step": "9. If selling: park + phase",
+  "what": "Park proceeds in 3M-2Y Treasuries 24-36 months, then phase into stocks over 24 months (default).",
+  "src": "damodaran"
+ },
+ {
+  "step": "10. If renting: lease + reassess",
+  "what": "Full FMV reassessment applies (no Prop 19); obtain comps first (rent path is a floor until then).",
+  "src": "boe-prop19"
+ },
+ {
+  "step": "11. Annual review",
+  "what": "Re-run model every January; recheck IRS/BOE/FTB/SF/SCC sources; review black swans.",
+  "src": null
+ }
+]

@@ -52,8 +52,8 @@ this session or the exact wording appeared in the retrieved official document.
 | Homeowners' exemption reduces taxable value by $7,000 | $7,000 | same booklet | verified (excerpt) |
 | Assessment appeal: regular window July 2 – Sept 15 (BOE-305-AH); informal Prop 8 review by Aug 8; fee $290 (2026) | — | multiple county-guidance sources; official AAB page not re-opened | FLAGGED (verify at clerk of board) |
 | Secured tax installments: 1st due Nov 1 (delinquent Dec 10), 2nd due Feb 1 (delinquent Apr 10) | — | county guidance sources | FLAGGED (verify at tax.santaclaracounty.gov) |
-| Special district (Property A) sewer, SFR per unit/yr FY2025-26 | $802.14 → rounds to $800 | CSD Ordinance 135 https://cupertinosanitarydistrict.org/i/u/10207194/f/Agendas/2025-05-21_Agenda_Packet.pdf | verified (excerpt) |
-| Household bill data (Property A): taxes/assessment history, water $100–150/mo, solar credit +$10–20/mo, insurance ~$1,500/yr | rounded to $10 | household-provided | user data — flagged as unverified estimates |
+| Special district (Property A) sewer, SFR per unit/yr FY2025-26 | $802.14 → rounds to $800 | CSD Ordinance 135 (district site; URL omitted — see sources.json note) | verified (excerpt) |
+| Household bill data (Property A): taxes/assessment history, water $100–150/mo, solar credit +$10–20/mo, insurance (household estimate, unverified) | rounded to $10 | household-provided | user data — flagged as unverified estimates |
 | Property A implied all-in tax rate from household bill (7,210 ÷ 539,740) | ≈1.34% | derived from household data | FLAGGED: exceeds typical published TRA rates (~1.15–1.30%) — likely direct assessments/Mello-Roos; verify against parcel bill |
 
 ## Local — San Francisco (Property B)
@@ -67,7 +67,7 @@ this session or the exact wording appeared in the retrieved official document.
 | Prop I (transfer-tax change for $10M+) defeated Nov 2026 — top rates unchanged | defeated | GrowSF results page + SF standard results | media-reported → FLAGGED pending certification |
 | SFPUC water W-1A FY2026-27: $19.65/mo service (5/8") + $12.20/unit first 4 + $13.55 additional; sewer Sch. A $6.62 + per discharge unit; stormwater Tier2 $19.66/mo | — | https://www.sfpuc.gov/sites/default/files/accounts-and-services/Rates_Schedule_Water_Sewer_2026-7.pdf | verified (excerpt) |
 | SF Rent Ordinance allowable increase Mar 2026 – Feb 2027 | 1.6% | SF Rent Board (sfrb.org / sf.gov) — reported by multiple sources | FLAGGED: official Rent Board page not re-opened |
-| Property B bill data: taxes/assessment history, rent $7,150/mo from 2 units, water $330–400/mo, electricity $30–70/mo, insurance ~$1,500/yr | rounded to $10 | household-provided | user data — flagged |
+| Property B bill data: taxes/assessment history, rent $7,150/mo from 2 units, water $330–400/mo, electricity $30–70/mo, insurance (household estimate, unverified) | rounded to $10 | household-provided | user data — flagged |
 | Property B implied all-in rate (2,440 ÷ 114,250) ≈ 2.14% vs official base 1.18162% | ≈2.14% | derived | FLAGGED: gap likely parcel taxes/direct levies — verify breakdown on bill |
 
 ## Market & macro data
@@ -100,7 +100,7 @@ this session or the exact wording appeared in the retrieved official document.
 
 1. Property A implied all-in tax rate ≈1.34% > published typical TRA rates — verify parcel bill / Mello-Roos.
 2. Property B implied all-in rate ≈2.14% > official base 1.18162% — verify direct-levy breakdown.
-3. Household insurance estimates (~$1,500/yr) below CA DOI statewide averages — obtain quotes.
+3. Household insurance estimates below CA DOI statewide averages — obtain quotes.
 4. Property A market rent unknown — model uses HUD FMR floor only; comps required.
 5. Cash inheritance amount undisclosed — modeled as scenarios, not facts.
 6. §121(d)(11) statutory text not retrievable this session — confirm with counsel.

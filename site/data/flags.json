@@ -24,22 +24,22 @@
   "id": "F4",
   "severity": "High",
   "item": "Property A market rent unknown",
-  "detail": "HUD FMR floor $3,604 (SF County 2-BR) used as a labeled floor only; Property A comps required before ranking rent path on evidence.",
+  "detail": "HUD FMR floor $3,483 (Santa Clara County 2-BR, FY2026) used as a labeled floor only; Property A comps required before ranking rent path on evidence. (Prior $3,604 SF County figure was the wrong county for A \u2014 corrected 2026-11-26.)",
   "src": "hud-fmr"
  },
  {
   "id": "F5",
   "severity": "Medium",
-  "item": "Insurance estimates (~$1,500) below CA DOI statewide averages",
+  "item": "Insurance estimates below CA DOI statewide averages",
   "detail": "Obtain quotes; CDI ZIP-level report holds both property ZIPs (internal) experience data (not extracted here).",
   "src": "cdi-report"
  },
  {
   "id": "F6",
   "severity": "Medium",
-  "item": "IRC \u00a7121(d)(11) statutory text not retrievable this session",
-  "detail": "The 2-year post-death tacking rule for inherited homes should be confirmed at uscode.house.gov or with counsel before relying on it.",
-  "src": "usc-121"
+  "item": "\u00a7121 tacking: former (d)(11) repealed 2010 \u2014 heir must meet own tests",
+  "detail": "IRS CCM 201429022: \u00a7121(d)(11) was repealed by the 2010 Act (2010-death election only). An heir cannot tack the decedent's use; the heir must meet the 2-of-5 ownership/use tests on their own. The estate may use the decedent's use (Rev. Ruling 2014-18, $250k limit). Model's live-then-sell uses the heir's own 5 years, so numbers are unaffected \u2014 counsel to confirm.",
+  "src": "irs-ccm-201429022"
  },
  {
   "id": "F7",
@@ -95,6 +95,20 @@
   "severity": "Medium",
   "item": "Property B depreciation history unknown (recapture exposure)",
   "detail": "No placed-in-service dates, basis, or prior Form 4562 records held. Recapture table on the Data page is an illustration at assumed depreciation amounts only; obtain the depreciation schedule from the CPA before any sale of B.",
+  "src": null
+ },
+ {
+  "id": "F15",
+  "severity": "Medium",
+  "item": "Prop 19 cap indexed at home growth (3.5%) in model",
+  "detail": "BOE adjusts the cap biennially by CA HPI, not by this property's growth. Actual cap path will differ; occupancy advantage is sensitive to it. See what-if (home growth slider).",
+  "src": "boe-prop19"
+ },
+ {
+  "id": "F16",
+  "severity": "Low",
+  "item": "Monte Carlo 'Sell' bundle is 70/30 stocks/bills; baseline SELL is 100% stocks",
+  "detail": "MC end percentiles are not directly comparable to baseline SELL net worth. Read MC as a distribution shape, not a level. Baseline SELL (100% stocks at 8.5%) will sit above the 70/30 median.",
   "src": null
  }
 ]
