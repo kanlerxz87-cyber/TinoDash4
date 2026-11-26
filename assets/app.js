@@ -17,7 +17,7 @@
     if(!row){ out.textContent = 'No grid row for these settings.'; return; }
     var max = Math.max.apply(null, order.map(function(p){ return row.results[p]; }));
     var best = order.reduce(function(a,p){ return row.results[p] > row.results[a] ? p : a; }, order[0]);
-    var html = '<p><strong>Highest result for these settings:</strong> ' + labels[best] + ' (' + money(row.results[best]) + ', real 2026 dollars).</p>';
+    var html = '<p><strong>Largest model output for these settings (not a recommendation):</strong> ' + labels[best] + ' (' + money(row.results[best]) + ', real 2026 dollars).</p>';
     order.forEach(function(p){
       var w = Math.max(2, Math.round(100 * row.results[p] / max));
       html += '<div class="wbar"><span>' + labels[p] + '</span><span><span class="bar" style="width:' + w + '%"></span></span><strong>' + money(row.results[p]) + '</strong></div>';

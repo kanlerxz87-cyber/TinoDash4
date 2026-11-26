@@ -261,9 +261,15 @@ UNVER = sum(1 for r in C.PROPERTY_A_FACTS + C.PROPERTY_B_FACTS if r[2] == "UNVER
 
 # ---------------------------------------------------------------- pages
 def build_index():
+    readiness = card("Decision status: exploratory, not decision-ready", """
+<p><strong>No path is endorsed by this dashboard today.</strong> Property A is the future inheritance; Property B is already owned and has existing rental cash flow. Keep Property B as the household's current baseline rather than treating it as inheritance proceeds.</p>
+<p>The rankings and projections below are conditional outputs from a published model, not a personalized forecast or recommendation. This checkout does not contain the private input file required to reproduce the model, and key inputs and legal interpretations remain unresolved. Do not rely on the numerical ranking until the private inputs are reviewed and the model is rebuilt.</p>
+<p><strong>Decision gates:</strong> obtain a written date-of-death valuation and basis record; confirm estate size, prior taxable gifts and portability; determine intended occupancy and verify Proposition 19 and home-sale exclusion eligibility; obtain market-rent comparables, lease/local-law review, insurance quotes, tax bills and a five-year capital plan; then agree a written investment and loss-tolerance policy before comparing the same transfer-year sale with live, rent, mixed and phased paths.</p>
+<p>Start with <a href="questions.html">Questions and gaps</a>, review <a href="flagged.html">Flagged for Review</a>, and check the <a href="inputs.html">Facts and inputs</a> register. Rebuild after evidence or assumptions change.</p>
+""", "warn")
     summary = card("Executive summary", f"""
 <ul class="bullets">
-<li><strong>Provisional lean (not a decision):</strong> in the base case, selling Property A in the transfer year and investing the proceeds ranks first. Phasing in over 24 months ranks second.</li>
+<li><strong>Conditional model ranking only (not a recommendation):</strong> the current published base-case output ranks a transfer-year sale and lump-sum investment first; phasing over 24 months ranks second. These outputs are not decision-ready until the source inputs and unresolved items are checked.</li>
 <li>Base case: transfer in 2045, 20-year horizon, real 2026 dollars, no imputed rent credit. Sell and invest: <strong>{money(BASE['S'])}</strong>. Phased over 24 months: <strong>{money(BASE['SP24'])}</strong>. Rent then sell: <strong>{money(BASE['R'])}</strong>. Live with no rent credit: <strong>{money(BASE['L'])}</strong>.</li>
 <li>Living in Property A ties with selling only if the household values avoided rent at about <strong>{pct(BE_CREDIT, 0)}</strong> of market rent.</li>
 <li>Phasing is an insurance choice: in the base-case grid it gives up about <strong>{pct(GRID_PHASE_COST, 0)}</strong> of the 20-year value if no crash comes (stylised no-crash test: about {pct(NOCRASH_PHASE_COST, 0)}), and it protects against an early 1929- or 2008-type fall.</li>
@@ -297,14 +303,14 @@ def build_index():
     nav = "".join(
         f'<a class="navcard" href="{h}"><strong>{e(l)}</strong><span>{e(g)}</span></a>'
         for g, items in NAV for h, l in items if h != "index.html")
-    body = summary + change + risk + res + ev + f"<section><h2>Go to</h2><div class='navgrid'>{nav}</div></section>"
+    body = readiness + summary + change + risk + res + ev + f"<section><h2>Go to</h2><div class='navgrid'>{nav}</div></section>"
     page("index.html", "Dashboard", body)
 
 
 def build_paths():
     grid_json = json.dumps(GRID, separators=(",", ":"))
     controls = card("What-if controls", """
-<p>Change a setting. Results come from the precomputed model grid (the same numbers as the tables). The grid is not re-simulated in the browser.</p>
+<p>Change a setting. Results come from the precomputed model grid (the same numbers as the tables); the grid is not re-simulated in the browser. The highest displayed number is a conditional model result, not a recommendation, and inherits all flagged input and source limitations.</p>
 <div class="controls">
 <label>Transfer year<select id="w-T"><option>2040</option><option selected>2045</option><option>2050</option></select></label>
 <label>Horizon (years after transfer)<select id="w-H"><option>10</option><option selected>20</option></select></label>
@@ -562,7 +568,7 @@ def build_brief():
 <h3>1. Key facts (household figures held internally)</h3>
 <table class="brieftbl"><tbody>{frow}</tbody></table>
 <h3>2. Results (real 2026 $, transfer 2045, 20 years, rounded to $10)</h3>
-<p>Sell and invest {money(BASE['S'])}; phased over 24 months {money(BASE['SP24'])}; rent then sell {money(BASE['R'])}; live with no rent credit {money(BASE['L'])}. Living ties with selling only at a rent credit of about {pct(BE_CREDIT, 0)}. Provisional lean: sell in the transfer year. Not a decision.</p>
+<p>Conditional model outputs only, not a recommendation: sell and invest {money(BASE['S'])}; phased over 24 months {money(BASE['SP24'])}; rent then sell {money(BASE['R'])}; live with no rent credit {money(BASE['L'])}. Living ties with selling only at a rent credit of about {pct(BE_CREDIT, 0)}. The private inputs are unavailable in this checkout, so the figures cannot be reproduced here; verify the flagged assumptions and rebuild before relying on them.</p>
 <h3>3. Deadlines</h3><ul>{''.join(f'<li>{e(x)}</li>' for x in dl)}</ul>
 </div>
 <div>
@@ -686,7 +692,7 @@ footer{max-width:1180px;margin:0 auto;padding:10px 20px 30px;color:var(--mut);fo
     if(!row){ out.textContent = 'No grid row for these settings.'; return; }
     var max = Math.max.apply(null, order.map(function(p){ return row.results[p]; }));
     var best = order.reduce(function(a,p){ return row.results[p] > row.results[a] ? p : a; }, order[0]);
-    var html = '<p><strong>Highest result for these settings:</strong> ' + labels[best] + ' (' + money(row.results[best]) + ', real 2026 dollars).</p>';
+    var html = '<p><strong>Largest model output for these settings (not a recommendation):</strong> ' + labels[best] + ' (' + money(row.results[best]) + ', real 2026 dollars).</p>';
     order.forEach(function(p){
       var w = Math.max(2, Math.round(100 * row.results[p] / max));
       html += '<div class="wbar"><span>' + labels[p] + '</span><span><span class="bar" style="width:' + w + '%"></span></span><strong>' + money(row.results[p]) + '</strong></div>';
