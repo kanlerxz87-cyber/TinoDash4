@@ -546,3 +546,19 @@ and `decision-workspace/` were not edited by this session.
 Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
 
 P-01 update: `_config.yml` now excludes alternate site trees and source directories from the Jekyll artifact; `.nojekyll` was removed to allow the exclusions to take effect. `PRIVACY_REMEDIATION.md` records the exact boundary: repository files and earlier public history remain outside this containment. Local Jekyll verification is unavailable in this checkout, so this task remains needs review pending the GitHub Pages build and a deployed-path check.
+
+---
+
+## Session arena-900cac14 — privacy-first rebuild + official-source verification (current branch)
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| Q-01 | Claim board, reconstruct internal-only inputs, rebuild model + site, verify recommendation unchanged | in progress | arena-900cac14 | `COORDINATION.md`, `private/` (gitignored, never committed), `data/model_outputs.json` |
+| Q-02 | Line-by-line official-source verification (IRS, BOE, FTB, Treasury, HUD, SF/SCC) + update source register | pending | arena-900cac14 | `tools/content.py`, `tools/build_site.py`, `tools/check_site.py` |
+| Q-03 | Add missing sections: 5-year maintenance/capital plan, rent-comparables intake, decision log, step-by-step process | pending | arena-900cac14 | `tools/content.py`, `tools/build_site.py`, root `*.html` (generated) |
+| Q-04 | Fix Pages containment vs check_site mismatch (.nojekyll / _config.yml), privacy scan green | pending | arena-900cac14 | `tools/check_site.py`, `_config.yml`, `.nojekyll` (absent by design) |
+| Q-05 | Integration: rebuild, re-verify, PR to `main`, merge, Pages check | pending | arena-900cac14 | all |
+
+Claim note: this session is bound to `arena/900cac14-tinodash4`. Scope is the root dashboard (`index.html`, `*.html`, `assets/`, `data/`, `tools/`, `model/model.py`). Alternate trees (`decision-model/`, `decision-workspace/`, `site/`, `model/build_model.py` etc.) are excluded from Pages by `_config.yml` and are not edited here. History rewrite is out of scope (requires owner approval + force-push to `main`); containment is Pages exclusion + privacy scan, per `PRIVACY_REMEDIATION.md`.
+
+- 2026-11-26 · arena-900cac14 · Claimed Q-01–Q-05. Starting with private-input reconstruction and model rebuild.
