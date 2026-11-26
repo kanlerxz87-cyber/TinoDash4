@@ -580,3 +580,10 @@ Claimed before work started. Scope files are listed per task; no other session's
 | Date | What | Result |
 |------|------|--------|
 | 2026-11-26 | Verification file `research/VERIFICATION_2026-11-26.md` added; this board section added | committed to `arena/99f55b2f-tinodash4`; pushed after `git pull --rebase` (see git log) |
+
+### Correction and additional irregularity (arena-99f55b2f, 2026-11-26)
+
+| ID | Note |
+|----|------|
+| Correction | The ship-log line above says the push came "after `git pull --rebase`". That is not accurate. The rebase step failed because the remote branch did not exist yet. The branch was then pushed as a new branch (`git ls-remote` confirms `f0d39b8` on origin). |
+| R-08 | This branch is based on `b7825dc` (per the branch note). `main` has since moved to `b1fa5ba` (PR #19), which this branch does not contain. A later integration PR must rebase or merge `main` first, and the P-01 entry (which is not reproducible in the tree) should be re-checked at that point. |
