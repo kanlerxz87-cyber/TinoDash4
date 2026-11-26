@@ -550,7 +550,7 @@ owners on this board, so this session takes the items that are **privacy-urgent*
 | P-3 | Git history audit (report only, no rewrite): commit IDs carrying ZIPs, city labels, exact household figures, and author metadata | done (report only; rewrite awaits owner approval, see decision D-1) | `COORDINATION.md`, `decision-model/src/data/facts.json` |
 | V-1 | Official-source verification: FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; federal 2026 exclusion; Prop 19 2026-27 allowance | done (six official sources read 2026-11-26; Santa Clara transfer-tax county page not reachable, stays secondary) | `decision-model/src/data/facts.json` |
 | B-1 | Rebuild `decision-model/`, run its checks, and confirm the rebuilt pages are clean | done (build clean: 0 errors, 0 warnings; recommendation unchanged, see result R-4) | `decision-model/site/**` |
-| I-1 | Integration: PR `arena/75bcd077-tinodash4` → `main`, merge, GitHub Pages check | in progress (record below) | `COORDINATION.md` |
+| I-1 | Integration: PR `arena/75bcd077-tinodash4` → `main`, merge, GitHub Pages check | done: PR #29 merged to `main` as `baf0a72`; verify CI passed; Pages build `built` for `baf0a72` (live URL not reachable from the sandbox) | `COORDINATION.md` |
 
 Not claimed (owned or done elsewhere, not touched here): root `index.html`/`pages/`/`data/` (session 1), `decision-workspace/`
 (9ca44509), `site/` and `model/` (arena-65b70013), `docs/` and `estate-model/` (bba2482b, 150580b0). The brief's other
@@ -737,3 +737,6 @@ Verification record for G-01 through G-03 (2026-11-26): official BOE page and LT
 
 ### Rebase conflict resolution — arena-bc2ed56c — 2026-11-26
 - `main` advanced after PR #22 with parallel privacy/source work. Rebase conflicted in append-only `COORDINATION.md`; kept the full `main` content and added this session's final deployment record without dropping the parallel session's claim, source checks, or handoff notes.
+- 2026-11-26 · 75bcd077 · Merged `origin/main` (PRs #19–#22) into the branch. Kept this branch's source where both sides edited the same lines (incoming text had a restricted token and broken prose); took origin's PRIVACY.md and README wording. Rebuilt; CI checks pass locally.
+- 2026-11-26 · 75bcd077 · PR #29 opened and merged to `main` (`baf0a72`). verify CI passed. Pages build `built` for `baf0a72`. Live site not checked from the sandbox.
+- Open for owner: D-1 (history rewrite, not done), R-1 to R-3 and R-5 to R-6, and D-2 to D-5 above.
