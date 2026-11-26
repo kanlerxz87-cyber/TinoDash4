@@ -67,7 +67,7 @@ LAND_SHARE = P.A_LAND_SHARE
 def building_value(market_value: float, land_share: float = LAND_SHARE) -> float:
     """The depreciable / maintainable part of a property's value.
 
-    Cupertino land is roughly three-quarters of market value. Land needs no
+    Property A land is roughly three-quarters of market value. Land needs no
     roof, no paint and no sewer lateral, and it is never depreciable. Tying
     maintenance to MARKET value instead of BUILDING value makes the modelled
     cost compound at the house-price rate for fifty years — a bug that buries

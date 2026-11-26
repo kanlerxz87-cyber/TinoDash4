@@ -41,13 +41,13 @@ TRANSFER_YEARS = (2040, 2045, 2050)
 BASE_TRANSFER_YEAR = 2045
 
 # ----------------------------------------------------------------------------
-# Property A — Cupertino 95014 (inherited)
+# Property A — Santa Clara County (inherited)
 # ----------------------------------------------------------------------------
 A_VALUE_2026 = 3_100_000
 A_VALUE_STATUS = "unverified"
-A_VALUE_SOURCE = "HH-CUPERTINO-VALUE"
+A_VALUE_SOURCE = "HH-A-VALUE"
 
-# Factored base year value, banded for privacy (facts.json HH-CUPERTINO-ASSESSED)
+# Factored base year value, banded for privacy (facts.json HH-A-ASSESSED)
 A_ASSESSED_2026_LOW = 545_000
 A_ASSESSED_2026_HIGH = 560_000
 
@@ -60,7 +60,7 @@ A_TAX_RATE_BASE = 0.0130
 
 A_PROP13_CAP = 0.02          # verified, CA-PROP13-CAP
 
-# Market rent for a ~2,000 sq ft SFR in 95014. Household did not supply one.
+# Market rent for a ~2,000 sq ft SFR in Santa Clara County. Household did not supply one.
 # Rangewide estimate from a gross-yield band rather than a voucher benchmark.
 A_RENT_YIELD_LOW = 0.0230    # 2.3% gross yield  -> ~$5,940/mo on $3.1M
 A_RENT_YIELD_BASE = 0.0290   # 2.9% gross yield  -> ~$7,490/mo
@@ -68,7 +68,7 @@ A_RENT_YIELD_HIGH = 0.0360   # 3.6% gross yield  -> ~$9,300/mo
 A_RENT_STATUS = "unverified"
 A_RENT_NOTE = ("No comparables obtained. Expressed as a gross-yield band so the rent path is "
                "ranked on a range rather than on the Section 8 payment standard, which the "
-               "household correctly objected to. Get real 95014 SFR comps.")
+               "household correctly objected to. Get real Santa Clara County SFR comps.")
 
 # Operating cost bands (annual, 2026 dollars). All unverified household/heuristic.
 A_INSURANCE_LOW = 1_500
@@ -76,7 +76,7 @@ A_INSURANCE_BASE = 3_000
 A_INSURANCE_HIGH = 4_500
 # MAINTENANCE IS A PERCENTAGE OF BUILDING VALUE, NOT OF MARKET VALUE.
 # This is a deliberate correction to a bug in the first version of this model.
-# Cupertino market value is roughly 75% land; land requires no roof, no sewer
+# Property A market value is roughly 75% land; land requires no roof, no sewer
 # lateral and no paint. Tying maintenance to market value made the modelled cost
 # compound at the house-price rate for fifty years and buried every holding path
 # in year 30. Maintenance scales with *replacement cost of the structure*, which
@@ -97,7 +97,7 @@ SELL_COMMISSION = 0.050      # assumption; negotiable, and NAR settlement change
 SELL_OTHER_COSTS = 0.010     # escrow, title, transfer tax, recording, staging
 
 # ----------------------------------------------------------------------------
-# Property B — San Francisco 94122 (already owned)
+# Property B — San Francisco (already owned)
 # ----------------------------------------------------------------------------
 B_VALUE_2026 = 1_800_000
 B_VALUE_STATUS = "unverified"
@@ -120,7 +120,7 @@ B_INSURANCE_LOW = 1_500
 B_INSURANCE_BASE = 3_800
 B_INSURANCE_HIGH = 6_500
 # Same correction as Property A: maintenance is a share of BUILDING value.
-# A 3-unit pre-war Outer Sunset building carries more maintenance per building
+# A 3-unit pre-war San Francisco building carries more maintenance per building
 # dollar than a single-family house: three kitchens, three baths, shared systems,
 # and tenants who cannot be told no. Banded higher for that reason.
 B_LAND_SHARE_2026 = 0.60
@@ -181,7 +181,7 @@ MACRO = {
         "house": 0.015,
         "equity": 0.050,
         "cash": 0.035,
-        "note": "Cupertino is a single-industry town. A durable regional contraction hits the "
+        "note": "Property A is a single-industry town. A durable regional contraction hits the "
                 "house directly and the stock market only partly. This is the scenario the "
                 "concentration risk lives in.",
     },
@@ -277,7 +277,7 @@ CA_BHST = 0.01                             # verified CA-FTB-MHST-THRESHOLD
 CA_BHST_THRESHOLD = 1_000_000              # verified, NOT indexed, same for MFJ
 CA_EFFECTIVE_ON_LARGE_GAIN = 0.105         # assumption: blended, not top marginal
 
-A_LAND_SHARE = A_LAND_SHARE_2026            # assumption: Cupertino land is most of the value
+A_LAND_SHARE = A_LAND_SHARE_2026            # assumption: Property A land is most of the value
 
 # ----------------------------------------------------------------------------
 # Phased investing (the feature the household asked for)

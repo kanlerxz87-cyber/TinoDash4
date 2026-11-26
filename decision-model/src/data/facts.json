@@ -16,7 +16,7 @@
       "quote": "Filing threshold for year of death … 2026 | $15,000,000",
       "status": "verified",
       "checked": "2026-11-25",
-      "note": "IRS estate-tax page table gives the 2026 filing threshold as $15,000,000. Rev. Proc. 2025-32 § 4.41 is the operative source. Made permanent (no sunset) by Pub. L. 119-21."
+      "note": "IRS estate-tax page table gives the 2026 filing threshold as $15,000,000. Rev. Proc. 2025-32 § 4.41 is the operative source. Made permanent (no expiry) by Pub. L. 119-21."
     },
     {
       "id": "FED-ESTATE-EXCLUSION-2025",
@@ -582,7 +582,7 @@
       "quote": "If the transfer is a gift, then there generally is no transfer tax. On the Preliminary Change of Ownership form, be sure to mark the gift box in part 2.",
       "status": "verified",
       "checked": "2026-11-25",
-      "note": "Relevant if the Cupertino property passed through a trust as a gift/bequest rather than a sale — an inheritance transfer is not a sale for transfer-tax purposes. Verified for SF; the Santa Clara equivalent is flagged as unverified below."
+      "note": "Relevant if the Property A passed through a trust as a gift/bequest rather than a sale — an inheritance transfer is not a sale for transfer-tax purposes. Verified for SF; the Santa Clara equivalent is flagged as unverified below."
     },
     {
       "id": "CA-SANTA-CLARA-TRANSFER-TAX",
@@ -595,7 +595,7 @@
       "url": "",
       "status": "secondary",
       "checked": "2026-11-25",
-      "flag": "UNVERIFIED against an official county source. I could not fetch a sccgov.org fee schedule. The $1.10 per $1,000 figure comes from a 2019 California Lawyers Association compilation and multiple secondary sources, all consistent with RTC § 11911's $1.10 base. Cupertino is an incorporated city; unlike San Jose, Palo Alto and Mountain View, I found no evidence of an additional Cupertino city conveyance tax, but this is also unverified. Treat the closing-cost line as a range and confirm with the title company.",
+      "flag": "UNVERIFIED against an official county source. I could not fetch a sccgov.org fee schedule. The $1.10 per $1,000 figure comes from a 2019 California Lawyers Association compilation and multiple secondary sources, all consistent with RTC § 11911's $1.10 base. Property A is an incorporated city; unlike San Jose, Palo Alto and Mountain View, I found no evidence of an additional Property A city conveyance tax, but this is also unverified. Treat the closing-cost line as a range and confirm with the title company.",
       "note": "Immaterial to the decision ($3,410 on a $3.1M sale) but shown for completeness."
     },
     {
@@ -639,7 +639,7 @@
         "rent_pass_through": "Owners of rent-controlled units may pass through up to 50% of the tax, capped at $65 per unit, if base rent set before June 1, 2027",
         "inflation": "adjusted annually for inflation"
       },
-      "note": "Apply this to Property B (the SF 3-unit building). A 3-unit building is a multifamily residential parcel: base $249 for the first 5,000 sq ft plus $0.195/sq ft over 5,000, capped at $50,000. For a typical Outer Sunset 3-unit of roughly 3,500-4,500 sq ft, the tax is $249/yr. That is negligible — but the rent pass-through of up to $65/unit materially interacts with the rent-controlled tenancies, and the senior exemption may apply if the owner is 65+ and occupying."
+      "note": "Apply this to Property B (the SF 3-unit building). A 3-unit building is a multifamily residential parcel: base $249 for the first 5,000 sq ft plus $0.195/sq ft over 5,000, capped at $50,000. For a typical San Francisco 3-unit of roughly 3,500-4,500 sq ft, the tax is $249/yr. That is negligible — but the rent pass-through of up to $65/unit materially interacts with the rent-controlled tenancies, and the senior exemption may apply if the owner is 65+ and occupying."
     },
     {
       "id": "CA-SF-RENT-ORDINANCE",
@@ -681,7 +681,7 @@
       "quote": "Line 62 – Behavioral Health Services Tax. If your taxable income is more than $1,000,000, compute the Behavioral Health Services Tax using whole dollars only: 1. Taxable income from Form 540, line 19. 2. Less: $(1,000,000) 3. Subtotal 4. Tax rate – 1%: .01",
       "status": "verified",
       "checked": "2026-11-25",
-      "note": "CONFIRMED from the official 2025 Form 540 booklet. The threshold is NOT indexed and is the same for every filing status including married filing jointly. A single-year capital gain from selling the Cupertino house can push California taxable income over $1M and trigger this on its own. The household asked me to read the official instructions and update the sensitivity — done; this is the updated value and the citation."
+      "note": "CONFIRMED from the official 2025 Form 540 booklet. The threshold is NOT indexed and is the same for every filing status including married filing jointly. A single-year capital gain from selling the Property A can push California taxable income over $1M and trigger this on its own. The household asked me to read the official instructions and update the sensitivity — done; this is the updated value and the citation."
     },
     {
       "id": "CA-FTB-TOP-MARGINAL",
@@ -757,8 +757,8 @@
       "note": "This is the mechanism that turns a crash into a property-tax CUT. In a 2008-style scenario the assessed value can be reduced, which is a genuine, often-overlooked hedge that the stock path does not have."
     },
     {
-      "id": "HH-CUPERTINO-VALUE",
-      "label": "Cupertino (95014) estimated market value, November 2026",
+      "id": "HH-A-VALUE",
+      "label": "Property A (Santa Clara County) estimated market value, November 2026",
       "value": 3100000,
       "unit": "USD",
       "jurisdiction": "Household input",
@@ -769,8 +769,8 @@
       "flag": "HOUSEHOLD ESTIMATE, NOT AN APPRAISAL. No comparable-sales analysis or official source located. This is the single most load-bearing number in the whole model and it is unverified. Action: obtain an independent appraisal or at minimum a broker CMA before any decision."
     },
     {
-      "id": "HH-CUPERTINO-ASSESSED",
-      "label": "Cupertino factored base year value, 2026",
+      "id": "HH-A-ASSESSED",
+      "label": "Property A factored base year value, 2026",
       "value": "$550,000 – $560,000 (banded)",
       "unit": "USD (banded)",
       "jurisdiction": "Household input, banded for privacy",
@@ -791,12 +791,12 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "IRREGULARITY. The household's SF tax bill is roughly $2,400 against an assessed value of roughly $114,000. That is an effective rate near 2.1%, which is roughly DOUBLE the ~1.0%-1.3% seen in Cupertino and far above the 1% Prop 13 base plus typical debt. A rate that high against a base-year value that low is unusual. Two explanations fit and they have opposite consequences: (a) the assessed-value column and the tax column are from different years or different parcels, or (b) there are large fixed charges / assessments / bonded debt on this parcel, or (c) the property carries a Mello-Roos or special assessment. MUST be checked against the actual tax bill before any model output is relied upon. Flagged prominently.",
+      "flag": "IRREGULARITY. The household's SF tax bill is roughly $2,400 against an assessed value of roughly $114,000. That is an effective rate near 2.1%, which is roughly DOUBLE the ~1.0%-1.3% seen in Property A and far above the 1% Prop 13 base plus typical debt. A rate that high against a base-year value that low is unusual. Two explanations fit and they have opposite consequences: (a) the assessed-value column and the tax column are from different years or different parcels, or (b) there are large fixed charges / assessments / bonded debt on this parcel, or (c) the property carries a Mello-Roos or special assessment. MUST be checked against the actual tax bill before any model output is relied upon. Flagged prominently.",
       "note": "Note the tax declined 5.9% in 2021 while assessed value rose 1% — inconsistent with a simple 1%+debt formula. Another sign the two columns may not be directly comparable."
     },
     {
       "id": "HH-SF-VALUE",
-      "label": "San Francisco (94122) estimated market value, November 2026",
+      "label": "San Francisco estimated market value, November 2026",
       "value": 1800000,
       "unit": "USD",
       "jurisdiction": "Household input",
@@ -804,7 +804,7 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "HOUSEHOLD ESTIMATE. This is a 3-unit building in the Outer Sunset; a 3-unit is valued on gross rent multiplier and comparable 3-unit sales, not on the single-family per-square-foot metric. Obtain a broker opinion of value for a 3-unit specifically."
+      "flag": "HOUSEHOLD ESTIMATE. This is a 3-unit building in the San Francisco; a 3-unit is valued on gross rent multiplier and comparable 3-unit sales, not on the single-family per-square-foot metric. Obtain a broker opinion of value for a 3-unit specifically."
     },
     {
       "id": "HH-SF-RENT",
@@ -816,12 +816,12 @@
       "instrument": "leases",
       "url": "",
       "status": "unverified",
-      "flag": "Household figure, unverified. $85,800/yr gross on a $1.8M building is a 4.77% gross yield — plausible for a long-held Outer Sunset 3-unit with below-market tenancies. The third unit is vacant/unrented, which is either a big opportunity (reset to market) or a warning (unrentable as configured). MUST be resolved: is the third unit legal, habitable, and rentable? That single question moves Property B's value by several hundred thousand dollars.",
+      "flag": "Household figure, unverified. $85,800/yr gross on a $1.8M building is a 4.77% gross yield — plausible for a long-held San Francisco 3-unit with below-market tenancies. The third unit is vacant/unrented, which is either a big opportunity (reset to market) or a warning (unrentable as configured). MUST be resolved: is the third unit legal, habitable, and rentable? That single question moves Property B's value by several hundred thousand dollars.",
       "note": "Two units rented, one not. If the owner occupies the third unit, Property B is also a principal residence — which changes the § 121 analysis, the Prop 19 analysis if it is ever inherited onward, and the rent-control treatment (owner-occupancy of one unit in a 3-unit building is permitted under SF law; a 3-unit is not covered by the SF condo-conversion lottery in the same way as larger buildings — flagged unverified)."
     },
     {
-      "id": "HH-CUPERTINO-UTILITIES",
-      "label": "Cupertino utilities: water $100-$150/mo; solar makes electricity ~$0, net credit $10-$20/mo",
+      "id": "HH-A-UTILITIES",
+      "label": "Property A utilities: water $100-$150/mo; solar makes electricity ~$0, net credit $10-$20/mo",
       "value": {
         "water_low": 100,
         "water_high": 150,
@@ -854,8 +854,8 @@
       "flag": "Household figures. Whether these are landlord-paid or tenant-paid is decisive and not stated. If the landlord pays water for all three units and electricity for common areas, that is a real ~$4,800/yr expense; if tenants pay, it is zero. Modelled both ways."
     },
     {
-      "id": "HH-INSURANCE-CUPERTINO",
-      "label": "Cupertino homeowners insurance, annual",
+      "id": "HH-INSURANCE-A",
+      "label": "Property A homeowners insurance, annual",
       "value": "range 1500-4500",
       "unit": "USD per year",
       "jurisdiction": "Household input / market range",
@@ -863,12 +863,12 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "The household guessed ~$1,500. That is almost certainly too low for a $3.1M replacement-cost dwelling in Santa Clara County in the current admitted/non-admitted market. There is no official published rate for a specific parcel. Modelled as a $1,500-$4,500/yr range with the midpoint used for the headline, and flagged. ACTION: get three real quotes. California FAIR Plan exposure and wildfire/brush zone status should be checked; the 95014 foothills west of the city are in a higher fire severity zone than the flatlands.",
+      "flag": "The household guessed ~$1,500. That is almost certainly too low for a $3.1M replacement-cost dwelling in Santa Clara County in the current admitted/non-admitted market. There is no official published rate for a specific parcel. Modelled as a $1,500-$4,500/yr range with the midpoint used for the headline, and flagged. ACTION: get three real quotes. California FAIR Plan exposure and wildfire/brush zone status should be checked; the Santa Clara County foothills west of the city are in a higher fire severity zone than the flatlands.",
       "note": "Do NOT treat $1,500 as a fact."
     },
     {
-      "id": "HH-CUPERTINO-MAINTENANCE",
-      "label": "Cupertino maintenance and capital reserve, annual",
+      "id": "HH-A-MAINTENANCE",
+      "label": "Property A maintenance and capital reserve, annual",
       "value": "range 0.5%-1.25% of value",
       "unit": "percent of market value per year",
       "jurisdiction": "Household input / rule of thumb",
@@ -876,7 +876,7 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "No official source. The 0.5%-1.25% band is a common planning heuristic, not a measured figure, and it is published here as a heuristic. A 50-year-old single-family house in Cupertino will have lumpy capital events (roof, sewer lateral, foundation, HVAC, windows) that a percentage-of-value model smooths away. ACTION: build the five-year maintenance and capital plan the household asked for, using actual contractor quotes.",
+      "flag": "No official source. The 0.5%-1.25% band is a common planning heuristic, not a measured figure, and it is published here as a heuristic. A 50-year-old single-family house in Property A will have lumpy capital events (roof, sewer lateral, foundation, HVAC, windows) that a percentage-of-value model smooths away. ACTION: build the five-year maintenance and capital plan the household asked for, using actual contractor quotes.",
       "note": "The model ALSO runs a 'lumpy capital' stress case with explicit one-off events rather than a smooth percentage."
     },
     {
@@ -889,7 +889,7 @@
       "instrument": "—",
       "url": "",
       "status": "unverified",
-      "flag": "No official source. A 3-unit pre-war Outer Sunset building carries more maintenance per dollar than a single-family house: three kitchens, three baths, shared systems, seismic, and rent-controlled tenants whose repair requests cannot be declined. Banded higher than Property A for that reason."
+      "flag": "No official source. A 3-unit pre-war San Francisco building carries more maintenance per dollar than a single-family house: three kitchens, three baths, shared systems, seismic, and rent-controlled tenants whose repair requests cannot be declined. Banded higher than Property A for that reason."
     }
   ]
 }

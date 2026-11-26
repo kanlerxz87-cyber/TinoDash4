@@ -37,7 +37,7 @@ The household asked for **rounding to the nearest \$10**. That is implemented as
 
 **However, rounding to \$10 is not, by itself, anonymising for this dataset.** A factored base
 year value rounded to the nearest \$10, combined with a ZIP code and a market value, is still a
-short search. Only about a dozen 95014 parcels have that combination.
+short search. Only about a dozen Santa Clara County parcels have that combination.
 
 The reconciliation actually implemented:
 
@@ -67,9 +67,9 @@ Replace private figures with **household-supplied estimates**, clearly labelled:
 
 | Private figure | Published as | Label |
 |---|---|---|
-| Cupertino value Nov 2026 | `$3,100,000` | Household estimate — unverified |
-| Cupertino assessed value 2026 | `$550,000–$560,000` band | From household series, banded |
-| Cupertino tax bill | **effective-rate range** `1.2%–1.4%` | Derived, banded |
+| Property A value Nov 2026 | `$3,100,000` | Household estimate — unverified |
+| Property A assessed value 2026 | `$550,000–$560,000` band | From household series, banded |
+| Property A tax bill | **effective-rate range** `1.2%–1.4%` | Derived, banded |
 | SF value Nov 2026 | `$1,800,000` | Household estimate — unverified |
 | SF assessed value 2025 | `$110,000–$120,000` band | From household series, banded |
 | SF tax bill | effective rate `2.0%–2.2%` | Derived — **flagged as anomalous** |
@@ -111,8 +111,8 @@ The household has previously shared figures in conversation. Containment actions
 - [x] The optional what-if calculator runs **entirely in the browser**; values are never sent.
 - [ ] Confirm with the household whether the figures were ever posted publicly elsewhere
       (Reddit, Bogleheads, a tax forum). **Open item — see `site/questions.html`.**
-- [ ] Consider whether the *combination* "Cupertino 95014, \$3.1M, inherited via trust,
-      plus a 3-unit Outer Sunset property" is itself identifying in a small community. If so,
+- [ ] Consider whether the *combination* "Property A (Santa Clara County), \$3.1M, inherited via trust,
+      plus a 3-unit San Francisco property" is itself identifying in a small community. If so,
       switch the committed default to `--round 100000`. **Open item.**
 
 ## 6. Threat model this does not cover

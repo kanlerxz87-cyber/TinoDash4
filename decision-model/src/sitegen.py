@@ -161,7 +161,7 @@ def page(title: str, active: str, body: str, *, subtitle: str = "",
     <span class="brandmark">IH</span>
     <span class="brandtext">
       <strong>Inherited-Home Decision Model</strong>
-      <small>Cupertino 95014 &middot; San Francisco 94122 &middot; anonymised</small>
+      <small>Property A (Santa Clara County) &middot; San Francisco &middot; anonymised</small>
     </span>
   </div>
   <nav class="topnav">
@@ -320,7 +320,7 @@ def page_index(ctx: Ctx) -> str:
     # -------- what would change the answer, on the first screen --------
     flip = []
     for name, delta in [
-        ("Cupertino house prices grow faster than assumed", None),
+        ("Property A prices grow faster than assumed", None),
         ("The household would pay market rent for equivalent shelter", None),
     ]:
         pass
@@ -332,7 +332,7 @@ def page_index(ctx: Ctx) -> str:
   {F.usd(gap_live)}</strong> over 30 years &mdash; but the answer is not robust,
   and three specific things would overturn it.</h2>
   <p class="herosub">And the number that matters most is not in this model at all:
-  <strong>whether the household actually wants to live in Cupertino for decades</strong>,
+  <strong>whether the household actually wants to live in Property A for decades</strong>,
   because the entire tax advantage of holding the house is legally conditioned on
   living in it.</p>
 </div>
@@ -484,7 +484,7 @@ planning conversation that must happen <em>before</em> the death, not after.
 """
     return page("Executive summary", "index.html", body,
                 subtitle="A read-first summary of a 30-year, after-tax comparison of nine ways to "
-                         "deal with an inherited house in Cupertino, held alongside a "
+                         "deal with an inherited house in Property A, held alongside a "
                          "three-unit rental building already owned in San Francisco.")
 
 
@@ -575,7 +575,7 @@ absurd, the ranking is safe. If it is merely optimistic, the ranking is not safe
 <div class="col">
 <h3>For live-and-hold to beat sell-and-invest</h3>
 <ul class="checks">
-<li>Cupertino house prices must grow at least as fast as a diversified equity portfolio
+<li>Property A prices must grow at least as fast as a diversified equity portfolio
 <em>in nominal terms</em>, for 30 years, in a town whose value is tied to one industry.</li>
 <li>The household must occupy continuously for the whole period. One move destroys the
 Prop&nbsp;19 base and with it the entire advantage.</li>
@@ -590,7 +590,7 @@ relatively better in the crash scenarios.</li>
 <h3>For sell-and-invest to beat live-and-hold</h3>
 <ul class="checks">
 <li>Equities must beat Bay Area housing over the horizon. Historically true nationally;
-  <em>not</em> obviously true for Cupertino over specific 30-year windows.</li>
+  <em>not</em> obviously true for Property A over specific 30-year windows.</li>
 <li>The household must be able to hold the portfolio through a 50%+ drawdown without
   selling. Empirically this is the assumption that fails most often.</li>
 <li>The after-tax proceeds must actually be reinvested rather than spent. The model cannot
@@ -929,7 +929,7 @@ bigger number than the entry-timing risk.</li>
 <h2>Beyond the crash: the risks a scenario grid cannot show</h2>
 <div class="threecol">
 <div class="col"><h3>Single-industry concentration</h3>
-<p>Cupertino's property values are tied to one industry's willingness to employ people at high
+<p>Property A's property values are tied to one industry's willingness to employ people at high
 salaries within commuting distance. A durable shift to distributed work or a sector contraction
 hits this asset directly and hits a diversified portfolio only partly. The
 <em>tech-bust</em> regime in the table models this.</p></div>
@@ -1044,7 +1044,7 @@ document</strong>, because it removes the only scenario in which a drawdown beco
 2 years of spending. Rebalance when any sleeve drifts more than 5 percentage points from target.
 Rebalancing is mechanical; it is not a market call.</td></tr>
 <tr><th>What is forbidden</th><td>Individual stocks (the household already holds enormous
-single-name exposure through Cupertino and through the San Francisco building). Leverage.
+single-name exposure through Property A and through the San Francisco building). Leverage.
 Anything with a lock-up longer than the liquidity reserve. Concentrated positions of any kind.</td></tr>
 <tr><th>Phasing rule</th><td>If the proceeds arrive as a lump sum, invest over 12 months by
 default, not 36. Phasing beyond a year is a cost, not a protection — see the timing table.
@@ -1188,7 +1188,7 @@ insurance, water and electricity, maintenance, and the imputed rent that offsets
 That gap, compounded for 30 years, <em>is</em> the hold path's advantage. Break the occupancy
 condition and the assessed value resets to market, and the tax line roughly triples overnight.</p></div>
 <div class="col"><h3>Maintenance is the number the household has wrong</h3>
-<p>The household's instinct that the Cupertino house needs less maintenance than the San
+<p>The household's instinct that the Property A needs less maintenance than the San
 Francisco one is reasonable. But &ldquo;less than the other house&rdquo; is not a number. At
 2% of building value, annual maintenance passes $30,000 well before the horizon — and that is
 a smooth average that hides the $60,000 roof.</p></div>
@@ -1247,7 +1247,7 @@ them is how households make expensive decisions.</p>
 <p>The household's biggest stated worry is the inheritance exceeding a tax-free threshold. For a
 California resident, <strong>that threshold is federal only</strong>, it is
 {F.usd_full(f['FED-ESTATE-EXCLUSION-2026']['value'])} per person in 2026, and it is now permanent
-with inflation indexing. Selling the Cupertino house does not change it by one dollar — the house
+with inflation indexing. Selling the Property A does not change it by one dollar — the house
 is inside the estate whether it is a house or a brokerage account. Meanwhile the tax that
 <em>does</em> change with the decision is the income tax on the sale, and it is
 <strong>smaller if you sell promptly</strong> and larger if you wait.</p>
@@ -1355,7 +1355,7 @@ Tax using whole dollars only: taxable income from Form 540 line 19, less $(1,000
 1%.</em>&rdquo; It was formerly called the Mental Health Services Tax; the mechanics are
 unchanged. It applies to the <em>excess only</em>, it is not subject to reduction by credits, and
 it is subject to the estimated-tax payment requirement.</p>
-<p>Practical consequence for this household: if the sale of the Cupertino house pushes California
+<p>Practical consequence for this household: if the sale of the Property A pushes California
 taxable income over $1,000,000 in the sale year, the entire gain is also taxed at the 12.3% top
 bracket, and the 1% surtax applies on top. Splitting the sale across two tax years, or timing it
 in a lower-income year, is worth more than almost any other lever in this file.</p>
@@ -1578,9 +1578,9 @@ def page_authorities(ctx: Ctx) -> str:
             "FED-TREASURY-YIELDS", "FED-CPI-SEP-2026", "FED-NBER-CYCLES",
         ]),
         ("Household-supplied inputs (not authorities)", [
-            "HH-CUPERTINO-VALUE", "HH-CUPERTINO-ASSESSED", "HH-SF-ASSESSED",
-            "HH-SF-VALUE", "HH-SF-RENT", "HH-CUPERTINO-UTILITIES",
-            "HH-SF-UTILITIES", "HH-INSURANCE-CUPERTINO", "HH-CUPERTINO-MAINTENANCE",
+            "HH-A-VALUE", "HH-A-ASSESSED", "HH-SF-ASSESSED",
+            "HH-SF-VALUE", "HH-SF-RENT", "HH-A-UTILITIES",
+            "HH-SF-UTILITIES", "HH-INSURANCE-A", "HH-A-MAINTENANCE",
             "HH-SF-MAINTENANCE",
         ]),
     ]
@@ -1680,10 +1680,10 @@ blank on purpose, and each has an action attached on the
                        "consistent across secondary compilations and with RTC § 11911, and is "
                        "immaterial (about $3,400 on this sale).",
                        "Santa Clara County Clerk-Recorder fee schedule"],
-                      ["Cupertino city conveyance tax",
+                      ["Property A city conveyance tax",
                        "No evidence of one — unlike San Jose, Palo Alto and Mountain View — but "
                        "absence of evidence is not verification.",
-                       "City of Cupertino finance department"],
+                       "Property A's city finance department"],
                       ["San Francisco allowable rent increase",
                        "The Rent Board figure was not fetched. The model uses a 2.0%–3.5% band "
                        "and flags it. The cap is a legal ceiling, not a forecast.",
@@ -1692,10 +1692,10 @@ blank on purpose, and each has an action attached on the
                        "No official source prices a single parcel. The household's $1,500 guess "
                        "is almost certainly low for a $3.1M replacement cost in Santa Clara County.",
                        "Three real quotes, and a FAIR Plan comparison"],
-                      ["Market rent for the Cupertino house",
+                      ["Market rent for the Property A",
                        "No comparables were obtained. Expressed as a 2.3%–3.6% gross-yield band "
                        "rather than a number.",
-                       "A property manager's rent survey for 95014 SFRs"],
+                       "A property manager's rent survey for Santa Clara County SFRs"],
                   ], cls="wide")
     body += "</section>"
     return page("Verified authorities &amp; figures", "authorities.html", body,
@@ -1784,8 +1784,8 @@ change is auditable.</p>
         ["Horizon", "30 years after transfer (to 2075); 50 years available",
          "Long enough for compounding to dominate, short enough to be meaningful",
          '<span class="badge warn">choice</span>'],
-        ["Land share, Cupertino", "75% of market value",
-         "Land is not depreciable and needs no maintenance; 75% is typical for 95014",
+        ["Land share, Property A", "75% of market value",
+         "Land is not depreciable and needs no maintenance; 75% is typical for Santa Clara County",
          '<span class="badge warn">assumption</span>'],
         ["Depreciation", "Straight line, 27.5 years, mid-month, on the building only",
          "IRC §§ 168(b)(3)(B), (c), (d)(2)(B)",
@@ -2064,11 +2064,11 @@ deadline-driven than it looks.</strong></p>
 
 QUESTIONS = [
     ("A", "Valuation — the number every path depends on", [
-        ("q-value", "What is the Cupertino house actually worth?",
+        ("q-value", "What is the Property A actually worth?",
          "Nothing. $3,100,000 is a household estimate with no comparable-sales analysis behind it. "
          "Every path in this model is denominated in this number: it is the sale price, the § 1014 "
          "basis, the Prop 19 test value, and the portfolio principal.",
-         "A licensed appraisal, or at minimum a broker CMA using at least three closed 95014 "
+         "A licensed appraisal, or at minimum a broker CMA using at least three closed Santa Clara County "
          "single-family sales within six months. Ask for the price-per-square-foot and the "
          "lot-value split, because the land/building split drives both depreciation and maintenance.",
          "HIGH"),
@@ -2076,15 +2076,15 @@ QUESTIONS = [
          "Nothing usable. The model carries a 2.3%–3.6% gross-yield band, which is a range built "
          "on a rule of thumb, not evidence. The household correctly objected to ranking the rent "
          "path on a voucher payment standard.",
-         "A rent survey from a Cupertino property manager: five current listings and five recent "
-         "leases for comparable single-family homes in 95014. Ask specifically what a 1960s-70s "
+         "A rent survey from a Property A manager: five current listings and five recent "
+         "leases for comparable single-family homes in Santa Clara County. Ask specifically what a 1960s-70s "
          "four-bedroom rents for, and how many days it sits vacant.",
          "HIGH"),
         ("q-value-b", "What is the San Francisco building actually worth?",
          "Nothing. $1,800,000 is a household estimate. A three-unit building is valued on gross "
          "rent multiplier and comparable three-unit sales, not on a single-family per-square-foot "
          "metric, so a Zillow-style estimate is actively misleading here.",
-         "A broker opinion of value for a three-unit building in 94122, with the GRM shown, plus "
+         "A broker opinion of value for a three-unit building in San Francisco, with the GRM shown, plus "
          "the legal unit count from the Planning Department. If the third unit is not a legal "
          "unit, the value and the rent story both change materially.",
          "HIGH"),
@@ -2128,7 +2128,7 @@ QUESTIONS = [
         ("q-bills", "What are the exact current property tax bills for both properties?",
          "The household supplied approximate series. The San Francisco series is internally "
          "inconsistent — see the flagged item — and implies an effective rate near 2.1%, which is "
-         "roughly double Cupertino's.",
+         "roughly double Property A's.",
          "The two most recent secured property tax bills for each parcel, front and back. They "
          "itemise the base tax, the voter-approved debt, and every fixed charge.",
          "HIGH"),
@@ -2143,17 +2143,17 @@ QUESTIONS = [
          "HIGH"),
     ]),
     ("D", "Operating costs — the household's estimates are placeholders", [
-        ("q-insurance", "What does homeowners insurance actually cost for the Cupertino house?",
+        ("q-insurance", "What does homeowners insurance actually cost for the Property A?",
          "The household guessed $1,500. The model carries $1,500–$4,500. For a $3,100,000 "
          "replacement cost in Santa Clara County in the current admitted market, $1,500 is almost "
          "certainly too low, and there is no official source that prices a single parcel.",
          "Three real quotes for a replacement-cost policy with the correct dwelling limit, plus a "
          "California FAIR Plan comparison. Ask each broker whether the property is in a fire "
-         "severity zone and whether they are writing new business in 95014 at all.",
+         "severity zone and whether they are writing new business in Santa Clara County at all.",
          "HIGH"),
         ("q-maint", "What does the house actually need, over five years?",
          "Nothing concrete. The model uses 2% of building value, which is a smooth average that "
-         "hides lumpy capital events. A 50-year-old Cupertino house will need a roof, a sewer "
+         "hides lumpy capital events. A 50-year-old Property A will need a roof, a sewer "
          "lateral, a furnace, and probably a foundation assessment, on known schedules.",
          "A five-year maintenance and capital plan with contractor quotes: roof age and remaining "
          "life, sewer lateral condition, HVAC age, water heater, electrical panel, foundation, "
@@ -2201,7 +2201,7 @@ QUESTIONS = [
          "Partly known. Prop H passed on 3 November 2026 with about 72% of the vote, imposing an "
          "annual parcel tax from 2027 for 15 years. A three-unit building is a multifamily "
          "residential parcel: $249 for the first 5,000 square feet plus $0.195 per square foot "
-         "above that, capped at $50,000. For a typical Outer Sunset three-unit that is roughly "
+         "above that, capped at $50,000. For a typical San Francisco three-unit that is roughly "
          "$249 a year. Owners of rent-controlled units may pass through up to 50%, capped at $65 "
          "per unit. The senior exemption may apply.",
          "The official Department of Elections canvass, the final ordinance text, and the "
@@ -2243,7 +2243,7 @@ QUESTIONS = [
     ("G", "Legal exposure and privacy", [
         ("q-prior-exposure", "Were these property figures ever posted publicly?",
          "Unknown. The household expressed concern about prior public-data exposure. If the dollar "
-         "figures plus 'Cupertino 95014 inherited house plus a three-unit Outer Sunset building' "
+         "figures plus 'Property A (Santa Clara County) inherited house plus a three-unit San Francisco building' "
          "appeared together anywhere public, the combination is identifying in a small community.",
          "The household's own recollection, and a search of any accounts used to post about it. "
          "If exposure is real, generate the site locally and do not publish — see PRIVACY.md §6.",
@@ -2336,7 +2336,7 @@ placeholder in the operating-cost model into a fact.</li>
 <li><strong>One appraisal.</strong> Roughly $600–$900 for a retrospective date-of-death appraisal.
 It is simultaneously the basis for income tax, the value test for Prop 19, and the estate-tax
 valuation. It is the highest-return dollar in this entire file.</li>
-<li><strong>One hour with a property manager.</strong> A rent survey for 95014 single-family homes
+<li><strong>One hour with a property manager.</strong> A rent survey for Santa Clara County single-family homes
 turns the rent path from a rule-of-thumb band into evidence. Ask what rents, not what is listed.</li>
 <li><strong>One meeting with the CPA, with a specific agenda.</strong> Prior taxable gifts,
 portability, and the projected estate against the exclusion. The briefing sheet page is built to
@@ -2366,7 +2366,7 @@ def page_property_b(ctx: Ctx) -> str:
     body = f"""
 <section>
 <h2>Why the San Francisco building is not a side note</h2>
-<p class="lead">The household was clear that the Cupertino house is being inherited while the
+<p class="lead">The household was clear that the Property A is being inherited while the
 San Francisco building is already owned. That distinction is load-bearing, and it cuts in two
 directions at once: Property B makes the household <em>more</em> able to hold Property A, and it
 makes holding it <em>more dangerous</em>.</p>
@@ -2378,7 +2378,7 @@ makes holding it <em>more dangerous</em>.</p>
 <li>A $7,150/month rent roll on a building that is nearly paid off means the household does not
 need Property A to generate cash. It can be held purely as a store of value.</li>
 <li>The household can live in one of the three units, which means it already has a residence in
-San Francisco — so the choice about Cupertino is a genuine choice about where to live, not a
+San Francisco — so the choice about Property A is a genuine choice about where to live, not a
 forced one.</li>
 <li>Property B's low assessed value is a demonstration of what the Prop 13 basis is worth over
 decades, which is a real argument for trying to preserve Property A's basis too.</li>
@@ -2421,7 +2421,7 @@ the only liquid asset is the inheritance itself.</li>
              "acquisition decades ago."],
             ["Annual property tax", f"≈ {F.usd_full(115_000 * P.B_TAX_RATE_BASE)}",
              '<span class="badge bad">flagged</span>',
-             "Implied effective rate ≈ 2.1%, roughly double Cupertino's. Unexplained — see the "
+             "Implied effective rate ≈ 2.1%, roughly double Property A's. Unexplained — see the "
              "flagged page."],
             ["Gross rent, 2 of 3 units", f"{F.usd_full(P.B_RENT_MONTHLY)}/month = {F.usd_full(rent_yr)}/year",
              '<span class="badge bad">unverified</span>',
@@ -2448,9 +2448,9 @@ the only liquid asset is the inheritance itself.</li>
 
     body += """
 <div class="callout warning">
-<h3>The one question about Property B that most changes the Cupertino decision</h3>
+<h3>The one question about Property B that most changes the Property A decision</h3>
 <p><strong>Is the third unit legal and habitable?</strong> If it is, Property B has unrealised
-income, the household has a genuine choice of where to live, and the Cupertino hold path becomes
+income, the household has a genuine choice of where to live, and the Property A hold path becomes
 a lifestyle preference rather than a financial necessity. If it is not a legal unit, the building
 is a two-unit for planning and rent-control purposes, the value estimate is too high, and the
 household has fewer options than it thinks. One trip to the Planning Department settles it.</p>
@@ -2464,7 +2464,7 @@ Both properties sit inside the same regional economy, and the household's income
 it too.</p>
 """
     body += table(
-        ["Scenario", "Cupertino house", "San Francisco building", "Household income",
+        ["Scenario", "Property A", "San Francisco building", "Household income",
          "Combined exposure"],
         [
             ["Bay Area tech contraction", "Falls directly — single-industry town",
@@ -2489,7 +2489,7 @@ it too.</p>
 """
     return page("Property B — the San Francisco building", "property-b.html", body,
                 subtitle="The building the household already owns. It changes the risk of the "
-                         "Cupertino decision more than any single assumption in the model.")
+                         "Property A decision more than any single assumption in the model.")
 
 
 # ---------------------------------------------------------------------------
@@ -2552,7 +2552,7 @@ over, because a model that quietly resolves an inconsistency is worse than one t
 <article class="qcard crit">
 <h3>1. Property B: a 2.1% effective tax rate against a 1% constitutional base</h3>
 <p>Roughly $2,400 of annual tax on roughly $114,000 of assessed value implies an effective rate
-near 2.1%. Cupertino's own series implies 1.2%–1.4%. The Proposition 13 base rate is 1%, plus
+near 2.1%. Property A's own series implies 1.2%–1.4%. The Proposition 13 base rate is 1%, plus
 voter-approved debt and fixed charges, which in practice runs to about 1.2%–1.4% in most Santa
 Clara County tax rate areas. A figure of 2.1% is roughly double.</p>
 <p><strong>Additional inconsistency:</strong> the household's San Francisco series shows the tax
@@ -2605,10 +2605,10 @@ remains unverified.</p>
 </article>
 
 <article class="qcard high">
-<h3>6. Cupertino city conveyance tax: possibly none, unverified</h3>
+<h3>6. Property A city conveyance tax: possibly none, unverified</h3>
 <p>San Jose, Palo Alto and Mountain View impose an additional city conveyance tax of $1.65 per
-$500. I found no evidence of an equivalent Cupertino tax. Absence of evidence is not
-verification; confirm with the City of Cupertino finance department.</p>
+$500. I found no evidence of an equivalent Property A tax. Absence of evidence is not
+verification; confirm with the Property A's city finance department.</p>
 </article>
 
 <article class="qcard med">
@@ -2840,7 +2840,7 @@ This page is designed to be printed and signed. It is three pages.
 <form class="agreement">
 <div class="agblock">
 <h3>1. The occupancy commitment</h3>
-<p class="aglabel">We will occupy the Cupertino property as our principal residence for at least:</p>
+<p class="aglabel">We will occupy the Property A as our principal residence for at least:</p>
 <div class="fillrow">
   <label><input type="radio" name="occ"> 0 years — we will not live there</label>
   <label><input type="radio" name="occ"> 1–4 years</label>
@@ -2946,7 +2946,7 @@ than a reconstruction afterwards.</p>
 <li><strong>Append, never edit.</strong> If a decision changes, add a new row with a new date and
 reference the row it supersedes. A log that can be rewritten is not a log.</li>
 <li><strong>Record the reason, not just the choice.</strong> &ldquo;Sell&rdquo; is not a decision;
-&ldquo;sell because we do not intend to live in Cupertino and the appraised value exceeded our
+&ldquo;sell because we do not intend to live in Property A and the appraised value exceeded our
 stated trigger&rdquo; is.</li>
 <li><strong>Record who decided.</strong> A decision with no owner drifts.</li>
 <li><strong>Record what was assumed.</strong> The model version and the input set, so a later
@@ -2966,7 +2966,7 @@ reader can tell whether the decision was made on the same facts they are looking
         ("Both property tax bills reviewed and the 2.1% explained", "Cause of the anomaly", "", "", "OPEN", ""),
         ("Insurance quoted (three carriers)", "Premium and coverage; FAIR Plan eligibility", "", "", "OPEN", ""),
         ("Five-year capital plan prepared", "Roof, sewer, HVAC, electrical, foundation", "", "", "OPEN", ""),
-        ("Rent survey obtained for 95014 SFRs", "Market rent range with evidence", "", "", "OPEN", ""),
+        ("Rent survey obtained for Santa Clara County SFRs", "Market rent range with evidence", "", "", "OPEN", ""),
         ("Third unit's legal status confirmed", "Legal unit count", "", "", "OPEN", ""),
         ("Prior taxable gifts and portability confirmed with CPA", "Amount and filing history", "", "", "OPEN", ""),
         ("Projected gross estate calculated", "Amount and distance from the exclusion", "", "", "OPEN", ""),
@@ -3235,10 +3235,10 @@ No personal identifiers appear on this sheet.</p>
 <h3>1. The facts as given</h3>
 <table class="brief-table">
 <tbody>
-<tr><th>Property A</th><td>Single-family house, Cupertino 95014. <strong>To be inherited</strong> via a
+<tr><th>Property A</th><td>Single-family house, Property A (Santa Clara County). <strong>To be inherited</strong> via a
 trust, expected distribution 2040–2050. Household estimate of value: {F.usd_full(P.A_VALUE_2026)}.
 Factored base year value roughly {F.usd_full(545_000)}–{F.usd_full(560_000)}.</td></tr>
-<tr><th>Property B</th><td>Three-unit building, San Francisco 94122. <strong>Already owned.</strong>
+<tr><th>Property B</th><td>Three-unit building, San Francisco. <strong>Already owned.</strong>
 Two of three units rented at about {F.usd_full(P.B_RENT_MONTHLY)}/month total. Household estimate
 of value: {F.usd_full(P.B_VALUE_2026)}.</td></tr>
 <tr><th>Inheritance</th><td>Both properties plus &ldquo;a considerable amount of money&rdquo;, size
