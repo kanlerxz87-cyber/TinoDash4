@@ -278,5 +278,12 @@
   "o": "Household",
   "k": "household",
   "v": "2026-11-25"
+ },
+ "repo-public": {
+  "t": "GitHub repository metadata \u2014 visibility and Pages publication state",
+  "u": "https://api.github.com/repos/kanlerxz87-cyber/TinoDash4",
+  "o": "GitHub REST API",
+  "k": "official",
+  "v": "2026-11-26"
  }
 }
