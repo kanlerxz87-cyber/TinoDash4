@@ -546,3 +546,21 @@ and `decision-workspace/` were not edited by this session.
 Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
 
 P-01 update: `_config.yml` now excludes alternate site trees and source directories from the Jekyll artifact; `.nojekyll` was removed to allow the exclusions to take effect. `PRIVACY_REMEDIATION.md` records the exact boundary: repository files and earlier public history remain outside this containment. Local Jekyll verification is unavailable in this checkout, so this task remains needs review pending the GitHub Pages build and a deployed-path check.
+
+---
+
+## Session e47762ee — official-source audit + final integration (active)
+
+Branch: `arena/e47762ee-tinodash4` (the platform-fixed current branch; no other branch will be created).
+Base: `b7825dc` (PR #18 merge on `main`).
+
+| Task | Status | Owner | Files in scope |
+| --- | --- | --- | --- |
+| E-1 | in progress | `e47762ee` | Official-source/model audit for the root dashboard: `tools/content.py`, `model/inputs.py`, `model/projections.py`, `model/model.py`, `model/site_pages.py`, `model/site_pages2.py`, `tools/build_site.py`, and generated root `*.html` / `data/model_outputs.json` as necessary |
+| E-2 | deferred to P-01 | `arena/bc2ed56c` | Public artifact containment, Pages exclusions, and history-boundary documentation; this session will not edit `_config.yml`, `.nojekyll`, or `PRIVACY_REMEDIATION.md` |
+| E-3 | in progress | `e47762ee` | Verify root-dashboard rebuild, source labels, table links, deterministic outputs, and report any integration findings without editing P-01-owned files |
+
+### Claim / constraint and conflict log
+- 2026-11-26 · `e47762ee` · Read the existing board and claimed source/model verification. The user requested per-task branches; this Arena session is restricted to the named current branch, so all work remains on `arena/e47762ee-tinodash4`.
+- 2026-11-26 · `e47762ee` · `git pull --rebase origin main` found a concurrent append to this board by `arena/bc2ed56c` after the claim commit. Resolved by retaining both session entries and keeping the other session's ownership/scope intact. No other session's files were modified.
+- The shared-history scrub is out of scope here: no force-push to `main` or rewrite of shared history will be attempted. The P-01 owner is documenting the current-public-artifact containment boundary; any residual history exposure will remain explicitly flagged.
