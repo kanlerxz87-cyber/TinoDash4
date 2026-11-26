@@ -1,5 +1,11 @@
 name: Verify decision dashboard
 
+# CI cannot regenerate the model or the pages: their inputs are owner figures kept in
+# private/ (gitignored, never committed). CI therefore runs the structural checks and
+# the guard that fails if owner inputs are tracked under dashboard/. The full
+# reproduction (model, build, diff, privacy scan) is run locally before each publish:
+#   python3 tools/dashboard_model.py && python3 tools/dashboard_build.py && python3 tools/dashboard_check.py
+
 on:
   push:
     branches: [main]
@@ -19,13 +25,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Regenerate model outputs (seeded, deterministic)
-        run: python3 tools/dashboard_model.py
-      - name: Fail if model outputs differ from the committed file
-        run: git diff --exit-code -- dashboard/data/model_outputs.json
-      - name: Rebuild the dashboard
-        run: python3 tools/dashboard_build.py
-      - name: Fail if the built dashboard differs from the committed files
-        run: git diff --exit-code -- dashboard
+      - name: Fail if owner inputs are tracked
+        run: |
+          if git ls-files | grep -E '(^|/)(inputs\.json|[^/]*_inputs\.json)$' | grep -q .; then
+            echo "owner inputs are tracked:"; git ls-files | grep -E '_inputs\.json$|inputs\.json$'; exit 1; fi
       - name: Structural checks (rounding, row markers, links, source register, required content)
         run: python3 tools/dashboard_check.py --structural
