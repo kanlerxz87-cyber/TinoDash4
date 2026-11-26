@@ -537,6 +537,16 @@ and `decision-workspace/` were not edited by this session.
 
 ---
 
+## Session arena-f97bc99f — privacy-first release review
+
+| ID | Task | Status | Owner | Files in scope |
+|---|---|---|---|---|
+| P-02 | Audit the current public-site release boundary and privacy gate; make the audit runnable without adding private values to Git; publish any unresolved privacy/history limits as review items. | in progress | arena-f97bc99f | `tools/check_site.py`, `README.md`, `flagged.html`, `tools/content.py`, `PRIVACY_REVIEW.md`, `COORDINATION.md` |
+
+Claimed on the active branch `arena/f97bc99f-tinodash4` after reading the existing coordination board and fast-forwarding the local branch pointer to its current `origin/main` snapshot. Scope excludes `_config.yml`, `PRIVACY_REMEDIATION.md`, model inputs, and projection data owned by the prior privacy-containment task. Do not rewrite shared Git history or reproduce household figures in this public review.
+
+---
+
 ## Session arena-bc2ed56c — privacy containment audit (current branch)
 
 | ID | Task | Status | Owner | Files in scope |
