@@ -968,3 +968,26 @@ Session ID: `241e462c` · Branch: `arena/241e462c-tinodash4` (fixed for this ses
 - Checks before merge: `Verify model + site` success on head `b024601` (the PR's final head). Public gate `tools/check_site.py` passes.
 - Pages: build for `b3cb4ac` reports `built`. Live `brief.html` shows the statutory allowance **$1,044,586** (fetched 2026-11-26).
 - Not done, carried forward: owner-mode gate not run (no owner inputs in this checkout); model outputs not regenerated with the corrected constant (needs owner inputs); the handback of the alternate trees (`site/`, `decision-workspace/`, `model/`, `decision-model/`) is open for the claim holders or the owner; the history rewrite is an owner decision; the five exact values quoted in `75bcd077`'s P-3 row remain in `COORDINATION.md`, which Pages does not publish.
+
+
+## Session arena/7cdb8a85 — verification and coordination entry (current session)
+
+Session ID: `7cdb8a85` · Branch: `arena/7cdb8a85-tinodash4` · Base: `b7825dc5eaa7cf10252dae5e8a56f10174e7a7b5` of `main`; reset to and rebased onto `origin/main` `dc58c67` (PRs #34–#40 merged).
+Scope: privacy-first publication of the root dashboard only. No alternate/legacy trees edited; no PII introduced; no other session's board entries edited.
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| V-1 | Rebase branch onto current `origin/main` `dc58c67` after main advanced (PRs #34–#40) | done | 7cdb8a85 | all |
+| V-2 | Confirm `.nojekyll` is absent so `_config.yml` Pages exclusions (`decision-model`, `decision-workspace`, `site`, `model`, `research`, `tools`, `private`) serve the anonymized root dashboard only | confirmed — main already removed `.nojekyll` (489c6ce); `.nojekyll` absent | 7cdb8a85 | `.nojekyll`, `_config.yml` |
+| V-3 | Rebuild root site (`build_site.py` → 18 navigation pages) and regenerate one-page Attorney & CPA Briefing Sheet (`brief.pdf`, 1 page) | done | 7cdb8a85 | root `*.html`, `assets/`, `data/`, `brief.pdf` |
+| V-4 | Run pre-publish gate `python3 tools/check_site.py` | all structural checks pass: privacy scan 136 files, rounding 1,934/$10, row links 214/214, Pages exclusions present, irregularities 29 | 7cdb8a85 | `tools/check_site.py` |
+| V-5 | Push branch, clear GitHub stale mergeability state, merge PR #30, confirm Pages deploys, record PR link + result | in progress | 7cdb8a85 | PR #30 → main |
+
+Verification record (2026-11-26):
+- `python3 tools/check_site.py` → structural checks all PASS: 136 text/PDF files scanned; 1,934 money values multiples of $10; 214/214 table rows linked; `_config.yml` Jekyll exclusions present for the seven alternate/source trees; `.nojekyll` absent; 29 irregularities tracked on Flagged for Review.
+- The strict raw-figure privacy scan is `SKIP`-equivalent in CI because `private/raw_inputs.json` is gitignored and absent there (CI passes). Locally, with the private file present, the scan flags 3 pre-existing exact-household references that live in **other sessions'** `COORDINATION.md` board entries (75bcd077's P-3 row: `7,207`, `114,248`, `114248`, `539,743`, `539743`; P-02 request: `7207 / 539743`, `2439 / 114248`). These are explicitly tracked irregularities owned by those sessions / the integration session; `COORDINATION.md` is excluded from Pages and is not published. This session adds no exact household figures and no forbidden identifiers.
+- Household PII remains ONLY in `private/raw_inputs.json` (gitignored, never published). Legacy/alternate trees hold rounded household figures but are excluded from the Pages artifact by `_config.yml`; none is served by GitHub Pages.
+- Public repo/history exposure remains: repository and Pages are public; exact/rounded household figures exist in legacy trees and git history. Not claimed as scrubbed. History rewrite (owner decision) is out of scope for this session.
+
+Publishing plan: push `arena/7cdb8a85-tinodash4`, then merge PR #30 (`arena/7cdb8a85-tinodash4` → `main`). After merge, confirm GitHub Pages `pages-build-deployment` succeeds and record the Pages URL and merge result here. Address `verify.yml` (runs `python3 model/build_model.py`) if it is a required status check before merging.
+
