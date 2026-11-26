@@ -777,3 +777,7 @@ The branch name is fixed by Arena as `arena/c3f30db8-tinodash4`; it is not being
 - CI `Verify model + site` for PR #24 passed (run 45886939406); root build, privacy gate, legacy data reproducibility, and renderer checks all succeeded.
 - GitHub Pages deployment for the merged change succeeded on run 45886980437. Concurrent later publishes temporarily canceled superseded runs; final main deployment run 45887217990 succeeded. Pages API reports `status: built`; live root dashboard with cache-buster and `/sources.html` were fetched to confirm the current dashboard and official source links are live.
 - Follow-up changes on main by other integration sessions are outside this PR; source register now includes the official Form 540 line 62, Prop 19 page, and BOE LTA PDF.
+
+### Rebase conflict resolution — arena-bc2ed56c — 2026-11-26 (follow-up wording)
+- Before merge of PR #33, `main` advanced to `582145d` through PR #31, creating another append-only `COORDINATION.md` conflict. Kept all main-side coordination entries and added a brief handoff; no other session's records were dropped.
+- PR #33 contains only the correction to the public checker wording and its generated root page. Its verification check passed before rebase; after pushing the rebased head, rerun checks and record the final merge/deployment separately.

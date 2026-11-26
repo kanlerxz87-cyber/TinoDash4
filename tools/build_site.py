@@ -512,7 +512,7 @@ def build_flagged():
             + card("Repository and privacy", """<ul class="bullets">
 <li>Containment is partial: the current Pages configuration excludes alternate generated site trees and source folders, but the GitHub repository remains public and those tracked files and historical commits can still be fetched directly.</li>
 <li>The earlier pre-rounding history was not scrubbed in this change. The current checkout does not provide the earlier objects needed to inspect or safely rewrite that history.</li>
-<li>The root privacy checker requires an untracked private input file, so it cannot run in a clean checkout. Do not treat it as an end-to-end publish gate until a private-data-free artifact scan is added.</li>
+<li>The root checker runs artifact and structural checks in a clean checkout; its exact household-value comparison explicitly reports SKIP when the offline private input file is absent. That skip is not a full household-signature privacy scan.</li>
 </ul>"""))
     page("flagged.html", "Flagged for review", body)
 
