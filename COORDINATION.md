@@ -1063,18 +1063,23 @@ Claim note: no private values, identifying property details, or new model assump
 
 ## Session arena/34783ce5 — final consolidation, verification and publish (current session)
 
-Session ID: `arena/34783ce5` · Branch: `arena/34783ce5-tinodash4` · Original base: `2511716` of `main` (PR #44 merged). Rebased onto current `origin/main` during this session.
-Scope: root dashboard only. No alternate trees edited. No PII introduced in this session; household identifiers remain placeholders and no ZIP/postal code, address, parcel number or exact household figure was added to the public pages.
+Session ID: `arena/34783ce5` · Branch: `arena/34783ce5-tinodash4` · Original base: `2511716` of `main` (PR #44 merged); rebased onto `origin/main` `27dfb87`.
+Scope: root dashboard only. No alternate trees edited. No PII introduced; all household values remain held internally or rounded/placeholders; no postal codes, addresses, parcel identifiers, personal names, or exact household source figures were added to the published pages.
 
 | ID | Task | Status | Owner | Files in scope | Claimed (UTC) |
 |----|------|--------|-------|----------------|---------------|
 | C-1 | Coordination claim + immediate commit/push | done | arena/34783ce5 | COORDINATION.md | 2026-11-26 |
 | C-2 | Baseline verification: rebuild root site and run `tools/check_site.py` | done | arena/34783ce5 | tools/build_site.py, tools/check_site.py, data/model_outputs.json, root *.html | 2026-11-26 |
-| C-3 | Official-source spot research (insurance guidance; county transfer tax/fees; SF transfer tax; TRA lookup) | in progress | arena/34783ce5 | tools/content.py, tools/build_site.py, inputs.html, property-tax.html, flagged.html, data/irregularities.json | 2026-11-26 |
-| C-4 | Black swan phased-investing path, reinvestment risk, real-economic-regime explanation | in progress | arena/34783ce5 | tools/build_site.py, tools/content.py, blackswan.html, sources.html | 2026-11-26 |
-| C-5 | Dated decision log | in progress | arena/34783ce5 | tools/build_site.py, decision-rules.html, DECISION_RULES.md | 2026-11-26 |
-| C-6 | Clarify Measure H/Measure I preliminary status and enacted-vs-proposed split | in progress | arena/34783ce5 | tools/content.py, tools/build_site.py, tools/build_brief_pdf.py, inputs.html, property-tax.html, legislation.html, flagged.html, brief.html | 2026-11-26 |
-| C-7 | Rebuild, re-verify, fix failures, commit, push, open PR, merge, confirm Pages deployment | in progress | arena/34783ce5 | all touched files | 2026-11-26 |
+| C-3 | Official-source spot research (insurance guidance; county transfer tax/fees; SF transfer tax; TRA lookup) | done; premium and parcel-specific rate remain unverified | arena/34783ce5 | tools/content.py, tools/build_site.py, inputs.html, property-tax.html, flagged.html, data/irregularities.json | 2026-11-26 |
+| C-4 | Black swan phased-investing path, reinvestment risk, real-economic-regime explanation | done; crash sizes remain stylized assumptions | arena/34783ce5 | tools/build_site.py, tools/content.py, blackswan.html, sources.html | 2026-11-26 |
+| C-5 | Dated decision log; separates provisional model results from household choice | done | arena/34783ce5 | tools/build_site.py, decision-rules.html, DECISION_RULES.md | 2026-11-26 |
+| C-6 | Clarify Measure H/Measure I preliminary status and enacted-vs-proposed split | done; certification pending | arena/34783ce5 | tools/content.py, tools/build_site.py, tools/build_brief_pdf.py, inputs.html, property-tax.html, legislation.html, flagged.html, brief.html | 2026-11-26 |
+| C-7 | Rebuild, re-verify, commit, push, open PR, merge, confirm Pages deployment | in progress | arena/34783ce5 | all touched files | 2026-11-26 |
 
-### Claim note
-This session works only on `arena/34783ce5-tinodash4` and does not switch branches or touch files claimed by other active sessions. Git history rewrite (force-push to `main`) is not performed here; prior public-data exposure remains and cannot be described as scrubbed.
+### Verification and source record
+- Baseline and final root build: `python3 tools/build_site.py` — 18 navigation pages generated.
+- Final gate: `python3 tools/check_site.py` — PASS: 165 text/PDF files scanned; 1,934 rounded model money values; 233/233 linked table rows; Pages exclusions present; 30 irregularities published. Private-value comparison skipped because `private/raw_inputs.json` is absent; no exact-value privacy claim is made.
+- Official source checks (2026-11-26): CDI Home/Residential Insurance, https://www.insurance.ca.gov/01-consumers/105-type/5-residential/ (comparison/shop guidance, no property-specific price); Santa Clara Clerk-Recorder transfer tax and recording fees, https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-real-estate and https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-document-fees; SF Assessor-Recorder fee/transfer-tax schedule, https://www.sf.gov/reports--march-2024--fees-record-document-san-francisco; Santa Clara Assessor property search and TRA glossary, https://asr.santaclaracounty.gov/online-services/property-search/real-property and https://asr.santaclaracounty.gov/faq/glossary. County DTAC rate-book page was identified but direct fetch failed; it is tagged LINK, not claimed as a checked parcel rate.
+- Macroeconomic context sources fetched: NBER US business-cycle chronology (last updated 2023) and BLS CPI series via FRED through October 2026; these are context, not return forecasts.
+- Official election page last updated Nov 23, 2026: preliminary Measure H tally 74.42% yes; Measure I 48.38% yes / 51.62% no. Both remained preliminary on Nov 26. Neither is treated as enacted or modelled.
+- History-cleanup limitation: public Git history still contains prior pre-rounding exposure and personal metadata noted on Flagged for Review. No history rewrite/force-push was performed; explicit owner authorization and coordinated remediation are required. History is not claimed scrubbed.

@@ -92,7 +92,7 @@ def pct(x, d=1):
 def tag(st):
     key = st.lower().split()[0].strip("()")
     cls = {"enacted": "enacted", "proposed": "proposal", "passed": "passed", "failed": "failed",
-           "unverified": "unverified", "secondary": "secondary", "fetched": "fetched",
+           "unverified": "unverified", "preliminary": "proposal", "secondary": "secondary", "fetched": "fetched",
            "excerpt": "excerpt", "link": "link", "user": "user", "derived": "derived",
            "assumption": "assumption"}.get(key, "link")
     return f'<span class="tag t-{cls}">{e(st)}</span>'
@@ -252,6 +252,7 @@ BE_EQ_RENT = BE["equity_for_rent_to_tie_sell"]
 BE_APP_LIVE0 = BE["appreciation_for_live_credit0_to_tie_sell"]
 NOCRASH_PHASE_COST = 1 - CRASH["No crash|0"]["phase24_20y"] / CRASH["No crash|0"]["lump_20y"]
 GRID_PHASE_COST = 1 - BASE["SP24"] / BASE["S"]  # base-case grid: sell now vs park and phase
+NOCRASH_PHASE36_COST = 1 - CRASH["No crash|0"]["phase36_20y"] / CRASH["No crash|0"]["lump_20y"]
 PROJ45 = next(r for r in PROJ if r["year"] == 2045)
 PROJ_YEARS = [r["year"] for r in PROJ]
 
@@ -393,6 +394,13 @@ def build_inputs():
         "<p>Household figures are held internally and appear here only as placeholders. Official values are shown where a source was checked. Blank cells are UNVERIFIED.</p>"
         + card("Property A (Santa Clara County): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], a_rows))
         + card("Property B (San Francisco): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], b_rows))
+        + card("Official sale and recording rates (rate cards; exact rates shown)", "<p>These are jurisdictional rate cards, not personalized estimates or tax determinations. Sale-year value, exemptions, document format, parcel count, and transaction classification control the final bill. Inheritance transfer and later sale are separate events; ask escrow and counsel to confirm applicable taxes.</p>" + table(["Jurisdiction and item", "Official rate", "Application", "Source"], [
+            ["Santa Clara County documentary transfer tax", "Rate: $0.55 per $500 or fraction", "Generally due on a change of ownership unless a statutory exemption applies; actual calculation depends on value and qualifying liens.", links(["SCC-REAL-ESTATE"])],
+            ["Santa Clara County recording fees", "Rates: $3.00 per additional page; $75.00 SB2 per title; $20.00 if a required PCOR is missing/incomplete. Base first-page fee not stated on the checked page.", "Rate card only; document configuration and exemptions must be confirmed.", links(["SCC-RECORD-FEES"])],
+            ["San Francisco documentary transfer tax", "Rates per $500 or portion: $2.50 (over $100 through $250,000); $3.40 (over $250,000 to under $1,000,000); $3.75 ($1,000,000 to under $5,000,000); $11.25 ($5,000,000 to under $10,000,000); $27.50 ($10,000,000 to under $25,000,000); $30.00 ($25,000,000 or more)", "Current official rate schedule. No transaction amount computed; verify exemptions and sale-year rules.", links(["SF-RECORD-FEES"])],
+            ["San Francisco recording fees", "Rates: $14.00 or $17.00 first page depending on title; $3.00 additional page; SB2 $75.00-$230.00 displayed rounded to nearest $10; $10.00 monument fee for deeds subject to transfer tax.", "Conditional charges; deed tax status and exemptions affect total.", links(["SF-RECORD-FEES"])],
+        ]), "")
+        + card("Property A: verify the tax rate area privately", "<p>No parcel/APN or address is published, so no property-specific TRA or tax rate is verified here. Privately, retrieve the tax bill/assessment record, identify its tax rate area, then match that area to the County DTAC fiscal-year property-tax rate book. The Assessor glossary defines a TRA as a geographic area sharing the same combination of local agencies. A countywide average or bill-derived effective rate is not a substitute for the published schedule.</p><p>Official starting points: " + links(["SCC-ASR-SEARCH", "SCC-TRA", "SCC-ASR-GLOSSARY"]) + ". Keep identifying information internal; publish only a rounded verified rate and its matching official schedule.</p>")
         + card("Not published", "<p>Historical tax and assessment records, parcel numbers, addresses, and household cost bills are not published. They are checked outside this repository and recorded as flags where they affect the decision.</p>")
     )
     page("inputs.html", "Facts and inputs", body)
@@ -428,14 +436,16 @@ def build_blackswan():
     body = (
         card("Economic conditions: baseline", "<p>The baseline is the official near-term projection. The stress cases are tests, not forecasts.</p>" + base_tbl)
         + card("Black swan regimes", stress_tbl)
+        + card("Real economic conditions over a 50-year holding period", "<p>Constant annual growth and inflation are simplifying assumptions, not a description of history. NBER's chronology records contractions and expansions with changing durations; the CPI series shows an observed history of changing price levels. Its chronology records the Great Depression contraction from August 1929 to March 1933 and the Great Recession from December 2007 to June 2009. These dates provide context only; the stress tests below are stylized, not a replay or forecast. " + links(["NBER-CYCLES", "FRED-CPI"]) + "</p><p>For the decision, regime risk affects both property and investment paths: rents, repairs, insurance, property-tax assessments, Treasury yields, inflation and equity returns need not move together or at a constant rate. The model's single baseline cannot represent all those correlations; use the range and stress cases, then re-run annually. The 1929/2008 equity drawdowns below are stylized stress inputs and are not claimed as official historical backtests.</p>")
         + card("Phased investing test (1929 and 2008 entry risk)",
-               "<p>Money is sold and held in 3-month to 2-year Treasuries (parking, taxed as ordinary income at an assumed 40%). It is then bought into stocks in equal steps over 12 months. The test uses the depth and timing of the two falls, not a daily replay. Each cell is the multiple of starting capital after tax (1.00x = no change).</p>"
+               "<p>After inheritance, sale proceeds are parked in 3-month to 2-year Treasuries for 24 or 36 months, then phased into stocks in equal monthly steps over 12 months. Parking interest is taxed as ordinary income at an assumed 40%. The test uses stylized drawdown depth and timing, not a daily replay. Each cell is the multiple of starting capital after tax (1.00x = no change).</p>"
                + crash_tbl
-               + f"<p class='note'>Reading the table: phasing helps when a fall begins during the parking window. With no crash, a 24-month phase-in gives up about {pct(NOCRASH_PHASE_COST, 0)} of the 20-year value in this stylised test (about {pct(GRID_PHASE_COST, 0)} in the base-case grid, where the stock path differs).</p>")
+               + f"<p class='note'>Reading the table: phasing helps when a fall begins during the parking window. In the stylized no-crash test, 20-year value is about {pct(NOCRASH_PHASE_COST, 0)} lower with 24-month staging and {pct(NOCRASH_PHASE36_COST, 0)} lower with 36-month staging than lump-sum investing. The separate base-case grid gives up about {pct(GRID_PHASE_COST, 0)} with 24-month staging. The opportunity cost is reinvestment risk, not a footnote.</p>")
         + card("Decision points for this test", """<ul class="bullets">
 <li>Parking is a hedge against entry timing, not a return enhancement.</li>
 <li>A fall that starts after the parking window leaves the lump sum and the phase-in close; luck decides which one wins.</li>
 <li>Parked money earns less than stocks in a calm market. The household accepts a lower median to buy protection.</li>
+<li><strong>Reinvestment risk beside the staging headline:</strong> 24 or 36 months out of equities means forgone growth if markets rise while proceeds are parked. In the stylized no-crash test the 20-year cost is shown above; crash protection is uncertain and not guaranteed.</li>
 </ul>""")
     )
     page("blackswan.html", "Black swan and phased investing", body)
@@ -470,7 +480,7 @@ def build_law_pages():
 
 def build_legislation():
     rows = [[e(a), tag(b), e(c), links(d), e(f)] for a, b, c, d, f in C.LEGISLATION]
-    body = ("<p>Proposals are listed separately from enacted law. None is in the base model. Bill numbers and texts were not verified in this session; check Congress.gov and the state legislature before relying on them.</p>"
+    body = ("<p>Rows marked ENACTED describe law with an official bill/code link. PROPOSED measures are not law. Election results marked preliminary are not treated as enacted until certified. None of the proposals or uncertified measures is in the base model.</p>"
             + table(["Measure", "Status", "Notes", "Sources", "Effect if enacted (not modelled)"], rows)
             + card("Recheck schedule", """<ul class="bullets">
 <li>Monthly: bill status on Congress.gov and the California Legislature site (manual).</li>
@@ -497,9 +507,18 @@ def build_questions():
 
 def build_decision_rules():
     items = "".join(f'<li><strong>{e(a)}.</strong> {e(b)} <span class="note">Basis: {e(c)}</span></li>' for a, b, c in C.DECISION_RULES)
+    decision_log = [
+        ["R1-R8 criteria pre-committed as a draft; not household-approved", "2026-11-25", 'Criteria were written before this session reviewed current model outputs. Household confirmation and signature remain outstanding. <a href="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/DECISION_RULES.md">Dated criteria record</a>.'],
+        ["Prop 19 allowance set to official statutory amount $1,044,586 for 2025-2027 (exact statutory exception)", "2026-11-26", 'BOE Letter to Assessors 2025/009. <a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf">Official letter</a>.'],
+        ["One-page Attorney & CPA briefing sheet prepared", "2026-11-26", 'Deliverable for professional review: <a href="brief.html">HTML</a> / <a href="brief.pdf">PDF</a>.'],
+        ["Base-case model ranking recorded as provisional; no household path selected", "2026-11-26", 'Transfer year 2045, horizon 20 years; outputs depend on unverified inputs. <a href="data/model_outputs.json">Rounded model output</a>.'],
+        ["24/36-month Treasury staging included for crash-entry tests", "2026-11-26", 'Stylized tests compare 1929/2008-type falls and no-crash outcomes; not forecasts. <a href="blackswan.html">Black swan analysis</a>.'],
+        ["“Prop H” interpreted as Measure H for preliminary tracking only; do not model until certified", "2026-11-26", 'Official results page, last updated Nov 23, 2026: preliminary 74.42% yes; certification pending. <a href="https://www.sfelections.org/results/20261103/index.html">Official results</a>.'],
+    ]
     body = (card("Status: DRAFT, not yet signed",
-                 f"<p>Drafted {CHECKED} from preliminary figures. The rules are proposed until the household confirms or edits each one, records the date, and signs outside this public repository.</p>", "warn")
-            + card("Proposed decision rules", f'<ul class="bullets">{items}</ul>'))
+                 f"<p>Drafted {CHECKED}. The decision criteria were set before the current model review, but remain unconfirmed by the household. The projected ranking is not a household decision. Record any final decision and date outside the public repository.</p>", "warn")
+            + card("Proposed decision rules", f'<ul class="bullets">{items}</ul>')
+            + card("Decision log (decision and date next to each item)", table(["Decision / status", "Date", "Basis and source"], decision_log) + "<p class='note'>This log distinguishes model output and implementation choices from decisions the household has actually made.</p>"))
     page("decision-rules.html", "Decision rules", body)
 
 
@@ -530,7 +549,7 @@ def build_brief():
         ("Property A: Prop 13 factor", "1.02 a year (BOE, secondary)"),
         ("Property B (San Francisco): units", "three livable units; two rented; owner occupancy possible"),
         ("Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)"),
-        ("Measure H (SF parcel tax)", "passed, preliminary, 74.42% yes; certification due by Dec 3, 2026"),
+        ("Measure H (SF parcel tax)", "preliminary tally 74.42% yes as of Nov 23; certification pending; no cost modeled"),
         ("Base result, sell and invest (2045, 20 yr)", money(BASE["S"])),
         ("Base result, live with no rent credit", money(BASE["L"])),
     ]
