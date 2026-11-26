@@ -534,3 +534,23 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+---
+
+## Session arena/be8e6daf — privacy containment and repo verification
+
+- Session ID: `arena/be8e6daf-tinodash4` (current Arena branch identity)
+- Branch: `arena/be8e6daf-tinodash4` (fixed; no branch switching)
+- Scope: current-working-tree privacy cleanup and verification only; no work on another session's branch.
+- Files in scope: `COORDINATION.md`, `README.md`, `tools/check_site.py`, `.github/workflows/verify.yml`, and `decision-model/` source + generated pages.
+- Status: **in progress**
+- Claim date: 2026-11-26 UTC
+
+| Task | Status | Scope |
+|---|---|---|
+| P-01: audit currently tracked website artifacts for ZIP/neighborhood identifiers and misleading claims | in progress | `decision-model/`, all published HTML |
+| P-02: contain identifiers in the current working tree and ensure rebuilds do not restore them | unclaimed | `decision-model/` |
+| P-03: make privacy/build checks runnable without a nonexistent private input file; preserve warnings about what cannot be verified | unclaimed | `tools/check_site.py`, `.github/workflows/verify.yml` |
+| P-04: correct repository privacy statements and record history limits | unclaimed | `README.md`, `COORDINATION.md` |
+
+No claim is made that earlier GitHub objects or Git history have been scrubbed: the checkout is grafted at `b7825dc` and does not contain the earlier commits needed to inspect or rewrite. Current-tree work cannot purge already-public GitHub objects or caches.
