@@ -215,10 +215,13 @@ def main():
     if not os.path.exists(nojekyll):
         if os.path.exists(jekyll_config):
             config = open(jekyll_config, encoding="utf-8").read()
-            if "exclude:" in config and "decision-model" in config and "decision-workspace" in config:
+            required_excludes = ("decision-model", "decision-workspace", "site", "model", "research", "tools", "private")
+            missing = [name for name in required_excludes
+                       if not re.search(r"^  - " + re.escape(name) + r"$", config, re.M)]
+            if "exclude:" in config and not missing:
                 ok("GitHub Pages Jekyll config present; alternate site/source trees are explicitly excluded")
             else:
-                bad(".nojekyll missing and _config.yml does not declare the expected privacy exclusions")
+                bad(".nojekyll missing and _config.yml lacks Pages exclusions: " + ", ".join(missing))
         else:
             bad(".nojekyll missing and no _config.yml configures GitHub Pages")
     irr = os.path.join(ROOT, "data", "irregularities.json")

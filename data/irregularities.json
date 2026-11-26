@@ -148,5 +148,11 @@
   "sources": [
    "IRS-NEWS-2027"
   ]
+ },
+ {
+  "item": "Repository privacy containment is partial",
+  "found": "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
+  "action": "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
+  "sources": []
  }
 ]
