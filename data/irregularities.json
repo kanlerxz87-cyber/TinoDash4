@@ -8,9 +8,9 @@
   ]
  },
  {
-  "item": "'Prop H' read as SF Measure H (November 3, 2026)",
-  "found": "The request's 'Prop H' is read as San Francisco Measure H, a Muni parcel tax. The official preliminary results show 74.42% yes. Measure I (transfer tax on sales over $10 million) shows 48.38% yes and did not pass.",
-  "action": "Confirm the reading. Certification is pending, so the result is preliminary.",
+  "item": "'Prop H' interpreted as SF Measure H (November 3, 2026)",
+  "found": "The request's 'Prop H' is interpreted as Measure H, a proposed Muni parcel tax. As of the official results page update Nov 23, preliminary tally was 74.42% yes. Measure I showed 48.38% yes and 51.62% no. Neither result was certified as of this check.",
+  "action": "Confirm the intended measure; recheck certification and effective terms before modelling any cost.",
   "sources": [
    "SF-ELECTIONS-2026"
   ]
@@ -123,28 +123,37 @@
   ]
  },
  {
-  "item": "Measure H not yet certified",
-  "found": "Measure H results are preliminary (74.42% yes). Certification is due within 30 days of Election Day (Dec 3, 2026).",
-  "action": "Recheck after certification. Tier and pass-through rules are unverified.",
+  "item": "Measure H and Measure I results remain preliminary",
+  "found": "The official election page was last updated Nov 23, 2026 and still labels the results preliminary: Measure H 74.42% yes; Measure I 48.38% yes, 51.62% no. Certification and final measure text/effective terms are pending.",
+  "action": "Recheck after official certification. Do not include Measure H as an enacted Property B cost; tier and pass-through rules remain unverified.",
   "sources": [
    "SF-ELECTIONS-2026"
   ]
  },
  {
-  "item": "SF documentary transfer tax tiers conflict",
-  "found": "Secondary sources give different tier schedules. Measure I (transfer tax over $10,000,000) failed on the preliminary count, but it does not apply to sales at this price range.",
-  "action": "Left blank in the model. Check the SF Treasurer page.",
+  "item": "SF documentary transfer tax rate schedule now verified; sale-year liability remains transaction-specific",
+  "found": "The San Francisco Assessor-Recorder publishes six transfer-tax rate tiers and the county recording-fee schedule. No tax amount is computed because sale consideration, transfer classification and exemptions must be confirmed at the time.",
+  "action": "Use the official schedule for any sale-year sensitivity; obtain a closing estimate from escrow.",
   "sources": [
-   "SF-TREASURER",
-   "SF-ELECTIONS-2026"
+   "SF-RECORD-FEES"
+  ]
+ },
+ {
+  "item": "Property A tax-rate area and published rate not yet verified",
+  "found": "The public site contains no parcel/APN or address, so it cannot identify Property A's tax-rate area. The official county assessor provides property search and defines each TRA; the DTAC property-tax page points to the current rate book. The parcel-specific rate remains blank.",
+  "action": "Privately identify the TRA from the tax bill/assessment record, then match it to the official fiscal-year rate book. Keep parcel identifiers off the website; publish only the rounded verified rate and official schedule link.",
+  "sources": [
+   "SCC-ASR-SEARCH",
+   "SCC-ASR-GLOSSARY",
+   "SCC-TRA"
   ]
  },
  {
   "item": "Insurance cost unverified",
-  "found": "No official average premium was confirmed for either county. Secondary sites disagree widely.",
-  "action": "Obtain quotes for both properties.",
+  "found": "CDI's official consumer page provides premium comparison tools and recommends shopping around; it does not state a property-specific premium for either home.",
+  "action": "Obtain quotes for a primary-residence policy and an occupancy-specific landlord policy, then replace the unverified inputs.",
   "sources": [
-   "CDI-INSURANCE"
+   "CDI-RESIDENTIAL"
   ]
  },
  {

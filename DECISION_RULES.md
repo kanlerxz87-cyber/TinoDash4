@@ -55,3 +55,14 @@
 5. **Drawdown rule:** do not sell equities to fund emergencies while the reserve is intact.
 6. **Review:** annual review, aligned with the annual model re-run.
 7. **Tax coordination:** the CPA confirms the holding structure and any trust or entity wrapper before funds are invested.
+
+## 6. Decision log (with date and basis)
+
+| Decision / status | Date | Basis and source |
+|---|---|---|
+| R1–R8 criteria pre-committed as a draft; not approved or signed by the household | 2026-11-25 | Decision rules recorded before reviewing this session's current model results. Household confirmation remains outstanding. |
+| Use the statutory Prop 19 allowance of $1,044,586 exactly for the published 2025–2027 period (exception to $10 rounding) | 2026-11-26 | [BOE Letter to Assessors 2025/009](https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf); period Feb 16, 2025–Feb 15, 2027. Next adjustment is due Feb 2027. |
+| Prepare the Attorney & CPA one-page brief | 2026-11-26 | Deliverables: `brief.html` and `brief.pdf`; for professional review, not a substitute for advice. |
+| Record the current base-case ranking only as provisional model output; no household path selected | 2026-11-26 | [Rounded model output](data/model_outputs.json), transfer year 2045 and 20-year horizon. The ranking depends on unverified inputs and may move. |
+| Include a 24/36-month Treasury parking path before monthly equity phase-in in crash-entry tests | 2026-11-26 | [Black swan model explanation](blackswan.html); stylised 1929/2008 tests are not forecasts. |
+| Read “Prop H” as the local Measure H for preliminary tracking only; do not model until certified | 2026-11-26 | [Official preliminary election results](https://www.sfelections.org/results/20261103/index.html), last updated Nov 23, 2026; certification pending as of this entry. |

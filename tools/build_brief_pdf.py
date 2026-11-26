@@ -43,7 +43,7 @@ def build():
         ["Property A: Prop 13 factor", "1.02 a year (BOE, secondary)"],
         ["Property B (San Francisco): units", "three livable units; two rented; owner occupancy possible"],
         ["Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)"],
-        ["Measure H (SF parcel tax)", "passed, preliminary, 74.42% yes; certification due by Dec 3, 2026"],
+        ["Measure H (SF parcel tax)", "preliminary tally 74.42% yes as of Nov 23; certification pending; no cost modeled"],
         ["Base: sell and invest (2045, 20 years)", B.money(B.BASE["S"])],
         ["Base: live with no rent credit", B.money(B.BASE["L"])],
     ]
