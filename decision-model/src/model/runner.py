@@ -43,21 +43,21 @@ INPUTS = Band(
         a_insurance=P.A_INSURANCE_HIGH, a_maint_pct=P.A_MAINT_HIGH,
         a_rent_yield=P.A_RENT_YIELD_LOW, prop19_allowance=1_044_586,
         sell_commission=0.055, sell_other=0.012,
-        ca_rate_on_gain=0.115,
+        ca_status="single", ca_other_income=0.0,
     ),
     base=dict(
         a_assessed_2026=552_500, a_tax_rate=P.A_TAX_RATE_BASE,
         a_insurance=P.A_INSURANCE_BASE, a_maint_pct=P.A_MAINT_BASE,
         a_rent_yield=P.A_RENT_YIELD_BASE, prop19_allowance=1_044_586,
         sell_commission=P.SELL_COMMISSION, sell_other=P.SELL_OTHER_COSTS,
-        ca_rate_on_gain=P.CA_EFFECTIVE_ON_LARGE_GAIN,
+        ca_status=P.CA_DEFAULT_STATUS, ca_other_income=P.CA_OTHER_TAXABLE_INCOME,
     ),
     high=dict(
         a_assessed_2026=545_000, a_tax_rate=P.A_TAX_RATE_LOW,
         a_insurance=P.A_INSURANCE_LOW, a_maint_pct=P.A_MAINT_LOW,
         a_rent_yield=P.A_RENT_YIELD_HIGH, prop19_allowance=1_300_000,
         sell_commission=0.045, sell_other=0.008,
-        ca_rate_on_gain=0.095,
+        ca_status=P.CA_DEFAULT_STATUS, ca_other_income=P.CA_OTHER_TAXABLE_INCOME,
     ),
 )
 

@@ -1,13 +1,13 @@
 # Inherited-Home Decision Model
 
-A privacy-first decision dashboard for one household question: **given a house in Cupertino
+A privacy-first decision dashboard for one household question: **given a house in Santa Clara County
 that will be inherited sometime between 2040 and 2050, and a three-unit rental building already
 owned in San Francisco, what is the right thing to do with the house?**
 
 Published site: **https://kanlerxz87-cyber.github.io/TinoDash4/decision-model/site/**
 
-Everything here is anonymised. The two properties are **Property A** (Cupertino, 95014) and
-**Property B** (San Francisco, 94122). There are no addresses, parcel numbers, owner names or
+Everything here is anonymised. The two properties are **Property A** (Santa Clara County) and
+**Property B** (San Francisco). There are no addresses, parcel numbers, owner names or
 exact assessed values anywhere in this directory — see [src/PRIVACY.md](src/PRIVACY.md), which is
 a binding rule for anything committed, not a disclaimer.
 

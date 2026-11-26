@@ -41,13 +41,13 @@ TRANSFER_YEARS = (2040, 2045, 2050)
 BASE_TRANSFER_YEAR = 2045
 
 # ----------------------------------------------------------------------------
-# Property A — Cupertino 95014 (inherited)
+# Property A — Property A [ZIP-A] (inherited)
 # ----------------------------------------------------------------------------
 A_VALUE_2026 = 3_100_000
 A_VALUE_STATUS = "unverified"
-A_VALUE_SOURCE = "HH-CUPERTINO-VALUE"
+A_VALUE_SOURCE = "HH-PROPERTY-A-VALUE"
 
-# Factored base year value, banded for privacy (facts.json HH-CUPERTINO-ASSESSED)
+# Factored base year value, banded for privacy (facts.json HH-PROPERTY-A-ASSESSED)
 A_ASSESSED_2026_LOW = 545_000
 A_ASSESSED_2026_HIGH = 560_000
 
@@ -60,7 +60,7 @@ A_TAX_RATE_BASE = 0.0130
 
 A_PROP13_CAP = 0.02          # verified, CA-PROP13-CAP
 
-# Market rent for a ~2,000 sq ft SFR in 95014. Household did not supply one.
+# Market rent for a ~2,000 sq ft SFR in [ZIP-A]. Household did not supply one.
 # Rangewide estimate from a gross-yield band rather than a voucher benchmark.
 A_RENT_YIELD_LOW = 0.0230    # 2.3% gross yield  -> ~$5,940/mo on $3.1M
 A_RENT_YIELD_BASE = 0.0290   # 2.9% gross yield  -> ~$7,490/mo
@@ -68,7 +68,7 @@ A_RENT_YIELD_HIGH = 0.0360   # 3.6% gross yield  -> ~$9,300/mo
 A_RENT_STATUS = "unverified"
 A_RENT_NOTE = ("No comparables obtained. Expressed as a gross-yield band so the rent path is "
                "ranked on a range rather than on the Section 8 payment standard, which the "
-               "household correctly objected to. Get real 95014 SFR comps.")
+               "household correctly objected to. Get real [ZIP-A] SFR comps.")
 
 # Operating cost bands (annual, 2026 dollars). All unverified household/heuristic.
 A_INSURANCE_LOW = 1_500
@@ -76,7 +76,7 @@ A_INSURANCE_BASE = 3_000
 A_INSURANCE_HIGH = 4_500
 # MAINTENANCE IS A PERCENTAGE OF BUILDING VALUE, NOT OF MARKET VALUE.
 # This is a deliberate correction to a bug in the first version of this model.
-# Cupertino market value is roughly 75% land; land requires no roof, no sewer
+# Property A market value is roughly 75% land; land requires no roof, no sewer
 # lateral and no paint. Tying maintenance to market value made the modelled cost
 # compound at the house-price rate for fifty years and buried every holding path
 # in year 30. Maintenance scales with *replacement cost of the structure*, which
@@ -97,7 +97,7 @@ SELL_COMMISSION = 0.050      # assumption; negotiable, and NAR settlement change
 SELL_OTHER_COSTS = 0.010     # escrow, title, transfer tax, recording, staging
 
 # ----------------------------------------------------------------------------
-# Property B — San Francisco 94122 (already owned)
+# Property B — San Francisco (already owned)
 # ----------------------------------------------------------------------------
 B_VALUE_2026 = 1_800_000
 B_VALUE_STATUS = "unverified"
@@ -120,7 +120,7 @@ B_INSURANCE_LOW = 1_500
 B_INSURANCE_BASE = 3_800
 B_INSURANCE_HIGH = 6_500
 # Same correction as Property A: maintenance is a share of BUILDING value.
-# A 3-unit pre-war Outer Sunset building carries more maintenance per building
+# A 3-unit pre-war Property B's neighbourhood building carries more maintenance per building
 # dollar than a single-family house: three kitchens, three baths, shared systems,
 # and tenants who cannot be told no. Banded higher for that reason.
 B_LAND_SHARE_2026 = 0.60
@@ -181,7 +181,7 @@ MACRO = {
         "house": 0.015,
         "equity": 0.050,
         "cash": 0.035,
-        "note": "Cupertino is a single-industry town. A durable regional contraction hits the "
+        "note": "Property A is a single-industry town. A durable regional contraction hits the "
                 "house directly and the stock market only partly. This is the scenario the "
                 "concentration risk lives in.",
     },
@@ -272,12 +272,29 @@ FED_S121_SINGLE = 250_000                  # verified FED-S121-EXCLUSION
 FED_S121_JOINT = 500_000
 FED_DEPR_LIFE = 27.5                       # verified FED-DEPRECIATION-27.5
 
-CA_TOP_MARGINAL = 0.123                    # secondary CA-FTB-TOP-MARGINAL
+CA_TOP_MARGINAL = 0.123                    # verified CA-FTB-TOP-MARGINAL (FTB 2025 schedule, read 2026-11-26)
 CA_BHST = 0.01                             # verified CA-FTB-MHST-THRESHOLD
 CA_BHST_THRESHOLD = 1_000_000              # verified, NOT indexed, same for MFJ
-CA_EFFECTIVE_ON_LARGE_GAIN = 0.105         # assumption: blended, not top marginal
+CA_EFFECTIVE_ON_LARGE_GAIN = 0.105         # RETIRED as default (2026-11-26). Unsourced blend. Kept only as an explicit flat override.
 
-A_LAND_SHARE = A_LAND_SHARE_2026            # assumption: Cupertino land is most of the value
+# Official 2025 California tax rate schedules (FTB, 2025-540-tax-rate-schedules.pdf),
+# as (lower bound of bracket, tax at lower bound, marginal rate above it).
+# Verified 2026-11-26. Schedule X = single / MFS; Y = MFJ / RDP / QSS; Z = head of household.
+CA_SCHEDULES = {
+    "single": [(0, 0.00, .01), (11079, 110.79, .02), (26264, 414.49, .04), (41452, 1022.01, .06),
+               (57542, 1987.41, .08), (72724, 3201.97, .093), (371479, 30986.19, .103),
+               (445771, 38638.27, .113), (742953, 72219.84, .123)],
+    "joint":  [(0, 0.00, .01), (22158, 221.58, .02), (52528, 828.98, .04), (82904, 2044.02, .06),
+               (115084, 3974.82, .08), (145448, 6403.94, .093), (742958, 61972.37, .103),
+               (891542, 77276.52, .113), (1485906, 144439.65, .123)],
+    "hoh":    [(0, 0.00, .01), (22173, 221.73, .02), (52530, 828.87, .04), (67716, 1436.31, .06),
+               (83805, 2401.65, .08), (98990, 3616.45, .093), (505208, 41394.72, .103),
+               (606251, 51802.15, .113), (1010417, 97472.91, .123)],
+}
+CA_DEFAULT_STATUS = "joint"                # household filing status is NOT supplied; see Q-CA-STATUS
+CA_OTHER_TAXABLE_INCOME = 0.0              # other taxable income in the sale year; NOT supplied
+
+A_LAND_SHARE = A_LAND_SHARE_2026            # assumption: Property A land is most of the value
 
 # ----------------------------------------------------------------------------
 # Phased investing (the feature the household asked for)
