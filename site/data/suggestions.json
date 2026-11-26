@@ -78,5 +78,13 @@
   "body": "Once the household shares a TRA number (not the address), pin the published rate into the data table with the county source link.",
   "owner": "Household",
   "status": "Proposed"
+ },
+ {
+  "id": "S11",
+  "priority": "High",
+  "title": "Contain and audit the public GitHub history before claiming privacy is restored",
+  "body": "The repository and Pages are currently public; this shallow checkout cannot verify prior commits. First preserve an authorized backup, complete an offline scan of every historical commit and public artifact, agree whether to take the repository/site private or replace it with a clean sanitized history, then coordinate the history rewrite and check forks/caches. Do not force-rewrite shared main as an isolated session action.",
+  "owner": "Repository administrator + privacy reviewer",
+  "status": "Proposed \u2014 high urgency; not implemented"
  }
 ]
