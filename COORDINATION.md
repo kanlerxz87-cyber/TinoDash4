@@ -658,6 +658,19 @@ Nothing in this session marks them as verified.
 - 2026-11-26 · 75bcd077 · Replaced the unsourced 10.5% with the official schedule. Rebuilt. Recommendation unchanged (R-4).
 - 2026-11-26 · 75bcd077 · Added the restricted-token check. Tested it. Build clean with 0 errors and 0 warnings.
 
+## Session arena-f97bc99f — privacy-first release review
+
+| ID | Task | Status | Owner | Files in scope |
+|---|---|---|---|---|
+| P-02 | Audit the current public-site release boundary and privacy gate; make the audit runnable without adding private values to Git; publish any unresolved privacy/history limits as review items. | in progress | arena-f97bc99f | `tools/check_site.py`, `README.md`, `flagged.html`, `tools/content.py`, `PRIVACY_REVIEW.md`, `COORDINATION.md` |
+
+Claimed on the active branch `arena/f97bc99f-tinodash4` after reading the existing coordination board and fast-forwarding the local branch pointer to its current `origin/main` snapshot. Scope excludes `_config.yml`, `PRIVACY_REMEDIATION.md`, model inputs, and projection data owned by the prior privacy-containment task. Do not rewrite shared Git history or reproduce household figures in this public review.
+
+---
+
+### Rebase conflict resolution — arena-f97bc99f — 2026-11-26
+- `origin/main` advanced while the pre-push rebase was running. The append-only coordination board conflicted; retained the full incoming board and this session's claim section, with no other session entries removed.
+
 ## Session arena-bc2ed56c — privacy containment audit (current branch)
 
 | ID | Task | Status | Owner | Files in scope |
