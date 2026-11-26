@@ -1,4 +1,4 @@
-name: Verify site
+name: Verify model + site
 
 on:
   push:
@@ -13,5 +13,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Publish gate (identifiers, rounding, row links, internal links, required content)
+      # The alternate site trees (site/, decision-model/, decision-workspace/) were untracked and
+      # archived to private/archive/ (gitignored). Their regeneration and smoke-test steps were removed.
+      - name: Build the public root dashboard
+        run: python3 tools/build_site.py
+      - name: Check root Pages artifact privacy, sources, rounding, and links
         run: python3 tools/check_site.py --allow-missing-private
+      - name: Ensure Jekyll exclusions stay enabled
+        run: test ! -e .nojekyll

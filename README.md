@@ -26,11 +26,13 @@ printable one-page brief is `brief.pdf`; the print-ready HTML version is `brief.
 python3 model/model.py            # needs private/raw_inputs.json (gitignored, internal only)
 python3 tools/build_site.py       # site from data/model_outputs.json and tools/content.py
 python3 tools/build_brief_pdf.py  # brief.pdf (needs reportlab)
-python3 tools/check_site.py       # privacy scan, row-link check, rounding, links; must pass before publishing
+python3 tools/check_site.py       # root Pages-artifact privacy scan, row-link check, rounding, links
 ```
 
-The site build does not need the private inputs. `check_site.py` scans every published file (including
-`brief.pdf`) for household values, zip codes, and location labels. It fails the build if any are found.
+The site build does not need the private inputs. `check_site.py` scans the root Pages artifact (including
+`brief.pdf`) for household signatures when the untracked private input file is available, and always
+checks for forbidden identifiers, rounding, row sources, required content, and internal links. GitHub Pages
+uses `_config.yml` to exclude alternate generated trees; repository contents remain independently public.
 
 ## Decision workspace (archived)
 

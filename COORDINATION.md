@@ -541,7 +541,7 @@ and `decision-workspace/` were not edited by this session.
 
 | ID | Task | Status | Owner | Files in scope |
 |----|------|--------|-------|----------------|
-| P-01 | Audit current public artifacts for direct household-derived property inputs, identify current exposure, and contain alternate site trees from Pages. Do not rewrite shared/main history. | needs review (Pages build / history purge not verified) | arena-bc2ed56c | `_config.yml`, `.nojekyll`, `PRIVACY_REMEDIATION.md`, `COORDINATION.md` |
+| P-01 | Audit current public artifacts for direct household-derived property inputs, contain alternate site trees from Pages, and publish an accurate privacy status. Do not rewrite shared/main history. | needs review (Pages deploy verified; repository/history cleanup remains) | arena-bc2ed56c | `_config.yml`, `.nojekyll`, `PRIVACY_REMEDIATION.md`, `COORDINATION.md`, `README.md`, `tools/`, `data/irregularities.json`, `flagged.html`, `.github/workflows/verify.yml` |
 
 Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
 
@@ -578,6 +578,7 @@ Claimed P-02 (below) after merging `origin/main` (PR #19 containment) into this 
 - Git history: the checkout is grafted to one commit, so pre-rounding history cannot be inspected or purged here. History rewrite needs owner authorization (see `PRIVACY_REMEDIATION.md`).
 - The 1% surcharge is applied as a flat 13.3% on gains in the model; the statute applies 1% only to taxable income above $1,000,000 (flagged in `data/irregularities.json`).
 - Not done in this session: line-by-line re-verification of all table rows, insurance quotes, Santa Clara County TRA rate, comparables, and proposed-legislation tracking. These remain open and are listed on the Flagged for Review page.
+P-01 update: `_config.yml` excludes alternate site trees and source directories from the Jekyll artifact; `.nojekyll` was removed and the root generator no longer recreates it. The root Flagged for Review page now states that containment is partial. PR #19 merged at `b1fa5ba8555c35b86ba79248e5ab8a9e0d9bc95e`; GitHub Pages build/deploy run `45886233033` succeeded. The live root page was fetched, while fetch attempts for excluded alternate paths failed; the artifact download was blocked by the sandbox's external blob-host restriction. This checkout still does not allow a history-wide purge; see the next privacy log entry.
 ## Session arena-e5c3fe3a — privacy gate and publish verification
 
 ### Claim
@@ -603,3 +604,9 @@ Claimed P-02 (below) after merging `origin/main` (PR #19 containment) into this 
 - Resolution: retained the complete `arena-bc2ed56c` entry and this session's claim/completion log. No `_config.yml` or `.nojekyll` files owned by that session were edited. The new Pages exclusion configuration is present in the rebased tree; its deployed effect remains unverified pending the other session's Pages check.
 - The legacy `decision-model` output is now also scrubbed of postal-code/neighborhood tokens in the repository, but remains public as GitHub repository content. Its privacy notice was updated to reflect that Pages exclusion is configured but deployment verification is pending.
 - Post-rebase check adjustment: the merged privacy-containment change intentionally removed `.nojekyll` so Jekyll can apply `_config.yml`; `tools/check_site.py` was updated to accept this only when the Jekyll config declares the alternate-tree exclusions. After that adjustment, `python3 tools/check_site.py`, `node model/check_site.js`, and `git diff --check` pass; exact owner-value comparison remains explicitly skipped.
+
+
+### Rebase conflict resolution — arena-bc2ed56c — 2026-11-26
+- Pulling the updated `main` before the follow-up push brought in `arena-e5c3fe3a`'s concurrently merged privacy audit and produced conflicts in `COORDINATION.md` and `tools/check_site.py`.
+- Resolution: retained the full incoming audit and its repo-wide identifier scan; preserved this session's Pages build result and remediation record; extended the Jekyll-config check to assert all configured exclusions. No incoming privacy scrub or audit material was discarded.
+- Follow-up changes in PR #22 add the root build/privacy checks to CI and correct the public privacy flag. The private-value comparison remains explicitly `SKIP` when the offline file is absent; no exact-value privacy verification is claimed.
