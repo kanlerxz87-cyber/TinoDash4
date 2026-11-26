@@ -31,3 +31,10 @@ Before relying on containment, the Pages artifact must be rebuilt from the repos
 4. For future household calculations, store raw inputs only in an offline or access-controlled private inventory and generate a publication export from synthetic/ranged inputs. Run a privacy scan on the final Pages artifact before every release.
 
 This note intentionally avoids restating the exposed household values or exact property identifiers.
+
+## Update 2026-11-26 (session on branch arena/10df03a3-tinodash4)
+
+- `decision-model/`, `decision-workspace/` and `site/` were untracked from git and moved to `private/archive/` (gitignored). They are no longer in the repository tree and are not published.
+- `model/build_model.py` now uses rounded constants (`7210 / 539740`, `2440 / 114250`) instead of the unrounded owner figures.
+- `tools/check_site.py` now (a) scans the whole tracked tree for unrounded owner figures, owner text strings and forbidden identifiers, (b) exempts official source URLs from the identifier check, and (c) runs in CI with `--allow-missing-private` (the owner runs the full scan locally with `private/raw_inputs.json`).
+- Result: `python3 tools/check_site.py` passes on the working tree. The earlier git history is unchanged and still contains the removed trees. A history rewrite remains an owner decision and is not claimed here.

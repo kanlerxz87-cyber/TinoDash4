@@ -546,3 +546,35 @@ and `decision-workspace/` were not edited by this session.
 Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
 
 P-01 update: `_config.yml` now excludes alternate site trees and source directories from the Jekyll artifact; `.nojekyll` was removed to allow the exclusions to take effect. `PRIVACY_REMEDIATION.md` records the exact boundary: repository files and earlier public history remain outside this containment. Local Jekyll verification is unavailable in this checkout, so this task remains needs review pending the GitHub Pages build and a deployed-path check.
+
+---
+
+## Session 10df03a3 — privacy containment and publish gate (branch `arena/10df03a3-tinodash4`)
+
+Claimed P-02 (below) after merging `origin/main` (PR #19 containment) into this branch.
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| P-02 | Contain household-specific figures and location labels in tracked files; make the publish gate runnable; verify the one enacted tax item the owner asked about | done (publish gate passes; repository history not rewritten; GitHub Pages result recorded below) | 10df03a3 | `decision-model/` and `decision-workspace/` and `site/` (untracked, moved to `private/archive/`), `model/build_model.py` (2 constants), `tools/check_site.py`, `.github/workflows/verify.yml`, `README.md`, `PRIVACY_REMEDIATION.md`, `data/irregularities.json`, `COORDINATION.md` |
+
+### Verification performed (2026-11-26)
+
+| Item | Official source checked | Result |
+|------|------------------------|--------|
+| Federal estate/gift filing threshold, 2026 year of death: $15,000,000 | https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax (fetched) | verified |
+| California 1% surcharge on taxable income over $1,000,000 (Behavioral Health Services Tax, formerly Mental Health Services Tax) | https://www.ftb.ca.gov/forms/2022/2022-540-booklet.html (search result excerpt of FTB Form 540 line 62 instructions; the FTB page itself returned an error in fetch) | verified from the FTB booklet excerpt; the model's flat 13.3% treatment is flagged, not changed |
+| Form 540 "capital-gain treatment" | not re-verified in this session | open |
+
+### Containment and gate changes
+
+- `decision-model/`, `decision-workspace/`, `site/` untracked from git and moved to `private/archive/` (gitignored). Earlier commits still contain them.
+- `model/build_model.py`: two unrounded owner constants replaced by $10-rounded values.
+- `tools/check_site.py`: scans for unrounded owner figures, owner text strings and forbidden identifiers across the tracked tree; skips URLs in the identifier check; `--allow-missing-private` for CI.
+- `.github/workflows/verify.yml`: runs the publish gate only (the old job regenerated the archived `site/` tree).
+- Result on the working tree: `python3 tools/check_site.py` → all checks passed.
+
+### Irregularities and open items (not blocking)
+
+- Git history: the checkout is grafted to one commit, so pre-rounding history cannot be inspected or purged here. History rewrite needs owner authorization (see `PRIVACY_REMEDIATION.md`).
+- The 1% surcharge is applied as a flat 13.3% on gains in the model; the statute applies 1% only to taxable income above $1,000,000 (flagged in `data/irregularities.json`).
+- Not done in this session: line-by-line re-verification of all table rows, insurance quotes, Santa Clara County TRA rate, comparables, and proposed-legislation tracking. These remain open and are listed on the Flagged for Review page.

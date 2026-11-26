@@ -7,8 +7,8 @@ independent treatments of one question rather than as one product.
 | Site | Where | How it is built |
 | --- | --- | --- |
 | Dashboard (root) | `index.html`, `pages/`, `assets/`, `data/` | `tools/build_site.py` from `data/model_outputs.json` |
-| Decision workspace | `decision-workspace/` | `model/build.py` then `model/site.py` (20 pages) |
-| Model + dashboard (`site/`) | `site/` (pages + `site/data/*.json`) | `model/build_model.py` then static HTML/JS; smoke-tested by `model/check_site.js` |
+| Decision workspace (archived, not tracked) | `private/archive/decision-workspace/` | `model/build.py` then `model/site.py` (20 pages) |
+| Model + dashboard (archived, not tracked) | `private/archive/site/` | `model/build_model.py` then static HTML/JS; smoke-tested by `model/check_site.js` |
 
 Both hold the household's figures only as rounded, anonymized output: every published dollar figure
 is rounded to the nearest $10, and no address, parcel number or account number appears anywhere.
@@ -32,7 +32,10 @@ python3 tools/check_site.py       # privacy scan, row-link check, rounding, link
 The site build does not need the private inputs. `check_site.py` scans every published file (including
 `brief.pdf`) for household values, zip codes, and location labels. It fails the build if any are found.
 
-## Decision workspace (`decision-workspace/`)
+## Decision workspace (archived)
+
+> Archived 2026-11-26: `decision-workspace/`, `decision-model/` and `site/` were untracked from git and moved to `private/archive/` (gitignored) because they contained household-specific figures and location labels. Their commands below now refer to that archive. Git history still contains earlier copies; see `PRIVACY_REMEDIATION.md`.
+
 
 The same question modelled end to end: twelve paths (live / rent / sell / eight mixed) scored on one
 set of assumptions, a 1,200-path block bootstrap over the 1928-2025 annual record, Prop 19 against
