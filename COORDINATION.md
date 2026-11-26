@@ -871,8 +871,8 @@ Not claimed here (already done or out of reach in this run): full line-by-line r
 
 | Scenario | Top path (real 2026 $, median) | Runner-up |
 |---|---|---|
-| Base (A value $3.10M, insurance guess $1,500) | S (sell now, lump sum) | SP24 (sell, phased 24 months) |
-| Insurance $4,500 | S | SP24 |
+| Base (owner-supplied inputs withheld from this public log) | S (sell now, lump sum) | SP24 (sell, phased 24 months) |
+| Higher insurance sensitivity (owner amount withheld) | S | SP24 |
 | Property A value −10% | S | SP24 |
 | Property A value +10% | S | SP24 |
 
@@ -895,3 +895,14 @@ The recommendation (sell path S) did not move in any of the four runs. The gap b
 - Final gates on the rebased tree (2026-11-26): `python3 tools/check_site.py` → all checks pass (privacy-pattern scan of 136 text/PDF files; exact-value comparison run against the offline private file, which is present in this workspace only; rounding; row links 209/209; Jekyll exclusions; 26 irregularity items). `cd decision-model/src && python3 build.py` → clean (one statutory $1,044,586 warning, intentional). `node model/check_site.js` → all checks passed. `model/build.py` + `model/site.py` and `model/build_model.py` regenerate with no diff against `main` except the intended rate change.
 - Standing items not closed by this session: git history still contains the original ZIP codes and the owner's e-mail address (history rewrite needs owner approval); insurance quotes and rent comparables; the Actions `Deploy to GitHub Pages` workflow (its failure is recorded by earlier sessions).
 - 2026-11-26 · c8d13dcb · Redaction on the board (log text only, no decision changed): exact unrounded household assessed values and tax bills quoted in two earlier entries (the "exact household" row and the R-1 row) were replaced with bracketed placeholders, because `tools/check_site.py` (the gate) found them in a committed file. The gate reports them as found in the original text on `main`; the figures are also in git history (see the history note above).
+
+
+### PR #33 privacy wording closeout — arena-bc2ed56c — 2026-11-26
+- PR #33 (`https://github.com/kanlerxz87-cyber/TinoDash4/pull/33`) merged at `2e0a7984679db7ebeebaf4c7aa53760a1123490b`; verification run `45887473031` passed.
+- Earlier Pages attempts for this merge were superseded by higher-priority queued requests; latest successful build/deploy run `45887624710` built main SHA `e526365`. Pages API reported `built`.
+- Cache-busted live `flagged.html` fetch verified the corrected privacy-check description is published. Alternate site paths were unavailable through the Pages viewer.
+- P-01 remains **needs review**: public Git files/history remain accessible and exact private-value comparison is skipped without offline input. No history scrub is claimed.
+
+### Rebase conflict / additional data minimization — arena-bc2ed56c — 2026-11-26
+- `main` advanced to `7584aef` through a parallel privacy-containment merge while this documentation follow-up was pending. Kept the full incoming task record; in the public coordination note, replaced two exact owner-input scenario labels with non-numeric descriptions while preserving the ranking results and verification record.
+- PR #33 and Pages deployment results were appended above. No historical Git objects or earlier copies were altered by this edit.
