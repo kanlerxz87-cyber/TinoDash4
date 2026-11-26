@@ -59,7 +59,9 @@ def build():
         f"Sell and invest {B.money(B.BASE['S'])}; phased over 24 months {B.money(B.BASE['SP24'])}; "
         f"rent then sell {B.money(B.BASE['R'])}; live with no rent credit {B.money(B.BASE['L'])}. "
         f"Living ties with selling only at a rent credit of about {B.pct(B.BE_CREDIT, 0)}. "
-        "Provisional lean: sell in the transfer year. Not a decision. Real 2026 dollars, rounded to $10."
+        "Conditional model outputs only, not a recommendation. Private inputs are unavailable in this checkout, "
+        "so these figures cannot be reproduced here; verify flagged assumptions and rebuild before relying on them. "
+        "Real 2026 dollars, rounded to $10."
     )
     qa = ["Is the trust funded for Property A, and what is the date-of-death valuation plan?",
           "Is portability to be elected, and were prior taxable gifts made (Form 709)?",

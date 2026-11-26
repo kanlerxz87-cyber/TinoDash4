@@ -1039,3 +1039,21 @@ Publishing result: branch pushed and PR #30 (`arena/7cdb8a85-tinodash4` → `mai
 - **Already true in the build (checked):** no "prior repository" figures, no P.L. 119-21 reference, no CRFB reference, S22 removed, S06 `not_verified`, and no "withdrawn" wording in the decision log.
 - **Still open (not blocking; flagged):** Rev. Proc. 2025-32 chunks 1, 3, 6; SCC FY 2025-26 rate book; 2008 T-bill check; T-bill column +0.034% (F-13). The live Pages URL could not be fetched from the sandbox; the Pages build status is `built`.
 - **Process note.** PR #41 was merged before these items were fixed, and the owner-inputs move (PR #43) was made after the merge. This entry records the order of events.
+
+---
+
+## Session arena/b717f898 — decision-readiness safeguards
+
+### Claim (scope; no overlapping active claim found)
+| ID | Task | Status | Owner | Files |
+|---|---|---|---|---|
+| BR-1 | Put decision readiness, missing evidence, and model reproducibility limits ahead of the provisional ranking on the public landing page and one-page brief | done | arena/b717f898-tinodash4 | `tools/build_site.py`, `tools/build_brief_pdf.py`, generated root HTML/PDF, `COORDINATION.md` |
+
+Claim note: no private values, identifying property details, or new model assumptions were added. The working tree has no private input file, so no new model run or exact-input comparison is claimed. Existing source register and flagged items remain the evidence of record.
+
+### Completion and verification (2026-11-26)
+- Landing page now leads with a decision-readiness warning, clearly distinguishes the future inheritance from the already-owned rental property, describes the ranking as conditional output only, and links directly to the questions, facts, and flagged registers. The existing "What would change the answer" section remains on the first screen.
+- The one-page HTML/PDF brief no longer describes the sale path as a provisional recommendation; it states that the reported model figures cannot be reproduced from this checkout and must be rebuilt after evidence is verified. What-if controls now call their top result a model output, not a recommendation.
+- Generated with `python3 tools/build_site.py` and `python3 tools/build_brief_pdf.py` (ReportLab installed in a temporary ignored virtual environment, removed after generation). PDF generator confirmed one page. `python3 tools/check_site.py`: PASS for privacy-pattern scan, $10 rounding, all table-row links, Pages exclusions, and 29 flagged items; private-value comparison was skipped because `private/raw_inputs.json` is absent, so no exact-value privacy claim is made.
+- `git diff --check` reports a trailing space in the ReportLab-generated PDF metadata line; the PDF is valid and the generated file remains one page. No claim is made that household calculations were rebuilt: the private input file is unavailable in this checkout.
+- Existing official-source findings and open questions are not changed by this UI safety improvement. No legal/tax value was added or marked newly verified.
