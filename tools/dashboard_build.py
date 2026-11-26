@@ -15,6 +15,7 @@ statutory amounts, which are checked against the source register.
 import html
 import json
 import pathlib
+import re
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DASH = ROOT / "dashboard"
@@ -73,7 +74,7 @@ STATUS = {
     "assumption": ("b-assume", "Assumption"),
     "model": ("b-model", "Model output"),
     "unverified": ("b-bad", "Unverified"),
-    "internal": ("b-model", "Internal decision item, not a sourced figure"),
+    "internal": ("b-model", "Decision item (no figure)"),
 }
 
 
@@ -90,15 +91,48 @@ def srcl(ids):
     return " ".join(out)
 
 
+FIG_RE = re.compile(r"[$%]\s*\d|\d\s*%|\$\d")
+LABEL_WORDS = ("assumption", "owner", "stress", "model output", "placeholder")
+
+
+def _is_figure(text):
+    return bool(FIG_RE.search(text)) and len(text) <= 40
+
+
 def table(headers, rows, cls="", marker="internal"):
-    """Rows without an official link get a visible marker: 'internal' (decision item, not a sourced
-    figure) or the status given in marker. Sourced rows are left as they are."""
+    """Every row must be sourced (official link) or labelled (owner record, assumption, model output).
+    A row with neither gets an 'Unverified' badge, and any figure in it is blanked (never inferred).
+    Text-only rows without a link keep their text with a neutral 'Decision item' badge."""
     h = "".join(f"<th>{e(x)}</th>" for x in headers)
     fixed = []
     for r in rows:
         r = list(r)
         joined = " ".join(str(c) for c in r)
-        if '<a href="http' not in joined and not any(b in joined for b in ("b-owner", "b-assume", "b-bad", "b-model", "b-snip")):
+        has_link = '<a href="http' in joined
+        has_badge = any(b in joined for b in ("b-owner", "b-assume", "b-bad", "b-model", "b-snip"))
+        labelled = any(w in joined.lower() for w in LABEL_WORDS)
+        if has_link or has_badge:
+            fixed.append(r)
+            continue
+        if labelled:
+            low = joined.lower()
+            if "placeholder" in low:
+                kind = "unverified"
+            elif "owner" in low:
+                kind = "owner"
+            elif "model output" in low:
+                kind = "model"
+            else:
+                kind = "assumption"
+            r[0] = badge(kind) + " " + str(r[0])
+            fixed.append(r)
+            continue
+        figs = [i for i, c in enumerate(r) if i > 0 and _is_figure(re.sub(r"<[^>]+>", "", str(c)).strip())]
+        if figs:
+            for i in figs:
+                r[i] = "<em>blank: not verified</em>"
+            r[0] = badge("unverified") + " " + str(r[0])
+        else:
             r[0] = badge(marker) + " " + str(r[0])
         fixed.append(r)
     body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in fixed)
@@ -176,7 +210,7 @@ def p_index():
 <h2>What would change the answer</h2>
 <ol class="changes">
 <li><strong>A written commitment by the heir to live in A within 12 months.</strong> Until it exists, Rule 3 removes the living paths. Even with it, living matches a lump-sum sale only if the imputed rent yield is about {pct(BE['live_rent_yield']*100,1)} of value a year (base assumption 3.75%) or if home values grow about {pct(BE['live_hpa']*100,1)} a year (base 2.3%).</li>
-<li><strong>Three verified rental comparables for A.</strong> Until they exist, Rule 4 keeps the rent paths as a floor only. A rent path matches a lump-sum sale only at a gross yield of {pct(BE['rent_rent_yield']*100,1) if BE['rent_rent_yield'] else 'above 20%, outside the range tested'}.</li>
+<li><strong>Three verified rental comparables for A.</strong> Until they exist, Rule 4 keeps the rent paths as a floor only. A rent path matches a lump-sum sale only at a gross yield of about {pct(MO['breakeven']['2050_10']['rent_rent_yield']*100,1)} in the 10-year cases, and not within 20% in the 20-year cases (outside the range tested).</li>
 <li><strong>Tax-rate area and bills for A.</strong> The owner's billed rate is {pct(A_RATE,2)} of assessed value; the reference rate area used here is {pct(REF_A,2)} (FY 2024-25). The parcel's own rate area is unknown. The model uses the billed rate. When the reference rate is used instead, the pick does not change (see What-if).</li>
 <li><strong>Equity returns.</strong> If equities return 5% a year instead of the historical {MO['assumptions']['equity_geo_mean_1928_2025_pct']:.2f}%, the pick does not change in any of the four cases (see What-if).</li>
 <li><strong>The Proposition 19 allowance.</strong> The statutory amount of {usd(PROP19)} applies to transfers up to 15 February 2027. The next adjustment is due 16 February 2027 (BOE LTA 2025/009). A change would re-open the living case.</li>
@@ -253,17 +287,32 @@ def p_paths():
     page("pages/paths.html", "Paths compared", body, "Eight paths for Property A at identical dates and horizons.")
 
 
+def _rules_section2():
+    """Verbatim choice criteria from DECISION_RULES.md section 2 (bold markers removed)."""
+    text = (ROOT / "DECISION_RULES.md").read_text(encoding="utf-8")
+    sec = text.split("## 2.", 1)[1].split("## 3.", 1)[0]
+    out = {}
+    for line in sec.splitlines():
+        m = re.match(r"^(\d)\. (.*)$", line.strip())
+        if m:
+            out[m.group(1)] = m.group(2).replace("**", "")
+    assert sorted(out) == [str(i) for i in range(1, 9)], "DECISION_RULES.md section 2 must hold rules 1 to 8"
+    return out
+
+
 def p_decision():
-    rules = [
-        ["1", "Primary metric: median real net position at the horizon, across the scenarios and simulated paths.", "Applied to every path."],
-        ["2", "Downside guard: a path's 10th-percentile real outcome must stay within 10% of the lump-sum sale's 10th percentile. If not, the lump-sum sale is chosen.", "Applied to the phased paths."],
-        ["3", "Living is eligible only if the household commits in writing to occupy A as its principal residence within 12 months.", "No commitment on file: living paths removed."],
-        ["4", "Renting is eligible only if at least three verified rental comparables for A exist. Until then, renting is reported as a floor.", "None on file: rent paths removed; shown as a floor."],
-        ["5", "Phased sale beats the lump sum only if its worse black-swan outcome is at least as good as the lump sum's, and its base median is within 5% of the lump sum's.", "Applied to the phased paths."],
-        ["6", "A mixed path is chosen only if it beats the best pure path on the primary metric and on the downside guard.", "No mixed path eligible."],
-        ["7", "No federal estate-tax liability is assumed unless the taxable estate is verified above the basic exclusion in the year of death.", "Other estate assets unknown; every result is conditional."],
-        ["8", "If two paths are within 2% on the primary metric, prefer more liquidity at transfer, then lower regulatory-change exposure.", "Applied to the phased paths."],
-    ]
+    quotes = _rules_section2()
+    effect = {
+        "1": "Applied to every path.",
+        "2": "Applied to the phased paths.",
+        "3": "No commitment on file: living paths removed.",
+        "4": "None on file: rent paths removed; shown as a floor.",
+        "5": "Applied to the phased paths.",
+        "6": "No mixed path eligible.",
+        "7": "Other estate assets unknown; every result is conditional.",
+        "8": "Applied to the phased paths.",
+    }
+    rules = [[k, quotes[k], effect[k]] for k in sorted(quotes)]
     rr = []
     for k in PICK_KEYS:
         ck = MO["picks"][k]["checks"]
@@ -320,7 +369,7 @@ def p_decision_log():
     rows = [
         ["2026-11-25", "Choice rules written (DECISION_RULES.md)", "Adopted as the pre-commitment", "Written before any model output; any change must be dated and logged.", "Repository file"],
         ["2026-11-26", "First model run", "Pick: lump-sum sale in all four cases", "Superseded by the correction below; not published.", "S03, S17"],
-        ["2026-11-26", "Model correction (bug)", "Household cash flows now go to the cash account at the bill return", "Before the fix, a living household's running costs compounded at the equity return, overstating them. Living median for 2050/20 moved from -$76,930 to $2,558,810. The pick did not change.", "Repository file (tools/model.py)"],
+        ["2026-11-26", "Model correction (bug)", "Household cash flows now go to the cash account at the bill return", "Before the fix, a living household's running costs compounded at the equity return, overstating them. Living median for 2050/20 moved from -$76,930 (before the fix) to " + usd(MO["results"]["2050_20"]["paths"]["LIVE"]["mc_fin"]["median"]) + ". The pick did not change.", "Repository file (tools/model.py)"],
         ["2026-11-26", "Prop 19 allowance", "Statutory $1,044,586 used exactly", "First run used a rounded placeholder.", srcl(["S03"])],
         ["2026-11-26", "Inflation and bill-return inputs", "2.3% inflation; 3.2% bill return", "Checked against CBO's February 2026 projections; the model holds them flat (see Flagged F-22).", srcl(["S23"])],
         ["2026-11-26", "Repository cleanup for publication", "Earlier site copies and analysis folders removed from the published tree", "They carried ZIP codes, a neighbourhood name and household-level material. Kept locally outside Git; history not rewritten (see Flagged F-14).", "Repository commit"],
@@ -719,7 +768,7 @@ def p_flagged():
         ["F-19", "County and city installment dates are not confirmed in a fetched passage.", "unverified", srcl(["S10", "S12"])],
         ["F-20", "The model's Proposition 19 assessed-value formula (higher of factored base and market value less the allowance) is the model's reading of the BOE letter. The CPA and attorney should confirm it.", "unverified reading", srcl(["S03"])],
         ["F-21", "Phase-in period: DECISION_RULES.md section 5 says staging over 24 to 36 months. The model tests a 12-month phase-in after 24 or 36 months of parking. The discrepancy is open (SG-08).", "open", "Repository file"],
-        ["F-22", "The model holds 2.3% inflation and a 3.2% bill return flat for all years. CBO's path is 2.8% and 3.3% in 2026 and 2.4% in 2027, and 3.2% bills from 2027 to 2030 (S23).", "simplification", srcl(["S23"])],
+        ["F-22", "The model holds 2.3% inflation and a 3.2% bill return flat for all years. CBO's path (S23): CPI 2.8% in 2026, 2.4% in 2027, then 2.3%; 3-month bill rate 3.3% in 2026 and 3.2% from 2027 to 2030.", "simplification", srcl(["S23"])],
         ["F-23", "Renting: no gross rent yield up to 20% lets a rent path match the lump-sum sale at 20 years. The rent path is not sensitive to the pick.", "result", "What-if"],
         ["F-24", "Model correction: a living household's running costs compounded at the equity return. Fixed; the pick is unchanged; before and after values are on the decision log.", "corrected", "Decision log"],
         ["F-25", "Interpretation: the primary metric excludes imputed rent (not cash). Including it would raise the living paths; the rule does not say which.", "interpretation", "Method"],
