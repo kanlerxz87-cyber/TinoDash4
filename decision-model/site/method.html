@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Method, sources &amp; privacy — Inherited-Home Decision Model</title>
+<link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="brand">
+    <span class="brandmark">IH</span>
+    <span class="brandtext">
+      <strong>Inherited-Home Decision Model</strong>
+      <small>Property A: Santa Clara County &middot; Property B: San Francisco &middot; anonymised</small>
+    </span>
+  </div>
+  <nav class="topnav">
+    <a href="index.html">Summary</a>
+    <a href="choices.html">What changes the answer</a>
+    <a href="paths.html">Compare</a>
+    <a href="flagged.html">Flagged</a>
+  </nav>
+</header>
+<div class="shell">
+<aside class="sidebar">
+<div class="navgroup"><div class="navlabel">Start here</div><ul>
+<li><a href="index.html">Executive summary</a></li>
+<li><a href="questions.html">Open questions &amp; missing information</a></li>
+<li><a href="flagged.html">Flagged for review</a></li>
+<li><a href="suggestions.html">Improvement suggestions</a></li>
+</ul></div>
+<div class="navgroup"><div class="navlabel">The four questions</div><ul>
+<li><a href="choices.html">What would change the answer</a></li>
+<li><a href="paths.html">Compare every path</a></li>
+<li><a href="black-swan.html">Stress tests &amp; black swans</a></li>
+<li><a href="reinvestment.html">Reinvestment risk &amp; the investing policy</a></li>
+</ul></div>
+<div class="navgroup"><div class="navlabel">The numbers</div><ul>
+<li><a href="projections.html">Year-by-year projections</a></li>
+<li><a href="taxes.html">Taxes, separated properly</a></li>
+<li><a href="authorities.html">Verified authorities &amp; figures</a></li>
+<li><a href="assumptions.html">Assumptions &amp; ranges</a></li>
+</ul></div>
+<div class="navgroup"><div class="navlabel">The process</div><ul>
+<li><a href="inheritance.html">Inheritance, step by step</a></li>
+<li><a href="deadlines.html">Deadlines as a timeline</a></li>
+<li><a href="property-b.html">Property B (existing three-unit building)</a></li>
+<li><a href="decision.html">Pre-commitment agreement</a></li>
+<li><a href="decision-log.html">Decision log</a></li>
+</ul></div>
+<div class="navgroup"><div class="navlabel">Reference</div><ul>
+<li><a href="briefing-sheet.html">Attorney &amp; CPA briefing sheet</a></li>
+<li><a href="inventory.html">Private estate inventory</a></li>
+<li><a href="glossary.html">Glossary</a></li>
+<li><a href="method.html" class="active">Method, sources &amp; privacy</a></li>
+</ul></div>
+<div class="navgroup privacy">
+  <div class="navlabel">Privacy</div>
+  <p>Owner-supplied and modelled amounts use the requested $10 rounding step; legal thresholds remain exact where needed. Parcel-unique assessed values are banded. No direct names, street addresses, parcel IDs, or postal codes are shown, but property estimates and local-law references can still be correlated.
+  <a href="method.html">Method &amp; privacy</a></p>
+</div>
+</aside>
+<main id="main">
+<header class="pagehead">
+<h1>Method, sources &amp; privacy</h1>
+<p class="subtitle">What was verified, what was not, how to check it, and the privacy model that governs what may appear here.</p>
+</header>
+
+<section>
+<h2>How this was built, and what its limits are</h2>
+<p class="lead">The household asked for line-by-line verification from official sources, no
+hallucination, and links for manual review. This page explains what was actually done, what was
+not, and how to check any of it.</p>
+
+<h3>The verification protocol</h3>
+<ol class="biglist">
+<li><strong>Every figure that enters the model is a row in <code>data/facts.json</code>.</strong>
+The row records the value, the issuing authority, the instrument, the URL, the exact wording read,
+the date checked, and a status.</li>
+<li><strong>A status of <code>verified</code> means I opened the cited page or PDF in this
+session and read the value in its text.</strong> The <code>quote</code> field holds the actual
+wording. Nothing is marked verified on the basis of memory or a summary.</li>
+<li><strong>A status of <code>secondary</code> means the value is official in substance but I
+could not fetch the official page.</strong> These are listed on the Flagged page with the reason.</li>
+<li><strong>A status of <code>unverified</code> means no official source exists or could be
+located.</strong> The value is either withheld, or shown as a range, or shown as the household's
+own estimate clearly labelled. It is never presented as a fact.</li>
+<li><strong>Nothing was inferred to fill a gap.</strong> Where a number was needed and could not
+be established, the model carries a range and the site says so.</li>
+</ol>
+
+<h3>What was actually fetched and read</h3>
+<p>Among others: the IRS estate-tax page and Rev. Proc. 2025-32 (both the PDF and the sections
+cited); IRS Publications 551, Topics 409, 414, 415, 701, 703; the IRS net investment income tax
+page; Revenue Procedure 2022-32 in full; the complete text of IRC §§ 102, 1014, 1031 and 168 via
+Cornell's Legal Information Institute; the California Franchise Tax Board's 2025 Form 540 booklet
+(including the line 62 Behavioral Health Services Tax instructions, which the household
+specifically asked about); Revenue and Taxation Code § 63.2 in full including the 2025 amendment;
+State Board of Equalization Letter To Assessors 2025/009; the Board of Equalization homeowners'
+exemption page; the San Francisco Assessor-Recorder's Proposition 19 and transfer-tax pages; the
+Federal Reserve H.15 release; FRED's CPI series; and the NBER's business cycle table.</p>
+
+<h3>What was not done</h3>
+<div class="callout warning">
+<ul>
+<li><strong>No legislation tracking.</strong> The household asked for proposed legislation to be
+tracked and distinguished from enacted law. This site tracks neither. It records only enacted law
+as of 2026-11-25 and says so on every page that touches the question.</li>
+<li><strong>No appraisal, no comparables, no rent survey.</strong> The three numbers that most
+drive the result are household estimates. This is the model's largest weakness and it is flagged
+in the most prominent place available.</li>
+<li><strong>No professional review.</strong> No attorney, CPA or adviser has seen this.</li>
+<li><strong>No probabilistic modelling.</strong> The scenarios are not weighted. Assigning
+probabilities to 1929 versus 2022 would be inventing information.</li>
+<li><strong>Property B is not fully modelled.</strong> It is analysed as a risk factor and a
+liquidity constraint, not as a cash-flow asset with its own ledger. That is a real gap.</li>
+</ul>
+</div>
+</section>
+
+<section>
+<h2>Privacy</h2>
+<div class="callout danger">
+<h3>This repository is public. Plan accordingly.</h3>
+<p>The repository is public and its GitHub Pages site is public and cannot be made private on a
+free plan. The household's stated highest priority was that no personal information appear in the
+final product. The measures taken:</p>
+<ul>
+<li>No household names, street addresses, parcel numbers, account numbers, dates of death, or tenant identities are intentionally stored in the working files. Commit metadata and public source/history still require separate privacy review.</li>
+<li>Owner-supplied estimates and modelled dollar outputs use the requested $10 rounding step. Statutory thresholds and source rates are left exact when rounding would misstate the law.</li>
+<li><strong>Parcel-unique assessed values are banded by construction, not by rounding.</strong>
+A $10 band on a tax-assessed value is still unique to one parcel; so those two values are carried
+as $10,000 bands in the model and never rendered at full precision.</li>
+<li>No analytics, no cookies, no third-party scripts, no fonts loaded from a CDN, and no forms
+that post anywhere. A visitor cannot be profiled and their inputs are never transmitted.</li>
+<li><code>.gitignore</code> excludes local private-input paths, but does not make the tracked model source or published estimates private. Do not place exact inventories or documents in this repository.</li>
+</ul>
+<p><strong>The honest limitation:</strong> rounding protects against casual discovery and search
+indexing. It does not protect against a reader who already knows the household. If that is a
+realistic threat, do not publish — run <code>python3 sitegen.py --out site-private</code> locally
+and keep the output off the internet. See <code>PRIVACY.md</code> in the repository.</p>
+</div>
+
+<h3>Git history and prior exposure</h3>
+<p>This checkout is shallow and does not contain enough earlier commits to audit the full public history. The merge-base commit metadata contains a personal email identifier, and the current branch cannot remove it from the default branch's history. A normal cleanup commit does not erase old Git objects. A repository-wide rewrite and cache purge have not been performed; do not treat this site as a completed history scrub.</p>
+</section>
+
+<section>
+<h2>Reproducing and extending this</h2>
+<table class="wide">
+<tbody>
+<tr><th><code>python3 sitegen.py --out site</code></th><td>Build the site. No dependencies beyond
+the Python standard library.</td></tr>
+<tr><th><code>python3 sitegen.py --round 10000</code></th><td>Coarser rounding for a more
+privacy-hardened build.</td></tr>
+<tr><th><code>python3 tools/check_site.py site</code></th><td>Check every internal link, every
+image, and every claim that a figure has a source.</td></tr>
+<tr><th><code>data/facts.json</code></th><td>The single source of truth for every figure. Edit
+here, never in a generated page.</td></tr>
+<tr><th><code>model/params.py</code></th><td>Every input, with its provenance and status.</td></tr>
+<tr><th><code>model/engine.py</code></th><td>The simulation. Heavily commented on the legal
+reasoning, because the legal reasoning is where these models usually go wrong.</td></tr>
+<tr><th><code>model/runner.py</code></th><td>The tables the site publishes.</td></tr>
+<tr><th><code>COORDINATION.md</code></th><td>The task board, for parallel sessions.</td></tr>
+<tr><th><code>PRIVACY.md</code></th><td>The privacy model, binding on every file.</td></tr>
+</tbody>
+</table>
+</section>
+
+<footer class="pagefoot">
+<p><strong>This is a decision-support model, not legal, tax or investment advice.</strong>
+Every figure traces to <a href="authorities.html">a verified authority or an explicit
+assumption</a>. Unverified items are on <a href="flagged.html">Flagged for review</a>.
+Confirm everything with a California estate attorney, a CPA, and a fee-only fiduciary adviser
+before acting.</p>
+<p class="muted">Model build 2026 baseline &middot; horizon to 2076 &middot;
+rounding step $10 &middot; generated from <code>data/facts.json</code> and
+<code>model/</code></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

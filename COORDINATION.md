@@ -537,6 +537,127 @@ and `decision-workspace/` were not edited by this session.
 
 ---
 
+## Session 75bcd077 — privacy containment, history audit, source verification (claim)
+
+Session ID: `75bcd077` · Branch: `arena/75bcd077-tinodash4` (fixed for this session) · Base: `b7825dc` (main, PR #18).
+Claimed 2026-11-26 (UTC). Scope is deliberately narrower than the full brief: the brief's 50-plus items already have
+owners on this board, so this session takes the items that are **privacy-urgent** or **unverified**, and nothing else.
+
+| # | Task | Status | Files in scope |
+|---|------|--------|----------------|
+| P-1 | Contain public exposure on the published `decision-model/` site: remove ZIP codes, the neighbourhood label and city-plus-ZIP combinations; use placeholders | done (2026-11-26; residual exposures R-1 to R-3 below) | `decision-model/**` (site, src, README) |
+| P-2 | Privacy checker for `decision-model/`: forbidden-identifier scan that stores hashes, not the literal identifiers | done (tested: a page containing the restricted tokens fails the build) | `decision-model/src/tools/check_site.py` |
+| P-3 | Git history audit (report only, no rewrite): commit IDs carrying ZIPs, city labels, exact household figures, and author metadata | done (report only; rewrite awaits owner approval, see decision D-1) | `COORDINATION.md`, `decision-model/src/data/facts.json` |
+| V-1 | Official-source verification: FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; federal 2026 exclusion; Prop 19 2026-27 allowance | done (six official sources read 2026-11-26; Santa Clara transfer-tax county page not reachable, stays secondary) | `decision-model/src/data/facts.json` |
+| B-1 | Rebuild `decision-model/`, run its checks, and confirm the rebuilt pages are clean | done (build clean: 0 errors, 0 warnings; recommendation unchanged, see result R-4) | `decision-model/site/**` |
+| I-1 | Integration: PR `arena/75bcd077-tinodash4` → `main`, merge, GitHub Pages check | in progress (record below) | `COORDINATION.md` |
+
+Not claimed (owned or done elsewhere, not touched here): root `index.html`/`pages/`/`data/` (session 1), `decision-workspace/`
+(9ca44509), `site/` and `model/` (arena-65b70013), `docs/` and `estate-model/` (bba2482b, 150580b0). The brief's other
+items are open items for a future session and are listed under "Open after 75bcd077" below.
+
+### Results (session 75bcd077, 2026-11-26)
+
+**P-1 Containment (decision-model/).** ZIP codes, the neighbourhood name and city-plus-ZIP labels were removed from
+the generator, the facts register, the README, `PRIVACY.md` and all 21 generated pages. They are now placeholders
+(`[ZIP-A]`, `[ZIP-B]`) or the labels "Property A (Santa Clara County)" and "Property B (San Francisco)".
+Fact IDs that contained the city name were renamed (`HH-PROPERTY-A-*`). The rendered site was scanned: 0 ZIP codes,
+0 city-plus-ZIP labels, 0 neighbourhood names, 0 unrounded household figures.
+
+**P-2 Checker.** `decision-model/src/tools/check_site.py` now stores SHA-256 digests of the restricted tokens, so the
+checker does not contain the identifiers. Tested with a page holding a ZIP, a city and a neighbourhood: all three failed.
+
+**P-3 History audit (report only; not rewritten).** `git fetch --unshallow` was run, and `git log --all -S` was used to
+find each pattern. Counts are commits that add or remove the string, not the string's occurrences:
+
+| Pattern class | Commits (count) | Earliest and examples | Severity |
+|---|---|---|---|
+| Exact household assessed values and tax bills (unrounded, parcel-unique) | Two of the four exact patterns checked appear in 2 commits (`550,537`-class and `114,248`-class); the two 2025 patterns (`539,743`, `7,207`) appear in 1 commit (`16b095d`) | `16b095d` (`data/inputs.json`, `docs/inputs.html`); `5026b1d` (`pages/executive-summary.html`) | **Critical** |
+| ZIP codes (both properties) | 9 (Property A ZIP) and 10 (Property B ZIP) | `5026b1d`, `0d79d3a`, `e23a4ec`, `3e6c258`, `453c515`, `2e8a6db`, `7a4ce48`, `459cfe3`, `cbdd66b` | High |
+| City-name labels | 15 | `0d79d3a` onward | High |
+| Neighbourhood name | 8 | `5026b1d` onward (`0d79d3a`, `3e6c258`, `453c515`, `e23a4ec`, `2e8a6db`, `7a4ce48`) | High |
+| Personal e-mail address in commit author metadata | many commits on `main` | e.g. `fe3cad6` (initial commit) and later merges | Medium (metadata) |
+
+**D-1 Decision required from the owner: rewrite history or not.** Options:
+(a) Leave history as is. Current files are scrubbed. Exact figures stay visible in past commits.
+(b) Rewrite history with `git filter-repo` on `main`, replacing the exact figures, ZIPs, city labels and neighbourhood
+name with placeholders, and rewriting author e-mail with the GitHub no-reply address. This needs a force-push to `main`
+(not permitted to this session), and every open PR and fork must be rebased. Cached copies cannot be recalled.
+(c) Make the repository private. Pages on a free plan stops, and the history is kept.
+This session did **not** do (b), because it is a force-push to `main` and needs explicit approval.
+
+**V-1 Verification (read 2026-11-26).**
+
+| Item | Official source read | Result | Board effect |
+|---|---|---|---|
+| 1% Behavioral Health Services Tax on taxable income above $1,000,000 (line 62) | FTB 2025 Form 540 booklet, Line 62: https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html | Verified for 2025; the booklet states a fixed $1,000,000 amount for every filing status. The 2026 booklet is not published. | `CA-FTB-MHST-THRESHOLD` status verified |
+| California top rate and thresholds | FTB 2025 Tax Rate Schedules: https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf | Verified: 12.30% top bracket from $742,953 (single), $1,010,417 (head of household), $1,485,906 (joint) | `CA-FTB-TOP-MARGINAL` verified (was secondary) |
+| California taxes capital gains as ordinary income | FTB Capital gains and losses: https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html | Verified: "California does not have a lower rate for capital gains." | `CA-FTB-CAPITAL-GAIN-TREATMENT` verified (was secondary) |
+| Federal 2026 filing threshold, $15,000,000 | IRS Estate tax page: https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax | Verified (table row "2026 \| $15,000,000") | Re-checked, date updated |
+| Prop 19 allowance, $1,044,586 for transfers 2025-02-16 to 2027-02-15 | BOE LTA 2025/009: https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf | Verified | Re-checked, date updated |
+| Santa Clara County transfer tax, $0.55 per $500 | Clerk-Recorder fee page: https://clerkrecorder.sccgov.org/recording-fees | **Not reachable from the sandbox on 2026-11-26.** Secondary sources agree on $1.10 per $1,000. | Stays **secondary** |
+
+**Discrepancy resolved:** an earlier board entry (session 65b70013) gave the Prop 19 allowance as $1,044,590. The
+official BOE text says $1,044,586, which is what the model uses. The board entry is wrong, and the model is right.
+
+**CA rate on a large gain (the sensitivity update requested in the brief).** The flat 10.5% blend (no source) was replaced
+by `engine.ca_increment`, which applies the official 2025 schedules and the 1% tax, stacked on other taxable income.
+Hand-checked values: joint, no other income, $2M gain: 10.9% effective; single, $2M gain: 11.8%. Bands: base = joint,
+low = single, high = joint (the same schedule; the gain size sets the rate, and no more favourable case exists under current
+law). Filing status and other taxable income were not supplied, so they are open question items, not inputs.
+
+**R-4 Rebuild result (decision-model).** Before and after, on the same rule set:
+
+| Item | Before (10.5% flat) | After (official schedule) |
+|---|---|---|
+| Recommended path (top of ranking) | Sell at transfer, invest the net proceeds | **unchanged** |
+| Sell beats live-and-hold over 30 years | $22.93M | $23.18M |
+| Tax on final sale, live-and-hold-to-horizon | $3.65M | $3.90M |
+| Spread between best and worst path | $24.79M | $24.85M |
+
+The recommendation did not move. The margin widened by about $0.25M, because the hold path's final-sale tax on large gains
+is now computed from the schedule. The decision rules and the pre-commitment text were not changed. Only the input was corrected.
+
+**Correction written into the site:** the joint 12.3% threshold ($1,485,906) and the single-filer and head-of-household
+thresholds were corrected on the taxes and paths footers, and on Flagged item 0c. The earlier statement that the 12.3%
+bracket starts at $1M is wrong for joint filers.
+
+### Irregularities (new, session 75bcd077)
+
+| ID | Where | Irregularity | Owner / action |
+|---|---|---|---|
+| R-1 | `model/build_model.py` lines 121–122 (root site, published) | Exact unrounded 2025 household figures are in source (`7207 / 539743`, `2439 / 114248`). They are parcel-unique and not $10-rounded. | Owner of `arena-65b70013` (or integration). Round to $10 at minimum, or band to $10,000, and regenerate `site/data`. |
+| R-2 | `decision-workspace/projections.html`, `decision-workspace/data/assessed.json` (published) | Historic assessed values and tax bills for both properties are published year by year. They meet the $10 rule but are parcel-unique. `decision-model/src/PRIVACY.md` §2 says these should be banded. | Owner of `9ca44509`. Band the series, or remove the table. |
+| R-3 | `tools/check_site.py` line 32 (root tool, published) | A forbidden-word list contains the literal ZIP codes and the e-mail provider string. | Owner of the root site (session 1). Replace with SHA-256 digests as done in `decision-model/src/tools/check_site.py`. |
+| R-5 | root `README.md`, line 78 ("Marginal rates: CA ordinary 50.3% …") | The 50.3% figure is 37% federal ordinary plus 12.3% California plus 1% tax. It is labelled as California ordinary. The label is wrong. | Owner of `9ca44509`. Relabel the figure as combined federal and state. |
+| R-6 | Repository and GitHub Pages | Both are public (the Pages API reports `public: true`). The household's exposure is public. | Owner decision (D-1). |
+| R-7 | `PRIVACY.md` (previous revision, 2026-11-25) | It said no personal data had ever been committed. That was wrong (P-3). | Corrected in this revision. |
+
+### Decisions and open items (for the household or owner; not blocking the merge)
+
+| ID | Decision | Default in this branch |
+|---|---|---|
+| D-1 | Rewrite git history (option b above), or accept the exposure | Not rewritten |
+| D-2 | Keep the repository public, or make it private | Public, unchanged |
+| D-3 | Public rounding: `--round 10` (the household's instruction) or `--round 100000` (coarser, given residual identifiability) | `--round 10` |
+| D-4 | Filing status and expected other taxable income in a sale year | Joint, no other income (base); single (low) |
+| D-5 | Whether to band or remove the historic assessed series (R-1, R-2) | Not changed (other sessions' files) |
+
+### Brief items not completed in this session (owned or open elsewhere)
+
+Appraisals and comparables for Property A, insurance quotes, the Santa Clara County tax-rate-area lookup, a legislation tracker,
+and the annual re-run. Each is recorded as unverified on the Flagged page of the decision-model site or on the earlier boards.
+Nothing in this session marks them as verified.
+
+### Log (session 75bcd077)
+
+- 2026-11-26 · 75bcd077 · Claimed P-1 to I-1. Commit `afeb2ed` pushed to `arena/75bcd077-tinodash4`.
+- 2026-11-26 · 75bcd077 · Unshallowed the clone. Ran the history audit (P-3). Confirmed the exposure. Did not rewrite.
+- 2026-11-26 · 75bcd077 · Read the official FTB, IRS and BOE sources listed under V-1. Updated `facts.json`.
+- 2026-11-26 · 75bcd077 · Scrubbed the decision-model generator, facts, README and PRIVACY. Renamed the fact IDs.
+- 2026-11-26 · 75bcd077 · Replaced the unsourced 10.5% with the official schedule. Rebuilt. Recommendation unchanged (R-4).
+- 2026-11-26 · 75bcd077 · Added the restricted-token check. Tested it. Build clean with 0 errors and 0 warnings.
+
 ## Session arena-bc2ed56c — privacy containment audit (current branch)
 
 | ID | Task | Status | Owner | Files in scope |
@@ -610,3 +731,53 @@ P-01 update: `_config.yml` excludes alternate site trees and source directories 
 - Pulling the updated `main` before the follow-up push brought in `arena-e5c3fe3a`'s concurrently merged privacy audit and produced conflicts in `COORDINATION.md` and `tools/check_site.py`.
 - Resolution: retained the full incoming audit and its repo-wide identifier scan; preserved this session's Pages build result and remediation record; extended the Jekyll-config check to assert all configured exclusions. No incoming privacy scrub or audit material was discarded.
 - Follow-up changes in PR #22 add the root build/privacy checks to CI and correct the public privacy flag. The private-value comparison remains explicitly `SKIP` when the offline file is absent; no exact-value privacy verification is claimed.
+### Published integration record — arena-e5c3fe3a
+- PR #20 (`arena/e5c3fe3a-tinodash4` → `main`) merged at `4ded1c801870e2b0c83a3b4432e3646b289e7219` on 2026-11-26.
+- Post-merge verification: `Verify model + site` run `45886619624` succeeded; GitHub Pages `pages-build-deployment` run `45886618931` succeeded (build, deploy, report-build-status); latest Pages build status is `built` for the merge SHA. Published root: `https://kanlerxz87-cyber.github.io/TinoDash4/`.
+- This records successful deployment of the Jekyll privacy-exclusion configuration. It does not remove public Git objects or complete the exact-value scan; those limitations remain above.
+---
+
+## Session 407d3840 — root-site privacy gate + source re-verification (current branch)
+
+Session ID: `407d3840` · Branch: `arena/407d3840-tinodash4` (fixed for this session) · Original base: `b1fa5ba`; rebased onto `538b398` (`main`).
+Scope of this session (non-overlapping with other sessions' trees): root dashboard only —
+`tools/check_site.py`, `tools/build_site.py`, `tools/content.py`, `.github/workflows/verify.yml`,
+rebuilt root `*.html` + `assets/` + `data/irregularities.json`, and this board entry.
+Alternate trees (`site/`, `decision-model/`, `decision-workspace/`, `model/`, `research/`) are NOT edited.
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| G-01 | Fix pre-publish gate: `check_site.py` must run without `private/` and must enforce the `_config.yml` Pages exclusion (no `.nojekyll` bypass) | done (local checks pass) | 407d3840 | `tools/check_site.py`, `tools/build_site.py`, `_config.yml` (read-only check) |
+| G-02 | Re-verify key official figures line-by-line (IRS exclusion, Prop 19 cap, SF rate, FTB 540 line 62, CBO) and correct source URLs/statuses | done (FTB line 62 located; future-year figures remain flagged) | 407d3840 | `tools/content.py` |
+| G-03 | Wire root build + gate into CI (`verify.yml`) so a broken site cannot merge | done (workflow updated; GitHub run pending) | 407d3840 | `.github/workflows/verify.yml` |
+| G-04 | Rebuild root site, run gate, verify links/rounding/privacy, PR to `main`, merge, confirm Pages | in progress (pending PR/CI/deploy) | 407d3840 | rebuilt `*.html`, `brief.pdf`, `assets/`, `data/` |
+
+Claim note: this session is bound to `arena/407d3840-tinodash4`; no additional branch/worktree is created.
+History rewrite is out of scope (needs owner approval + force-push to `main`); see `PRIVACY_REMEDIATION.md`.
+
+Verification record for G-01 through G-03 (2026-11-26): official BOE page and LTA 2025/009 PDF fetched directly; official IRS IR-2025-103 fetched; SF Treasurer secured-tax page fetched (FY2026-27 rate 1.18162182%); FTB 2025 Form 540 instructions fetched at chunk 4, which explicitly states Line 62 is 1% of taxable income over $1,000,000. CBO Feb 2026 outlook fetched. Source URLs and statuses corrected in `tools/content.py`; values requiring 2027 updates remain flagged. `python3 tools/build_site.py`, `python3 tools/check_site.py`, `python3 model/build_model.py`, `git diff --exit-code -- site/data`, and `node model/check_site.js` all passed. Gate output after rebase: 136 repository text/PDF files scanned for identifier patterns (private exact-value scan visibly skipped); 1,934 money values all rounded to $10; 204/204 table rows linked; `.nojekyll` absent and all configured Pages exclusions present. `brief.pdf` rebuilt as one page with ReportLab in temporary ignored venv (venv removed). Repo-level exposure/history rewrite remains unresolved; no claim is made that repository contents or old history are private. Next: push, PR/CI, merge only after checks, verify deployment; check `.github/workflows/deploy.yml` discrepancy noted by prior session.
+
+### Rebase / conflict log — session 407d3840 — 2026-11-26
+- Before the merge attempt, `main` advanced from `4ded1c8` to `538b398` (PR #22). Rebased current branch as required before push. Append-only `COORDINATION.md` conflicted; both main's privacy audit and this session's work log were retained. Shared `tools/check_site.py`, `tools/content.py`, `tools/build_site.py`, and generated root pages conflicted because the merged privacy work touched them too.
+- Resolution retained main's newer repository-wide privacy-pattern scanner and its candid `SKIP` behavior, then layered this session's official source updates and a stricter check that `.nojekyll` is forbidden and all six alternate trees are excluded. Main's partial-containment wording and privacy edits remain intact.
+- Rebuilt the site after resolution. `python3 tools/build_site.py` and `python3 tools/check_site.py` pass; checker sees 136 repository files, 204/204 linked rows, 1,934 rounded model outputs. `node model/check_site.js` and deterministic `model/build_model.py` checks also passed before the rebase; rerunning in the latest rebased checkout is pending.
+
+### Final PR / deployment record — arena-bc2ed56c — 2026-11-26
+- PR #22 (`https://github.com/kanlerxz87-cyber/TinoDash4/pull/22`) merged to `main` at `538b398ac349faa2d2af97732e9e176a643122ac` on 2026-11-26T19:51:51Z. Its `Verify model + site` check passed (run `45886754279`).
+- The immediately triggered Pages run `45886791561` was cancelled at deploy setup while a later main update triggered a replacement build; this was a cancellation, not a Jekyll build failure. Replacement Pages build/deploy run `45886856976` completed successfully. Pages API reported `built`.
+- Post-deploy review: root dashboard and Flagged for Review page fetched successfully. Fetches for excluded legacy paths were unavailable through the page fetcher; the Pages artifact download could not be retrieved because the artifact blob host was inaccessible in this sandbox.
+- Remaining status: P-01 stays **needs review** because the GitHub repository and historical commits remain public and the optional private-value comparison is skipped without the offline inventory. Do not describe this as a history scrub or complete privacy verification.
+
+### Rebase conflict resolution — arena-bc2ed56c — 2026-11-26
+- `main` advanced after PR #22 with parallel privacy/source work. Rebase conflicted in append-only `COORDINATION.md`; kept the full `main` content and added this session's final deployment record without dropping the parallel session's claim, source checks, or handoff notes.
+
+### P-02 merge update (2026-11-26, branch arena/10df03a3-tinodash4)
+
+- `main` moved three times during this session (PRs #20, #22, #28, #29). Each merge conflicted with the containment work. Shared files were resolved by taking `main` (`tools/check_site.py`, `tools/content.py`, `PRIVACY_REMEDIATION.md`, `README.md`, `data/irregularities.json` regenerated by the builder) and re-adding only this session's entries.
+- The earlier note above that `decision-model/` was untracked is **superseded**: `decision-model/` is actively maintained by session 75bcd077 (PR #29). This session did not edit it.
+- Still untracked by this session (not claimed by any in-flight session; last touched on the old base): `site/` and `decision-workspace/` (archived locally in gitignored `private/archive/`).
+- `.github/workflows/verify.yml`: removed the steps that regenerate or check `site/data` and run `model/check_site.js`. It now builds the root site, checks it is in sync, runs `tools/check_site.py --allow-missing-private`, and checks `.nojekyll` is absent.
+- `.nojekyll` removed (Jekyll exclusions in `_config.yml` are the containment mechanism).
+- Irregularity added: "Alternate site trees contained household figures and location labels" (source `REPO-PRIVACY`).
+
+**Owner / next-session request (not done here, owned by other sessions):** with the private file present, the strict raw-figure scan in `tools/check_site.py` flags rounded owner figures (for example $1,500 insurance guess, $7,150 rent, $3,100,000 and $1,800,000 values) in `decision-model/`, `model/`, `research/` and this board. CI cannot run that scan (no private file), so CI passes. Action: the owner decides whether these source and log files should keep rounded household figures or be scrubbed; the check exempts model/ and research/ only if the owner adopts that rule (it was in this session's version of the checker and was overwritten by a merge with `main`).

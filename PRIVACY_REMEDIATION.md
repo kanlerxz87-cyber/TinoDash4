@@ -32,9 +32,7 @@ PR #19 was merged to `main`; the GitHub Pages Jekyll build and deploy completed 
 
 This note intentionally avoids restating the exposed household values or exact property identifiers.
 
-## Update 2026-11-26 (session on branch arena/10df03a3-tinodash4)
 
-- `decision-model/`, `decision-workspace/` and `site/` were untracked from git and moved to `private/archive/` (gitignored). They are no longer in the repository tree and are not published.
-- `model/build_model.py` now uses rounded constants (`7210 / 539740`, `2440 / 114250`) instead of the unrounded owner figures.
-- `tools/check_site.py` now (a) scans the whole tracked tree for unrounded owner figures, owner text strings and forbidden identifiers, (b) exempts official source URLs from the identifier check, and (c) runs in CI with `--allow-missing-private` (the owner runs the full scan locally with `private/raw_inputs.json`).
-- Result: `python3 tools/check_site.py` passes on the working tree. The earlier git history is unchanged and still contains the removed trees. A history rewrite remains an owner decision and is not claimed here.
+## Final deployment record (2026-11-26)
+
+PR #22 merged to `main` at `538b398ac349faa2d2af97732e9e176a643122ac`. Its CI verification passed. The first post-merge Pages run was cancelled during deployment when a concurrent main update started a replacement; replacement build/deploy run `45886856976` succeeded and the Pages API reported `built`. The root dashboard and Flagged for Review page were fetched successfully. Fetch attempts for excluded legacy paths were unavailable; the Actions artifact download was blocked by the sandbox's external blob host. This does not change the key limitation: the public repository and prior history remain outside Pages-only containment.

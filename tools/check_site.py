@@ -32,7 +32,6 @@ ALLOW_PUBLIC_NUMBERS = {
 # Postal codes and hyper-local neighbourhood labels are not needed in the published pages and
 # are treated as privacy-sensitive identifiers. Do not use broad words such as "sunset" here.
 FORBIDDEN_WORDS = ["95014", "94122", "outer sunset", "gmail"]
-ROUNDED_OK_IN = ("model" + os.sep, "research" + os.sep, "model/", "research/")
 SELF = os.path.normpath(os.path.abspath(__file__))
 LOG = []
 FAIL = []
@@ -117,17 +116,17 @@ def main():
             bad(f"private numbers collide with allowed public figures: {collide}")
         for n in nums:
             comma = f"{n:,}"
-            pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9])"), n))
+            pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9])")))
             if n >= 10000:  # plain digits only for 5+ digit values (avoids chance matches such as counts)
                 s = str(n)
-                pats.append(("value " + s, re.compile(r"(?<![0-9.,])" + re.escape(s) + r"(?![0-9])"), n))
+                pats.append(("value " + s, re.compile(r"(?<![0-9.,])" + re.escape(s) + r"(?![0-9])")))
         strs = []
         walk_strings(raw, strs)
         for s in strs:
             if len(s) >= 6 and s.lower() not in ("property", "estimate"):
-                pats.append(("text '" + s[:24] + "...'", re.compile(re.escape(s), re.IGNORECASE), None))
+                pats.append(("text '" + s[:24] + "...'", re.compile(re.escape(s), re.IGNORECASE)))
         for z in raw.get("zip_codes_internal_only", []):
-            pats.append(("zip " + str(z), re.compile(r"(?<![0-9])" + re.escape(str(z)) + r"(?![0-9])"), None))
+            pats.append(("zip " + str(z), re.compile(r"(?<![0-9])" + re.escape(str(z)) + r"(?![0-9])")))
     else:
         LOG.append("SKIP  private-value comparison: private/raw_inputs.json is not present (no exact-value privacy claim)")
 
@@ -139,11 +138,7 @@ def main():
         if fp.endswith(".pdf"):
             text += "\n".join(pdf_streams(raw_bytes))
         rel = os.path.relpath(fp, ROOT)
-        for label, rx, val in pats:
-            # Rounded owner figures are allowed in source and research notes (not published pages)
-            # under the owner's $10-rounding rule. They are never allowed in published output.
-            if val is not None and val % 10 == 0 and rel.startswith(ROUNDED_OK_IN):
-                continue
+        for label, rx in pats:
             if rx.search(text):
                 bad(f"privacy: {label} found in {rel}")
         low = text.lower()
@@ -217,8 +212,9 @@ def main():
             bad(f"'{needle}' missing from {fn}")
     nojekyll = os.path.join(ROOT, ".nojekyll")
     jekyll_config = os.path.join(ROOT, "_config.yml")
-    if not os.path.exists(nojekyll):
-        if os.path.exists(jekyll_config):
+    if os.path.exists(nojekyll):
+        bad(".nojekyll present: it bypasses Jekyll, so _config.yml exclusions may not apply")
+    elif os.path.exists(jekyll_config):
             config = open(jekyll_config, encoding="utf-8").read()
             required_excludes = ("decision-model", "decision-workspace", "site", "model", "research", "tools", "private")
             missing = [name for name in required_excludes
@@ -227,8 +223,8 @@ def main():
                 ok("GitHub Pages Jekyll config present; alternate site/source trees are explicitly excluded")
             else:
                 bad(".nojekyll missing and _config.yml lacks Pages exclusions: " + ", ".join(missing))
-        else:
-            bad(".nojekyll missing and no _config.yml configures GitHub Pages")
+    else:
+        bad(".nojekyll missing and no _config.yml configures GitHub Pages")
     irr = os.path.join(ROOT, "data", "irregularities.json")
     if not os.path.exists(irr):
         bad("data/irregularities.json missing")

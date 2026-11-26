@@ -13,11 +13,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # The alternate site trees (site/, decision-model/, decision-workspace/) were untracked and
-      # archived to private/archive/ (gitignored). Their regeneration and smoke-test steps were removed.
-      - name: Build the public root dashboard
+      # site/ and decision-workspace/ were untracked (archived locally, gitignored) on 2026-11-26.
+      # Their regeneration and smoke-test steps were removed.
+      - name: Rebuild root dashboard (deterministic from data/model_outputs.json)
         run: python3 tools/build_site.py
-      - name: Check root Pages artifact privacy, sources, rounding, and links
+      - name: Fail if rebuild changed tracked root site (must be committed in sync)
+        run: git diff --exit-code -- '*.html' assets data/irregularities.json
+      - name: Pre-publish gate (privacy, rounding, row links, internal links, Pages containment)
         run: python3 tools/check_site.py --allow-missing-private
       - name: Ensure Jekyll exclusions stay enabled
         run: test ! -e .nojekyll
