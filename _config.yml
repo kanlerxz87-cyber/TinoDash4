@@ -1,7 +1,7 @@
 # GitHub Pages is built from the repository root using Jekyll.
-# Keep only the maintained, anonymized root dashboard in the published artifact.
-# Alternate/legacy model implementations contain household-specific inputs and
-# are excluded from Pages while the repository-level privacy remediation is reviewed.
+# The root dashboard contains rounded, derived household outputs and is not certified anonymous.
+# Alternate model/site trees are excluded from the Pages artifact, but remain visible in public Git.
+# This configuration limits Pages output; it is not access control or a history purge.
 exclude:
   - .github
   - COORDINATION.md

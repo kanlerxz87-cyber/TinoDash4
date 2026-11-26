@@ -2,10 +2,10 @@
 Site content: source register, facts, law, legislation, timeline, questions, rules,
 suggestions, flagged items, glossary.
 
-Privacy rules (enforced by tools/check_site.py before any build):
-  * No household figure appears here. Household values are shown as "held internally".
-  * No zip code, neighbourhood, parcel number, or personal name appears here.
-  * Published money values are rounded to the nearest $10 (done by the model, not here).
+Privacy handling (policy; not a claim of complete release clearance):
+  * No raw household figure, address, ZIP code, parcel number, or personal name is intended to appear in this content.
+  * The Pages output may contain rounded, derived values; rounding is not proof of anonymization.
+  * Default checker mode requires an ignored local inventory and fails closed if it is absent; --public-only skips exact comparison.
 
 Status vocabulary (every row carries one):
   FETCHED    - official page opened in this session and the statement checked
@@ -141,6 +141,18 @@ SOURCES = {
         title="This site's decision model (model/model.py): analyst assumptions, each labelled",
         url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/model/model.py",
         publisher="Analyst (this repository)", status="ASSUMPTION"),
+    "REPO-PRIVACY-CONFIG": dict(
+        title="Repository Jekyll configuration: Pages exclusions for alternate model and site trees",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/_config.yml",
+        publisher="GitHub repository configuration", status="FETCHED"),
+    "REPO-PRIVACY-REPORT": dict(
+        title="Repository privacy-remediation note: Pages containment is not a Git-history purge",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/blob/main/PRIVACY_REMEDIATION.md",
+        publisher="Repository privacy review", status="FETCHED"),
+    "REPO-PAGES-BUILD": dict(
+        title="GitHub Pages build run reported successful; deployed artifact file list was not inspected",
+        url="https://github.com/kanlerxz87-cyber/TinoDash4/actions/runs/45886233033",
+        publisher="GitHub Actions", status="FETCHED"),
 }
 
 # Property facts: (item, figure as published, status, source ids, note)
@@ -171,10 +183,10 @@ PROPERTY_A_FACTS = [
 PROPERTY_B_FACTS = [
     ("Estimated market value, Nov 2026", "held internally", "USER", ["HOUSEHOLD"],
      "Household estimate, not an appraisal."),
-    ("Units", "three livable units; two rented", "USER", ["SF-RENT-BOARD"],
-     "Owner occupancy of one unit is possible per household. Tenant-protection rules apply. Confirm rent-control status for each unit."),
-    ("Rent, two units", "held internally", "USER", ["HOUSEHOLD"],
-     "Approximate household figure. Get the leases and rent roll."),
+    ("Unit and lease details", "held internally (not published)", "USER", ["HOUSEHOLD", "SF-RENT-BOARD"],
+     "Unit count, occupancy and lease terms are private inputs. Verify leases and local tenant rules before any choice."),
+    ("Rental income", "held internally", "USER", ["HOUSEHOLD"],
+     "Household amount is not published. Check leases and the rent roll."),
     ("Water, electricity (household ranges)", "held internally", "USER", ["HOUSEHOLD"],
      "Check the utility bills before using these in a projection."),
     ("Measure H parcel tax (Muni), rate per parcel", "$129 to $400,000 per parcel (size and type tiers)", "PASSED (preliminary)", ["SF-ELECTIONS-2026"],
@@ -208,8 +220,8 @@ IRREGULARITIES = [
      "Owner decision: history rewrite (a force-push to main) is not done here. Decide whether to rewrite history.",
      ["HOUSEHOLD"]),
     ("Projection shift from rounding the implied tax rate",
-     "The implied all-in tax rate in model/build_model.py was recomputed from inputs rounded to the nearest $10 (tax and assessed value, both to $10). The rate moves from 1.3353% to 1.3358%. The 30-year projection moves by about $1,020 (0.006%). The decision-workspace output did not change.",
-     "None. Recorded so the change is traceable.",
+     "An implied tax rate in model/build_model.py was recomputed from bill inputs rounded to the nearest $10. The rate and long-horizon projection changed slightly; household-derived amounts are intentionally omitted here.",
+     "Review the underlying calculation offline and keep unrounded household values out of public artifacts.",
      ["MODEL"]),
     ("Household tax-history record: repeated values",
      "The internal tax-history record repeats some year-by-year values. Details are held internally and not published.",
@@ -267,18 +279,18 @@ IRREGULARITIES = [
      "It is 1% of taxable income over $1,000,000 (Form 540, line 62; R&TC 17043). Large gains can reach it. The model applies a flat 13.3% state rate on gains.",
      "CPA to confirm the state rate on large gains for the transfer year.",
      ["FTB-540-2025", "FTB-540ES-2025"]),
-    ("Public Git history contains a personal e-mail address",
-     "The base commit on main lists a personal e-mail address as the author. The repository is public. History was NOT rewritten.",
-     "Decide whether to rewrite history (requires a force-push to main and your explicit approval), or set the e-mail to private for future commits.",
-     []),
-    ("Parallel session branch overlaps this work",
-     "Branch arena/1277b9f1-tinodash4 has its own COORDINATION.md and claims the same files. It was not modified here.",
-     "Reconcile before any merge of that branch to main.",
-     []),
-    ("Platform branch rule differs from the request",
-     "The request asked for per-task branches and an integration branch. The platform allows one branch per session, so all work is on arena/8c530ff4-tinodash4.",
-     "No action beyond noting the constraint.",
-     []),
+    ("Public Git history contains author contact metadata",
+     "A public commit records a commit-author contact address. It is not repeated here. Git history has not been rewritten; prior copies, forks, caches, and pull-request diffs may persist.",
+     "The repository owner should review whether a coordinated history-remediation operation is justified. Changing current profile settings does not remove existing commit objects.",
+     ["REPO-PRIVACY-REPORT"]),
+    ("Pages containment does not purge Git history",
+     "A prior repository audit found household-derived inputs in alternate model and site trees. The Pages build following the containment change completed using Jekyll exclusions for those paths, but files remain accessible through the public repository, old commits, pull-request diffs, forks, or copies. The artifact file list was not independently inspected in this audit.",
+     "Keep the repository-level privacy review open. Check the built artifact and public refs; if personal details are present, decide on a coordinated history and cache-remediation plan. Assume previously copied material may persist.",
+     ["REPO-PRIVACY-CONFIG", "REPO-PAGES-BUILD", "REPO-PRIVACY-REPORT"]),
+    ("Rounded model outputs are not a guarantee of anonymity",
+     "The public dashboard contains rounded, derived projections based on household-provided assumptions. Rounding to the nearest $10 does not prove that outputs cannot be linked to other public records.",
+     "For a strict no-household-data publication rule, replace public outputs with synthetic or broad non-household ranges and retain personalized calculations offline.",
+     ["REPO-PRIVACY-REPORT", "MODEL"]),
     ("Household figures are used but not verified",
      "Household figures are used in the model and held internally. Each is labelled USER and is not verified against an official source.",
      "Verify against bills and appraisals before any decision.",
@@ -287,10 +299,6 @@ IRREGULARITIES = [
      "The 2027 figures ($15,480,000 estate and gift exclusion; $20,000 annual gift exclusion) come from secondary reports.",
      "Confirm on the IRS release before relying on them.",
      ["IRS-NEWS-2027"]),
-    ("Repository privacy containment is partial",
-     "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
-     "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
-     []),
 ]
 
 # Law: (topic, rule, status, source ids, what it means here)

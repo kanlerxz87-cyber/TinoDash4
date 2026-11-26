@@ -41,8 +41,8 @@
  },
  {
   "item": "Projection shift from rounding the implied tax rate",
-  "found": "The implied all-in tax rate in model/build_model.py was recomputed from inputs rounded to the nearest $10 (tax and assessed value, both to $10). The rate moves from 1.3353% to 1.3358%. The 30-year projection moves by about $1,020 (0.006%). The decision-workspace output did not change.",
-  "action": "None. Recorded so the change is traceable.",
+  "found": "An implied tax rate in model/build_model.py was recomputed from bill inputs rounded to the nearest $10. The rate and long-horizon projection changed slightly; household-derived amounts are intentionally omitted here.",
+  "action": "Review the underlying calculation offline and keep unrounded household values out of public artifacts.",
   "sources": [
    "MODEL"
   ]
@@ -165,22 +165,31 @@
   ]
  },
  {
-  "item": "Public Git history contains a personal e-mail address",
-  "found": "The base commit on main lists a personal e-mail address as the author. The repository is public. History was NOT rewritten.",
-  "action": "Decide whether to rewrite history (requires a force-push to main and your explicit approval), or set the e-mail to private for future commits.",
-  "sources": []
+  "item": "Public Git history contains author contact metadata",
+  "found": "A public commit records a commit-author contact address. It is not repeated here. Git history has not been rewritten; prior copies, forks, caches, and pull-request diffs may persist.",
+  "action": "The repository owner should review whether a coordinated history-remediation operation is justified. Changing current profile settings does not remove existing commit objects.",
+  "sources": [
+   "REPO-PRIVACY-REPORT"
+  ]
  },
  {
-  "item": "Parallel session branch overlaps this work",
-  "found": "Branch arena/1277b9f1-tinodash4 has its own COORDINATION.md and claims the same files. It was not modified here.",
-  "action": "Reconcile before any merge of that branch to main.",
-  "sources": []
+  "item": "Pages containment does not purge Git history",
+  "found": "A prior repository audit found household-derived inputs in alternate model and site trees. The Pages build following the containment change completed using Jekyll exclusions for those paths, but files remain accessible through the public repository, old commits, pull-request diffs, forks, or copies. The artifact file list was not independently inspected in this audit.",
+  "action": "Keep the repository-level privacy review open. Check the built artifact and public refs; if personal details are present, decide on a coordinated history and cache-remediation plan. Assume previously copied material may persist.",
+  "sources": [
+   "REPO-PRIVACY-CONFIG",
+   "REPO-PAGES-BUILD",
+   "REPO-PRIVACY-REPORT"
+  ]
  },
  {
-  "item": "Platform branch rule differs from the request",
-  "found": "The request asked for per-task branches and an integration branch. The platform allows one branch per session, so all work is on arena/8c530ff4-tinodash4.",
-  "action": "No action beyond noting the constraint.",
-  "sources": []
+  "item": "Rounded model outputs are not a guarantee of anonymity",
+  "found": "The public dashboard contains rounded, derived projections based on household-provided assumptions. Rounding to the nearest $10 does not prove that outputs cannot be linked to other public records.",
+  "action": "For a strict no-household-data publication rule, replace public outputs with synthetic or broad non-household ranges and retain personalized calculations offline.",
+  "sources": [
+   "REPO-PRIVACY-REPORT",
+   "MODEL"
+  ]
  },
  {
   "item": "Household figures are used but not verified",
@@ -197,11 +206,5 @@
   "sources": [
    "IRS-NEWS-2027"
   ]
- },
- {
-  "item": "Repository privacy containment is partial",
-  "found": "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
-  "action": "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
-  "sources": []
  }
 ]

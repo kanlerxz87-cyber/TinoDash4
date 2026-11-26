@@ -134,14 +134,14 @@ def page(filename, title, body, extra_js=""):
 </head>
 <body>
 <header class="top"><a class="brand" href="index.html">Inheritance decision dashboard</a>
-<span class="sub">Property A (Santa Clara County) &middot; Property B (San Francisco) &middot; $ rounded to $10 &middot; checked {CHECKED}</span></header>
+<span class="sub">Property A (inherited) &middot; Property B (already-owned rental) &middot; $ rounded to $10 &middot; checked {CHECKED} &middot; <a href="flagged.html">Privacy: partial</a></span></header>
 <nav class="menu">{''.join(nav)}</nav>
 <main>
 <h1>{e(title)}</h1>
 {body}
 </main>
 <footer>
-<p>Not legal or tax advice. Figures use placeholders for households and are rounded to the nearest $10. Each row shows a source status: FETCHED (official page opened), EXCERPT (official excerpt reviewed), SECONDARY (secondary source, official link given for checking), LINK (official page identified, not opened), ASSUMPTION (modelling choice), DERIVED (computed), USER (household figure held internally), UNVERIFIED (blank).</p>
+<p>Privacy: figures use placeholders and rounded, derived outputs, which are not guaranteed anonymous; public Git history has not been purged. Not legal or tax advice. Each row shows a source status: FETCHED (official page opened), EXCERPT (official excerpt reviewed), SECONDARY (secondary source, official link given for checking), LINK (official page identified, not opened), ASSUMPTION (modelling choice), DERIVED (computed), USER (household figure held internally), UNVERIFIED (blank).</p>
 <p><a href="flagged.html">Flagged for Review</a> &middot; <a href="sources.html">Sources</a> &middot; <a href="{REPO_URL}">Repository</a></p>
 </footer>
 <script src="assets/app.js"></script>{extra_js}
@@ -293,7 +293,7 @@ def build_index():
         ])
     results = table(["Path", "Base case (real 2026 $)", "Range across growth and stock-return cases", "Simulated 10th to 90th percentile", "Sources"], rows)
     res = card("All paths: transfer 2045, 20-year horizon", "<p>Each path is liquidated after tax at the horizon so liquid and illiquid choices compare fairly. Real 2026 dollars, rounded to $10.</p>" + results)
-    ev = card("Evidence status", f"""<p>{FACT_COUNT} input rows are on the Facts page. {UNVER} are UNVERIFIED and left blank. Household figures are held internally and are not published. Secondary-source figures are labelled and linked for checking. Irregularities are on the <a href="flagged.html">Flagged for Review</a> page.</p>""")
+    ev = card("Evidence status", f"""<p>{FACT_COUNT} input rows are on the Facts page. {UNVER} are UNVERIFIED and left blank. Raw household inputs are not displayed; rounded projections above are derived from household assumptions and are not guaranteed anonymous. Secondary-source figures are labelled and linked for checking. Irregularities are on the <a href="flagged.html">Flagged for Review</a> page.</p>""")
     nav = "".join(
         f'<a class="navcard" href="{h}"><strong>{e(l)}</strong><span>{e(g)}</span></a>'
         for g, items in NAV for h, l in items if h != "index.html")
@@ -385,8 +385,8 @@ def build_inputs():
     b_rows = [[e(l), e(v) if v else "blank (UNVERIFIED)", tag(s), links(src), e(n)] for l, v, s, src, n in C.PROPERTY_B_FACTS]
     body = (
         "<p>Household figures are held internally and appear here only as placeholders. Official values are shown where a source was checked. Blank cells are UNVERIFIED.</p>"
-        + card("Property A (Santa Clara County): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], a_rows))
-        + card("Property B (San Francisco): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], b_rows))
+        + card("Property A (inherited): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], a_rows))
+        + card("Property B (already owned): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], b_rows))
         + card("Not published", "<p>Historical tax and assessment records, parcel numbers, addresses, and household cost bills are not published. They are checked outside this repository and recorded as flags where they affect the decision.</p>")
     )
     page("inputs.html", "Facts and inputs", body)
@@ -507,24 +507,25 @@ def build_suggestions():
 
 def build_flagged():
     rows = [[e(a), e(b), e(c), links(d)] for a, b, c, d in C.IRREGULARITIES]
-    body = (card("Flagged for Review", "<p>These items do not block the site. Each has its source link so the household can review it and request a change.</p>", "warn")
+    body = (card("Flagged for Review", "<p>These items do not block the site. Each has its source link so the household can review it and request a change. Privacy/history limits are not waived by a successful Pages build.</p>", "warn")
             + table(["Item", "What we found", "Action needed", "Sources"], rows)
             + card("Repository and privacy", """<ul class="bullets">
 <li>Containment is partial: the current Pages configuration excludes alternate generated site trees and source folders, but the GitHub repository remains public and those tracked files and historical commits can still be fetched directly.</li>
+<li>Rounded projections are derived from household assumptions and may still be linkable to public records; rounding is not a guarantee of anonymity.</li>
 <li>The earlier pre-rounding history was not scrubbed in this change. The current checkout does not provide the earlier objects needed to inspect or safely rewrite that history.</li>
-<li>The root checker runs artifact and structural checks in a clean checkout; its exact household-value comparison explicitly reports SKIP when the offline private input file is absent. That skip is not a full household-signature privacy scan.</li>
+<li>Default strict checking requires the ignored private inventory and fails closed when it is absent; --public-only explicitly skips exact comparison for clean CI. Neither result certifies that rounded projections are anonymous.</li>
 </ul>"""))
     page("flagged.html", "Flagged for review", body)
 
 
 def build_brief():
     facts = [
-        ("Property A (Santa Clara County): value, Nov 2026", "held internally (household estimate; not an appraisal)"),
+        ("Property A: value, Nov 2026", "held internally (household estimate; not an appraisal)"),
         ("Property A: Prop 19 allowance", "$1,044,590 (BOE, secondary)"),
         ("Property A: Prop 13 factor", "1.02 a year (BOE, secondary)"),
-        ("Property B (San Francisco): units", "three livable units; two rented; owner occupancy possible"),
+        ("Property B: unit/lease details", "held internally (not published)"),
         ("Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)"),
-        ("Measure H (SF parcel tax)", "passed, preliminary, 74.42% yes; certification due by Dec 3, 2026"),
+        ("Local parcel-tax measure", "passed, preliminary; certification pending"),
         ("Base result, sell and invest (2045, 20 yr)", money(BASE["S"])),
         ("Base result, live with no rent credit", money(BASE["L"])),
     ]
@@ -544,19 +545,19 @@ def build_brief():
           "Within 3 years of transfer: BOE-19-P claim (secondary).",
           "Within 5 years: late portability relief (Rev. Proc. 2022-32; secondary)."]
     src_for = {
-        "Property A (Santa Clara County): value, Nov 2026": ["HOUSEHOLD"],
+        "Property A: value, Nov 2026": ["HOUSEHOLD"],
         "Property A: Prop 19 allowance": ["BOE-LTA-2025-009"],
         "Property A: Prop 13 factor": ["BOE-LTA-2026-002"],
-        "Property B (San Francisco): units": ["SF-RENT-BOARD"],
+        "Property B: unit/lease details": ["HOUSEHOLD", "SF-RENT-BOARD"],
         "Federal exclusion, per person": ["IRS-IR-2025-103", "IRS-NEWS-2027"],
-        "Measure H (SF parcel tax)": ["SF-ELECTIONS-2026"],
+        "Local parcel-tax measure": ["SF-ELECTIONS-2026"],
         "Base result, sell and invest (2045, 20 yr)": ["MODEL"],
         "Base result, live with no rent credit": ["MODEL"],
     }
     frow = "".join(f"<tr><td>{e(a)}</td><td>{e(b)}</td><td>{links(src_for[a])}</td></tr>" for a, b in facts)
     body = f"""
 <section class="brief">
-<div class="briefhead"><strong>Attorney &amp; CPA Briefing Sheet</strong> &middot; Property A (Santa Clara County, inherited) and Property B (San Francisco, owned) &middot; prepared {CHECKED} &middot; placeholders for all names</div>
+<div class="briefhead"><strong>Attorney &amp; CPA Briefing Sheet</strong> &middot; Property A (inherited) and Property B (already owned) &middot; prepared {CHECKED} &middot; placeholders for all names</div>
 <div class="cols">
 <div>
 <h3>1. Key facts (household figures held internally)</h3>
@@ -574,7 +575,7 @@ def build_brief():
 <li>Secondary, to check: SF transfer-tax tiers (unverified); 2027 federal figures; SB 974.</li></ul>
 <h3>7. Flags</h3><ul><li>Property A market rent and insurance: unverified.</li><li>Historical tax records: check against bills.</li><li>Prop 19 move-out reading: counsel to confirm.</li></ul>
 </div></div>
-<p class="foot">Sources: IRS IR-2025-103 and What's new (estate and gift tax); FTB Form 540-ES instructions; U.S. Treasury yield table; CBO Feb 2026 outlook; SF Department of Elections (Nov 3, 2026, preliminary). Full register: sources.html. Not legal or tax advice.</p>
+<p class="foot">Sources: IRS IR-2025-103 and What's new (estate and gift tax); FTB Form 540-ES instructions; U.S. Treasury yield table; CBO Feb 2026 outlook; local election results (preliminary). Full register: sources.html. Rounded outputs are not guaranteed anonymous; the public Git history has not been purged. Not legal or tax advice.</p>
 </section>"""
     page("brief.html", "Attorney and CPA briefing sheet", body)
 

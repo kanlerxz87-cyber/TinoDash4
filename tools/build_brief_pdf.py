@@ -36,19 +36,32 @@ def bullets(items, style=base):
     return [P("&bull; " + i, style) for i in items]
 
 
+def source_cell(source_ids):
+    """Clickable source IDs with their evidence status, using the shared register."""
+    out = []
+    for source_id in source_ids:
+        source = C.SOURCES[source_id]
+        url = source["url"].replace("&", "&amp;").replace('"', "&quot;")
+        label = source_id.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        status = source["status"].replace("&", "&amp;")
+        out.append(f'<link href="{url}">{label}</link> <font color="#4a5568">({status})</font>')
+    return "<br/>".join(out) if out else "UNVERIFIED"
+
+
 def build():
     facts = [
-        ["Property A (Santa Clara County): value, Nov 2026", "held internally (household estimate; not an appraisal)"],
-        ["Property A: Prop 19 allowance", "$1,044,590 (BOE, secondary)"],
-        ["Property A: Prop 13 factor", "1.02 a year (BOE, secondary)"],
-        ["Property B (San Francisco): units", "three livable units; two rented; owner occupancy possible"],
-        ["Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)"],
-        ["Measure H (SF parcel tax)", "passed, preliminary, 74.42% yes; certification due by Dec 3, 2026"],
-        ["Base: sell and invest (2045, 20 years)", B.money(B.BASE["S"])],
-        ["Base: live with no rent credit", B.money(B.BASE["L"])],
+        ["Property A: value, Nov 2026", "held internally (household estimate; not an appraisal)", ["HOUSEHOLD"]],
+        ["Property A: Prop 19 allowance", "$1,044,590 (BOE, secondary)", ["BOE-LTA-2025-009", "BOE-PROP19-INTRO"]],
+        ["Property A: Prop 13 factor", "1.02 a year (BOE, secondary)", ["BOE-LTA-2026-002"]],
+        ["Property B: unit/lease details", "held internally (not published)", ["HOUSEHOLD", "SF-RENT-BOARD"]],
+        ["Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)", ["IRS-IR-2025-103", "IRS-NEWS-2027"]],
+        ["Local parcel-tax measure", "passed, preliminary; certification pending", ["SF-ELECTIONS-2026"]],
+        ["Base: sell and invest (2045, 20 years)", B.money(B.BASE["S"]), ["MODEL", "IRS-PUB-523", "FTB-540ES-2025"]],
+        ["Base: live with no rent credit", B.money(B.BASE["L"]), ["MODEL", "BOE-PROP19-INTRO", "IRS-PUB-523"]],
     ]
-    rows = [[P(a, base), P(b, base)] for a, b in facts]
-    t = Table(rows, colWidths=[2.45 * inch, 4.55 * inch])
+    rows = [[P("Topic", head), P("Value / status", head), P("Source links", head)]]
+    rows += [[P(a, base), P(b, base), P(source_cell(source_ids), small)] for a, b, source_ids in facts]
+    t = Table(rows, colWidths=[1.75 * inch, 2.8 * inch, 2.45 * inch], repeatRows=1)
     t.setStyle(TableStyle([
         ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cbd5e0")),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
@@ -85,7 +98,7 @@ def build():
              "Measure H tier for Property B: not verified."]
     story = [
         P("Attorney &amp; CPA Briefing Sheet", title),
-        P(f"Property A (Santa Clara County, inherited) and Property B (San Francisco, owned) &middot; prepared {C.CHECKED} &middot; placeholders for all names. Not legal or tax advice.", small),
+        P(f"Property A (inherited) and Property B (already owned) &middot; prepared {C.CHECKED} &middot; placeholders for all names. Rounded outputs are not guaranteed anonymous; the public Git history has not been purged. Not legal or tax advice.", small),
         Spacer(1, 4),
         P("1. Key facts (household figures held internally)", head), t,
         P("2. Results", head), P(results),

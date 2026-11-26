@@ -1,0 +1,2 @@
+# Treat generated PDFs as binary publication artifacts; do not run text whitespace checks on streams.
+*.pdf binary

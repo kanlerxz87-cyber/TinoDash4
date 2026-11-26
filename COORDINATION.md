@@ -662,14 +662,17 @@ Nothing in this session marks them as verified.
 
 | ID | Task | Status | Owner | Files in scope |
 |---|---|---|---|---|
-| P-02 | Audit the current public-site release boundary and privacy gate; make the audit runnable without adding private values to Git; publish any unresolved privacy/history limits as review items. | in progress | arena-f97bc99f | `tools/check_site.py`, `README.md`, `flagged.html`, `tools/content.py`, `PRIVACY_REVIEW.md`, `COORDINATION.md` |
+| P-02 | Audit the current public-site release boundary and privacy gate; make the audit runnable without adding private values to Git; publish any unresolved privacy/history limits as review items. | in progress | arena-f97bc99f | `_config.yml`, `.github/workflows/verify.yml`, `tools/check_site.py`, `tools/build_site.py`, `tools/build_brief_pdf.py`, `.gitattributes`, `README.md`, root Pages `*.html`, `brief.pdf`, `data/irregularities.json`, `tools/content.py`, `PRIVACY_REVIEW.md`, `COORDINATION.md` |
 
-Claimed on the active branch `arena/f97bc99f-tinodash4` after reading the existing coordination board and fast-forwarding the local branch pointer to its current `origin/main` snapshot. Scope excludes `_config.yml`, `PRIVACY_REMEDIATION.md`, model inputs, and projection data owned by the prior privacy-containment task. Do not rewrite shared Git history or reproduce household figures in this public review.
+Claimed on the active branch `arena/f97bc99f-tinodash4` after reading the existing coordination board and fast-forwarding the local branch pointer to its current `origin/main` snapshot. Scope does not change the Pages exclusion behavior or rewrite `PRIVACY_REMEDIATION.md`, model inputs, or projection data. The `_config.yml` scope was added after review because its comment overstated the root site's anonymity. Do not rewrite shared Git history or reproduce household figures in this public review.
 
 ---
 
 ### Rebase conflict resolution — arena-f97bc99f — 2026-11-26
 - `origin/main` advanced while the pre-push rebase was running. The append-only coordination board conflicted; retained the full incoming board and this session's claim section, with no other session entries removed.
+- Reconciled the updated root builder, source register, Pages exclusions, and main-branch CI with P-02. Restored a fail-closed default checker and a separate `--public-only` mode; CI calls the latter so no private baseline is committed.
+- Removed household-derived amounts from current review entries and hid Property B's detailed unit/lease inputs in the root facts and brief. Earlier commits and copies remain outside this current-tree change; no shared history was rewritten.
+- Local verification: 18 root pages rebuilt; public-only check passed (23 Pages files, 212/212 source-linked rows, $10 rounding, one-page PDF with 15 links, 25 irregularity items); model build left `site/data` unchanged and the renderer smoke test passed. Strict mode failed closed as expected because `private/raw_inputs.json` is absent. Artifact contents and exact private-input comparison remain unverified.
 
 ## Session arena-bc2ed56c — privacy containment audit (current branch)
 
@@ -797,7 +800,7 @@ Verification record for G-01 through G-03 (2026-11-26): official BOE page and LT
 - `.nojekyll` removed (Jekyll exclusions in `_config.yml` are the containment mechanism).
 - Irregularity added: "Alternate site trees contained household figures and location labels" (source `REPO-PRIVACY`).
 
-**Owner / next-session request (not done here, owned by other sessions):** with the private file present, the strict raw-figure scan in `tools/check_site.py` flags rounded owner figures (for example $1,500 insurance guess, $7,150 rent, $3,100,000 and $1,800,000 values) in `decision-model/`, `model/`, `research/` and this board. CI cannot run that scan (no private file), so CI passes. Action: the owner decides whether these source and log files should keep rounded household figures or be scrubbed; the check exempts model/ and research/ only if the owner adopts that rule (it was in this session's version of the checker and was overwritten by a merge with `main`).
+**Owner / next-session request (not done here, owned by other sessions):** The strict private-input scan previously found unrounded household amounts in tracked source and data files. No amounts are repeated here. A local ignored baseline is required to rerun the exact-pattern check; current public outputs and historical commits still require separate privacy review.
 ---
 
 ---
@@ -833,7 +836,7 @@ The branch name is fixed by Arena as `arena/c3f30db8-tinodash4`; it is not being
 - Root build follow-up: `python3 tools/build_site.py` initially recreated `.nojekyll`, which would bypass the Jekyll exclusions. Before this branch's latest rebase, concurrent PR #22 from `arena-bc2ed56c` independently removed the writer; retained that incoming fix (no duplicate `tools/build_site.py` change in this PR). Rebuild now leaves `.nojekyll` absent. Follow-up addressed by PR #24: `tools/check_site.py` now fails if `.nojekyll` exists while privacy exclusions are expected and requires all configured exclusions. Validation on 2026-11-26: `python3 tools/build_site.py` (18 pages), `test ! -e .nojekyll`, `python3 tools/check_site.py` (204/204 rows linked; $10 rounding passes; exact private-value scan SKIPPED because `private/raw_inputs.json` is absent), model build and JS renderer smoke tests, internal-link/anchor and flag-source checker, `git diff --check` all passed.
 - Latest parallel handoff: `main` advanced to `f63485f` via PR #24 and then `e12d205` via PR #28 while PR #26 was open; merge attempts reported conflicts. Rebased onto latest main and preserved `407d3840`'s source-verification/Pages-gate record plus `bc2ed56c`'s final containment record. Root `tools/build_site.py` and privacy checks are covered by merged work; this PR does not claim to deploy its excluded `site/` files.
 
-**P-02 request (owned by the site/model session):** `model/build_model.py` implies two rates from unrounded owner bill figures (`7207 / 539743`, `2439 / 114248`). They are not published, but they are in the public source. The owner's $10-rounding rule would use `7210 / 539740` and `2440 / 114250`. Changing them regenerates `site/data/*.json` (about 1,250 lines), so this change was reverted in this PR. The site/model session should apply it and regenerate `site/data` in the same commit.
+**P-02 request (owned by the site/model session):** Earlier review identified two owner-specific rate calculations derived from unrounded bill inputs in `model/build_model.py`. Their figures are intentionally omitted here. This root-site review did not change those model inputs or rewrite historical objects; any remediation should be coordinated with the model owner and regenerate dependent outputs.
 ### G-04 closeout
 - PR #24: https://github.com/kanlerxz87-cyber/TinoDash4/pull/24 — merged to `main` at `f63485f` on 2026-11-26.
 - CI `Verify model + site` for PR #24 passed (run 45886939406); root build, privacy gate, legacy data reproducibility, and renderer checks all succeeded.
