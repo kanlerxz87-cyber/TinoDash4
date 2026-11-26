@@ -537,6 +537,127 @@ and `decision-workspace/` were not edited by this session.
 
 ---
 
+## Session 75bcd077 — privacy containment, history audit, source verification (claim)
+
+Session ID: `75bcd077` · Branch: `arena/75bcd077-tinodash4` (fixed for this session) · Base: `b7825dc` (main, PR #18).
+Claimed 2026-11-26 (UTC). Scope is deliberately narrower than the full brief: the brief's 50-plus items already have
+owners on this board, so this session takes the items that are **privacy-urgent** or **unverified**, and nothing else.
+
+| # | Task | Status | Files in scope |
+|---|------|--------|----------------|
+| P-1 | Contain public exposure on the published `decision-model/` site: remove ZIP codes, the neighbourhood label and city-plus-ZIP combinations; use placeholders | done (2026-11-26; residual exposures R-1 to R-3 below) | `decision-model/**` (site, src, README) |
+| P-2 | Privacy checker for `decision-model/`: forbidden-identifier scan that stores hashes, not the literal identifiers | done (tested: a page containing the restricted tokens fails the build) | `decision-model/src/tools/check_site.py` |
+| P-3 | Git history audit (report only, no rewrite): commit IDs carrying ZIPs, city labels, exact household figures, and author metadata | done (report only; rewrite awaits owner approval, see decision D-1) | `COORDINATION.md`, `decision-model/src/data/facts.json` |
+| V-1 | Official-source verification: FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; federal 2026 exclusion; Prop 19 2026-27 allowance | done (six official sources read 2026-11-26; Santa Clara transfer-tax county page not reachable, stays secondary) | `decision-model/src/data/facts.json` |
+| B-1 | Rebuild `decision-model/`, run its checks, and confirm the rebuilt pages are clean | done (build clean: 0 errors, 0 warnings; recommendation unchanged, see result R-4) | `decision-model/site/**` |
+| I-1 | Integration: PR `arena/75bcd077-tinodash4` → `main`, merge, GitHub Pages check | in progress (record below) | `COORDINATION.md` |
+
+Not claimed (owned or done elsewhere, not touched here): root `index.html`/`pages/`/`data/` (session 1), `decision-workspace/`
+(9ca44509), `site/` and `model/` (arena-65b70013), `docs/` and `estate-model/` (bba2482b, 150580b0). The brief's other
+items are open items for a future session and are listed under "Open after 75bcd077" below.
+
+### Results (session 75bcd077, 2026-11-26)
+
+**P-1 Containment (decision-model/).** ZIP codes, the neighbourhood name and city-plus-ZIP labels were removed from
+the generator, the facts register, the README, `PRIVACY.md` and all 21 generated pages. They are now placeholders
+(`[ZIP-A]`, `[ZIP-B]`) or the labels "Property A (Santa Clara County)" and "Property B (San Francisco)".
+Fact IDs that contained the city name were renamed (`HH-PROPERTY-A-*`). The rendered site was scanned: 0 ZIP codes,
+0 city-plus-ZIP labels, 0 neighbourhood names, 0 unrounded household figures.
+
+**P-2 Checker.** `decision-model/src/tools/check_site.py` now stores SHA-256 digests of the restricted tokens, so the
+checker does not contain the identifiers. Tested with a page holding a ZIP, a city and a neighbourhood: all three failed.
+
+**P-3 History audit (report only; not rewritten).** `git fetch --unshallow` was run, and `git log --all -S` was used to
+find each pattern. Counts are commits that add or remove the string, not the string's occurrences:
+
+| Pattern class | Commits (count) | Earliest and examples | Severity |
+|---|---|---|---|
+| Exact household assessed values and tax bills (unrounded, parcel-unique) | Two of the four exact patterns checked appear in 2 commits (`550,537`-class and `114,248`-class); the two 2025 patterns (`539,743`, `7,207`) appear in 1 commit (`16b095d`) | `16b095d` (`data/inputs.json`, `docs/inputs.html`); `5026b1d` (`pages/executive-summary.html`) | **Critical** |
+| ZIP codes (both properties) | 9 (Property A ZIP) and 10 (Property B ZIP) | `5026b1d`, `0d79d3a`, `e23a4ec`, `3e6c258`, `453c515`, `2e8a6db`, `7a4ce48`, `459cfe3`, `cbdd66b` | High |
+| City-name labels | 15 | `0d79d3a` onward | High |
+| Neighbourhood name | 8 | `5026b1d` onward (`0d79d3a`, `3e6c258`, `453c515`, `e23a4ec`, `2e8a6db`, `7a4ce48`) | High |
+| Personal e-mail address in commit author metadata | many commits on `main` | e.g. `fe3cad6` (initial commit) and later merges | Medium (metadata) |
+
+**D-1 Decision required from the owner: rewrite history or not.** Options:
+(a) Leave history as is. Current files are scrubbed. Exact figures stay visible in past commits.
+(b) Rewrite history with `git filter-repo` on `main`, replacing the exact figures, ZIPs, city labels and neighbourhood
+name with placeholders, and rewriting author e-mail with the GitHub no-reply address. This needs a force-push to `main`
+(not permitted to this session), and every open PR and fork must be rebased. Cached copies cannot be recalled.
+(c) Make the repository private. Pages on a free plan stops, and the history is kept.
+This session did **not** do (b), because it is a force-push to `main` and needs explicit approval.
+
+**V-1 Verification (read 2026-11-26).**
+
+| Item | Official source read | Result | Board effect |
+|---|---|---|---|
+| 1% Behavioral Health Services Tax on taxable income above $1,000,000 (line 62) | FTB 2025 Form 540 booklet, Line 62: https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html | Verified for 2025; the booklet states a fixed $1,000,000 amount for every filing status. The 2026 booklet is not published. | `CA-FTB-MHST-THRESHOLD` status verified |
+| California top rate and thresholds | FTB 2025 Tax Rate Schedules: https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf | Verified: 12.30% top bracket from $742,953 (single), $1,010,417 (head of household), $1,485,906 (joint) | `CA-FTB-TOP-MARGINAL` verified (was secondary) |
+| California taxes capital gains as ordinary income | FTB Capital gains and losses: https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html | Verified: "California does not have a lower rate for capital gains." | `CA-FTB-CAPITAL-GAIN-TREATMENT` verified (was secondary) |
+| Federal 2026 filing threshold, $15,000,000 | IRS Estate tax page: https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax | Verified (table row "2026 \| $15,000,000") | Re-checked, date updated |
+| Prop 19 allowance, $1,044,586 for transfers 2025-02-16 to 2027-02-15 | BOE LTA 2025/009: https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf | Verified | Re-checked, date updated |
+| Santa Clara County transfer tax, $0.55 per $500 | Clerk-Recorder fee page: https://clerkrecorder.sccgov.org/recording-fees | **Not reachable from the sandbox on 2026-11-26.** Secondary sources agree on $1.10 per $1,000. | Stays **secondary** |
+
+**Discrepancy resolved:** an earlier board entry (session 65b70013) gave the Prop 19 allowance as $1,044,590. The
+official BOE text says $1,044,586, which is what the model uses. The board entry is wrong, and the model is right.
+
+**CA rate on a large gain (the sensitivity update requested in the brief).** The flat 10.5% blend (no source) was replaced
+by `engine.ca_increment`, which applies the official 2025 schedules and the 1% tax, stacked on other taxable income.
+Hand-checked values: joint, no other income, $2M gain: 10.9% effective; single, $2M gain: 11.8%. Bands: base = joint,
+low = single, high = joint (the same schedule; the gain size sets the rate, and no more favourable case exists under current
+law). Filing status and other taxable income were not supplied, so they are open question items, not inputs.
+
+**R-4 Rebuild result (decision-model).** Before and after, on the same rule set:
+
+| Item | Before (10.5% flat) | After (official schedule) |
+|---|---|---|
+| Recommended path (top of ranking) | Sell at transfer, invest the net proceeds | **unchanged** |
+| Sell beats live-and-hold over 30 years | $22.93M | $23.18M |
+| Tax on final sale, live-and-hold-to-horizon | $3.65M | $3.90M |
+| Spread between best and worst path | $24.79M | $24.85M |
+
+The recommendation did not move. The margin widened by about $0.25M, because the hold path's final-sale tax on large gains
+is now computed from the schedule. The decision rules and the pre-commitment text were not changed. Only the input was corrected.
+
+**Correction written into the site:** the joint 12.3% threshold ($1,485,906) and the single-filer and head-of-household
+thresholds were corrected on the taxes and paths footers, and on Flagged item 0c. The earlier statement that the 12.3%
+bracket starts at $1M is wrong for joint filers.
+
+### Irregularities (new, session 75bcd077)
+
+| ID | Where | Irregularity | Owner / action |
+|---|---|---|---|
+| R-1 | `model/build_model.py` lines 121–122 (root site, published) | Exact unrounded 2025 household figures are in source (`7207 / 539743`, `2439 / 114248`). They are parcel-unique and not $10-rounded. | Owner of `arena-65b70013` (or integration). Round to $10 at minimum, or band to $10,000, and regenerate `site/data`. |
+| R-2 | `decision-workspace/projections.html`, `decision-workspace/data/assessed.json` (published) | Historic assessed values and tax bills for both properties are published year by year. They meet the $10 rule but are parcel-unique. `decision-model/src/PRIVACY.md` §2 says these should be banded. | Owner of `9ca44509`. Band the series, or remove the table. |
+| R-3 | `tools/check_site.py` line 32 (root tool, published) | A forbidden-word list contains the literal ZIP codes and the e-mail provider string. | Owner of the root site (session 1). Replace with SHA-256 digests as done in `decision-model/src/tools/check_site.py`. |
+| R-5 | root `README.md`, line 78 ("Marginal rates: CA ordinary 50.3% …") | The 50.3% figure is 37% federal ordinary plus 12.3% California plus 1% tax. It is labelled as California ordinary. The label is wrong. | Owner of `9ca44509`. Relabel the figure as combined federal and state. |
+| R-6 | Repository and GitHub Pages | Both are public (the Pages API reports `public: true`). The household's exposure is public. | Owner decision (D-1). |
+| R-7 | `PRIVACY.md` (previous revision, 2026-11-25) | It said no personal data had ever been committed. That was wrong (P-3). | Corrected in this revision. |
+
+### Decisions and open items (for the household or owner; not blocking the merge)
+
+| ID | Decision | Default in this branch |
+|---|---|---|
+| D-1 | Rewrite git history (option b above), or accept the exposure | Not rewritten |
+| D-2 | Keep the repository public, or make it private | Public, unchanged |
+| D-3 | Public rounding: `--round 10` (the household's instruction) or `--round 100000` (coarser, given residual identifiability) | `--round 10` |
+| D-4 | Filing status and expected other taxable income in a sale year | Joint, no other income (base); single (low) |
+| D-5 | Whether to band or remove the historic assessed series (R-1, R-2) | Not changed (other sessions' files) |
+
+### Brief items not completed in this session (owned or open elsewhere)
+
+Appraisals and comparables for Property A, insurance quotes, the Santa Clara County tax-rate-area lookup, a legislation tracker,
+and the annual re-run. Each is recorded as unverified on the Flagged page of the decision-model site or on the earlier boards.
+Nothing in this session marks them as verified.
+
+### Log (session 75bcd077)
+
+- 2026-11-26 · 75bcd077 · Claimed P-1 to I-1. Commit `afeb2ed` pushed to `arena/75bcd077-tinodash4`.
+- 2026-11-26 · 75bcd077 · Unshallowed the clone. Ran the history audit (P-3). Confirmed the exposure. Did not rewrite.
+- 2026-11-26 · 75bcd077 · Read the official FTB, IRS and BOE sources listed under V-1. Updated `facts.json`.
+- 2026-11-26 · 75bcd077 · Scrubbed the decision-model generator, facts, README and PRIVACY. Renamed the fact IDs.
+- 2026-11-26 · 75bcd077 · Replaced the unsourced 10.5% with the official schedule. Rebuilt. Recommendation unchanged (R-4).
+- 2026-11-26 · 75bcd077 · Added the restricted-token check. Tested it. Build clean with 0 errors and 0 warnings.
+
 ## Session arena-bc2ed56c — privacy containment audit (current branch)
 
 | ID | Task | Status | Owner | Files in scope |

@@ -40,6 +40,34 @@ def strip_tags(s: str) -> str:
     return re.sub(r"<[^>]+>", "", s)
 
 
+# SHA-256 digests of restricted tokens (PRIVACY.md §1). Regenerate with:
+#   python3 -c "import hashlib;print(hashlib.sha256(b'TOKEN').hexdigest())"
+RESTRICTED = {
+    "2478d903d7c875f05299efe5a271b802046c65fdbb33ab2d0a0085f5b73748ed": "ZIP code",
+    "43086d953bcc428c4a8bf097446b87d9f577a80d4bd010a4313d575484cc9f21": "ZIP code",
+    "f6f9c5f004b4e5b525d9712aaafefcf17a8e93130541a137e5d7d9cf495a50f9": "city label",
+    "13ec7cc438685651ee4e808146d43f73ce84994ae3f8c5fe6786c38f2a9d9a3a": "neighbourhood label",
+}
+
+
+def identifier_hits(text: str):
+    """Yield (kind, digest) for each restricted token found in the visible text."""
+    import hashlib
+    bare = strip_tags(html.unescape(text)).lower()
+    words = re.findall(r"[a-z0-9]+", bare)
+    seen = set()
+    for w in words:
+        d = hashlib.sha256(w.encode()).hexdigest()
+        if d in RESTRICTED and d not in seen:
+            seen.add(d)
+            yield RESTRICTED[d], d
+    for a, b in zip(words, words[1:]):
+        d = hashlib.sha256(f"{a} {b}".encode()).hexdigest()
+        if d in RESTRICTED and d not in seen:
+            seen.add(d)
+            yield RESTRICTED[d], d
+
+
 def main(argv: List[str]) -> int:
     site = pathlib.Path(argv[1]) if len(argv) > 1 else ROOT / "site"
     if not site.exists():
@@ -107,6 +135,14 @@ def main(argv: List[str]) -> int:
                     errors.append(
                         f"{p.name}: a fact row has neither a source link nor an explicit "
                         f"'no official source' marker: {strip_tags(row)[:90]}")
+
+    # --- 0. restricted identifiers (PRIVACY.md §1, §5) ---
+    # Stored as SHA-256 digests so that this file does not itself contain the
+    # identifiers. Matching is on lower-cased whole words; an adjacent word pair
+    # is also tested for the neighbourhood name. Messages never echo the match.
+    for p in pages:
+        for kind, word_hash in identifier_hits(p.read_text(encoding="utf-8")):
+            errors.append(f"{p.name}: restricted {kind} present (PRIVACY.md §1)")
 
     # --- 1 & 2. links ---
     for page, href in hrefs:

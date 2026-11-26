@@ -41,6 +41,30 @@ from . import params as P
 # Helpers
 # ---------------------------------------------------------------------------
 
+def ca_regular_tax(ti: float, status: str) -> float:
+    """California regular tax on taxable income, from the official 2025 schedule."""
+    if ti <= 0:
+        return 0.0
+    rows = P.CA_SCHEDULES[status]
+    base, rate = 0.0, 0.0
+    for lower, tax_at, marg in rows:
+        if ti > lower:
+            base, rate, lo = tax_at, marg, lower
+    return base + rate * (ti - lo)
+
+
+def ca_total_tax(ti: float, status: str) -> float:
+    """Regular tax plus the 1% Behavioral Health Services Tax above $1,000,000 (Form 540 line 62)."""
+    return ca_regular_tax(ti, status) + P.CA_BHST * max(0.0, ti - P.CA_BHST_THRESHOLD)
+
+
+def ca_increment(gain: float, other_income: float, status: str) -> float:
+    """California tax attributable to a gain stacked on other taxable income (ordinary rates, no preference)."""
+    if gain <= 0:
+        return 0.0
+    return ca_total_tax(other_income + gain, status) - ca_total_tax(other_income, status)
+
+
 def compound(rate: float, years: float) -> float:
     return (1.0 + rate) ** years
 
@@ -67,7 +91,7 @@ LAND_SHARE = P.A_LAND_SHARE
 def building_value(market_value: float, land_share: float = LAND_SHARE) -> float:
     """The depreciable / maintainable part of a property's value.
 
-    Cupertino land is roughly three-quarters of market value. Land needs no
+    Property A land is roughly three-quarters of market value. Land needs no
     roof, no paint and no sewer lateral, and it is never depreciable. Tying
     maintenance to MARKET value instead of BUILDING value makes the modelled
     cost compound at the house-price rate for fifty years — a bug that buries
@@ -383,7 +407,9 @@ def simulate(
     sell_other: float = P.SELL_OTHER_COSTS,
     # choices
     federal_gain_rate: float = P.FED_TOP_LTCG,
-    ca_rate_on_gain: float = P.CA_EFFECTIVE_ON_LARGE_GAIN,
+    ca_rate_on_gain: Optional[float] = None,      # flat override; None = official schedule
+    ca_status: str = P.CA_DEFAULT_STATUS,
+    ca_other_income: float = P.CA_OTHER_TAXABLE_INCOME,
     include_niit: bool = True,
     rent_vacancy: float = 0.05,
     rent_growth: float = 0.030,
@@ -489,14 +515,22 @@ def simulate(
         fed = taxable * federal_gain_rate
         if include_niit and taxable > 0:
             fed += taxable * P.FED_NIIT
-        ca = taxable * ca_rate_on_gain
+        # California taxes the gain as ordinary income (FTB capital-gains page,
+        # verified 2026-11-26), so the tax is the increment of the official schedule
+        # plus the 1% BHST, stacked on other taxable income. The flat override is kept
+        # only for explicit sensitivity runs.
+        if ca_rate_on_gain is not None:
+            ca = taxable * ca_rate_on_gain
+        else:
+            ca = ca_increment(taxable, ca_other_income, ca_status)
 
         # Unrecaptured § 1250 gain: depreciation previously taken is taxed at a
-        # maximum 25% federal rate (verified, IRS Topic 409) and as ordinary
-        # income by California.
+        # maximum 25% federal rate (verified, IRS Topic 409). Its California tax is
+        # already inside `taxable` above on the official path.
         if depreciation_taken > 0:
             fed += depreciation_taken * P.FED_UNRECAPTURED_1250
-            ca += depreciation_taken * P.CA_TOP_MARGINAL
+            if ca_rate_on_gain is not None:
+                ca += depreciation_taken * P.CA_TOP_MARGINAL
             notes.append(
                 f"Depreciation recapture of ${depreciation_taken:,.0f} taxed at 25% "
                 f"federal / California ordinary rates."
