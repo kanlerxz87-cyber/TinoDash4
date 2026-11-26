@@ -259,6 +259,10 @@ IRREGULARITIES = [
      "The 2027 figures ($15,480,000 estate and gift exclusion; $20,000 annual gift exclusion) come from secondary reports.",
      "Confirm on the IRS release before relying on them.",
      ["IRS-NEWS-2027"]),
+    ("Repository privacy containment is partial",
+     "The Pages build now excludes alternate generated site trees and source directories, but those tracked files and prior public commits remain accessible through the public GitHub repository. This checkout cannot inspect or purge unavailable earlier history.",
+     "Treat this as partial containment only. A complete repository/history remediation needs an authorized administrator-led review; check forks, cached pages, PR diffs, and downloaded copies as well.",
+     []),
 ]
 
 # Law: (topic, rule, status, source ids, what it means here)

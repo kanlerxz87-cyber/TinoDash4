@@ -657,3 +657,44 @@ Nothing in this session marks them as verified.
 - 2026-11-26 · 75bcd077 · Scrubbed the decision-model generator, facts, README and PRIVACY. Renamed the fact IDs.
 - 2026-11-26 · 75bcd077 · Replaced the unsourced 10.5% with the official schedule. Rebuilt. Recommendation unchanged (R-4).
 - 2026-11-26 · 75bcd077 · Added the restricted-token check. Tested it. Build clean with 0 errors and 0 warnings.
+
+## Session arena-bc2ed56c — privacy containment audit (current branch)
+
+| ID | Task | Status | Owner | Files in scope |
+|----|------|--------|-------|----------------|
+| P-01 | Audit current public artifacts for direct household-derived property inputs, contain alternate site trees from Pages, and publish an accurate privacy status. Do not rewrite shared/main history. | needs review (Pages deploy verified; repository/history cleanup remains) | arena-bc2ed56c | `_config.yml`, `.nojekyll`, `PRIVACY_REMEDIATION.md`, `COORDINATION.md`, `README.md`, `tools/`, `data/irregularities.json`, `flagged.html`, `.github/workflows/verify.yml` |
+
+Claim note: this session is bound to `arena/bc2ed56c-tinodash4`; no additional branch/worktree is being created. Prior tasks are marked done in historical entries, but the repository audit found user-supplied property amounts, rent, and specific locality labels still present in publicly served files. P-01 takes priority over adding new projections. History rewriting is explicitly out of scope because the current checkout is a single grafted commit and rewriting published `main`/GitHub caches requires separate owner approval and coordinated repository administration.
+
+P-01 update: `_config.yml` excludes alternate site trees and source directories from the Jekyll artifact; `.nojekyll` was removed and the root generator no longer recreates it. The root Flagged for Review page now states that containment is partial. PR #19 merged at `b1fa5ba8555c35b86ba79248e5ab8a9e0d9bc95e`; GitHub Pages build/deploy run `45886233033` succeeded. The live root page was fetched, while fetch attempts for excluded alternate paths failed; the artifact download was blocked by the sandbox's external blob-host restriction. This checkout still does not allow a history-wide purge; see the next privacy log entry.
+## Session arena-e5c3fe3a — privacy gate and publish verification
+
+### Claim
+- Session ID: `arena-e5c3fe3a`
+- Branch: `arena/e5c3fe3a-tinodash4` (fixed by Arena)
+- Task: audit the existing published dashboard for privacy/build-gate failures; make the privacy scan fail-safe (never silently call a skipped scan verified), run the existing site/model checks, and log remaining privacy/history irregularities.
+- Status: in progress
+- Scope: `tools/check_site.py`, `COORDINATION.md` only. No site pages or shared model outputs will be edited in this task.
+- Initial finding: `python3 tools/check_site.py` exits immediately because `private/raw_inputs.json` is absent, so the other published-site checks never run. `model/build_model.py` and `node model/check_site.js` currently pass.
+
+### Completion log — arena-e5c3fe3a
+- Scope extension: final-integration privacy containment also touched `decision-model/README.md`, `decision-model/src/{PRIVACY.md,sitegen.py,data/facts.json,model/params.py}`, and regenerated `decision-model/site/*.html`. Earlier task owners are historical/completed; this pass is the final integration check for the legacy nested site.
+- Containment: removed postal codes and neighborhood label strings from the current working tree's published/text files; the legacy nested site now identifies the houses as Property A / Property B in its headers and non-legal property descriptions. The local authority names and links remain where needed to distinguish the applicable local law.
+- Privacy language corrected: `decision-model/src/PRIVACY.md` no longer claims that the source tree contains no owner-supplied property information or that $10 rounding guarantees anonymity. It discloses correlation risk, public-source limitations, and the shallow-history limitation.
+- Gate repair: `tools/check_site.py` now continues structural checks when the optional offline `private/raw_inputs.json` is absent, while explicitly printing `SKIP` and making no exact-value privacy-verification claim. It checks postal-code and hyper-local-label patterns across repository text/PDF files. Missing private inputs are not silently reported as a successful exact-value scan.
+- Verification run on 2026-11-26: `python3 model/build_model.py` (complete); `node model/check_site.js` (ALL CHECKS PASSED); `python3 tools/build_site.py` (18 pages generated); `python3 tools/check_site.py` (all implemented checks pass; exact-value comparison explicitly SKIPPED); `cd decision-model/src && python3 build.py` (21 pages / 765 links checked, no errors, four warnings); `git diff --check` (clean). Warnings are four legal/forecast amounts not on a $10 step in the nested site's Prop 19 allowance table; the allowance is an official statutory/indexed value and the future figures are model outputs. See `decision-model/site/taxes.html`.
+- Privacy limitations requiring review (not claimed resolved): this branch is shallow and exposes only the merge base plus the new claim commit. The merge-base commit metadata contains a personal email identifier; the full history was not available for audit or rewrite. Rewriting the default branch and requesting cache removal are outside this branch's permitted scope. The exact-value scan also remains skipped because no private input file is present. Rounded owner estimates and local jurisdiction references remain in the public model by design; these may be correlatable. The privacy notice and existing Flagged for Review entry disclose these risks.
+- Legal/regulatory claims were not re-researched in this privacy-only pass; existing claims/statuses remain subject to the source register and Flagged for Review page. No new legal figure is marked verified by this pass.
+- Task status: needs review for history-wide privacy verification and the skipped exact-value comparison. Containment changes and structural checks are complete; the outstanding items do not block a site build but must not be described as a full history scrub or a complete private-input comparison.
+
+### Rebase / parallel-session handoff — 2026-11-26
+- `git pull --rebase origin main` advanced main from `b7825dc` to `b1fa5ba` while this task was active and produced an add/append conflict in `COORDINATION.md` with `arena-bc2ed56c`'s already-merged privacy-containment entry.
+- Resolution: retained the complete `arena-bc2ed56c` entry and this session's claim/completion log. No `_config.yml` or `.nojekyll` files owned by that session were edited. The new Pages exclusion configuration is present in the rebased tree; its deployed effect remains unverified pending the other session's Pages check.
+- The legacy `decision-model` output is now also scrubbed of postal-code/neighborhood tokens in the repository, but remains public as GitHub repository content. Its privacy notice was updated to reflect that Pages exclusion is configured but deployment verification is pending.
+- Post-rebase check adjustment: the merged privacy-containment change intentionally removed `.nojekyll` so Jekyll can apply `_config.yml`; `tools/check_site.py` was updated to accept this only when the Jekyll config declares the alternate-tree exclusions. After that adjustment, `python3 tools/check_site.py`, `node model/check_site.js`, and `git diff --check` pass; exact owner-value comparison remains explicitly skipped.
+
+
+### Rebase conflict resolution — arena-bc2ed56c — 2026-11-26
+- Pulling the updated `main` before the follow-up push brought in `arena-e5c3fe3a`'s concurrently merged privacy audit and produced conflicts in `COORDINATION.md` and `tools/check_site.py`.
+- Resolution: retained the full incoming audit and its repo-wide identifier scan; preserved this session's Pages build result and remediation record; extended the Jekyll-config check to assert all configured exclusions. No incoming privacy scrub or audit material was discarded.
+- Follow-up changes in PR #22 add the root build/privacy checks to CI and correct the public privacy flag. The private-value comparison remains explicitly `SKIP` when the offline file is absent; no exact-value privacy verification is claimed.

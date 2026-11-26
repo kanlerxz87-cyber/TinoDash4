@@ -116,7 +116,7 @@ NAV_GROUPS = [
     ("The process", [
         ("inheritance.html", "Inheritance, step by step"),
         ("deadlines.html", "Deadlines as a timeline"),
-        ("property-b.html", "Property B (the San Francisco building)"),
+        ("property-b.html", "Property B (existing three-unit building)"),
         ("decision.html", "Pre-commitment agreement"),
         ("decision-log.html", "Decision log"),
     ]),
@@ -176,8 +176,7 @@ def page(title: str, active: str, body: str, *, subtitle: str = "",
 {navhtml}
 <div class="navgroup privacy">
   <div class="navlabel">Privacy</div>
-  <p>All figures are rounded to the nearest {F.step:,} dollar as requested. Parcel-unique
-  assessed values are banded by construction. No personal information is on this site.
+  <p>Owner-supplied and modelled amounts use the requested ${F.step:,} rounding step; legal thresholds remain exact where needed. Parcel-unique assessed values are banded. No direct names, street addresses, parcel IDs, or postal codes are shown, but property estimates and local-law references can still be correlated.
   <a href="method.html">Method &amp; privacy</a></p>
 </div>
 </aside>
@@ -327,7 +326,7 @@ def page_index(ctx: Ctx) -> str:
 
     body = f"""
 <div class="hero">
-  <p class="kicker">Decision support &middot; updated 2026-11-25 &middot; all figures rounded to the nearest {F.step:,} dollar</p>
+  <p class="kicker">Decision support &middot; updated 2026-11-25 &middot; household and modelled dollar amounts use ${F.step:,} rounding; legal thresholds remain exact</p>
   <h2 class="heroline">On the numbers, <strong>selling and diversifying wins by
   {F.usd(gap_live)}</strong> over 30 years &mdash; but the answer is not robust,
   and three specific things would overturn it.</h2>
@@ -2082,7 +2081,7 @@ QUESTIONS = [
          "leases for comparable single-family homes in Property A's ZIP code. Ask specifically what a 1960s-70s "
          "four-bedroom rents for, and how many days it sits vacant.",
          "HIGH"),
-        ("q-value-b", "What is the San Francisco building actually worth?",
+        ("q-value-b", "What is the Property B building actually worth?",
          "Nothing. $1,800,000 is a household estimate. A three-unit building is valued on gross "
          "rent multiplier and comparable three-unit sales, not on a single-family per-square-foot "
          "metric, so a Zillow-style estimate is actively misleading here.",
@@ -2128,7 +2127,7 @@ QUESTIONS = [
          "lookup and takes minutes.",
          "HIGH"),
         ("q-bills", "What are the exact current property tax bills for both properties?",
-         "The household supplied approximate series. The San Francisco series is internally "
+         "The household supplied approximate series. The Property B tax history is internally "
          "inconsistent — see the flagged item — and implies an effective rate near 2.1%, which is "
          "roughly double Property A's.",
          "The two most recent secured property tax bills for each parcel, front and back. They "
@@ -2175,7 +2174,7 @@ QUESTIONS = [
          "The three leases, and the utility bills. Check whether the units are separately metered.",
          "MEDIUM"),
     ]),
-    ("E", "Property B — the San Francisco building that changes the whole risk picture", [
+    ("E", "Property B — the existing three-unit building that changes the whole risk picture", [
         ("q-b-units", "Is the third unit legal, habitable, and rentable?",
          "Unknown. Two of three units are rented. If the third is legal and vacant, it is a "
          "substantial unrealised income and a candidate principal residence. If it is not a legal "
@@ -2489,7 +2488,7 @@ it too.</p>
     body += """
 </section>
 """
-    return page("Property B — the San Francisco building", "property-b.html", body,
+    return page("Property B — the existing three-unit building", "property-b.html", body,
                 subtitle="The building the household already owns. It changes the risk of the "
                          "Property A decision more than any single assumption in the model.")
 
@@ -2612,7 +2611,7 @@ the $10 rule. They are not household figures. Rounding them would make them wron
 near 2.1%. Property A's own series implies 1.2%–1.4%. The Proposition 13 base rate is 1%, plus
 voter-approved debt and fixed charges, which in practice runs to about 1.2%–1.4% in most Santa
 Clara County tax rate areas. A figure of 2.1% is roughly double.</p>
-<p><strong>Additional inconsistency:</strong> the household's San Francisco series shows the tax
+<p><strong>Additional inconsistency:</strong> the household's Property B tax history shows the tax
 bill <em>falling 5.9% in 2021</em> while the assessed value rose 1%. Under a 1%-plus-debt formula
 that cannot happen unless the debt component changed, which would be unusual.</p>
 <p><strong>Possible explanations:</strong> (a) the tax and assessment columns describe different
@@ -2628,7 +2627,7 @@ parcel page.</p>
 <h3>2. The assessed-value and tax columns do not quite reconcile in either property</h3>
 <p>In both series, multiplying the stated assessed value by the implied rate does not reproduce
 the stated tax to the dollar in every year. That is expected — the effective rate varies with
-the debt levy — but the size of the variation in the San Francisco series is not consistent with
+the debt levy — but the size of the variation in the Property B tax history is not consistent with
 a stable parcel. <strong>Both series should be read off the actual bills rather than
 inferred.</strong></p>
 </article>
@@ -3284,8 +3283,7 @@ def page_briefing(ctx: Ctx) -> str:
 <header class="briefhead">
 <h2>Attorney &amp; CPA Briefing Sheet</h2>
 <p class="briefsub">One page. Two properties. One inherited, one already owned. Prepared
-2026-11-25. All figures rounded to the nearest {F.step:,} dollar; parcel-unique figures banded.
-No personal identifiers appear on this sheet.</p>
+2026-11-25. Owner estimates and modelled amounts use the ${F.step:,} rounding step; statutory values remain exact. Parcel-unique assessments are banded. Names, street addresses, parcel IDs, and postal codes are omitted; other property details may still be correlatable.</p>
 </header>
 
 <div class="briefsec">
@@ -3453,17 +3451,14 @@ liquidity constraint, not as a cash-flow asset with its own ledger. That is a re
 free plan. The household's stated highest priority was that no personal information appear in the
 final product. The measures taken:</p>
 <ul>
-<li>No names, addresses, parcel numbers, account numbers or dates of death appear anywhere in
-this repository or on this site. None were collected.</li>
-<li>All dollar figures on this site are rounded to the nearest """ + f"{F.step:,}" + """ dollar, as
-requested.</li>
+<li>No household names, street addresses, parcel numbers, account numbers, dates of death, or tenant identities are intentionally stored in the working files. Commit metadata and public source/history still require separate privacy review.</li>
+<li>Owner-supplied estimates and modelled dollar outputs use the requested """ + f"${F.step:,}" + """ rounding step. Statutory thresholds and source rates are left exact when rounding would misstate the law.</li>
 <li><strong>Parcel-unique assessed values are banded by construction, not by rounding.</strong>
 A $10 band on a tax-assessed value is still unique to one parcel; so those two values are carried
 as $10,000 bands in the model and never rendered at full precision.</li>
 <li>No analytics, no cookies, no third-party scripts, no fonts loaded from a CDN, and no forms
 that post anywhere. A visitor cannot be profiled and their inputs are never transmitted.</li>
-<li>The <code>.gitignore</code> blocks <code>private/</code>, <code>*.private.json</code> and
-<code>inventory.local.*</code> so that exact figures cannot be committed by accident.</li>
+<li><code>.gitignore</code> excludes local private-input paths, but does not make the tracked model source or published estimates private. Do not place exact inventories or documents in this repository.</li>
 </ul>
 <p><strong>The honest limitation:</strong> rounding protects against casual discovery and search
 indexing. It does not protect against a reader who already knows the household. If that is a
@@ -3471,12 +3466,8 @@ realistic threat, do not publish — run <code>python3 sitegen.py --out site-pri
 and keep the output off the internet. See <code>PRIVACY.md</code> in the repository.</p>
 </div>
 
-<h3>Git history</h3>
-<p>The repository was created with a single initial commit containing an 11-byte README. No
-personal data has ever been committed, so there is no pre-rounding history to scrub — the first
-version of every data file is already the rounded, banded version. The rule going forward is that
-a private figure must never be committed even transiently, because git history is permanent and a
-<code>git rm</code> commit does not remove it from history.</p>
+<h3>Git history and prior exposure</h3>
+<p>This checkout is shallow and does not contain enough earlier commits to audit the full public history. The merge-base commit metadata contains a personal email identifier, and the current branch cannot remove it from the default branch's history. A normal cleanup commit does not erase old Git objects. A repository-wide rewrite and cache purge have not been performed; do not treat this site as a completed history scrub.</p>
 </section>
 
 <section>

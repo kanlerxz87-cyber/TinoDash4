@@ -41,7 +41,7 @@ TRANSFER_YEARS = (2040, 2045, 2050)
 BASE_TRANSFER_YEAR = 2045
 
 # ----------------------------------------------------------------------------
-# Property A — Property A [ZIP-A] (inherited)
+# Property A (inherited)
 # ----------------------------------------------------------------------------
 A_VALUE_2026 = 3_100_000
 A_VALUE_STATUS = "unverified"

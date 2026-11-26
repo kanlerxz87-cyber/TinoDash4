@@ -1,15 +1,14 @@
 # Inherited-Home Decision Model
 
-A privacy-first decision dashboard for one household question: **given a house in Santa Clara County
-that will be inherited sometime between 2040 and 2050, and a three-unit rental building already
-owned in San Francisco, what is the right thing to do with the house?**
+A decision dashboard comparing paths for **Property A**, a house expected to be inherited sometime
+between 2040 and 2050, with **Property B**, an already-owned three-unit rental building. The model
+keeps the inheritance and current-ownership distinction explicit.
 
 Published site: **https://kanlerxz87-cyber.github.io/TinoDash4/decision-model/site/**
 
-Everything here is anonymised. The two properties are **Property A** (Santa Clara County) and
-**Property B** (San Francisco). There are no addresses, parcel numbers, owner names or
-exact assessed values anywhere in this directory — see [src/PRIVACY.md](src/PRIVACY.md), which is
-a binding rule for anything committed, not a disclaimer.
+Property placeholders are used in place of names and postal codes. The public model contains
+rounded, owner-supplied estimates and local-law citations, so it is not a private record; see
+[src/PRIVACY.md](src/PRIVACY.md) for the current limitations and history caveat.
 
 > This is one of several independent analyses in this repository. Everything it needs is inside
 > this directory, and it writes to nothing outside it. It does not modify the integrated site at
