@@ -969,6 +969,36 @@ Session ID: `241e462c` · Branch: `arena/241e462c-tinodash4` (fixed for this ses
 - Pages: build for `b3cb4ac` reports `built`. Live `brief.html` shows the statutory allowance **$1,044,586** (fetched 2026-11-26).
 - Not done, carried forward: owner-mode gate not run (no owner inputs in this checkout); model outputs not regenerated with the corrected constant (needs owner inputs); the handback of the alternate trees (`site/`, `decision-workspace/`, `model/`, `decision-model/`) is open for the claim holders or the owner; the history rewrite is an owner decision; the five exact values quoted in `75bcd077`'s P-3 row remain in `COORDINATION.md`, which Pages does not publish.
 
+---
+
+## Session b422acd0 — decision dashboard in `dashboard/` (branch `arena/b422acd0-tinodash4`)
+
+### Claims and scope (this session touches only these paths)
+| Task | Files | Status |
+|---|---|---|
+| D-01 Decision model: eight paths at 2040 and 2050 transfers, 10- and 20-year horizons; Monte Carlo (2,000 paths, seeded); crash replays; rules from `DECISION_RULES.md`; sensitivity; what-if; breakevens | `tools/dashboard_model.py`, `dashboard/data/*` | done |
+| D-02 Pages: summary first (\"What would change the answer\"), paths, rules, what-if, decision log, projections, black-swan, phased investing, Property A and B, inventory, tax and law, legislation, timeline, questions, suggestions, Flagged for Review, sources, glossary, method, briefing sheet | `tools/dashboard_build.py`, `dashboard/index.html`, `dashboard/pages/`, `dashboard/assets/` | done (21 pages) |
+| D-03 Gate and CI for the dashboard | `tools/dashboard_check.py`, `.github/workflows/verify-dashboard.yml`, `dashboard/README.md` | done |
+
+**Not touched:** the root site (`index.html`, `pages/` if present, `tools/build_site.py`, `tools/check_site.py`, `tools/content.py`, `brief.*`, root legacy pages), `site/`, `decision-workspace/`, `decision-model/`, `model/`, `research/`, `_config.yml`, `verify.yml`, root `README.md`, root `data/`.
+
+### Decisions (logged)
+1. **Published at `/dashboard/`, not as a replacement for the root.** The root site and the alternate trees are claimed by other sessions (see session 241e462c's conflict log). Replacing them here would overwrite claimed work. Owners can point the root at `dashboard/` when they decide.
+2. **Earlier attempt discarded.** This branch first removed the alternate trees and root legacy pages. Those removals are not in the final tree: the branch was merged with `origin/main`, and the PR now adds files only.
+3. **Model correction.** Household cash flows compounded at the equity return, overstating living costs. Now they go to the cash account at the bill return. Living median (2050/20): -$76,930 before, $2,558,810 after. The pick did not change in any case.
+4. **Owner property figures on the dashboard.** Values, insurance, utilities, rent ranges and tax histories, rounded to $10, are shown because the brief allows $10-rounded figures. `main`'s open item asks the owner to confirm the $10 policy; if the owner decides otherwise, the tables built from `dashboard/data/inputs.json` should be removed.
+5. **Privacy scan.** `tools/dashboard_check.py` scans the dashboard's files against the internal list in `private/raw_inputs.json` (gitignored; local only). Its contents are not recorded here. CI runs `--structural`. The repository-wide exposure in the alternate trees is outside this scope and remains claimed by their owners.
+
+### Open (flagged on the dashboard; not blocking merge)
+F-01 parcel's own rate area and bills; F-02 Property B billed rate; F-06 appraisals; F-07 insurance quotes; F-08 rental comparables (Rule 4); F-13 T-bill column (+0.034%, unresolved); F-17 Form 706 due date; F-19 installment dates; F-20 Prop 19 assessed-value formula (CPA to confirm); F-21 phase-in period (rules say 24 to 36 months; model tests 12).
+Git history still contains earlier ZIP codes and an owner e-mail address; rewriting history needs owner approval (not done).
+
+### Verification
+- `python3 tools/dashboard_model.py` (about 30 seconds; output identical on re-run).
+- `python3 tools/dashboard_build.py` (21 pages).
+- `python3 tools/dashboard_check.py`: all checks pass (privacy scan of 30 files, rounding, row markers, links, source register, required content). `--structural` also passes.
+- Official sources read this session: IRS Rev. Proc. 2025-32 (partly), IRS Form 706 instructions (partly), IRS Pub 551, Pub 523 (partly), BOE LTA 2025/009, FTB 2025 Form 540-ES instructions (partly), CBO *The Budget and Economic Outlook: 2026 to 2036, By the Numbers* (Feb 2026). Santa Clara tax rate book FY 2025-26 (partly).
+
 
 ## Session arena/7cdb8a85 — verification and coordination entry (current session)
 

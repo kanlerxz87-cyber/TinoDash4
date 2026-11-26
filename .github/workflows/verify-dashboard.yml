@@ -1,0 +1,31 @@
+name: Verify decision dashboard
+
+on:
+  push:
+    branches: [main]
+    paths: ["dashboard/**", "tools/dashboard_*.py", ".github/workflows/verify-dashboard.yml"]
+  pull_request:
+    branches: [main]
+    paths: ["dashboard/**", "tools/dashboard_*.py", ".github/workflows/verify-dashboard.yml"]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Regenerate model outputs (seeded, deterministic)
+        run: python3 tools/dashboard_model.py
+      - name: Fail if model outputs differ from the committed file
+        run: git diff --exit-code -- dashboard/data/model_outputs.json
+      - name: Rebuild the dashboard
+        run: python3 tools/dashboard_build.py
+      - name: Fail if the built dashboard differs from the committed files
+        run: git diff --exit-code -- dashboard
+      - name: Structural checks (rounding, row markers, links, source register, required content)
+        run: python3 tools/dashboard_check.py --structural

@@ -1,0 +1,2592 @@
+{
+ "_meta": {
+  "generated_by": "tools/model.py",
+  "seed": 20261126,
+  "monte_carlo_draws": 2000,
+  "sensitivity_draws": 200,
+  "valuation_year": 2026,
+  "transfer_years": [
+   2040,
+   2050
+  ],
+  "horizons_years": [
+   10,
+   20
+  ],
+  "note": "All money values rounded to the nearest $10. Real = deflated by the base CPI assumption. Property B is held in every path and is shown as context only."
+ },
+ "assumptions": {
+  "cpi_base": 0.023,
+  "home_value_growth": 0.023,
+  "prop13_growth_cap": 0.02,
+  "prop19_cap_2025_2027": 1044586,
+  "rate_owner_implied_pct": 1.3358,
+  "rate_county_floor_pct": 1.0412,
+  "rate_sf_b_statutory_pct": 1.18162182,
+  "water_net_monthly": 110,
+  "insurance_annual": 1500,
+  "rent_yield": 0.0375,
+  "vacancy": 0.05,
+  "maintenance_rate": 0.01,
+  "sale_costs_pct": 5.61,
+  "transfer_tax_pct": 0.11,
+  "ordinary_rate_combined": 0.4,
+  "ltcg_rate_combined": 0.331,
+  "recapture_rate_combined": 0.381,
+  "equity_tax_drag": 0.005,
+  "building_share": 0.7,
+  "exclusion_living": 250000,
+  "equity_geo_mean_1928_2025_pct": 10.02,
+  "tbill_geo_mean_1928_2025_pct": 3.37,
+  "forward_bill_pct": 3.2,
+  "stress_equity_pct": 5.0,
+  "living_commitment_in_writing": false,
+  "verified_rental_comparables": 0
+ },
+ "paths": {
+  "LIVE": {
+   "label": "Live in A (occupy, claim Prop 19)",
+   "pure": true
+  },
+  "RENT": {
+   "label": "Rent A (full reassessment)",
+   "pure": true
+  },
+  "SELL_LUMP": {
+   "label": "Sell at transfer, invest lump sum",
+   "pure": true
+  },
+  "SELL_P24": {
+   "label": "Sell, park 24 months in T-bills, phase in over 12",
+   "pure": false
+  },
+  "SELL_P36": {
+   "label": "Sell, park 36 months in T-bills, phase in over 12",
+   "pure": false
+  },
+  "LIVE3_SELL": {
+   "label": "Mixed: live 3 years, then sell",
+   "pure": false
+  },
+  "RENT3_SELL": {
+   "label": "Mixed: rent 3 years, then sell",
+   "pure": false
+  },
+  "LIVE3_RENT": {
+   "label": "Mixed: live 3 years, then rent",
+   "pure": false
+  }
+ },
+ "results": {
+  "2040_10": {
+   "T": 2040,
+   "H": 10,
+   "paths": {
+    "LIVE": {
+     "label": "Live in A (occupy, claim Prop 19)",
+     "pure": true,
+     "mc_fin": {
+      "median": 3063020,
+      "p10": 3026420,
+      "p90": 3091920
+     },
+     "mc_total": {
+      "median": 5421170,
+      "p10": 4500710,
+      "p90": 6750750
+     },
+     "det_base": 3066500,
+     "det_base_total": 5346990,
+     "imputed_real_base": 2280500,
+     "prop_tax_nominal": 422580,
+     "imputed_nominal": 1792890,
+     "sale_tax_base": 178100,
+     "bs1929": 3126270,
+     "bs2008": 3132110,
+     "bs1973": 2896930,
+     "bs2000": 3086280,
+     "stress_eq5": 3066500,
+     "reinvest_shock": 3112600
+    },
+    "RENT": {
+     "label": "Rent A (full reassessment)",
+     "pure": true,
+     "mc_fin": {
+      "median": 3979870,
+      "p10": 3962500,
+      "p90": 4001830
+     },
+     "mc_total": {
+      "median": 3979870,
+      "p10": 3962500,
+      "p90": 4001830
+     },
+     "det_base": 3977770,
+     "det_base_total": 3977770,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 630140,
+     "imputed_nominal": 0,
+     "sale_tax_base": 674190,
+     "bs1929": 3941900,
+     "bs2008": 3938470,
+     "bs1973": 4079530,
+     "bs2000": 3965880,
+     "stress_eq5": 3977770,
+     "reinvest_shock": 3950120
+    },
+    "SELL_LUMP": {
+     "label": "Sell at transfer, invest lump sum",
+     "pure": true,
+     "mc_fin": {
+      "median": 8088920,
+      "p10": 3672010,
+      "p90": 16224230
+     },
+     "mc_total": {
+      "median": 8088920,
+      "p10": 3672010,
+      "p90": 16224230
+     },
+     "det_base": 7955300,
+     "det_base_total": 7955300,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 2565930,
+     "bs2008": 6860340,
+     "bs1973": 5842010,
+     "bs2000": 2764720,
+     "stress_eq5": 4976830,
+     "reinvest_shock": 7955300
+    },
+    "SELL_P24": {
+     "label": "Sell, park 24 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 6611080,
+      "p10": 3442130,
+      "p90": 12184670
+     },
+     "mc_total": {
+      "median": 6611080,
+      "p10": 3442130,
+      "p90": 12184670
+     },
+     "det_base": 6498860,
+     "det_base_total": 6498860,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 5448860,
+     "bs2008": 8117950,
+     "bs1973": 8431430,
+     "bs2000": 4237240,
+     "stress_eq5": 4633260,
+     "reinvest_shock": 6482910
+    },
+    "SELL_P36": {
+     "label": "Sell, park 36 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 6173730,
+      "p10": 3426630,
+      "p90": 10599560
+     },
+     "mc_total": {
+      "median": 6173730,
+      "p10": 3426630,
+      "p90": 10599560
+     },
+     "det_base": 6019500,
+     "det_base_total": 6019500,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 7372080,
+     "bs2008": 7568000,
+     "bs1973": 6778790,
+     "bs2000": 4198640,
+     "stress_eq5": 4511190,
+     "reinvest_shock": 5974100
+    },
+    "LIVE3_SELL": {
+     "label": "Mixed: live 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 6354830,
+      "p10": 3072980,
+      "p90": 11737340
+     },
+     "mc_total": {
+      "median": 7274520,
+      "p10": 3522830,
+      "p90": 13372190
+     },
+     "det_base": 6241370,
+     "det_base_total": 7094790,
+     "imputed_real_base": 853430,
+     "prop_tax_nominal": 118110,
+     "imputed_nominal": 495750,
+     "sale_tax_base": 0,
+     "bs1929": 7059870,
+     "bs2008": 7927360,
+     "bs1973": 6990840,
+     "bs2000": 4581490,
+     "stress_eq5": 4426740,
+     "reinvest_shock": 6262500
+    },
+    "RENT3_SELL": {
+     "label": "Mixed: rent 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 6537340,
+      "p10": 3353450,
+      "p90": 11730370
+     },
+     "mc_total": {
+      "median": 6537340,
+      "p10": 3353450,
+      "p90": 11730370
+     },
+     "det_base": 6418600,
+     "det_base_total": 6418600,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 176120,
+     "imputed_nominal": 0,
+     "sale_tax_base": 138870,
+     "bs1929": 7169370,
+     "bs2008": 7997830,
+     "bs1973": 7260530,
+     "bs2000": 4797680,
+     "stress_eq5": 4662480,
+     "reinvest_shock": 6406050
+    },
+    "LIVE3_RENT": {
+     "label": "Mixed: live 3 years, then rent",
+     "pure": false,
+     "mc_fin": {
+      "median": 3815140,
+      "p10": 3804940,
+      "p90": 3823270
+     },
+     "mc_total": {
+      "median": 4691090,
+      "p10": 4241870,
+      "p90": 5430130
+     },
+     "det_base": 3815830,
+     "det_base_total": 4669260,
+     "imputed_real_base": 853430,
+     "prop_tax_nominal": 576150,
+     "imputed_nominal": 495750,
+     "sale_tax_base": 388270,
+     "bs1929": 3822350,
+     "bs2008": 3830210,
+     "bs1973": 3798000,
+     "bs2000": 3818870,
+     "stress_eq5": 3815830,
+     "reinvest_shock": 3822020
+    }
+   }
+  },
+  "2040_20": {
+   "T": 2040,
+   "H": 20,
+   "paths": {
+    "LIVE": {
+     "label": "Live in A (occupy, claim Prop 19)",
+     "pure": true,
+     "mc_fin": {
+      "median": 2032100,
+      "p10": 1931400,
+      "p90": 2117310
+     },
+     "mc_total": {
+      "median": 9120500,
+      "p10": 5495110,
+      "p90": 16416540
+     },
+     "det_base": 2050360,
+     "det_base_total": 8840470,
+     "imputed_real_base": 6790110,
+     "prop_tax_nominal": 937710,
+     "imputed_nominal": 4043550,
+     "sale_tax_base": 604900,
+     "bs1929": 2280210,
+     "bs2008": 2130450,
+     "bs1973": 1569400,
+     "bs2000": 2230380,
+     "stress_eq5": 2050360,
+     "reinvest_shock": 2234860
+    },
+    "RENT": {
+     "label": "Rent A (full reassessment)",
+     "pure": true,
+     "mc_fin": {
+      "median": 4054820,
+      "p10": 4002530,
+      "p90": 4116450
+     },
+     "mc_total": {
+      "median": 4054820,
+      "p10": 4002530,
+      "p90": 4116450
+     },
+     "det_base": 4043710,
+     "det_base_total": 4043710,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 1398290,
+     "imputed_nominal": 0,
+     "sale_tax_base": 1514340,
+     "bs1929": 3903730,
+     "bs2008": 3995750,
+     "bs1973": 4335070,
+     "bs2000": 3933930,
+     "stress_eq5": 4043710,
+     "reinvest_shock": 3931310
+    },
+    "SELL_LUMP": {
+     "label": "Sell at transfer, invest lump sum",
+     "pure": true,
+     "mc_fin": {
+      "median": 16282870,
+      "p10": 5283920,
+      "p90": 45683610
+     },
+     "mc_total": {
+      "median": 16282870,
+      "p10": 5283920,
+      "p90": 45683610
+     },
+     "det_base": 15731350,
+     "det_base_total": 15731350,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 3685190,
+     "bs2008": 19957930,
+     "bs1973": 19798950,
+     "bs2000": 7435040,
+     "stress_eq5": 6156870,
+     "reinvest_shock": 15731350
+    },
+    "SELL_P24": {
+     "label": "Sell, park 24 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 13264190,
+      "p10": 4818890,
+      "p90": 33876600
+     },
+     "mc_total": {
+      "median": 13264190,
+      "p10": 4818890,
+      "p90": 33876600
+     },
+     "det_base": 12665890,
+     "det_base_total": 12665890,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 7714220,
+     "bs2008": 23554260,
+     "bs1973": 27423310,
+     "bs2000": 10976170,
+     "stress_eq5": 5681800,
+     "reinvest_shock": 12630870
+    },
+    "SELL_P36": {
+     "label": "Sell, park 36 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 12285770,
+      "p10": 4630710,
+      "p90": 29735430
+     },
+     "mc_total": {
+      "median": 12285770,
+      "p10": 4630710,
+      "p90": 29735430
+     },
+     "det_base": 11647430,
+     "det_base_total": 11647430,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 10456480,
+     "bs2008": 21950860,
+     "bs1973": 21501500,
+     "bs2000": 10820760,
+     "stress_eq5": 5511750,
+     "reinvest_shock": 11579310
+    },
+    "LIVE3_SELL": {
+     "label": "Mixed: live 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 13337720,
+      "p10": 4606640,
+      "p90": 33923230
+     },
+     "mc_total": {
+      "median": 15085160,
+      "p10": 5248050,
+      "p90": 38415450
+     },
+     "det_base": 12587850,
+     "det_base_total": 14275470,
+     "imputed_real_base": 1687620,
+     "prop_tax_nominal": 118110,
+     "imputed_nominal": 495750,
+     "sale_tax_base": 0,
+     "bs1929": 10273580,
+     "bs2008": 23473700,
+     "bs1973": 24384220,
+     "bs2000": 12755310,
+     "stress_eq5": 5542650,
+     "reinvest_shock": 12634260
+    },
+    "RENT3_SELL": {
+     "label": "Mixed: rent 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 13290840,
+      "p10": 4813320,
+      "p90": 33244900
+     },
+     "mc_total": {
+      "median": 13290840,
+      "p10": 4813320,
+      "p90": 33244900
+     },
+     "det_base": 12546630,
+     "det_base_total": 12546630,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 176120,
+     "imputed_nominal": 0,
+     "sale_tax_base": 138870,
+     "bs1929": 10216960,
+     "bs2008": 23022590,
+     "bs1973": 24195490,
+     "bs2000": 12644090,
+     "stress_eq5": 5728590,
+     "reinvest_shock": 12519060
+    },
+    "LIVE3_RENT": {
+     "label": "Mixed: live 3 years, then rent",
+     "pure": false,
+     "mc_fin": {
+      "median": 3829300,
+      "p10": 3803510,
+      "p90": 3859210
+     },
+     "mc_total": {
+      "median": 5575140,
+      "p10": 4439020,
+      "p90": 8465680
+     },
+     "det_base": 3826430,
+     "det_base_total": 5514050,
+     "imputed_real_base": 1687620,
+     "prop_tax_nominal": 1351090,
+     "imputed_nominal": 495750,
+     "sale_tax_base": 1257590,
+     "bs1929": 3779350,
+     "bs2008": 3838840,
+     "bs1973": 3878170,
+     "bs2000": 3783410,
+     "stress_eq5": 3826430,
+     "reinvest_shock": 3788830
+    }
+   }
+  },
+  "2050_10": {
+   "T": 2050,
+   "H": 10,
+   "paths": {
+    "LIVE": {
+     "label": "Live in A (occupy, claim Prop 19)",
+     "pure": true,
+     "mc_fin": {
+      "median": 3836230,
+      "p10": 3789660,
+      "p90": 3871500
+     },
+     "mc_total": {
+      "median": 6782070,
+      "p10": 5638930,
+      "p90": 8441440
+     },
+     "det_base": 3839670,
+     "det_base_total": 6702440,
+     "imputed_real_base": 2862760,
+     "prop_tax_nominal": 530480,
+     "imputed_nominal": 2250660,
+     "sale_tax_base": 244700,
+     "bs1929": 3914200,
+     "bs2008": 3921470,
+     "bs1973": 3628280,
+     "bs2000": 3864340,
+     "stress_eq5": 3839670,
+     "reinvest_shock": 3897150
+    },
+    "RENT": {
+     "label": "Rent A (full reassessment)",
+     "pure": true,
+     "mc_fin": {
+      "median": 5002580,
+      "p10": 4980960,
+      "p90": 5031170
+     },
+     "mc_total": {
+      "median": 5002580,
+      "p10": 4980960,
+      "p90": 5031170
+     },
+     "det_base": 5000450,
+     "det_base_total": 5000450,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 791040,
+     "imputed_nominal": 0,
+     "sale_tax_base": 846330,
+     "bs1929": 4954910,
+     "bs2008": 4950550,
+     "bs1973": 5129660,
+     "bs2000": 4985350,
+     "stress_eq5": 5000450,
+     "reinvest_shock": 4965340
+    },
+    "SELL_LUMP": {
+     "label": "Sell at transfer, invest lump sum",
+     "pure": true,
+     "mc_fin": {
+      "median": 10259710,
+      "p10": 4469860,
+      "p90": 20786500
+     },
+     "mc_total": {
+      "median": 10259710,
+      "p10": 4469860,
+      "p90": 20786500
+     },
+     "det_base": 9986490,
+     "det_base_total": 9986490,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 3221070,
+     "bs2008": 8611960,
+     "bs1973": 7333620,
+     "bs2000": 3470620,
+     "stress_eq5": 6247550,
+     "reinvest_shock": 9986490
+    },
+    "SELL_P24": {
+     "label": "Sell, park 24 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 8407370,
+      "p10": 4304830,
+      "p90": 15074950
+     },
+     "mc_total": {
+      "median": 8407370,
+      "p10": 4304830,
+      "p90": 15074950
+     },
+     "det_base": 8158180,
+     "det_base_total": 8158180,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 6840090,
+     "bs2008": 10190670,
+     "bs1973": 10584190,
+     "bs2000": 5319110,
+     "stress_eq5": 5816250,
+     "reinvest_shock": 8138160
+    },
+    "SELL_P36": {
+     "label": "Sell, park 36 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 7823210,
+      "p10": 4170350,
+      "p90": 13243240
+     },
+     "mc_total": {
+      "median": 7823210,
+      "p10": 4170350,
+      "p90": 13243240
+     },
+     "det_base": 7556440,
+     "det_base_total": 7556440,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 9254360,
+     "bs2008": 9500310,
+     "bs1973": 8509590,
+     "bs2000": 5270670,
+     "stress_eq5": 5663010,
+     "reinvest_shock": 7499440
+    },
+    "LIVE3_SELL": {
+     "label": "Mixed: live 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 8110220,
+      "p10": 3902690,
+      "p90": 14629740
+     },
+     "mc_total": {
+      "median": 9271680,
+      "p10": 4468290,
+      "p90": 16638570
+     },
+     "det_base": 7837040,
+     "det_base_total": 8908360,
+     "imputed_real_base": 1071330,
+     "prop_tax_nominal": 148270,
+     "imputed_nominal": 622320,
+     "sale_tax_base": 0,
+     "bs1929": 8864290,
+     "bs2008": 9953210,
+     "bs1973": 8778510,
+     "bs2000": 5753270,
+     "stress_eq5": 5559090,
+     "reinvest_shock": 7863390
+    },
+    "RENT3_SELL": {
+     "label": "Mixed: rent 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 8326420,
+      "p10": 4245540,
+      "p90": 14643640
+     },
+     "mc_total": {
+      "median": 8326420,
+      "p10": 4245540,
+      "p90": 14643640
+     },
+     "det_base": 8059530,
+     "det_base_total": 8059530,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 221090,
+     "imputed_nominal": 0,
+     "sale_tax_base": 174330,
+     "bs1929": 9001760,
+     "bs2008": 10041680,
+     "bs1973": 9117060,
+     "bs2000": 6024660,
+     "stress_eq5": 5855020,
+     "reinvest_shock": 8043580
+    },
+    "LIVE3_RENT": {
+     "label": "Mixed: live 3 years, then rent",
+     "pure": false,
+     "mc_fin": {
+      "median": 4779610,
+      "p10": 4767280,
+      "p90": 4789760
+     },
+     "mc_total": {
+      "median": 5882260,
+      "p10": 5305140,
+      "p90": 6828960
+     },
+     "det_base": 4780340,
+     "det_base_total": 5851670,
+     "imputed_real_base": 1071330,
+     "prop_tax_nominal": 723250,
+     "imputed_nominal": 622320,
+     "sale_tax_base": 508530,
+     "bs1929": 4788010,
+     "bs2008": 4797810,
+     "bs1973": 4759420,
+     "bs2000": 4783980,
+     "stress_eq5": 4780340,
+     "reinvest_shock": 4787710
+    }
+   }
+  },
+  "2050_20": {
+   "T": 2050,
+   "H": 20,
+   "paths": {
+    "LIVE": {
+     "label": "Live in A (occupy, claim Prop 19)",
+     "pure": true,
+     "mc_fin": {
+      "median": 2558810,
+      "p10": 2432640,
+      "p90": 2663340
+     },
+     "mc_total": {
+      "median": 11532840,
+      "p10": 6945500,
+      "p90": 20985070
+     },
+     "det_base": 2574320,
+     "det_base_total": 11098110,
+     "imputed_real_base": 8523790,
+     "prop_tax_nominal": 1177130,
+     "imputed_nominal": 5075970,
+     "sale_tax_base": 780470,
+     "bs1929": 2860850,
+     "bs2008": 2674160,
+     "bs1973": 1974730,
+     "bs2000": 2798730,
+     "stress_eq5": 2574320,
+     "reinvest_shock": 2804320
+    },
+    "RENT": {
+     "label": "Rent A (full reassessment)",
+     "pure": true,
+     "mc_fin": {
+      "median": 5099820,
+      "p10": 5034590,
+      "p90": 5177670
+     },
+     "mc_total": {
+      "median": 5099820,
+      "p10": 5034590,
+      "p90": 5177670
+     },
+     "det_base": 5090020,
+     "det_base_total": 5090020,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 1755300,
+     "imputed_nominal": 0,
+     "sale_tax_base": 1900980,
+     "bs1929": 4912310,
+     "bs2008": 5029120,
+     "bs1973": 5459950,
+     "bs2000": 4950660,
+     "stress_eq5": 5090020,
+     "reinvest_shock": 4947320
+    },
+    "SELL_LUMP": {
+     "label": "Sell at transfer, invest lump sum",
+     "pure": true,
+     "mc_fin": {
+      "median": 20199660,
+      "p10": 6720000,
+      "p90": 56435280
+     },
+     "mc_total": {
+      "median": 20199660,
+      "p10": 6720000,
+      "p90": 56435280
+     },
+     "det_base": 19747970,
+     "det_base_total": 19747970,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 4626110,
+     "bs2008": 25053700,
+     "bs1973": 24854120,
+     "bs2000": 9333390,
+     "stress_eq5": 7728870,
+     "reinvest_shock": 19747970
+    },
+    "SELL_P24": {
+     "label": "Sell, park 24 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 16211010,
+      "p10": 5892200,
+      "p90": 42011090
+     },
+     "mc_total": {
+      "median": 16211010,
+      "p10": 5892200,
+      "p90": 42011090
+     },
+     "det_base": 15899810,
+     "det_base_total": 15899810,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 9683850,
+     "bs2008": 29568260,
+     "bs1973": 34425180,
+     "bs2000": 13778660,
+     "stress_eq5": 7132510,
+     "reinvest_shock": 15855860
+    },
+    "SELL_P36": {
+     "label": "Sell, park 36 months in T-bills, phase in over 12",
+     "pure": false,
+     "mc_fin": {
+      "median": 14838580,
+      "p10": 5503040,
+      "p90": 36995640
+     },
+     "mc_total": {
+      "median": 14838580,
+      "p10": 5503040,
+      "p90": 36995640
+     },
+     "det_base": 14621320,
+     "det_base_total": 14621320,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 0,
+     "imputed_nominal": 0,
+     "sale_tax_base": 0,
+     "bs1929": 13126280,
+     "bs2008": 27555480,
+     "bs1973": 26991380,
+     "bs2000": 13583570,
+     "stress_eq5": 6919030,
+     "reinvest_shock": 14535800
+    },
+    "LIVE3_SELL": {
+     "label": "Mixed: live 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 15874180,
+      "p10": 5489460,
+      "p90": 42103860
+     },
+     "mc_total": {
+      "median": 18095310,
+      "p10": 6261480,
+      "p90": 47776510
+     },
+     "det_base": 15803860,
+     "det_base_total": 17922370,
+     "imputed_real_base": 2118520,
+     "prop_tax_nominal": 148270,
+     "imputed_nominal": 622320,
+     "sale_tax_base": 0,
+     "bs1929": 12898200,
+     "bs2008": 29468820,
+     "bs1973": 30613430,
+     "bs2000": 16013720,
+     "stress_eq5": 6959850,
+     "reinvest_shock": 15861720
+    },
+    "RENT3_SELL": {
+     "label": "Mixed: rent 3 years, then sell",
+     "pure": false,
+     "mc_fin": {
+      "median": 15813120,
+      "p10": 5766860,
+      "p90": 41176160
+     },
+     "mc_total": {
+      "median": 15813120,
+      "p10": 5766860,
+      "p90": 41176160
+     },
+     "det_base": 15752110,
+     "det_base_total": 15752110,
+     "imputed_real_base": 0,
+     "prop_tax_nominal": 221090,
+     "imputed_nominal": 0,
+     "sale_tax_base": 174330,
+     "bs1929": 12827130,
+     "bs2008": 28902530,
+     "bs1973": 30376510,
+     "bs2000": 15874110,
+     "stress_eq5": 7193260,
+     "reinvest_shock": 15717100
+    },
+    "LIVE3_RENT": {
+     "label": "Mixed: live 3 years, then rent",
+     "pure": false,
+     "mc_fin": {
+      "median": 4805890,
+      "p10": 4772540,
+      "p90": 4845620
+     },
+     "mc_total": {
+      "median": 6992450,
+      "p10": 5566010,
+      "p90": 10598100
+     },
+     "det_base": 4803860,
+     "det_base_total": 6922380,
+     "imputed_real_base": 2118520,
+     "prop_tax_nominal": 1696060,
+     "imputed_nominal": 622320,
+     "sale_tax_base": 1599820,
+     "bs1929": 4742760,
+     "bs2008": 4818750,
+     "bs1973": 4872980,
+     "bs2000": 4748290,
+     "stress_eq5": 4803860,
+     "reinvest_shock": 4755060
+    }
+   }
+  }
+ },
+ "picks": {
+  "2040_10": {
+   "choice": "SELL_LUMP",
+   "choice_label": "Sell at transfer, invest lump sum",
+   "unconstrained_leader": "SELL_LUMP",
+   "unconstrained_leader_label": "Sell at transfer, invest lump sum",
+   "eligible": [
+    "SELL_LUMP",
+    "SELL_P24",
+    "SELL_P36"
+   ],
+   "removed": {
+    "LIVE": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_SELL": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT3_SELL": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_RENT": "Rule 3: no written commitment to occupy A within 12 months"
+   },
+   "checks": {
+    "SELL_P24": {
+     "guard_rule2": true,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 4237240,
+     "median": 6611080
+    },
+    "SELL_P36": {
+     "guard_rule2": true,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 4198640,
+     "median": 6173730
+    }
+   }
+  },
+  "2040_20": {
+   "choice": "SELL_LUMP",
+   "choice_label": "Sell at transfer, invest lump sum",
+   "unconstrained_leader": "SELL_LUMP",
+   "unconstrained_leader_label": "Sell at transfer, invest lump sum",
+   "eligible": [
+    "SELL_LUMP",
+    "SELL_P24",
+    "SELL_P36"
+   ],
+   "removed": {
+    "LIVE": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_SELL": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT3_SELL": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_RENT": "Rule 3: no written commitment to occupy A within 12 months"
+   },
+   "checks": {
+    "SELL_P24": {
+     "guard_rule2": true,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 7714220,
+     "median": 13264190
+    },
+    "SELL_P36": {
+     "guard_rule2": false,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 10456480,
+     "median": 12285770
+    }
+   }
+  },
+  "2050_10": {
+   "choice": "SELL_LUMP",
+   "choice_label": "Sell at transfer, invest lump sum",
+   "unconstrained_leader": "SELL_LUMP",
+   "unconstrained_leader_label": "Sell at transfer, invest lump sum",
+   "eligible": [
+    "SELL_LUMP",
+    "SELL_P24",
+    "SELL_P36"
+   ],
+   "removed": {
+    "LIVE": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_SELL": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT3_SELL": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_RENT": "Rule 3: no written commitment to occupy A within 12 months"
+   },
+   "checks": {
+    "SELL_P24": {
+     "guard_rule2": true,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 5319110,
+     "median": 8407370
+    },
+    "SELL_P36": {
+     "guard_rule2": true,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 5270670,
+     "median": 7823210
+    }
+   }
+  },
+  "2050_20": {
+   "choice": "SELL_LUMP",
+   "choice_label": "Sell at transfer, invest lump sum",
+   "unconstrained_leader": "SELL_LUMP",
+   "unconstrained_leader_label": "Sell at transfer, invest lump sum",
+   "eligible": [
+    "SELL_LUMP",
+    "SELL_P24",
+    "SELL_P36"
+   ],
+   "removed": {
+    "LIVE": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_SELL": "Rule 3: no written commitment to occupy A within 12 months",
+    "RENT3_SELL": "Rule 4: fewer than three verified rental comparables; reported as a floor only",
+    "LIVE3_RENT": "Rule 3: no written commitment to occupy A within 12 months"
+   },
+   "checks": {
+    "SELL_P24": {
+     "guard_rule2": false,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 9683850,
+     "median": 16211010
+    },
+    "SELL_P36": {
+     "guard_rule2": false,
+     "phase_rule5": false,
+     "beats_by_more_than_2pct": false,
+     "worst_black_swan": 13126280,
+     "median": 14838580
+    }
+   }
+  }
+ },
+ "sensitivity": {
+  "grid": [
+   {
+    "id": "base",
+    "label": "Base case (as published)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "cpi_low",
+    "label": "Inflation 1.7% a year (range tested; not a CBO figure)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8882190
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 17870410
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10826460
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 24231570
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "cpi_high",
+    "label": "Inflation 3.7% a year (range tested; not a CBO figure)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 7310410
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 12105380
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8910630
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 16414420
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "hpa_low",
+    "label": "Home values flat in nominal terms",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 6091360
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 11555320
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 5914590
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 12481670
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "hpa_high",
+    "label": "Home values +4% a year",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10548260
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 20010070
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15160890
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 31994320
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "rent_low",
+    "label": "Gross rent yield 3.0% (assumption)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "rent_high",
+    "label": "Gross rent yield 4.5% (assumption)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "tax_floor",
+    "label": "Tax rate at the published county floor 1.0412%",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "maint_high",
+    "label": "Maintenance 1.5% of value (assumption)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "ins_high",
+    "label": "Insurance $2,500 a year (assumption band)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "ord_high",
+    "label": "Ordinary tax rate 50.3% (stress case; top rate not verified, F-05)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "excl_high",
+    "label": "Living exclusion $500,000 (joint filers)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8374770
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 15886960
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 10207980
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 21542100
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "drag_high",
+    "label": "Equity tax drag 1.5% a year (assumption)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 7635440
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 13155060
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 9307300
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 17881650
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   },
+   {
+    "id": "eq_stress",
+    "label": "Equity return 5% a year (record shifted to a 5% geometric mean)",
+    "picks": {
+     "2040_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 5219040
+     },
+     "2040_20": {
+      "choice": "SELL_LUMP",
+      "leader": "RENT3_SELL",
+      "median_choice": 6062360
+     },
+     "2050_10": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 6365500
+     },
+     "2050_20": {
+      "choice": "SELL_LUMP",
+      "leader": "SELL_LUMP",
+      "median_choice": 8302690
+     }
+    },
+    "moved_in": [],
+    "moved": false
+   }
+  ],
+  "moved_variants": []
+ },
+ "whatif": {
+  "transfer_year": 2050,
+  "horizon": 20,
+  "rent_yields": [
+   0.03,
+   0.0375,
+   0.045
+  ],
+  "hpa": [
+   0.0,
+   0.023,
+   0.04
+  ],
+  "cells": [
+   {
+    "rent_yield": 0.03,
+    "hpa": 0.0,
+    "paths": {
+     "LIVE": 989860,
+     "RENT": 1573110,
+     "SELL_LUMP": 11442140,
+     "SELL_P24": 9212490,
+     "SELL_P36": 8471720,
+     "LIVE3_SELL": 8569030,
+     "RENT3_SELL": 8671110,
+     "LIVE3_RENT": 1495060
+    }
+   },
+   {
+    "rent_yield": 0.03,
+    "hpa": 0.023,
+    "paths": {
+     "LIVE": 2574320,
+     "RENT": 4356560,
+     "SELL_LUMP": 19747970,
+     "SELL_P24": 15899810,
+     "SELL_P36": 14621320,
+     "LIVE3_SELL": 15803860,
+     "RENT3_SELL": 15645540,
+     "LIVE3_RENT": 4176970
+    }
+   },
+   {
+    "rent_yield": 0.03,
+    "hpa": 0.04,
+    "paths": {
+     "LIVE": 5285110,
+     "RENT": 8982310,
+     "SELL_LUMP": 29329680,
+     "SELL_P24": 23614400,
+     "SELL_P36": 21715580,
+     "LIVE3_SELL": 24412820,
+     "RENT3_SELL": 24061220,
+     "LIVE3_RENT": 8601780
+    }
+   },
+   {
+    "rent_yield": 0.0375,
+    "hpa": 0.0,
+    "paths": {
+     "LIVE": 989860,
+     "RENT": 1913930,
+     "SELL_LUMP": 11442140,
+     "SELL_P24": 9212490,
+     "SELL_P36": 8471720,
+     "LIVE3_SELL": 8569030,
+     "RENT3_SELL": 8730850,
+     "LIVE3_RENT": 1776140
+    }
+   },
+   {
+    "rent_yield": 0.0375,
+    "hpa": 0.023,
+    "paths": {
+     "LIVE": 2574320,
+     "RENT": 5090020,
+     "SELL_LUMP": 19747970,
+     "SELL_P24": 15899810,
+     "SELL_P36": 14621320,
+     "LIVE3_SELL": 15803860,
+     "RENT3_SELL": 15752110,
+     "LIVE3_RENT": 4803860
+    }
+   },
+   {
+    "rent_yield": 0.0375,
+    "hpa": 0.04,
+    "paths": {
+     "LIVE": 5285110,
+     "RENT": 10207980,
+     "SELL_LUMP": 29329680,
+     "SELL_P24": 23614400,
+     "SELL_P36": 21715580,
+     "LIVE3_SELL": 24412820,
+     "RENT3_SELL": 24223370,
+     "LIVE3_RENT": 9711040
+    }
+   },
+   {
+    "rent_yield": 0.045,
+    "hpa": 0.0,
+    "paths": {
+     "LIVE": 989860,
+     "RENT": 2254760,
+     "SELL_LUMP": 11442140,
+     "SELL_P24": 9212490,
+     "SELL_P36": 8471720,
+     "LIVE3_SELL": 8569030,
+     "RENT3_SELL": 8790590,
+     "LIVE3_RENT": 2057220
+    }
+   },
+   {
+    "rent_yield": 0.045,
+    "hpa": 0.023,
+    "paths": {
+     "LIVE": 2574320,
+     "RENT": 5794310,
+     "SELL_LUMP": 19747970,
+     "SELL_P24": 15899810,
+     "SELL_P36": 14621320,
+     "LIVE3_SELL": 15803860,
+     "RENT3_SELL": 15858680,
+     "LIVE3_RENT": 5419400
+    }
+   },
+   {
+    "rent_yield": 0.045,
+    "hpa": 0.04,
+    "paths": {
+     "LIVE": 5285110,
+     "RENT": 11201280,
+     "SELL_LUMP": 29329680,
+     "SELL_P24": 23614400,
+     "SELL_P36": 21715580,
+     "LIVE3_SELL": 24412820,
+     "RENT3_SELL": 24385520,
+     "LIVE3_RENT": 10620240
+    }
+   }
+  ]
+ },
+ "distribution": {
+  "SELL_LUMP": {
+   "min": 669640,
+   "max": 225572540,
+   "bin_width": 11245140,
+   "bins": [
+    669640,
+    11914780,
+    23159930,
+    34405070,
+    45650220,
+    56895360,
+    68140510,
+    79385650,
+    90630800,
+    101875940,
+    113121090,
+    124366230,
+    135611380,
+    146856520,
+    158101670,
+    169346810,
+    180591960,
+    191837100,
+    203082250,
+    214327390
+   ],
+   "counts": [
+    542,
+    602,
+    338,
+    203,
+    118,
+    58,
+    44,
+    25,
+    18,
+    15,
+    14,
+    6,
+    4,
+    5,
+    3,
+    2,
+    0,
+    0,
+    0,
+    3
+   ]
+  },
+  "SELL_P24": {
+   "min": 984740,
+   "max": 133556070,
+   "bin_width": 6628570,
+   "bins": [
+    984740,
+    7613300,
+    14241870,
+    20870440,
+    27499010,
+    34127570,
+    40756140,
+    47384710,
+    54013270,
+    60641840,
+    67270410,
+    73898970,
+    80527540,
+    87156110,
+    93784670,
+    100413240,
+    107041810,
+    113670370,
+    120298940,
+    126927510
+   ],
+   "counts": [
+    354,
+    513,
+    403,
+    241,
+    157,
+    102,
+    73,
+    37,
+    28,
+    23,
+    21,
+    14,
+    8,
+    7,
+    7,
+    2,
+    7,
+    1,
+    0,
+    2
+   ]
+  },
+  "SELL_P36": {
+   "min": 1117580,
+   "max": 118375920,
+   "bin_width": 5862920,
+   "bins": [
+    1117580,
+    6980500,
+    12843420,
+    18706330,
+    24569250,
+    30432170,
+    36295090,
+    42158000,
+    48020920,
+    53883840,
+    59746750,
+    65609670,
+    71472590,
+    77335500,
+    83198420,
+    89061340,
+    94924250,
+    100787170,
+    106650090,
+    112513000
+   ],
+   "counts": [
+    317,
+    523,
+    413,
+    253,
+    145,
+    112,
+    75,
+    39,
+    33,
+    31,
+    16,
+    6,
+    11,
+    12,
+    5,
+    4,
+    3,
+    1,
+    0,
+    1
+   ]
+  },
+  "LIVE": {
+   "min": 2134270,
+   "max": 2796570,
+   "bin_width": 33120,
+   "bins": [
+    2134270,
+    2167380,
+    2200500,
+    2233610,
+    2266730,
+    2299840,
+    2332960,
+    2366070,
+    2399190,
+    2432300,
+    2465420,
+    2498530,
+    2531650,
+    2564760,
+    2597880,
+    2630990,
+    2664110,
+    2697220,
+    2730340,
+    2763450
+   ],
+   "counts": [
+    2,
+    1,
+    2,
+    4,
+    7,
+    18,
+    33,
+    53,
+    81,
+    154,
+    175,
+    260,
+    324,
+    269,
+    223,
+    198,
+    122,
+    47,
+    22,
+    5
+   ]
+  },
+  "RENT": {
+   "min": 4951600,
+   "max": 5363990,
+   "bin_width": 20620,
+   "bins": [
+    4951600,
+    4972220,
+    4992840,
+    5013460,
+    5034080,
+    5054700,
+    5075320,
+    5095940,
+    5116550,
+    5137170,
+    5157790,
+    5178410,
+    5199030,
+    5219650,
+    5240270,
+    5260890,
+    5281510,
+    5302130,
+    5322750,
+    5343370
+   ],
+   "counts": [
+    5,
+    20,
+    49,
+    124,
+    200,
+    216,
+    277,
+    321,
+    259,
+    175,
+    153,
+    83,
+    52,
+    32,
+    18,
+    7,
+    4,
+    2,
+    1,
+    2
+   ]
+  }
+ },
+ "projections": [
+  {
+   "year": 2026,
+   "a_value": 3100000,
+   "a_assessed_if_reassessed_2040": 550540,
+   "a_assessed_live_prop19": 550540,
+   "a_tax_live_prop19": 7350,
+   "a_tax_full_reassessment": 7350,
+   "a_insurance": 1500,
+   "a_water_net_annual": 1320,
+   "a_maintenance_at_1pct": 31000,
+   "a_imputed_rent_at_yield": 116250,
+   "b_value": 1800000,
+   "b_assessed": 114250,
+   "b_tax_statutory_rate": 1350,
+   "b_insurance": 1500,
+   "b_water_annual": 4380,
+   "b_electricity_annual": 600,
+   "b_rent_income_annual": 85800,
+   "real_factor": 1.0
+  },
+  {
+   "year": 2027,
+   "a_value": 3171300,
+   "a_assessed_if_reassessed_2040": 561550,
+   "a_assessed_live_prop19": 561550,
+   "a_tax_live_prop19": 7500,
+   "a_tax_full_reassessment": 7500,
+   "a_insurance": 1530,
+   "a_water_net_annual": 1350,
+   "a_maintenance_at_1pct": 31710,
+   "a_imputed_rent_at_yield": 118920,
+   "b_value": 1841400,
+   "b_assessed": 116540,
+   "b_tax_statutory_rate": 1380,
+   "b_insurance": 1530,
+   "b_water_annual": 4480,
+   "b_electricity_annual": 610,
+   "b_rent_income_annual": 87770,
+   "real_factor": 0.9775
+  },
+  {
+   "year": 2028,
+   "a_value": 3244240,
+   "a_assessed_if_reassessed_2040": 572780,
+   "a_assessed_live_prop19": 572780,
+   "a_tax_live_prop19": 7650,
+   "a_tax_full_reassessment": 7650,
+   "a_insurance": 1570,
+   "a_water_net_annual": 1380,
+   "a_maintenance_at_1pct": 32440,
+   "a_imputed_rent_at_yield": 121660,
+   "b_value": 1883750,
+   "b_assessed": 118870,
+   "b_tax_statutory_rate": 1400,
+   "b_insurance": 1570,
+   "b_water_annual": 4580,
+   "b_electricity_annual": 630,
+   "b_rent_income_annual": 89790,
+   "real_factor": 0.9555
+  },
+  {
+   "year": 2029,
+   "a_value": 3318860,
+   "a_assessed_if_reassessed_2040": 584240,
+   "a_assessed_live_prop19": 584240,
+   "a_tax_live_prop19": 7800,
+   "a_tax_full_reassessment": 7800,
+   "a_insurance": 1610,
+   "a_water_net_annual": 1410,
+   "a_maintenance_at_1pct": 33190,
+   "a_imputed_rent_at_yield": 124460,
+   "b_value": 1927080,
+   "b_assessed": 121240,
+   "b_tax_statutory_rate": 1430,
+   "b_insurance": 1610,
+   "b_water_annual": 4690,
+   "b_electricity_annual": 640,
+   "b_rent_income_annual": 91860,
+   "real_factor": 0.9341
+  },
+  {
+   "year": 2030,
+   "a_value": 3395190,
+   "a_assessed_if_reassessed_2040": 595920,
+   "a_assessed_live_prop19": 595920,
+   "a_tax_live_prop19": 7960,
+   "a_tax_full_reassessment": 7960,
+   "a_insurance": 1640,
+   "a_water_net_annual": 1450,
+   "a_maintenance_at_1pct": 33950,
+   "a_imputed_rent_at_yield": 127320,
+   "b_value": 1971400,
+   "b_assessed": 123670,
+   "b_tax_statutory_rate": 1460,
+   "b_insurance": 1640,
+   "b_water_annual": 4800,
+   "b_electricity_annual": 660,
+   "b_rent_income_annual": 93970,
+   "real_factor": 0.9131
+  },
+  {
+   "year": 2031,
+   "a_value": 3473280,
+   "a_assessed_if_reassessed_2040": 607840,
+   "a_assessed_live_prop19": 607840,
+   "a_tax_live_prop19": 8120,
+   "a_tax_full_reassessment": 8120,
+   "a_insurance": 1680,
+   "a_water_net_annual": 1480,
+   "a_maintenance_at_1pct": 34730,
+   "a_imputed_rent_at_yield": 130250,
+   "b_value": 2016740,
+   "b_assessed": 126140,
+   "b_tax_statutory_rate": 1490,
+   "b_insurance": 1680,
+   "b_water_annual": 4910,
+   "b_electricity_annual": 670,
+   "b_rent_income_annual": 96130,
+   "real_factor": 0.8925
+  },
+  {
+   "year": 2032,
+   "a_value": 3553170,
+   "a_assessed_if_reassessed_2040": 620000,
+   "a_assessed_live_prop19": 620000,
+   "a_tax_live_prop19": 8280,
+   "a_tax_full_reassessment": 8280,
+   "a_insurance": 1720,
+   "a_water_net_annual": 1510,
+   "a_maintenance_at_1pct": 35530,
+   "a_imputed_rent_at_yield": 133240,
+   "b_value": 2063130,
+   "b_assessed": 128660,
+   "b_tax_statutory_rate": 1520,
+   "b_insurance": 1720,
+   "b_water_annual": 5020,
+   "b_electricity_annual": 690,
+   "b_rent_income_annual": 98340,
+   "real_factor": 0.8725
+  },
+  {
+   "year": 2033,
+   "a_value": 3634890,
+   "a_assessed_if_reassessed_2040": 632400,
+   "a_assessed_live_prop19": 632400,
+   "a_tax_live_prop19": 8450,
+   "a_tax_full_reassessment": 8450,
+   "a_insurance": 1760,
+   "a_water_net_annual": 1550,
+   "a_maintenance_at_1pct": 36350,
+   "a_imputed_rent_at_yield": 136310,
+   "b_value": 2110580,
+   "b_assessed": 131240,
+   "b_tax_statutory_rate": 1550,
+   "b_insurance": 1760,
+   "b_water_annual": 5140,
+   "b_electricity_annual": 700,
+   "b_rent_income_annual": 100600,
+   "real_factor": 0.8528
+  },
+  {
+   "year": 2034,
+   "a_value": 3718490,
+   "a_assessed_if_reassessed_2040": 645050,
+   "a_assessed_live_prop19": 645050,
+   "a_tax_live_prop19": 8620,
+   "a_tax_full_reassessment": 8620,
+   "a_insurance": 1800,
+   "a_water_net_annual": 1580,
+   "a_maintenance_at_1pct": 37180,
+   "a_imputed_rent_at_yield": 139440,
+   "b_value": 2159120,
+   "b_assessed": 133860,
+   "b_tax_statutory_rate": 1580,
+   "b_insurance": 1800,
+   "b_water_annual": 5250,
+   "b_electricity_annual": 720,
+   "b_rent_income_annual": 102920,
+   "real_factor": 0.8337
+  },
+  {
+   "year": 2035,
+   "a_value": 3804020,
+   "a_assessed_if_reassessed_2040": 657950,
+   "a_assessed_live_prop19": 657950,
+   "a_tax_live_prop19": 8790,
+   "a_tax_full_reassessment": 8790,
+   "a_insurance": 1840,
+   "a_water_net_annual": 1620,
+   "a_maintenance_at_1pct": 38040,
+   "a_imputed_rent_at_yield": 142650,
+   "b_value": 2208780,
+   "b_assessed": 136540,
+   "b_tax_statutory_rate": 1610,
+   "b_insurance": 1840,
+   "b_water_annual": 5370,
+   "b_electricity_annual": 740,
+   "b_rent_income_annual": 105290,
+   "real_factor": 0.8149
+  },
+  {
+   "year": 2036,
+   "a_value": 3891510,
+   "a_assessed_if_reassessed_2040": 671110,
+   "a_assessed_live_prop19": 671110,
+   "a_tax_live_prop19": 8960,
+   "a_tax_full_reassessment": 8960,
+   "a_insurance": 1880,
+   "a_water_net_annual": 1660,
+   "a_maintenance_at_1pct": 38920,
+   "a_imputed_rent_at_yield": 145930,
+   "b_value": 2259590,
+   "b_assessed": 139270,
+   "b_tax_statutory_rate": 1650,
+   "b_insurance": 1880,
+   "b_water_annual": 5500,
+   "b_electricity_annual": 750,
+   "b_rent_income_annual": 107710,
+   "real_factor": 0.7966
+  },
+  {
+   "year": 2037,
+   "a_value": 3981010,
+   "a_assessed_if_reassessed_2040": 684530,
+   "a_assessed_live_prop19": 684530,
+   "a_tax_live_prop19": 9140,
+   "a_tax_full_reassessment": 9140,
+   "a_insurance": 1930,
+   "a_water_net_annual": 1700,
+   "a_maintenance_at_1pct": 39810,
+   "a_imputed_rent_at_yield": 149290,
+   "b_value": 2311560,
+   "b_assessed": 142060,
+   "b_tax_statutory_rate": 1680,
+   "b_insurance": 1930,
+   "b_water_annual": 5620,
+   "b_electricity_annual": 770,
+   "b_rent_income_annual": 110180,
+   "real_factor": 0.7787
+  },
+  {
+   "year": 2038,
+   "a_value": 4072580,
+   "a_assessed_if_reassessed_2040": 698220,
+   "a_assessed_live_prop19": 698220,
+   "a_tax_live_prop19": 9330,
+   "a_tax_full_reassessment": 9330,
+   "a_insurance": 1970,
+   "a_water_net_annual": 1730,
+   "a_maintenance_at_1pct": 40730,
+   "a_imputed_rent_at_yield": 152720,
+   "b_value": 2364720,
+   "b_assessed": 144900,
+   "b_tax_statutory_rate": 1710,
+   "b_insurance": 1970,
+   "b_water_annual": 5750,
+   "b_electricity_annual": 790,
+   "b_rent_income_annual": 112720,
+   "real_factor": 0.7612
+  },
+  {
+   "year": 2039,
+   "a_value": 4166250,
+   "a_assessed_if_reassessed_2040": 712180,
+   "a_assessed_live_prop19": 712180,
+   "a_tax_live_prop19": 9510,
+   "a_tax_full_reassessment": 9510,
+   "a_insurance": 2020,
+   "a_water_net_annual": 1770,
+   "a_maintenance_at_1pct": 41660,
+   "a_imputed_rent_at_yield": 156230,
+   "b_value": 2419110,
+   "b_assessed": 147790,
+   "b_tax_statutory_rate": 1750,
+   "b_insurance": 2020,
+   "b_water_annual": 5890,
+   "b_electricity_annual": 810,
+   "b_rent_income_annual": 115310,
+   "real_factor": 0.7441
+  },
+  {
+   "year": 2040,
+   "a_value": 4262070,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 2858200,
+   "a_tax_live_prop19": 38180,
+   "a_tax_full_reassessment": 56930,
+   "a_insurance": 2060,
+   "a_water_net_annual": 1810,
+   "a_maintenance_at_1pct": 42620,
+   "a_imputed_rent_at_yield": 159830,
+   "b_value": 2474750,
+   "b_assessed": 150750,
+   "b_tax_statutory_rate": 1780,
+   "b_insurance": 2060,
+   "b_water_annual": 6020,
+   "b_electricity_annual": 820,
+   "b_rent_income_annual": 117960,
+   "real_factor": 0.7273
+  },
+  {
+   "year": 2041,
+   "a_value": 4360100,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 2915360,
+   "a_tax_live_prop19": 38940,
+   "a_tax_full_reassessment": 58070,
+   "a_insurance": 2110,
+   "a_water_net_annual": 1860,
+   "a_maintenance_at_1pct": 43600,
+   "a_imputed_rent_at_yield": 163500,
+   "b_value": 2531670,
+   "b_assessed": 153770,
+   "b_tax_statutory_rate": 1820,
+   "b_insurance": 2110,
+   "b_water_annual": 6160,
+   "b_electricity_annual": 840,
+   "b_rent_income_annual": 120680,
+   "real_factor": 0.711
+  },
+  {
+   "year": 2042,
+   "a_value": 4460380,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 2973670,
+   "a_tax_live_prop19": 39720,
+   "a_tax_full_reassessment": 59230,
+   "a_insurance": 2160,
+   "a_water_net_annual": 1900,
+   "a_maintenance_at_1pct": 44600,
+   "a_imputed_rent_at_yield": 167260,
+   "b_value": 2589900,
+   "b_assessed": 156840,
+   "b_tax_statutory_rate": 1850,
+   "b_insurance": 2160,
+   "b_water_annual": 6300,
+   "b_electricity_annual": 860,
+   "b_rent_income_annual": 123450,
+   "real_factor": 0.695
+  },
+  {
+   "year": 2043,
+   "a_value": 4562970,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3033140,
+   "a_tax_live_prop19": 40520,
+   "a_tax_full_reassessment": 60420,
+   "a_insurance": 2210,
+   "a_water_net_annual": 1940,
+   "a_maintenance_at_1pct": 45630,
+   "a_imputed_rent_at_yield": 171110,
+   "b_value": 2649470,
+   "b_assessed": 159980,
+   "b_tax_statutory_rate": 1890,
+   "b_insurance": 2210,
+   "b_water_annual": 6450,
+   "b_electricity_annual": 880,
+   "b_rent_income_annual": 126290,
+   "real_factor": 0.6794
+  },
+  {
+   "year": 2044,
+   "a_value": 4667920,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3093810,
+   "a_tax_live_prop19": 41330,
+   "a_tax_full_reassessment": 61630,
+   "a_insurance": 2260,
+   "a_water_net_annual": 1990,
+   "a_maintenance_at_1pct": 46680,
+   "a_imputed_rent_at_yield": 175050,
+   "b_value": 2710400,
+   "b_assessed": 163180,
+   "b_tax_statutory_rate": 1930,
+   "b_insurance": 2260,
+   "b_water_annual": 6600,
+   "b_electricity_annual": 900,
+   "b_rent_income_annual": 129200,
+   "real_factor": 0.6641
+  },
+  {
+   "year": 2045,
+   "a_value": 4775280,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3155680,
+   "a_tax_live_prop19": 42150,
+   "a_tax_full_reassessment": 62860,
+   "a_insurance": 2310,
+   "a_water_net_annual": 2030,
+   "a_maintenance_at_1pct": 47750,
+   "a_imputed_rent_at_yield": 179070,
+   "b_value": 2772740,
+   "b_assessed": 166440,
+   "b_tax_statutory_rate": 1970,
+   "b_insurance": 2310,
+   "b_water_annual": 6750,
+   "b_electricity_annual": 920,
+   "b_rent_income_annual": 132170,
+   "real_factor": 0.6492
+  },
+  {
+   "year": 2046,
+   "a_value": 4885110,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3218800,
+   "a_tax_live_prop19": 43000,
+   "a_tax_full_reassessment": 64120,
+   "a_insurance": 2360,
+   "a_water_net_annual": 2080,
+   "a_maintenance_at_1pct": 48850,
+   "a_imputed_rent_at_yield": 183190,
+   "b_value": 2836520,
+   "b_assessed": 169770,
+   "b_tax_statutory_rate": 2010,
+   "b_insurance": 2360,
+   "b_water_annual": 6900,
+   "b_electricity_annual": 950,
+   "b_rent_income_annual": 135210,
+   "real_factor": 0.6346
+  },
+  {
+   "year": 2047,
+   "a_value": 4997470,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3283170,
+   "a_tax_live_prop19": 43860,
+   "a_tax_full_reassessment": 65400,
+   "a_insurance": 2420,
+   "a_water_net_annual": 2130,
+   "a_maintenance_at_1pct": 49970,
+   "a_imputed_rent_at_yield": 187410,
+   "b_value": 2901760,
+   "b_assessed": 173160,
+   "b_tax_statutory_rate": 2050,
+   "b_insurance": 2420,
+   "b_water_annual": 7060,
+   "b_electricity_annual": 970,
+   "b_rent_income_annual": 138320,
+   "real_factor": 0.6203
+  },
+  {
+   "year": 2048,
+   "a_value": 5112410,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3348830,
+   "a_tax_live_prop19": 44730,
+   "a_tax_full_reassessment": 66710,
+   "a_insurance": 2470,
+   "a_water_net_annual": 2180,
+   "a_maintenance_at_1pct": 51120,
+   "a_imputed_rent_at_yield": 191720,
+   "b_value": 2968500,
+   "b_assessed": 176630,
+   "b_tax_statutory_rate": 2090,
+   "b_insurance": 2470,
+   "b_water_annual": 7220,
+   "b_electricity_annual": 990,
+   "b_rent_income_annual": 141500,
+   "real_factor": 0.6064
+  },
+  {
+   "year": 2049,
+   "a_value": 5229990,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3415810,
+   "a_tax_live_prop19": 45630,
+   "a_tax_full_reassessment": 68040,
+   "a_insurance": 2530,
+   "a_water_net_annual": 2230,
+   "a_maintenance_at_1pct": 52300,
+   "a_imputed_rent_at_yield": 196120,
+   "b_value": 3036770,
+   "b_assessed": 180160,
+   "b_tax_statutory_rate": 2130,
+   "b_insurance": 2530,
+   "b_water_annual": 7390,
+   "b_electricity_annual": 1010,
+   "b_rent_income_annual": 144750,
+   "real_factor": 0.5927
+  },
+  {
+   "year": 2050,
+   "a_value": 5350280,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3484130,
+   "a_tax_live_prop19": 46540,
+   "a_tax_full_reassessment": 69400,
+   "a_insurance": 2590,
+   "a_water_net_annual": 2280,
+   "a_maintenance_at_1pct": 53500,
+   "a_imputed_rent_at_yield": 200640,
+   "b_value": 3106620,
+   "b_assessed": 183760,
+   "b_tax_statutory_rate": 2170,
+   "b_insurance": 2590,
+   "b_water_annual": 7560,
+   "b_electricity_annual": 1040,
+   "b_rent_income_annual": 148080,
+   "real_factor": 0.5794
+  },
+  {
+   "year": 2051,
+   "a_value": 5473340,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3553810,
+   "a_tax_live_prop19": 47470,
+   "a_tax_full_reassessment": 70790,
+   "a_insurance": 2650,
+   "a_water_net_annual": 2330,
+   "a_maintenance_at_1pct": 54730,
+   "a_imputed_rent_at_yield": 205250,
+   "b_value": 3178070,
+   "b_assessed": 187440,
+   "b_tax_statutory_rate": 2210,
+   "b_insurance": 2650,
+   "b_water_annual": 7730,
+   "b_electricity_annual": 1060,
+   "b_rent_income_annual": 151490,
+   "real_factor": 0.5664
+  },
+  {
+   "year": 2052,
+   "a_value": 5599230,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3624890,
+   "a_tax_live_prop19": 48420,
+   "a_tax_full_reassessment": 72210,
+   "a_insurance": 2710,
+   "a_water_net_annual": 2380,
+   "a_maintenance_at_1pct": 55990,
+   "a_imputed_rent_at_yield": 209970,
+   "b_value": 3251160,
+   "b_assessed": 191190,
+   "b_tax_statutory_rate": 2260,
+   "b_insurance": 2710,
+   "b_water_annual": 7910,
+   "b_electricity_annual": 1080,
+   "b_rent_income_annual": 154970,
+   "real_factor": 0.5536
+  },
+  {
+   "year": 2053,
+   "a_value": 5728010,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3697380,
+   "a_tax_live_prop19": 49390,
+   "a_tax_full_reassessment": 73650,
+   "a_insurance": 2770,
+   "a_water_net_annual": 2440,
+   "a_maintenance_at_1pct": 57280,
+   "a_imputed_rent_at_yield": 214800,
+   "b_value": 3325940,
+   "b_assessed": 195010,
+   "b_tax_statutory_rate": 2300,
+   "b_insurance": 2770,
+   "b_water_annual": 8090,
+   "b_electricity_annual": 1110,
+   "b_rent_income_annual": 158540,
+   "real_factor": 0.5412
+  },
+  {
+   "year": 2054,
+   "a_value": 5859750,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3771330,
+   "a_tax_live_prop19": 50380,
+   "a_tax_full_reassessment": 75120,
+   "a_insurance": 2840,
+   "a_water_net_annual": 2500,
+   "a_maintenance_at_1pct": 58600,
+   "a_imputed_rent_at_yield": 219740,
+   "b_value": 3402440,
+   "b_assessed": 198910,
+   "b_tax_statutory_rate": 2350,
+   "b_insurance": 2840,
+   "b_water_annual": 8280,
+   "b_electricity_annual": 1130,
+   "b_rent_income_annual": 162180,
+   "real_factor": 0.529
+  },
+  {
+   "year": 2055,
+   "a_value": 5994530,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3846760,
+   "a_tax_live_prop19": 51390,
+   "a_tax_full_reassessment": 76630,
+   "a_insurance": 2900,
+   "a_water_net_annual": 2550,
+   "a_maintenance_at_1pct": 59950,
+   "a_imputed_rent_at_yield": 224790,
+   "b_value": 3480690,
+   "b_assessed": 202890,
+   "b_tax_statutory_rate": 2400,
+   "b_insurance": 2900,
+   "b_water_annual": 8470,
+   "b_electricity_annual": 1160,
+   "b_rent_income_annual": 165910,
+   "real_factor": 0.5171
+  },
+  {
+   "year": 2056,
+   "a_value": 6132400,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 3923690,
+   "a_tax_live_prop19": 52410,
+   "a_tax_full_reassessment": 78160,
+   "a_insurance": 2970,
+   "a_water_net_annual": 2610,
+   "a_maintenance_at_1pct": 61320,
+   "a_imputed_rent_at_yield": 229970,
+   "b_value": 3560750,
+   "b_assessed": 206950,
+   "b_tax_statutory_rate": 2450,
+   "b_insurance": 2970,
+   "b_water_annual": 8660,
+   "b_electricity_annual": 1190,
+   "b_rent_income_annual": 169730,
+   "real_factor": 0.5055
+  },
+  {
+   "year": 2057,
+   "a_value": 6273450,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 4002170,
+   "a_tax_live_prop19": 53460,
+   "a_tax_full_reassessment": 79720,
+   "a_insurance": 3040,
+   "a_water_net_annual": 2670,
+   "a_maintenance_at_1pct": 62730,
+   "a_imputed_rent_at_yield": 235250,
+   "b_value": 3642650,
+   "b_assessed": 211090,
+   "b_tax_statutory_rate": 2490,
+   "b_insurance": 3040,
+   "b_water_annual": 8860,
+   "b_electricity_annual": 1210,
+   "b_rent_income_annual": 173630,
+   "real_factor": 0.4941
+  },
+  {
+   "year": 2058,
+   "a_value": 6417740,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 4082210,
+   "a_tax_live_prop19": 54530,
+   "a_tax_full_reassessment": 81320,
+   "a_insurance": 3110,
+   "a_water_net_annual": 2730,
+   "a_maintenance_at_1pct": 64180,
+   "a_imputed_rent_at_yield": 240670,
+   "b_value": 3726430,
+   "b_assessed": 215310,
+   "b_tax_statutory_rate": 2540,
+   "b_insurance": 3110,
+   "b_water_annual": 9070,
+   "b_electricity_annual": 1240,
+   "b_rent_income_annual": 177630,
+   "real_factor": 0.483
+  },
+  {
+   "year": 2059,
+   "a_value": 6565350,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 4163850,
+   "a_tax_live_prop19": 55620,
+   "a_tax_full_reassessment": 82940,
+   "a_insurance": 3180,
+   "a_water_net_annual": 2800,
+   "a_maintenance_at_1pct": 65650,
+   "a_imputed_rent_at_yield": 246200,
+   "b_value": 3812140,
+   "b_assessed": 219610,
+   "b_tax_statutory_rate": 2600,
+   "b_insurance": 3180,
+   "b_water_annual": 9280,
+   "b_electricity_annual": 1270,
+   "b_rent_income_annual": 181710,
+   "real_factor": 0.4722
+  },
+  {
+   "year": 2060,
+   "a_value": 6716350,
+   "a_assessed_if_reassessed_2040": 4262070,
+   "a_assessed_live_prop19": 4247130,
+   "a_tax_live_prop19": 56730,
+   "a_tax_full_reassessment": 84600,
+   "a_insurance": 3250,
+   "a_water_net_annual": 2860,
+   "a_maintenance_at_1pct": 67160,
+   "a_imputed_rent_at_yield": 251860,
+   "b_value": 3899820,
+   "b_assessed": 224010,
+   "b_tax_statutory_rate": 2650,
+   "b_insurance": 3250,
+   "b_water_annual": 9490,
+   "b_electricity_annual": 1300,
+   "b_rent_income_annual": 185890,
+   "real_factor": 0.4616
+  }
+ ],
+ "breakeven": {
+  "2040_10": {
+   "live_rent_yield": 0.08039,
+   "rent_rent_yield": 0.19687,
+   "live_hpa": 0.0852
+  },
+  "2040_20": {
+   "live_rent_yield": 0.07556,
+   "rent_rent_yield": null,
+   "live_hpa": 0.07261
+  },
+  "2050_10": {
+   "live_rent_yield": 0.08052,
+   "rent_rent_yield": 0.19672,
+   "live_hpa": 0.08602
+  },
+  "2050_20": {
+   "live_rent_yield": 0.07555,
+   "rent_rent_yield": null,
+   "live_hpa": 0.07295
+  }
+ },
+ "estate": {
+  "federal_basic_exclusion": 15000000,
+  "known_real_estate_owner_estimates": 4900000,
+  "headroom_for_other_assets_before_debts_and_expenses": 10100000,
+  "federal_rate_above_exclusion_pct": 40
+ }
+}
