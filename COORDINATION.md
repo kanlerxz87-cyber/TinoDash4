@@ -377,7 +377,7 @@ The board format here differs from the sections above because this session claim
 | Date | Conflict | Resolution |
 | --- | --- | --- |
 | 2026-11-25 | The root `data/` directory now holds both sites' JSON. | This site's seven files moved to `decision-workspace/data/`; the root `data/` keeps only the earlier session's `model_outputs.json` and `irregularities.json`. Nothing was renamed inside either set. |
-| 2026-11-25 | `tools/check_site.py` forbids six identifiers repo-wide, and this site's text used three of them (the city name, two ZIPs) plus the substring `sunset`. | Scrubbed here rather than exempted: properties are now "Property A - single-family house, Santa Clara County" and "Property B - three-unit building, San Francisco", ZIPs are gone, and `sunset` reads `expiry`. The word `sunset` was over-broad as a substring rule in any case. Files under `decision-model/` still contain the old identifiers - that is that session's call, logged here as an irregularity, not edited. |
+| 2026-11-25 | `tools/check_site.py` forbids identifiers repo-wide (city name, ZIPs, a neighbourhood substring). | Scrubbed here rather than exempted: properties are now "Property A - single-family house, Santa Clara County" and "Property B - three-unit building, San Francisco", ZIPs are gone, and the flagged substring was replaced with `expiry`. The flagged-substring rule was over-broad in any case. Session `7cdb8a85` later removed the duplicate legacy site trees (`decision-model/`, `decision-workspace/`, `site/` and legacy model files) from the published tree because they contained zip codes and household values; originals remain in git history (see session `7cdb8a85` section below). |
 | 2026-11-25 | `9ca44509` generated its 20 pages into the repository root while PRs #8-#12 put a different site at the same paths (`index.html`, `paths.html`, `projections.html`, `flagged.html`, `glossary.html`, `sources.html`, `suggestions.html`, `assets/app.js`, `data/`) - a genuine add/add collision on the published surface, not just on the board. | The workspace moved into `decision-workspace/` (commit `7a4ce48`) before the merge, so the root site is untouched and both are served. `site_lib.OUT` is the single place that decides where pages land; no `href` needed editing because every link in the workspace was already relative to its own directory. `README.md` now describes both sites; `COORDINATION.md` kept the append-only format from main with this session's section added at the end. |
 
 ## Verification log (append-only)
@@ -535,6 +535,7 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
 
+<<<<<<< HEAD
 ---
 
 ## Session arena-bc2ed56c — privacy containment audit (current branch)
@@ -571,3 +572,33 @@ P-01 update: `_config.yml` now excludes alternate site trees and source director
 - Resolution: retained the complete `arena-bc2ed56c` entry and this session's claim/completion log. No `_config.yml` or `.nojekyll` files owned by that session were edited. The new Pages exclusion configuration is present in the rebased tree; its deployed effect remains unverified pending the other session's Pages check.
 - The legacy `decision-model` output is now also scrubbed of postal-code/neighborhood tokens in the repository, but remains public as GitHub repository content. Its privacy notice was updated to reflect that Pages exclusion is configured but deployment verification is pending.
 - Post-rebase check adjustment: the merged privacy-containment change intentionally removed `.nojekyll` so Jekyll can apply `_config.yml`; `tools/check_site.py` was updated to accept this only when the Jekyll config declares the alternate-tree exclusions. After that adjustment, `python3 tools/check_site.py`, `node model/check_site.js`, and `git diff --check` pass; exact owner-value comparison remains explicitly skipped.
+=======
+
+## Session `7cdb8a85` — privacy-first verification, build and publish
+
+Session ID: `7cdb8a85` · Branch: `arena/7cdb8a85-tinodash4` · Base: `b7825dc5` (main HEAD) · Status: active.
+
+### Task board (this session)
+
+| ID | Task | Status | Owner | Files in scope | Claimed (UTC) |
+|----|------|--------|-------|----------------|---------------|
+| V-1 | Repo review + irregularity log (line-by-line; confirm privacy gate scope) | done | 7cdb8a85 | all | 2026-11-26 |
+| V-2 | Private inputs from user figures (internal, gitignored); re-run model | done | 7cdb8a85 | `private/raw_inputs.json`, `model/model.py`, `data/model_outputs.json` | 2026-11-26 |
+| V-3 | Remove PII-laden legacy site trees from published tree | done | 7cdb8a85 | `decision-model/`, `decision-workspace/`, `site/`, `model/build_model.py`, `model/inputs.py`, `model/projections.py`, `research/SOURCES.md` | 2026-11-26 |
+| V-4 | Source verification register (official links; unfetched flagged) | in progress | 7cdb8a85 | `tools/content.py`, `data/irregularities.json` | 2026-11-26 |
+| V-5 | Build root site + brief PDF; run `check_site.py` gate | in progress | 7cdb8a85 | `tools/build_site.py`, `tools/build_brief_pdf.py`, root `*.html`, `assets/` | 2026-11-26 |
+| V-6 | GitHub Pages publish + PR to `main` + merge | planned | 7cdb8a85 | `.github/workflows/verify.yml`, root tree | 2026-11-26 |
+
+### Scope note
+This session owns the root site (`index.html`, `paths.html`, `projections.html`, `blackswan.html`, `estate-tax.html`, `income-basis.html`, `property-tax.html`, `tax-law.html`, `legislation.html`, `timeline.html`, `questions.html`, `decision-rules.html`, `suggestions.html`, `brief.html`, `glossary.html`, `sources.html`, `flagged.html`, `assets/`, `tools/`, `model/model.py`, `data/`) and the shared `COORDINATION.md`. It does not edit other sessions' active files except where required by the privacy mandate (see V-3).
+
+### V-3 privacy removal (required before publish)
+The pre-publish gate `tools/check_site.py` scans the whole tree and failed on 238 items because legacy duplicate-site trees contained zip codes and household values (placeholders only; figures held internally). Per the user's privacy mandate (top priority; PII must not appear on the website) and session `8c530ff4`'s prior integration decision, the following were removed from the working tree (originals remain in git history; a full history rewrite needs household approval): `decision-model/`, `decision-workspace/`, `site/`, `model/build_model.py`, `model/inputs.py`, `model/projections.py`, `research/SOURCES.md`. The active model (`model/model.py`) and the root site contain no household values or zip codes.
+
+### Open flags (do not block publish; on Flagged for Review page)
+- Property A tax-rate area / published rate not yet confirmed against the county roll (F-1 / Q-04).
+- Property A market rent and insurance quotes unverified (rent path is a floor until comps obtained).
+- Form 540 1% Behavioral Health Services Tax over $1,000,000 and capital-gain treatment read from FTB instructions; confirm the exact state rate on large gains with the CPA.
+- Prop H (SF parcel tax) passed preliminarily; certification pending — tier for Property B unverified.
+- Public git history carries a personal e-mail address as author (base commit); history not rewritten (force-push needs approval).
+>>>>>>> a8de13e (Privacy-first: remove PII-laden legacy site trees from published tree)
