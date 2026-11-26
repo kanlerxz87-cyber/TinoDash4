@@ -510,8 +510,9 @@ def build_flagged():
     body = (card("Flagged for Review", "<p>These items do not block the site. Each has its source link so the household can review it and request a change.</p>", "warn")
             + table(["Item", "What we found", "Action needed", "Sources"], rows)
             + card("Repository and privacy", """<ul class="bullets">
-<li>The repository is public. Only placeholders and rounded results are published; raw household figures stay in an untracked folder.</li>
-<li>A privacy scan (tools/check_site.py) fails the build if a household figure, zip code, or parcel identifier appears in any published file.</li>
+<li>Containment is partial: the current Pages configuration excludes alternate generated site trees and source folders, but the GitHub repository remains public and those tracked files and historical commits can still be fetched directly.</li>
+<li>The earlier pre-rounding history was not scrubbed in this change. The current checkout does not provide the earlier objects needed to inspect or safely rewrite that history.</li>
+<li>The root privacy checker requires an untracked private input file, so it cannot run in a clean checkout. Do not treat it as an end-to-end publish gate until a private-data-free artifact scan is added.</li>
 </ul>"""))
     page("flagged.html", "Flagged for review", body)
 
@@ -723,7 +724,7 @@ def main():
     build_glossary()
     build_sources()
     write_irregularities_json()
-    open(os.path.join(ROOT, ".nojekyll"), "w").close()
+    # Keep Jekyll enabled so _config.yml exclusions constrain the Pages artifact.
     print("site built:", len(PAGES_NAV), "navigation pages")
 
 

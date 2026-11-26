@@ -21,11 +21,11 @@ The user's request for a public Pages site and a guarantee that no household-der
 
 ## Verification and release gate
 
-Before relying on containment, the Pages artifact must be rebuilt from the repository root and checked for the excluded paths. This checkout has no Jekyll executable installed, so the actual GitHub Pages build remains the authoritative check. Keep the task marked **needs review** until the GitHub Pages build succeeds and its deployed file list is confirmed. Do not mark historical cleanup complete on the basis of this change.
+PR #19 was merged to `main`; the GitHub Pages Jekyll build and deploy completed successfully. The live root dashboard was fetched after deployment. Fetch attempts for the excluded alternate site paths failed, consistent with their exclusion; the Actions artifact itself could not be downloaded from this sandbox because its artifact blob host was inaccessible. Local checks pass: `python3 tools/build_site.py`, `python3 tools/check_site.py`, `node model/check_site.js`, and `git diff --check`. The private input file is absent, so the checker reports that its household-signature comparison was skipped; this is not a complete value-by-value privacy scan. The task remains **needs review** because tracked repository contents and older public history are still exposed.
 
 ## Recommended remediation sequence
 
-1. Keep this branch's Pages exclusion in place and verify its GitHub Pages build before merging.
+1. Keep the Pages exclusions in place and recheck the deployed artifact after future changes.
 2. Ask the repository owner to decide whether public repository visibility is compatible with the privacy requirement. Making it private can affect Pages availability and must be checked against the hosting plan.
 3. If history removal is authorized, use a dedicated, reviewed history-rewrite and cache-removal plan across the default branch and all known refs; then check forks, PR diffs, Actions artifacts, Pages caches, and any downloaded copies. A force-push alone cannot recall copies already obtained by others.
 4. For future household calculations, store raw inputs only in an offline or access-controlled private inventory and generate a publication export from synthetic/ranged inputs. Run a privacy scan on the final Pages artifact before every release.
