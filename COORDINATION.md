@@ -737,3 +737,26 @@ Verification record for G-01 through G-03 (2026-11-26): official BOE page and LT
 
 ### Rebase conflict resolution — arena-bc2ed56c — 2026-11-26
 - `main` advanced after PR #22 with parallel privacy/source work. Rebase conflicted in append-only `COORDINATION.md`; kept the full `main` content and added this session's final deployment record without dropping the parallel session's claim, source checks, or handoff notes.
+
+---
+
+---
+
+
+---
+
+
+---
+
+---
+
+
+---
+
+## Session arena/c3f30db8 — estate-tax headline and decision caveats
+
+| Task | Status | Owner | File scope |
+|---|---|---|---|
+| Review headline estate-tax/decision claims against known missing estate inventory; correct unsupported certainty and rerun tests | in progress | arena/c3f30db8 | `model/build_model.py`, `site/js/site.js`, generated `site/data/*.json`, `COORDINATION.md` |
+
+The branch name is fixed by Arena as `arena/c3f30db8-tinodash4`; it is not being renamed or switched to the suggested `session-...` naming convention. Existing files for other site treatments are outside this task scope. Historical public-exposure remediation requires a separate history/visibility decision; the checkout is shallow and cannot establish all prior commits from local Git data.
