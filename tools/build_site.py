@@ -1,730 +1,979 @@
-"""
-Builds the static GitHub Pages site at the repository root from:
-  data/model_outputs.json   (written by model/model.py; contains rounded results only)
-  tools/content.py          (sources, facts placeholders, law, legislation, timeline, rules)
+#!/usr/bin/env python3
+"""Builds the static decision site served by GitHub Pages from the repository root.
 
-Run:  python3 tools/build_site.py      (does not need the private inputs)
-Then: python3 tools/check_site.py      (privacy scan, link check, row-link check)
-Standard library only.
+Reads (all public, all figures rounded to the nearest $10 or statutory):
+    data/inputs.json          owner-supplied property figures (rounded to $10)
+    data/sources.json         source register (S01-S23) with status
+    data/model_outputs.json   results from tools/model.py
+Writes:
+    index.html, pages/*.html, assets/site.css, assets/site.js
+
+Run:  python3 tools/build_site.py      then      python3 tools/check_site.py --structural
+Every table row is built from these files; no figure is typed in by hand except
+statutory amounts, which are checked against the source register.
 """
 import html
 import json
-import os
-import sys
+import pathlib
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, ".."))
-sys.path.insert(0, HERE)
-import content as C  # noqa: E402
-
-DATA = json.load(open(os.path.join(ROOT, "data", "model_outputs.json")))
-CHECKED = C.CHECKED
-REPO_URL = "https://github.com/kanlerxz87-cyber/TinoDash4"
-PATHS = DATA["paths"]
-BASE = DATA["base_results_real_2026"]
-BE = DATA["breakevens"]
-MC = DATA["monte_carlo"]["summary"]
-HIST = DATA["monte_carlo"]["histogram"]
-CRASH = DATA["crash_test"]
-GRID = DATA["grid"]
-PROJ = DATA["projection_base"]
-BASE_CASE = DATA["meta"]["base_case"]
-SHORT = {
-    "S": "Sell in transfer year, invest lump sum",
-    "SP24": "Sell, park 24 months, then phase in",
-    "SP36": "Sell, park 36 months, then phase in",
-    "R": "Rent long-term, sell at horizon",
-    "L": "Live long-term, sell at horizon (no rent credit)",
-    "L2S": "Mixed: live 2 years, then sell",
-    "L5S": "Mixed: live 5 years, then sell",
-    "R10S": "Mixed: rent 10 years, then sell",
-    "L5R_B": "Mixed: live 5 years, then rent (reading B)",
-    "L5R_A": "Mixed: live 5 years, then rent (reading A)",
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+INP = json.loads((ROOT / "data/inputs.json").read_text())
+SRC_LIST = json.loads((ROOT / "data/sources.json").read_text())["sources"]
+SRC = {s["id"]: s for s in SRC_LIST}
+MO = json.loads((ROOT / "data/model_outputs.json").read_text())
+ACCESSED = "2026-11-26"
+PICK_KEYS = ["2040_10", "2040_20", "2050_10", "2050_20"]
+PATH_ORDER = ["LIVE", "RENT", "SELL_LUMP", "SELL_P24", "SELL_P36", "LIVE3_SELL", "RENT3_SELL", "LIVE3_RENT"]
+PATH_SHORT = {
+    "LIVE": "Live in A", "RENT": "Rent A", "SELL_LUMP": "Sell, lump sum",
+    "SELL_P24": "Sell, park 24 months, phase in over 12", "SELL_P36": "Sell, park 36 months, phase in over 12",
+    "LIVE3_SELL": "Mixed: live 3 years, then sell", "RENT3_SELL": "Mixed: rent 3 years, then sell",
+    "LIVE3_RENT": "Mixed: live 3 years, then rent",
 }
-ORDER = ["S", "SP24", "SP36", "L2S", "R10S", "R", "L5S", "L5R_A", "L5R_B", "L"]
-# Official sources for each path's row (every row links to at least one)
-PATH_SOURCES = {
-    "S": ["TREASURY-YIELD", "IRS-FORM-706", "IRS-PUB-523"],
-    "SP24": ["TREASURY-YIELD", "SP-DRAWDOWN", "FTB-540ES-2025"],
-    "SP36": ["TREASURY-YIELD", "SP-DRAWDOWN", "FTB-540ES-2025"],
-    "R": ["IRS-PUB-527", "BOE-PROP19-INTRO", "FTB-540ES-2025"],
-    "L": ["IRS-PUB-523", "BOE-PROP19-INTRO", "BOE-LTA-2026-002"],
-    "L2S": ["IRS-PUB-523", "BOE-PROP19-INTRO"],
-    "L5S": ["IRS-PUB-523", "BOE-PROP19-INTRO"],
-    "R10S": ["IRS-PUB-527", "BOE-PROP19-INTRO"],
-    "L5R_A": ["CA-RTC-63.2", "BOE-PROP19-INTRO"],
-    "L5R_B": ["CA-RTC-63.2", "BOE-PROP19-INTRO"],
-}
-NAV = [
-    ("Decide", [("index.html", "Dashboard"), ("paths.html", "Paths and what-if"),
-                ("decision-rules.html", "Decision rules"), ("suggestions.html", "Suggestions"),
-                ("brief.html", "Attorney and CPA brief")]),
-    ("Analysis", [("projections.html", "Projections"), ("blackswan.html", "Black swan and phasing"),
-                  ("inputs.html", "Facts and inputs")]),
-    ("Tax and law", [("estate-tax.html", "Estate tax"), ("income-basis.html", "Income-tax basis"),
-                     ("property-tax.html", "Property-tax assessment"), ("tax-law.html", "All law (enacted)"),
-                     ("legislation.html", "Proposed and reported"), ("timeline.html", "Deadlines timeline")]),
-    ("Work", [("questions.html", "Questions and gaps"), ("flagged.html", "Flagged for Review")]),
-    ("Reference", [("glossary.html", "Glossary"), ("sources.html", "Sources")]),
+GROUPS = [
+    ("Start", [("Home and decision summary", "index.html")]),
+    ("Decision", [("Paths compared", "pages/paths.html"), ("Rules and pick", "pages/decision.html"),
+                  ("What-if and sensitivity", "pages/what-if.html"), ("Decision log", "pages/decision-log.html")]),
+    ("Money", [("Projections", "pages/projections.html"), ("Black-swan scenarios", "pages/black-swan.html"),
+               ("Phased investing and reinvestment", "pages/phased-investing.html")]),
+    ("Properties", [("Property A (inherited)", "pages/property-a.html"), ("Property B (owned)", "pages/property-b.html"),
+                    ("Estate inventory (structure)", "pages/inventory.html")]),
+    ("Tax and law", [("Federal, state and local rules", "pages/tax-law.html"),
+                     ("Legislation: enacted vs proposed", "pages/legislation.html"),
+                     ("Inheritance steps and timeline", "pages/process-timeline.html")]),
+    ("Review", [("Questions and gaps", "pages/questions.html"), ("Suggestions", "pages/suggestions.html"),
+                ("Flagged for Review", "pages/flagged.html"), ("Sources", "pages/sources.html"),
+                ("Glossary", "pages/glossary.html"), ("Method and privacy", "pages/method.html")]),
+    ("Attorney and CPA", [("One-page briefing sheet", "pages/briefing.html")]),
 ]
-PAGES_NAV = [href for _, links in NAV for href, _ in links]
 
 
 def e(x):
     return html.escape("" if x is None else str(x))
 
 
-def r10(x):
-    return int(round(x / 10.0) * 10)
+def usd(v):
+    if v is None:
+        return "not verified"
+    return ("-$" if v < 0 else "$") + f"{abs(v):,.0f}"
 
 
-def money(x):
-    """Every published money value: rounded to the nearest $10."""
-    if x is None:
-        return "blank (UNVERIFIED)"
-    return "${:,}".format(r10(x))
+def pct(x, dp=2):
+    return "not reached" if x is None else f"{x:.{dp}f}%"
 
 
-def pct(x, d=1):
-    return f"{x * 100:.{d}f}%"
+STATUS = {
+    "fetched": ("b-ok", "Official, read in full"),
+    "statute": ("b-ok", "Enacted law (official source)"),
+    "partial": ("b-snip", "Official, partly read"),
+    "snippet": ("b-snip", "Official, snippet only"),
+    "academic": ("b-snip", "Academic dataset"),
+    "owner": ("b-owner", "Owner record, not verified"),
+    "assumption": ("b-assume", "Assumption"),
+    "model": ("b-model", "Model output"),
+    "unverified": ("b-bad", "Unverified"),
+    "internal": ("b-model", "Internal decision item, not a sourced figure"),
+}
 
 
-def tag(st):
-    key = st.lower().split()[0].strip("()")
-    cls = {"enacted": "enacted", "proposed": "proposal", "passed": "passed", "failed": "failed",
-           "unverified": "unverified", "secondary": "secondary", "fetched": "fetched",
-           "excerpt": "excerpt", "link": "link", "user": "user", "derived": "derived",
-           "assumption": "assumption"}.get(key, "link")
-    return f'<span class="tag t-{cls}">{e(st)}</span>'
+def badge(status):
+    cls, label = STATUS[status]
+    return f'<span class="badge {cls}">{e(label)}</span>'
 
 
-def links(ids):
-    """Official-source links for one row. An empty list links to the repository record."""
-    if not ids:
-        return f'<a href="{REPO_URL}/commits/main">repository record</a>'
+def srcl(ids):
     out = []
     for i in ids:
-        s = C.SOURCES[i]
-        out.append(f'<a href="{e(s["url"])}" title="{e(s["title"])}">{e(i)}</a> {tag(s["status"])}')
-    return "<br>".join(out)
+        s = SRC[i]
+        out.append(f'<a href="{e(s["url"])}" title="{e(s["publisher"])}: {e(s["title"])}">{e(i)}</a>')
+    return " ".join(out)
 
 
-def table(headers, rows, cls="wide"):
-    th = "".join(f"<th>{e(h)}</th>" for h in headers)
-    body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
-    return (f'<div class="tablewrap"><table class="{cls}"><thead><tr>{th}</tr></thead>'
+def table(headers, rows, cls="", marker="internal"):
+    """Rows without an official link get a visible marker: 'internal' (decision item, not a sourced
+    figure) or the status given in marker. Sourced rows are left as they are."""
+    h = "".join(f"<th>{e(x)}</th>" for x in headers)
+    fixed = []
+    for r in rows:
+        r = list(r)
+        joined = " ".join(str(c) for c in r)
+        if '<a href="http' not in joined and not any(b in joined for b in ("b-owner", "b-assume", "b-bad", "b-model", "b-snip")):
+            r[0] = badge(marker) + " " + str(r[0])
+        fixed.append(r)
+    body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in fixed)
+    return (f'<div class="tablewrap"><table class="{cls}"><thead><tr>{h}</tr></thead>'
             f"<tbody>{body}</tbody></table></div>")
 
 
-def card(title, body, cls=""):
-    return f'<section class="card {cls}"><h2>{e(title)}</h2>{body}</section>'
-
-
-def page(filename, title, body, extra_js=""):
+def page(path, title, body, desc="", print_mode=False):
+    prefix = "../" * path.count("/")
     nav = []
-    for group, items in NAV:
-        links_html = " ".join(
-            f'<a href="{h}" class="{"on" if h == filename else ""}">{e(l)}</a>' for h, l in items)
-        nav.append(f'<div class="navgroup"><span class="navlabel">{e(group)}</span>{links_html}</div>')
-    doc = f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{e(title)} | Inheritance decision dashboard</title>
-<link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-<header class="top"><a class="brand" href="index.html">Inheritance decision dashboard</a>
-<span class="sub">Property A (Santa Clara County) &middot; Property B (San Francisco) &middot; $ rounded to $10 &middot; checked {CHECKED}</span></header>
-<nav class="menu">{''.join(nav)}</nav>
-<main>
-<h1>{e(title)}</h1>
-{body}
-</main>
-<footer>
-<p>Not legal or tax advice. Figures use placeholders for households and are rounded to the nearest $10. Each row shows a source status: FETCHED (official page opened), EXCERPT (official excerpt reviewed), SECONDARY (secondary source, official link given for checking), LINK (official page identified, not opened), ASSUMPTION (modelling choice), DERIVED (computed), USER (household figure held internally), UNVERIFIED (blank).</p>
-<p><a href="flagged.html">Flagged for Review</a> &middot; <a href="sources.html">Sources</a> &middot; <a href="{REPO_URL}">Repository</a></p>
-</footer>
-<script src="assets/app.js"></script>{extra_js}
-</body></html>
-"""
-    with open(os.path.join(ROOT, filename), "w", encoding="utf-8") as f:
-        f.write(doc)
+    for gname, items in GROUPS:
+        links = []
+        for label, target in items:
+            cur = ' aria-current="page"' if target == path else ""
+            links.append(f'<a href="{prefix}{target}"{cur}>{e(label)}</a>')
+        nav.append(f'<div class="navgroup"><div class="navhead">{e(gname)}</div>{"".join(links)}</div>')
+    head = (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
+            f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+            f"<title>{e(title)} | Inherited-home decision dashboard</title>"
+            f'<meta name="description" content="{e(desc)}">'
+            f'<link rel="stylesheet" href="{prefix}assets/site.css"></head>')
+    if print_mode:
+        doc = f'{head}<body class="print"><main class="sheetwrap">{body}</main></body></html>'
+    else:
+        doc = (f'{head}<body><header class="top"><a class="brand" href="{prefix}index.html">'
+               f'Inherited-home decision dashboard</a><span class="privacy">No addresses, ZIP codes or '
+               f'account numbers. Dollar figures rounded to $10.</span></header>'
+               f'<div class="layout"><nav class="side" aria-label="Site menu">{"".join(nav)}</nav>'
+               f'<main class="content">{body}<footer>Not legal or tax advice. Results depend on owner '
+               f'estimates and the stated assumptions. Built {ACCESSED}.</footer></main></div>'
+               f'<script src="{prefix}assets/site.js"></script></body></html>')
+    out = ROOT / path
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(doc, encoding="utf-8")
 
 
-# ---------------------------------------------------------------- charts
-def svg_lines(series, xs, title, width=860, height=320):
-    pl, pr, pt, pb = 84, 16, 28, 40
-    allv = [v for _, vals, _ in series for v in vals if v is not None]
-    ymax = max(allv) * 1.05
+# ---------- numbers used on several pages (all computed) ----------
 
-    def X(i):
-        return pl + (width - pl - pr) * i / (len(xs) - 1)
-
-    def Y(v):
-        return pt + (height - pt - pb) * (1 - v / ymax)
-
-    p = [f'<svg viewBox="0 0 {width} {height}" role="img" aria-label="{e(title)}" class="chart">']
-    for k in range(6):
-        v = ymax * k / 5
-        y = Y(v)
-        p.append(f'<line x1="{pl}" x2="{width - pr}" y1="{y:.1f}" y2="{y:.1f}" class="grid"/>')
-        p.append(f'<text x="{pl - 6}" y="{y + 4:.1f}" text-anchor="end" class="axis">${v / 1e6:.1f}M</text>')
-    for i in range(0, len(xs), 5):
-        p.append(f'<text x="{X(i):.1f}" y="{height - pb + 16}" text-anchor="middle" class="axis">{xs[i]}</text>')
-    for _, vals, color in series:
-        pts = " ".join(f"{X(i):.1f},{Y(v):.1f}" for i, v in enumerate(vals))
-        p.append(f'<polyline points="{pts}" fill="none" stroke="{color}" stroke-width="2.4"/>')
-    lx = pl
-    for label, _, color in series:
-        p.append(f'<rect x="{lx}" y="6" width="12" height="12" fill="{color}"/>')
-        p.append(f'<text x="{lx + 17}" y="16" class="legend">{e(label)}</text>')
-        lx += 40 + 6.3 * len(label)
-    p.append("</svg>")
-    return "".join(p)
+R50 = MO["results"]["2050_20"]["paths"]
+PICK50 = MO["picks"]["2050_20"]["choice"]
+BE = MO["breakeven"]["2050_20"]
+A_HIST = INP["property_a"]["history"]
+B_HIST = INP["property_b"]["history"]
+A_RATE = A_HIST[1]["tax"] / A_HIST[1]["assessed"] * 100
+B_RATE = B_HIST[0]["tax"] / B_HIST[0]["assessed"] * 100
+STAT_B = 1.18162182
+REF_A = 1.04120   # FY 2024-25 total for a published reference rate area (S11 snippet); parcel's own area unknown
+PROP19 = 1044586  # BOE LTA 2025/009 (S03), statutory, printed exactly
+SAVE = sum(r["a_tax_full_reassessment"] - r["a_tax_live_prop19"] for r in MO["projections"] if 2040 <= r["year"] <= 2060)
+CHG = lambda a, b: (a - b) / b * 100
 
 
-def svg_hist(hist, title, width=860, height=300):
-    """Outcome distribution: counts per bin for each path (real 2026 dollars)."""
-    pl, pr, pt, pb = 60, 16, 30, 40
-    colors = {"S": "#2b6cb0", "R": "#718096", "L": "#dd6b20"}
-    names = {"S": "Sell and invest", "R": "Rent", "L": "Live"}
-    xmin = min(h["lo"] for h in hist.values())
-    xmax = max(h["lo"] + h["width"] * len(h["counts"]) for h in hist.values())
-    cmax = max(max(h["counts"]) for h in hist.values())
-
-    def X(v):
-        return pl + (width - pl - pr) * (v - xmin) / (xmax - xmin)
-
-    def Y(c):
-        return pt + (height - pt - pb) * (1 - c / cmax)
-
-    p = [f'<svg viewBox="0 0 {width} {height}" role="img" aria-label="{e(title)}" class="chart">']
-    lx = pl
-    for k, h in hist.items():
-        p.append(f'<rect x="{lx}" y="8" width="12" height="12" fill="{colors[k]}"/>')
-        p.append(f'<text x="{lx + 17}" y="18" class="legend">{names[k]}</text>')
-        lx += 150
-        pts = []
-        for i, c in enumerate(h["counts"]):
-            v = h["lo"] + h["width"] * (i + 0.5)
-            pts.append(f"{X(v):.1f},{Y(c):.1f}")
-        p.append(f'<polyline points="{" ".join(pts)}" fill="none" stroke="{colors[k]}" stroke-width="2.2"/>')
-    p.append(f'<text x="{pl}" y="{height - 8}" class="axis">${xmin / 1e6:.1f}M</text>')
-    p.append(f'<text x="{width - pr}" y="{height - 8}" text-anchor="end" class="axis">${xmax / 1e6:.1f}M (real 2026 $, rounded)</text>')
-    p.append(f'<text x="{pl - 6}" y="{pt + 4}" text-anchor="end" class="axis">{cmax}</text>')
-    p.append(f'<text x="{pl - 6}" y="{height - pb}" text-anchor="end" class="axis">0</text>')
-    p.append("</svg>")
-    return "".join(p)
-
-
-def svg_bars(labels, values, title, width=860):
-    rh = 26
-    pl, pr = 300, 110
-    h = rh * len(labels) + 10
-    vmax = max(values)
-    p = [f'<svg viewBox="0 0 {width} {h}" role="img" aria-label="{e(title)}" class="chart">']
-    for i, (lab, v) in enumerate(zip(labels, values)):
-        y = 5 + i * rh
-        bw = (width - pl - pr) * v / vmax
-        p.append(f'<text x="{pl - 8}" y="{y + 16}" text-anchor="end" class="axis">{e(lab)}</text>')
-        p.append(f'<rect x="{pl}" y="{y + 4}" width="{bw:.1f}" height="16" fill="#2b6cb0"/>')
-        p.append(f'<text x="{pl + bw + 6:.1f}" y="{y + 16}" class="axis">{money(v)}</text>')
-    p.append("</svg>")
-    return "".join(p)
-
-
-# ---------------------------------------------------------------- derived helpers
-def grid_row(T, H, ap, eq, c):
-    for r in GRID:
-        if r["T"] == T and r["H"] == H and r["appreciation"] == ap and r["equity"] == eq and abs(r["credit"] - c) < 1e-9:
-            return r["results"]
-    raise KeyError((T, H, ap, eq, c))
-
-
-RANGE = {}
-for p in PATHS:
-    vals = [grid_row(2045, 20, a, q, 0.0)[p] for a in ("low", "base", "high") for q in ("low", "base", "high")]
-    RANGE[p] = (min(vals), max(vals))
-
-BE_CREDIT = BE["credit_for_live_to_tie_sell"]
-BE_APP_RENT = BE["appreciation_for_rent_to_tie_sell"]
-BE_EQ_RENT = BE["equity_for_rent_to_tie_sell"]
-BE_APP_LIVE0 = BE["appreciation_for_live_credit0_to_tie_sell"]
-NOCRASH_PHASE_COST = 1 - CRASH["No crash|0"]["phase24_20y"] / CRASH["No crash|0"]["lump_20y"]
-GRID_PHASE_COST = 1 - BASE["SP24"] / BASE["S"]  # base-case grid: sell now vs park and phase
-PROJ45 = next(r for r in PROJ if r["year"] == 2045)
-PROJ_YEARS = [r["year"] for r in PROJ]
-
-FACT_COUNT = len(C.PROPERTY_A_FACTS) + len(C.PROPERTY_B_FACTS)
-UNVER = sum(1 for r in C.PROPERTY_A_FACTS + C.PROPERTY_B_FACTS if r[2] == "UNVERIFIED")
-
-
-# ---------------------------------------------------------------- pages
-def build_index():
-    summary = card("Executive summary", f"""
-<ul class="bullets">
-<li><strong>Provisional lean (not a decision):</strong> in the base case, selling Property A in the transfer year and investing the proceeds ranks first. Phasing in over 24 months ranks second.</li>
-<li>Base case: transfer in 2045, 20-year horizon, real 2026 dollars, no imputed rent credit. Sell and invest: <strong>{money(BASE['S'])}</strong>. Phased over 24 months: <strong>{money(BASE['SP24'])}</strong>. Rent then sell: <strong>{money(BASE['R'])}</strong>. Live with no rent credit: <strong>{money(BASE['L'])}</strong>.</li>
-<li>Living in Property A ties with selling only if the household values avoided rent at about <strong>{pct(BE_CREDIT, 0)}</strong> of market rent.</li>
-<li>Phasing is an insurance choice: in the base-case grid it gives up about <strong>{pct(GRID_PHASE_COST, 0)}</strong> of the 20-year value if no crash comes (stylised no-crash test: about {pct(NOCRASH_PHASE_COST, 0)}), and it protects against an early 1929- or 2008-type fall.</li>
-<li>Evidence gap: {UNVER} input(s) are UNVERIFIED and left blank. Household inputs are held internally and shown only as placeholders.</li>
-</ul>""", "lean")
-    change = card("What would change the answer", f"""
-<ul class="bullets">
-<li><strong>Living in Property A</strong> ties with selling only at an imputed rent credit of about <strong>{pct(BE_CREDIT, 0)}</strong> (base credit 0%).</li>
-<li><strong>Renting</strong> ties with selling if Property A's appreciation reaches about <strong>{pct(BE_APP_RENT)}</strong> a year (base {pct(DATA['meta']['base_case'].get('appreciation', 0.025))}), or stock returns fall to about <strong>{pct(BE_EQ_RENT)}</strong> a year.</li>
-<li><strong>Phasing in</strong> gives up about <strong>{pct(GRID_PHASE_COST, 0)}</strong> of the base-case 20-year value if no crash comes, and reduces entry risk if a 1929- or 2008-type fall starts while the money is parked.</li>
-<li><strong>Prop 19</strong>: if the heir does not live in Property A, the property is reassessed to market on transfer. In 2045 terms (base assumptions), the property tax on the reassessed value is about <strong>{money(PROJ45['property_tax_if_rented'])}</strong> a year, against about <strong>{money(PROJ45['property_tax_if_living'])}</strong> if the Prop 19 base applies.</li>
-<li><strong>Unknowns that could move the answer:</strong> the valuation at date of death, Property A's market rent, insurance quotes, estate size against the federal exclusion, and the heir's occupancy plan.</li>
-</ul>""", "")
-    risk = card("Reinvestment risk (beside every headline)", f"""
-<p>Sell and invest: the 10th-percentile outcome is <strong>{money(MC['S']['p10'])}</strong> and the 90th is <strong>{money(MC['S']['p90'])}</strong> (simulated, base distribution).</p>
-<p>Phased over 24 months: <strong>{money(MC['SP24']['p10'])}</strong> to <strong>{money(MC['SP24']['p90'])}</strong>. Rent then sell: <strong>{money(MC['R']['p10'])}</strong> to <strong>{money(MC['R']['p90'])}</strong>.</p>
-<p class="note">These are assumption-based distributions, not forecasts. The Paths page lets you change the assumptions.</p>""", "risk")
+def picks_table():
     rows = []
-    for p in ORDER:
-        lo, hi = RANGE[p]
-        rows.append([
-            e(SHORT[p]),
-            money(BASE[p]),
-            e(f"{money(lo)} to {money(hi)}"),
-            e(f"{money(MC[p]['p10'])} to {money(MC[p]['p90'])}"),
-            links(PATH_SOURCES[p] + ["MODEL"]),
-        ])
-    results = table(["Path", "Base case (real 2026 $)", "Range across growth and stock-return cases", "Simulated 10th to 90th percentile", "Sources"], rows)
-    res = card("All paths: transfer 2045, 20-year horizon", "<p>Each path is liquidated after tax at the horizon so liquid and illiquid choices compare fairly. Real 2026 dollars, rounded to $10.</p>" + results)
-    ev = card("Evidence status", f"""<p>{FACT_COUNT} input rows are on the Facts page. {UNVER} are UNVERIFIED and left blank. Household figures are held internally and are not published. Secondary-source figures are labelled and linked for checking. Irregularities are on the <a href="flagged.html">Flagged for Review</a> page.</p>""")
-    nav = "".join(
-        f'<a class="navcard" href="{h}"><strong>{e(l)}</strong><span>{e(g)}</span></a>'
-        for g, items in NAV for h, l in items if h != "index.html")
-    body = summary + change + risk + res + ev + f"<section><h2>Go to</h2><div class='navgrid'>{nav}</div></section>"
-    page("index.html", "Dashboard", body)
+    for k in PICK_KEYS:
+        T, H = k.split("_")
+        p = MO["picks"][k]
+        rows.append([f"Transfer {T}, {H} years", f"<strong>{e(PATH_SHORT[p['choice']])}</strong>",
+                     usd(MO["results"][k]["paths"][p["choice"]]["mc_fin"]["median"]),
+                     e(PATH_SHORT[p["unconstrained_leader"]]),
+                     "No" if not MO["sensitivity"]["moved_variants"] else "Yes (see What-if)",
+                     srcl(["S03", "S17", "S23"])])
+    return table(["Case", "Pick under the written rules", "Median, real, of the pick",
+                  "Highest median with no rules applied", "Pick changes in any sensitivity?", "Sources"], rows)
 
 
-def build_paths():
-    grid_json = json.dumps(GRID, separators=(",", ":"))
-    controls = card("What-if controls", """
-<p>Change a setting. Results come from the precomputed model grid (the same numbers as the tables). The grid is not re-simulated in the browser.</p>
-<div class="controls">
-<label>Transfer year<select id="w-T"><option>2040</option><option selected>2045</option><option>2050</option></select></label>
-<label>Horizon (years after transfer)<select id="w-H"><option>10</option><option selected>20</option></select></label>
-<label>Property A appreciation<select id="w-ap"><option value="low">Low (0.0%)</option><option value="base" selected>Base (2.5%)</option><option value="high">High (4.5%)</option></select></label>
-<label>Stock returns<select id="w-eq"><option value="low">Low (4.0%)</option><option value="base" selected>Base (6.5%)</option><option value="high">High (8.5%)</option></select></label>
-<label>Imputed rent credit (living)<select id="w-c"><option value="0">0% (no credit)</option><option value="0.5">50%</option><option value="1">100% (full market rent)</option></select></label>
-</div>
-<div id="w-out"></div>
-<script type="application/json" id="grid-data">""" + grid_json + "</script>")
-    defs = table(["Path", "What it means", "Occupancy", "Tax points that matter"], [
-        [e("S"), e(PATHS["S"]), "none", links(PATH_SOURCES["S"])],
-        [e("SP24 / SP36"), e(PATHS["SP24"]), "none", links(PATH_SOURCES["SP24"])],
-        [e("R"), e(PATHS["R"]), "tenants", links(PATH_SOURCES["R"])],
-        [e("L"), e(PATHS["L"]), "primary residence", links(PATH_SOURCES["L"])],
-        [e("L2S / L5S"), "Mixed: live 2 or 5 years, then sell", "2 or 5 years", links(PATH_SOURCES["L2S"])],
-        [e("R10S"), "Mixed: rent 10 years, then sell", "rented", links(PATH_SOURCES["R10S"])],
-        [e("L5R_A / L5R_B"), "Mixed: live 5 years, then rent", "5 years, then rented", links(PATH_SOURCES["L5R_A"])],
-    ])
-    rows = []
-    for T in (2040, 2045, 2050):
-        for H in (10, 20):
-            r = grid_row(T, H, "base", "base", 0.0)
-            rc = grid_row(T, H, "base", "base", 1.0)
-            rows.append([str(T), str(H)] + [money(r[p]) for p in ORDER] + [money(rc["L"]), links(["MODEL", "TREASURY-YIELD", "IRS-PUB-523"])])
-    combos = table(["Transfer", "Horizon"] + [SHORT[p] for p in ORDER] + ["Live with full rent credit", "Sources"], rows)
-    be_rows = [
-        [e("Imputed rent credit at which living ties with selling"), pct(BE_CREDIT, 1), links(["MODEL"])],
-        [e("Property A appreciation at which renting ties with selling"), pct(BE_APP_RENT, 2), links(["MODEL", "IRS-PUB-527"])],
-        [e("Stock return at which renting ties with selling"), pct(BE_EQ_RENT, 2), links(["MODEL", "TREASURY-YIELD"])],
-        [e("Property A appreciation at which living (0% credit) ties with selling"), pct(BE_APP_LIVE0, 2), links(["MODEL", "BOE-PROP19-INTRO"])],
-    ]
-    be = table(["Break-even", "Value", "Sources"], be_rows)
-    mcrows = [[e(SHORT[p]), money(MC[p]["p10"]), money(MC[p]["p50"]), money(MC[p]["p90"]), money(MC[p]["mean"]), links(["MODEL"])] for p in ORDER]
-    mc = table(["Path", "10th percentile", "Median", "90th percentile", "Mean", "Sources"], mcrows)
-    body = (
-        controls
-        + card("Pure and mixed paths, same transfer dates and horizons",
-               "<p>Real 2026 dollars, rounded to $10, imputed rent credit 0% unless stated. The last column shows living in Property A with a full market-rent credit.</p>" + combos)
-        + card("Break-evens: what would change the answer", be)
-        + card("Distribution of outcomes (simulated)",
-               "<p>2,000 simulated paths (fixed seed). Annual stock returns: normal, mean 6.5%, standard deviation 15%. Property A appreciation: normal, mean 2.5%, standard deviation 4%. These are assumptions, not forecasts.</p>"
-               + mc + '<div class="chartbox">' + svg_hist(HIST, "Distribution of simulated outcomes") + "</div>")
-        + card("Path definitions", defs)
-    )
-    page("paths.html", "Paths and what-if", body)
-
-
-def build_projections():
-    xs = PROJ_YEARS
-    series = [
-        ("Taxable value if heir lives in A (Prop 19)", [r["taxable_if_living_prop19"] for r in PROJ], "#2b6cb0"),
-        ("Taxable value if rented (reassessed)", [r["taxable_if_rented"] for r in PROJ], "#dd6b20"),
-        ("Assessed value, no transfer (Prop 13)", [r["assessed_no_transfer"] for r in PROJ], "#718096"),
-        ("Market value (base 2.5%)", [r["market_value"] for r in PROJ], "#2f855a"),
-    ]
-    chart = svg_lines(series, xs, "Property A projection (base case, transfer 2045)")
-    rows = []
-    for r in PROJ:
-        if r["year"] % 5 == 0 or r["year"] in (2027, 2045):
-            rows.append([str(r["year"]), money(r["market_value"]), money(r["assessed_no_transfer"]),
-                         money(r["taxable_if_living_prop19"]), money(r["taxable_if_rented"]),
-                         money(r["property_tax_if_living"]), money(r["property_tax_if_rented"]),
-                         links(["BOE-LTA-2026-002", "BOE-PROP19-INTRO", "MODEL"])])
-    tbl = table(["Year", "Market value", "Assessed (no transfer)", "Taxable if living (Prop 19)", "Taxable if rented",
-                 "Property tax if living", "Property tax if rented", "Sources"], rows)
-    body = (
-        "<p>Base case: transfer in 2045, appreciation 2.5%, Prop 13 factor 2% a year. The Prop 19 line applies if the heir lives in Property A and qualifies; the reassessed line applies if the property is rented. Costs of insurance, water, and maintenance are not shown here because they are household figures held internally.</p>"
-        + f'<div class="chartbox">{chart}</div>'
-        + card("Property A, every five years", tbl)
-        + card("Property B (already owned by the heir)",
-               "<p>Property B is not inherited, but its cash flow affects the household's choice. It is held constant here. A year-by-year projection needs the leases and the Measure H tier for the building (see Facts).</p>")
-    )
-    page("projections.html", "Projections", body)
-
-
-def build_inputs():
-    a_rows = [[e(l), e(v) if v else "blank (UNVERIFIED)", tag(s), links(src), e(n)] for l, v, s, src, n in C.PROPERTY_A_FACTS]
-    b_rows = [[e(l), e(v) if v else "blank (UNVERIFIED)", tag(s), links(src), e(n)] for l, v, s, src, n in C.PROPERTY_B_FACTS]
-    body = (
-        "<p>Household figures are held internally and appear here only as placeholders. Official values are shown where a source was checked. Blank cells are UNVERIFIED.</p>"
-        + card("Property A (Santa Clara County): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], a_rows))
-        + card("Property B (San Francisco): facts and inputs", table(["Item", "Figure", "Status", "Source", "Note"], b_rows))
-        + card("Not published", "<p>Historical tax and assessment records, parcel numbers, addresses, and household cost bills are not published. They are checked outside this repository and recorded as flags where they affect the decision.</p>")
-    )
-    page("inputs.html", "Facts and inputs", body)
-
-
-def build_blackswan():
-    base_rows = [
-        ["Inflation (PCE)", "2.7% in 2026, falling to 2.0% by 2030", "2.0% long-run (model deflator)", links(["CBO-OUTLOOK-2026"])],
-        ["3-month Treasury, Nov 24, 2026", "4.36%", "3.5% after tax (parking, assumption)", links(["TREASURY-YIELD"])],
-        ["2-year Treasury, Nov 24, 2026", "4.63%", "parked money in the 3-month to 2-year range", links(["TREASURY-YIELD"])],
-        ["10-year Treasury, Nov 24, 2026", "4.91%; CBO projects about 4.4% in 2031-35", "4.4% bond return (CBO anchor)", links(["TREASURY-YIELD", "CBO-OUTLOOK-2026"])],
-        ["Property A appreciation", "not sourced", "2.5% base; 0.0% low; 4.5% high", links(["MODEL"])],
-        ["Stock returns (nominal)", "not sourced", "6.5% base; 4.0% low; 8.5% high", links(["MODEL"])],
-    ]
-    base_tbl = table(["Indicator", "Official or sourced value", "Model setting", "Sources"], base_rows)
-    stress_rows = [
-        ["Baseline (CBO-type path)", "inflation falling to 2.0%; real growth about 1.8%", "base case of this site", links(["CBO-OUTLOOK-2026"])],
-        ["1929-type fall at sale", "stock decline of 86.2% (secondary), recovery modelled at 300 months", "stylised crash test (below)", links(["SP-DRAWDOWN"])],
-        ["2008-type fall at sale", "stock decline of 56.8% (secondary), recovery modelled at 66 months", "stylised crash test (below); recovery reported as about 4.5 to 5.5 years", links(["SP-DRAWDOWN"])],
-        ["Housing stagnation", "0.0% nominal appreciation for 20 years", "low appreciation case", links(["MODEL"])],
-    ]
-    stress_tbl = table(["Regime", "Description", "How the site uses it", "Sources"], stress_rows)
-    rows = []
-    for name in ("1929-type", "2008-type", "No crash"):
-        for st in (0, 12, 24, 36):
-            r = CRASH[f"{name}|{st}"]
-            rows.append([name, f"month {st}",
-                         f"{r['lump_10y']:.2f}x", f"{r['phase24_10y']:.2f}x", f"{r['phase36_10y']:.2f}x",
-                         f"{r['lump_20y']:.2f}x", f"{r['phase24_20y']:.2f}x", f"{r['phase36_20y']:.2f}x",
-                         links(["SP-DRAWDOWN", "MODEL"])])
-    crash_tbl = table(["Fall type", "Fall starts", "Lump sum 10y", "Phase 24m 10y", "Phase 36m 10y",
-                       "Lump sum 20y", "Phase 24m 20y", "Phase 36m 20y", "Sources"], rows)
-    body = (
-        card("Economic conditions: baseline", "<p>The baseline is the official near-term projection. The stress cases are tests, not forecasts.</p>" + base_tbl)
-        + card("Black swan regimes", stress_tbl)
-        + card("Phased investing test (1929 and 2008 entry risk)",
-               "<p>Money is sold and held in 3-month to 2-year Treasuries (parking, taxed as ordinary income at an assumed 40%). It is then bought into stocks in equal steps over 12 months. The test uses the depth and timing of the two falls, not a daily replay. Each cell is the multiple of starting capital after tax (1.00x = no change).</p>"
-               + crash_tbl
-               + f"<p class='note'>Reading the table: phasing helps when a fall begins during the parking window. With no crash, a 24-month phase-in gives up about {pct(NOCRASH_PHASE_COST, 0)} of the 20-year value in this stylised test (about {pct(GRID_PHASE_COST, 0)} in the base-case grid, where the stock path differs).</p>")
-        + card("Decision points for this test", """<ul class="bullets">
-<li>Parking is a hedge against entry timing, not a return enhancement.</li>
-<li>A fall that starts after the parking window leaves the lump sum and the phase-in close; luck decides which one wins.</li>
-<li>Parked money earns less than stocks in a calm market. The household accepts a lower median to buy protection.</li>
-</ul>""")
-    )
-    page("blackswan.html", "Black swan and phased investing", body)
-
-
-def law_page(filename, title, intro, topics):
-    rows = [[e(a), e(b), tag(c), links(d), e(f)] for a, b, c, d, f in C.LAW_ROWS if a in topics]
-    body = f"<p>{e(intro)}</p>" + table(["Topic", "Rule", "Status", "Sources", "What it means here"], rows)
-    page(filename, title, body)
-
-
-def build_law_pages():
-    law_page("estate-tax.html", "Estate tax",
-             "Federal estate and gift tax: exclusion, portability and prior gifts. Estate size is unknown; the estate-tax module is not in the base model.",
-             {"Federal estate and gift exclusion, deaths in 2026", "Federal exclusion, deaths in 2027",
-              "Annual gift exclusion", "Portability of unused exclusion"})
-    law_page("income-basis.html", "Income-tax basis",
-             "Basis, sale gains, and income tax in the transfer year. Section 121, depreciation, and the state surcharge matter for a sale.",
-             {"Basis at death (step-up)", "Capital gains rates (federal, 2026)", "Section 121 home-sale exclusion",
-              "Like-kind exchange (section 1031)", "Depreciation of rental property", "California tax on capital gains",
-              "Trust and estate income tax", "Solar net billing (NEM 3.0)"})
-    law_page("property-tax.html", "Property-tax assessment",
-             "Prop 13 and Prop 19: how the assessed value changes at transfer and whether the heir's occupancy keeps the Prop 19 base.",
-             {"Prop 13 (property tax)", "Prop 19 parent-child exclusion (family home)", "Prop 19 claim filing window",
-              "Prop 19 after the heir moves out", "SB 974 (special needs trusts and Prop 19)",
-              "San Francisco documentary transfer tax", "Santa Clara County documentary transfer tax",
-              "SF Measure H parcel tax (Muni)"})
-    law_page("tax-law.html", "All enacted law",
-             "Every row shows a status. ENACTED rows are current law as stated by the source. Secondary rows must be checked on the official link before use.",
-             {r[0] for r in C.LAW_ROWS})
-
-
-def build_legislation():
-    rows = [[e(a), tag(b), e(c), links(d), e(f)] for a, b, c, d, f in C.LEGISLATION]
-    body = ("<p>Proposals are listed separately from enacted law. None is in the base model. Bill numbers and texts were not verified in this session; check Congress.gov and the state legislature before relying on them.</p>"
-            + table(["Measure", "Status", "Notes", "Sources", "Effect if enacted (not modelled)"], rows)
-            + card("Recheck schedule", """<ul class="bullets">
-<li>Monthly: bill status on Congress.gov and the California Legislature site (manual).</li>
-<li>Each rate change: IRS inflation release (October or November) and BOE inflation letter (early in the year).</li>
-<li>Before any decision: the Treasury curve, the HUD Fair Market Rent notice (October 1), and the SF election certification.</li>
-</ul>"""))
-    page("legislation.html", "Proposed and reported", body)
-
-
-def build_timeline():
-    rows = [[e(a), e(b), e(c), links(d)] for a, b, c, d in C.TIMELINE]
-    body = ("<p>Steps from date of death. Dates are the deadlines shown on the linked sources; check them against the trust's own calendar.</p>"
-            + table(["When", "Action", "Why", "Sources"], rows))
-    page("timeline.html", "Deadlines timeline", body)
-
-
-def build_questions():
-    items = "".join(f'<li><strong>{e(a)}:</strong> {e(b)}<br><span class="note">Why it matters: {e(c)}. How to get it: {e(d)}.</span></li>'
-                    for a, b, c, d in C.QUESTIONS)
-    body = ("<p>Questions and information needed before a decision. These are not values; they have no source to link. Household answers are kept internally.</p>"
-            + card("Questions and information gaps", f'<ul class="bullets">{items}</ul>'))
-    page("questions.html", "Questions and gaps", body)
-
-
-def build_decision_rules():
-    items = "".join(f'<li><strong>{e(a)}.</strong> {e(b)} <span class="note">Basis: {e(c)}</span></li>' for a, b, c in C.DECISION_RULES)
-    body = (card("Status: DRAFT, not yet signed",
-                 f"<p>Drafted {CHECKED} from preliminary figures. The rules are proposed until the household confirms or edits each one, records the date, and signs outside this public repository.</p>", "warn")
-            + card("Proposed decision rules", f'<ul class="bullets">{items}</ul>'))
-    page("decision-rules.html", "Decision rules", body)
-
-
-def build_suggestions():
-    items = "".join(f'<li><strong>{e(a)}.</strong> {e(b)}. <span class="note">Why: {e(c)}.</span> {tag(d)} &nbsp; <span class="choice">[ ] approve</span></li>'
-                    for a, b, c, d in C.SUGGESTIONS)
-    body = ("<p>Suggestions for approval before implementation. None has been implemented. Mark the ones to implement by ID.</p>"
-            + card("Suggestions", f'<ul class="bullets">{items}</ul>'))
-    page("suggestions.html", "Suggestions", body)
-
-
-def build_flagged():
-    rows = [[e(a), e(b), e(c), links(d)] for a, b, c, d in C.IRREGULARITIES]
-    body = (card("Flagged for Review", "<p>These items do not block the site. Each has its source link so the household can review it and request a change.</p>", "warn")
-            + table(["Item", "What we found", "Action needed", "Sources"], rows)
-            + card("Repository and privacy", """<ul class="bullets">
-<li>The repository is public. Only placeholders and rounded results are published; raw household figures stay in an untracked folder.</li>
-<li>A privacy scan (tools/check_site.py) fails the build if a household figure, zip code, or parcel identifier appears in any published file.</li>
-</ul>"""))
-    page("flagged.html", "Flagged for review", body)
-
-
-def build_brief():
-    facts = [
-        ("Property A (Santa Clara County): value, Nov 2026", "held internally (household estimate; not an appraisal)"),
-        ("Property A: Prop 19 allowance", "$1,044,590 (BOE, secondary)"),
-        ("Property A: Prop 13 factor", "1.02 a year (BOE, secondary)"),
-        ("Property B (San Francisco): units", "three livable units; two rented; owner occupancy possible"),
-        ("Federal exclusion, per person", "$15,000,000 (2026; IRS); $15,480,000 (2027; secondary)"),
-        ("Measure H (SF parcel tax)", "passed, preliminary, 74.42% yes; certification due by Dec 3, 2026"),
-        ("Base result, sell and invest (2045, 20 yr)", money(BASE["S"])),
-        ("Base result, live with no rent credit", money(BASE["L"])),
-    ]
-    qa = ["Is the trust funded for Property A, and what is the date-of-death valuation plan?",
-          "Is portability to be elected, and were prior taxable gifts made (Form 709)?",
-          "Will the heir occupy Property A within one year; when is the homeowners' exemption filed?",
-          "Who files the BOE-19-P claim, and when is it calendared?",
-          "Counsel to confirm the Prop 19 reading after a move-out (reading A or B)."]
-    qc = ["Basis at date of death and the transfer-year sale (step-up; section 121 if the heir lives there).",
-          "Confirm the 1% Behavioral Health Services Tax and the state rate on large gains.",
-          "Depreciation and recapture if Property A is rented; the land share is needed.",
-          "Solar credit tariff (NEM 3.0 or earlier) and property tax on the Prop 19 base.",
-          "Trust income tax: compressed brackets if sale income stays in the trust."]
-    dl = ["Day 0: date of death; appraisal at date of death.",
-          "9 months: Form 706 if required or to elect portability (6-month extension on Form 4768).",
-          "Within 1 year: occupancy and homeowners' exemption (Prop 19 only).",
-          "Within 3 years of transfer: BOE-19-P claim (secondary).",
-          "Within 5 years: late portability relief (Rev. Proc. 2022-32; secondary)."]
-    src_for = {
-        "Property A (Santa Clara County): value, Nov 2026": ["HOUSEHOLD"],
-        "Property A: Prop 19 allowance": ["BOE-LTA-2025-009"],
-        "Property A: Prop 13 factor": ["BOE-LTA-2026-002"],
-        "Property B (San Francisco): units": ["SF-RENT-BOARD"],
-        "Federal exclusion, per person": ["IRS-IR-2025-103", "IRS-NEWS-2027"],
-        "Measure H (SF parcel tax)": ["SF-ELECTIONS-2026"],
-        "Base result, sell and invest (2045, 20 yr)": ["MODEL"],
-        "Base result, live with no rent credit": ["MODEL"],
-    }
-    frow = "".join(f"<tr><td>{e(a)}</td><td>{e(b)}</td><td>{links(src_for[a])}</td></tr>" for a, b in facts)
+def p_index():
+    pk = R50[PICK50]
+    p24 = R50["SELL_P24"]
     body = f"""
-<section class="brief">
-<div class="briefhead"><strong>Attorney &amp; CPA Briefing Sheet</strong> &middot; Property A (Santa Clara County, inherited) and Property B (San Francisco, owned) &middot; prepared {CHECKED} &middot; placeholders for all names</div>
-<div class="cols">
-<div>
-<h3>1. Key facts (household figures held internally)</h3>
-<table class="brieftbl"><tbody>{frow}</tbody></table>
-<h3>2. Results (real 2026 $, transfer 2045, 20 years, rounded to $10)</h3>
-<p>Sell and invest {money(BASE['S'])}; phased over 24 months {money(BASE['SP24'])}; rent then sell {money(BASE['R'])}; live with no rent credit {money(BASE['L'])}. Living ties with selling only at a rent credit of about {pct(BE_CREDIT, 0)}. Provisional lean: sell in the transfer year. Not a decision.</p>
-<h3>3. Deadlines</h3><ul>{''.join(f'<li>{e(x)}</li>' for x in dl)}</ul>
-</div>
-<div>
-<h3>4. Questions for counsel</h3><ul>{''.join(f'<li>{e(x)}</li>' for x in qa)}</ul>
-<h3>5. Questions for the CPA</h3><ul>{''.join(f'<li>{e(x)}</li>' for x in qc)}</ul>
-<h3>6. Law status</h3>
-<ul><li>Enacted: federal $15,000,000 exclusion (2026); Prop 19 family-home rules; 1% state surcharge over $1,000,000.</li>
-<li>Proposed or reported, not enacted: federal estate-tax changes (not in the model).</li>
-<li>Secondary, to check: SF transfer-tax tiers (unverified); 2027 federal figures; SB 974.</li></ul>
-<h3>7. Flags</h3><ul><li>Property A market rent and insurance: unverified.</li><li>Historical tax records: check against bills.</li><li>Prop 19 move-out reading: counsel to confirm.</li></ul>
-</div></div>
-<p class="foot">Sources: IRS IR-2025-103 and What's new (estate and gift tax); FTB Form 540-ES instructions; U.S. Treasury yield table; CBO Feb 2026 outlook; SF Department of Elections (Nov 3, 2026, preliminary). Full register: sources.html. Not legal or tax advice.</p>
-</section>"""
-    page("brief.html", "Attorney and CPA briefing sheet", body)
+<h1>Inherited-home decision dashboard</h1>
+<p class="lede">Property A is a single-family house in Santa Clara County that the heir expects to inherit through a trust, around 2040 to 2050. Property B is a three-unit building in San Francisco County that the heir already owns. This site compares eight paths for Property A at identical transfer years and horizons, with taxes, debt, occupancy, capital costs, liquidity and reinvestment risk.</p>
+
+<section class="card first" aria-label="Summary">
+<h2>What would change the answer</h2>
+<ol class="changes">
+<li><strong>A written commitment by the heir to live in A within 12 months.</strong> Until it exists, Rule 3 removes the living paths. Even with it, living matches a lump-sum sale only if the imputed rent yield is about {pct(BE['live_rent_yield']*100,1)} of value a year (base assumption 3.75%) or if home values grow about {pct(BE['live_hpa']*100,1)} a year (base 2.3%).</li>
+<li><strong>Three verified rental comparables for A.</strong> Until they exist, Rule 4 keeps the rent paths as a floor only. A rent path matches a lump-sum sale only at a gross yield of {pct(BE['rent_rent_yield']*100,1) if BE['rent_rent_yield'] else 'above 20%, outside the range tested'}.</li>
+<li><strong>Tax-rate area and bills for A.</strong> The owner's billed rate is {pct(A_RATE,2)} of assessed value; the reference rate area used here is {pct(REF_A,2)} (FY 2024-25). The parcel's own rate area is unknown. The model uses the billed rate. When the reference rate is used instead, the pick does not change (see What-if).</li>
+<li><strong>Equity returns.</strong> If equities return 5% a year instead of the historical {MO['assumptions']['equity_geo_mean_1928_2025_pct']:.2f}%, the pick does not change in any of the four cases (see What-if).</li>
+<li><strong>The Proposition 19 allowance.</strong> The statutory amount of {usd(PROP19)} applies to transfers up to 15 February 2027. The next adjustment is due 16 February 2027 (BOE LTA 2025/009). A change would re-open the living case.</li>
+<li><strong>Other estate assets above the federal exclusion.</strong> Known real estate is about {usd(MO['estate']['known_real_estate_owner_estimates'])} (owner estimates). The federal basic exclusion is $15,000,000 for 2026, so estate tax is not modelled unless the total estate is verified above that amount (Rule 7).</li>
+</ol>
+</section>
+
+<section class="card" aria-label="Headline">
+<h2>Pick for the 2050 transfer, 20-year horizon</h2>
+<p><strong>Pick under the rules written on 25 November 2026, before any output existed: {e(PATH_SHORT[PICK50])}.</strong>
+Median real financial position at the horizon: <strong>{usd(pk['mc_fin']['median'])}</strong> (10th percentile {usd(pk['mc_fin']['p10'])}, 90th percentile {usd(pk['mc_fin']['p90'])}).
+The phased path (park 24 months, then phase in) has a median of {usd(p24['mc_fin']['median'])}, which is {pct(abs(CHG(p24['mc_fin']['median'], pk['mc_fin']['median'])),1)} below the pick, outside the 5% band in Rule 5. Under a repeat of the 1929-type crash, the pick gives {usd(pk['bs1929'])} and the 24-month phased path gives {usd(p24['bs1929'])}; see <a href="pages/phased-investing.html">phased investing</a>.</p>
+<p class="small">This is a comparison of stated assumptions. It is not a forecast and not advice.</p>
+</section>
+
+<section class="card" aria-label="Picks by case">
+<h2>Pick by case</h2>
+{picks_table()}
+<p class="small">In every case the lump-sum sale is both the pick under the rules and the highest median with no rules applied. Both phased paths fail the Rule 5 median test in all four cases. The three living paths are removed by Rule 3, and the two rent-based paths by Rule 4, until the household supplies a commitment and comparables.</p>
+</section>
+
+<section class="card" aria-label="Start here">
+<h2>Start here</h2>
+<div class="grid3">
+<a class="tile" href="pages/paths.html"><strong>Paths compared</strong><span>Eight paths at the same transfer years and horizons.</span></a>
+<a class="tile" href="pages/decision.html"><strong>Rules and pick</strong><span>The written criteria and how each path was tested.</span></a>
+<a class="tile" href="pages/property-a.html"><strong>Property A</strong><span>Assessment, tax history, Proposition 19 and costs.</span></a>
+<a class="tile" href="pages/property-b.html"><strong>Property B</strong><span>Rent, costs, tax history and depreciation.</span></a>
+<a class="tile" href="pages/process-timeline.html"><strong>Steps and deadlines</strong><span>The inheritance steps and the timeline.</span></a>
+<a class="tile" href="pages/flagged.html"><strong>Flagged for Review</strong><span>Everything that is unverified, corrected or unreconciled.</span></a>
+<a class="tile" href="pages/questions.html"><strong>Questions and gaps</strong><span>What is known, what is missing, and how to find out.</span></a>
+<a class="tile" href="pages/suggestions.html"><strong>Suggestions</strong><span>Proposed changes, to review before any is made.</span></a>
+<a class="tile" href="pages/briefing.html"><strong>Briefing sheet</strong><span>One page for the attorney and the tax adviser.</span></a>
+</div></section>
+"""
+    page("index.html", "Home", body, "Inherited-home decision dashboard: paths, rules, sources and flags.")
 
 
-def build_glossary():
-    dl = "".join(f"<dt>{e(a)}</dt><dd>{e(b)}</dd>" for a, b in C.GLOSSARY)
-    page("glossary.html", "Glossary", card("Terms", f"<dl class='gloss'>{dl}</dl>"))
-
-
-def build_sources():
+def result_rows(k):
+    R = MO["results"][k]["paths"]
     rows = []
-    for k, s in C.SOURCES.items():
-        rows.append([e(k), e(s["publisher"]), f'<a href="{e(s["url"])}">{e(s["title"])}</a>', tag(s["status"]), e(CHECKED)])
-    body = ("<p>Every row on the site links to one of these entries. FETCHED and EXCERPT entries were checked in this session. SECONDARY entries repeat an official rule and must be checked on the link before relying on them. LINK entries were identified but not opened.</p>"
-            + table(["ID", "Publisher", "Title and link", "Status", "Checked"], rows))
-    page("sources.html", "Sources", body)
+    for pid in PATH_ORDER:
+        r = R[pid]
+        elig = "Eligible" if pid in MO["picks"][k]["eligible"] else "Removed by rule (value shown for reference)"
+        imp = usd(r["imputed_real_base"]) if pid.startswith("LIVE") else "not applicable"
+        rows.append([
+            f"<strong>{e(PATH_SHORT[pid])}</strong><br><span class='small'>{'Pure' if r['pure'] else 'Mixed or phased'}</span>",
+            usd(r["mc_fin"]["median"]), usd(r["mc_fin"]["p10"]), usd(r["mc_fin"]["p90"]),
+            usd(r["bs1929"]), usd(r["bs2008"]), usd(r["bs1973"]), usd(r["bs2000"]),
+            usd(r["stress_eq5"]), usd(r["reinvest_shock"]), imp, elig, srcl(["S03", "S17", "S23"]),
+        ])
+    return rows
 
 
-def write_irregularities_json():
-    os.makedirs(os.path.join(ROOT, "data"), exist_ok=True)
-    out = [{"item": a, "found": b, "action": c, "sources": d} for a, b, c, d in C.IRREGULARITIES]
-    with open(os.path.join(ROOT, "data", "irregularities.json"), "w", encoding="utf-8") as f:
-        json.dump(out, f, indent=1, ensure_ascii=False)
-        f.write("\n")
+def p_paths():
+    hdr = ["Path", "Median (real)", "10th pct", "90th pct", "1929-type crash", "2008-type crash",
+           "1973-type stagflation", "2000-type decline", "Equity at 5% a year", "Bills 1% from year 4",
+           "Imputed rent (living, not cash)", "Rule status", "Sources"]
+    parts = [f"<h3>Transfer {k.split('_')[0]}, horizon {k.split('_')[1]} years</h3>"
+             + table(hdr, result_rows(k), cls="wide") for k in PICK_KEYS]
+    body = f"""
+<h1>Paths compared</h1>
+<p>Eight paths for Property A, compared at the same transfer years (2040 and 2050) and horizons (10 and 20 years). Values are the financial position at the end of the horizon, in real dollars (deflated by the 2.3% inflation assumption), rounded to $10. A property still held at the end is valued as if sold then, after selling costs and tax, so the paths are comparable. Property B is held in every path and is left out. Median and percentiles come from {MO['_meta']['monte_carlo_draws']:,} simulated paths (seed {MO['_meta']['seed']}); crash columns replay the historical sequence from that year.</p>
+<p class="small">Imputed rent (the rent a living owner does not pay) is not cash, so it is excluded from the financial position used by the rules and shown separately. Mixed and phased paths are listed beside the pure choices.</p>
+{''.join(parts)}
+<h2>How to read the columns</h2>
+<ul>
+<li><strong>Bills 1% from year 4:</strong> the same path if T-bill yields fall to 1% from year 4. It shows how much a path depends on the rate earned while cash waits.</li>
+<li><strong>Taxes:</strong> property tax on the Proposition 19 or reassessed value, capital-gain tax at sale (basis is the value at death), depreciation recapture for rented paths, and tax on net rental income.</li>
+<li><strong>Rule status:</strong> the rules are on the <a href="decision.html">rules page</a>.</li>
+</ul>
+<p class="small">Sources: {srcl(['S03','S17','S23'])}. Assumptions: <a href="method.html">Method and privacy</a>.</p>
+"""
+    page("pages/paths.html", "Paths compared", body, "Eight paths for Property A at identical dates and horizons.")
 
 
-def write_assets():
-    os.makedirs(os.path.join(ROOT, "assets"), exist_ok=True)
-    css = """
-:root{--ink:#1a202c;--mut:#4a5568;--line:#e2e8f0;--bg:#f7fafc;--acc:#2b6cb0}
+def p_decision():
+    rules = [
+        ["1", "Primary metric: median real net position at the horizon, across the scenarios and simulated paths.", "Applied to every path."],
+        ["2", "Downside guard: a path's 10th-percentile real outcome must stay within 10% of the lump-sum sale's 10th percentile. If not, the lump-sum sale is chosen.", "Applied to the phased paths."],
+        ["3", "Living is eligible only if the household commits in writing to occupy A as its principal residence within 12 months.", "No commitment on file: living paths removed."],
+        ["4", "Renting is eligible only if at least three verified rental comparables for A exist. Until then, renting is reported as a floor.", "None on file: rent paths removed; shown as a floor."],
+        ["5", "Phased sale beats the lump sum only if its worse black-swan outcome is at least as good as the lump sum's, and its base median is within 5% of the lump sum's.", "Applied to the phased paths."],
+        ["6", "A mixed path is chosen only if it beats the best pure path on the primary metric and on the downside guard.", "No mixed path eligible."],
+        ["7", "No federal estate-tax liability is assumed unless the taxable estate is verified above the basic exclusion in the year of death.", "Other estate assets unknown; every result is conditional."],
+        ["8", "If two paths are within 2% on the primary metric, prefer more liquidity at transfer, then lower regulatory-change exposure.", "Applied to the phased paths."],
+    ]
+    rr = []
+    for k in PICK_KEYS:
+        ck = MO["picks"][k]["checks"]
+        for pid in ("SELL_P24", "SELL_P36"):
+            c = ck[pid]
+            rr.append([e(k.replace("_", " / ") + " years"), e(PATH_SHORT[pid]),
+                       "pass" if c["guard_rule2"] else "fail", "pass" if c["phase_rule5"] else "fail",
+                       "yes" if c["beats_by_more_than_2pct"] else "no", usd(c["median"]),
+                       usd(c["worst_black_swan"]), srcl(["S03", "S17"])])
+    removed = "".join(f"<li><strong>{e(PATH_SHORT[p])}</strong>: {e(v)}</li>"
+                      for p, v in MO["picks"]["2050_20"]["removed"].items())
+    body = f"""
+<h1>Rules and pick</h1>
+<p>The choice rules are those written in the repository file <code>DECISION_RULES.md</code> on 25 November 2026, before any model output was generated. The model applies them mechanically and does not set them. A change must be dated, justified and logged in the <a href="decision-log.html">decision log</a>.</p>
+<h2>Rules</h2>
+{table(["#", "Rule (as written)", "Status for this household"], rules)}
+<h2>Phased paths against the lump-sum sale</h2>
+{table(["Case", "Path", "Rule 2 guard", "Rule 5 test", "Beats lump sum by more than 2%?", "Median (real)", "Worst black-swan (real)", "Sources"], rr)}
+<h2>Pick and eligibility by case</h2>
+{picks_table()}
+<h2>Removed by rule (2050 transfer, 20-year horizon)</h2>
+<ul>{removed}</ul>
+<p class="small">Sources for the rule tests: {srcl(['S03','S17'])}. The rules are the household's own criteria; they are not sourced to any statute.</p>
+"""
+    page("pages/decision.html", "Rules and pick", body, "Pre-committed choice rules, eligibility and the resulting pick.")
+
+
+def p_whatif():
+    sens = []
+    for g in MO["sensitivity"]["grid"]:
+        p = g["picks"]["2050_20"]
+        sens.append([e(g["label"]), "No" if not g["moved"] else "Yes: " + e(", ".join(g["moved_in"])),
+                     e(PATH_SHORT[p["choice"]]), usd(p["median_choice"]), srcl(["S03", "S17", "S23"])])
+    data = json.dumps({"rent_yields": MO["whatif"]["rent_yields"], "hpa": MO["whatif"]["hpa"],
+                       "cells": MO["whatif"]["cells"]})
+    body = f"""
+<h1>What-if and sensitivity</h1>
+<p>Two views. The first table shows whether the pick moves when one assumption changes. The second is an interactive table of real financial position for the 2050 transfer and 20-year horizon, for a chosen gross rent yield and home-value growth rate. Both are deterministic apart from the historical return draws.</p>
+<h2>Does the pick move?</h2>
+{table(["Change (one at a time)", "Pick moved?", "Pick (2050, 20 years)", "Median of the pick (real)", "Sources"], sens)}
+<h2>Interactive table</h2>
+<div class="controls">
+<label>Gross rent yield on value <select id="ry"></select></label>
+<label>Home-value growth a year <select id="hp"></select></label>
+</div>
+<div id="whatif-out"></div>
+<p class="small">Rent yield and home-value growth are assumptions: no verified comparables and no appraisal. Values are financial positions; imputed rent is not included. Sources: {srcl(['S03','S17','S23'])}.</p>
+<script type="application/json" id="whatif-data">{data}</script>
+"""
+    page("pages/what-if.html", "What-if and sensitivity", body, "Sensitivity of the pick and an interactive what-if table.")
+
+
+def p_decision_log():
+    rows = [
+        ["2026-11-25", "Choice rules written (DECISION_RULES.md)", "Adopted as the pre-commitment", "Written before any model output; any change must be dated and logged.", "Repository file"],
+        ["2026-11-26", "First model run", "Pick: lump-sum sale in all four cases", "Superseded by the correction below; not published.", "S03, S17"],
+        ["2026-11-26", "Model correction (bug)", "Household cash flows now go to the cash account at the bill return", "Before the fix, a living household's running costs compounded at the equity return, overstating them. Living median for 2050/20 moved from -$76,930 to $2,558,810. The pick did not change.", "Repository file (tools/model.py)"],
+        ["2026-11-26", "Prop 19 allowance", "Statutory $1,044,586 used exactly", "First run used a rounded placeholder.", srcl(["S03"])],
+        ["2026-11-26", "Inflation and bill-return inputs", "2.3% inflation; 3.2% bill return", "Checked against CBO's February 2026 projections; the model holds them flat (see Flagged F-22).", srcl(["S23"])],
+        ["2026-11-26", "Repository cleanup for publication", "Earlier site copies and analysis folders removed from the published tree", "They carried ZIP codes, a neighbourhood name and household-level material. Kept locally outside Git; history not rewritten (see Flagged F-14).", "Repository commit"],
+        ["Open", "Written occupancy commitment (Rule 3)", "Not decided", "Re-open only with a signed commitment.", "Rule 3"],
+        ["Open", "Three rental comparables (Rule 4)", "Not decided", "Re-open only with three verified comparables.", "Rule 4"],
+        ["Open", "Phase-in length (Rule 5 wording vs model)", "Not decided", "DECISION_RULES.md section 5 says 24 to 36 months; the model phases in over 12 months. See Flagged F-21.", "Repository file"],
+    ]
+    body = f"""
+<h1>Decision log</h1>
+<p>Each decision with its date and reason. Open rows say what would reopen the question.</p>
+{table(["Date", "Item", "Decision", "Why", "Source"], rows)}
+"""
+    page("pages/decision-log.html", "Decision log", body, "Decisions and dates for the inherited-home model.")
+
+
+def svg_lines(series, w=640, h=260):
+    allv = [v for _, _, vals in series for v in vals]
+    lo, hi = min(0, min(allv)), max(allv)
+    n = len(series[0][2])
+    pad = 34
+    lines = []
+    for label, color, vals in series:
+        pts = []
+        for i, v in enumerate(vals):
+            x = pad + i * (w - 2 * pad) / (n - 1)
+            y = h - pad - (h - 2 * pad) * (v - lo) / (hi - lo)
+            pts.append(f"{x:.1f},{y:.1f}")
+        lines.append(f'<polyline fill="none" stroke="{color}" stroke-width="2" points="{" ".join(pts)}"/>')
+    legend = "".join(f'<text x="{pad + 230*i}" y="16" font-size="12" fill="{c}">{e(l)}</text>'
+                     for i, (l, c, _) in enumerate(series))
+    return (f'<figure><svg viewBox="0 0 {w} {h}" role="img" aria-label="Projection lines">{legend}'
+            f'<line x1="{pad}" y1="{h-pad}" x2="{w-pad}" y2="{h-pad}" stroke="#666"/>'
+            f'<text x="{pad}" y="{h-10}" font-size="11">2026</text><text x="{w-pad-30}" y="{h-10}" font-size="11">2046</text>'
+            f'{"".join(lines)}</svg><figcaption>Nominal dollars, rounded to $10.</figcaption></figure>')
+
+
+def svg_hist(dist, key, color, label):
+    d = dist[key]
+    counts = d["counts"]
+    w, h, pad = 620, 220, 30
+    mx = max(counts) or 1
+    bw = (w - 2 * pad) / len(counts)
+    bars = []
+    for i, c in enumerate(counts):
+        bh = (h - 2 * pad) * c / mx
+        bars.append(f'<rect x="{pad + i*bw:.1f}" y="{h-pad-bh:.1f}" width="{bw-2:.1f}" height="{bh:.1f}" fill="{color}"><title>{c} paths</title></rect>')
+    return (f'<figure><svg viewBox="0 0 {w} {h}" role="img" aria-label="Distribution: {e(label)}">'
+            f'<line x1="{pad}" y1="{h-pad}" x2="{w-pad}" y2="{h-pad}" stroke="#666"/>{"".join(bars)}'
+            f'<text x="{pad}" y="{h-8}" font-size="11">{usd(d["min"])}</text>'
+            f'<text x="{w-pad-90}" y="{h-8}" font-size="11">{usd(d["max"])}</text></svg>'
+            f'<figcaption>{e(label)}: {MO["_meta"]["monte_carlo_draws"]:,} simulated paths, 2050 transfer, 20 years, real dollars.</figcaption></figure>')
+
+
+def p_projections():
+    pr = MO["projections"]
+    rows = [[e(r["year"]), usd(r["a_value"]), usd(r["a_tax_live_prop19"]), usd(r["a_tax_full_reassessment"]),
+             usd(r["a_insurance"]), usd(r["a_water_net_annual"]), usd(r["a_maintenance_at_1pct"]),
+             usd(r["b_value"]), usd(r["b_tax_statutory_rate"]), usd(r["b_rent_income_annual"]),
+             srcl(["S03", "S12", "S23"])] for r in pr if r["year"] % 5 == 0 or r["year"] in (2026, 2027)]
+    body = f"""
+<h1>Projections</h1>
+<p>Base-case projections, every fifth year. Property A is shown under the Proposition 19 living case and under full reassessment (no exclusion). Property B is shown at the statutory San Francisco secured rate on its assessed value. Nominal dollars, rounded to $10. The 2% a year assessed-value growth cap and 2.3% inflation are assumptions (see <a href="method.html">Method</a>).</p>
+<p class="small">Property B's billed tax is {pct(B_RATE,2)} of its assessed value, above the statutory rate of {pct(STAT_B,8)}. The table uses the statutory rate so the figures can be checked; the difference is Flagged F-02.</p>
+{svg_lines([("Property A value", "#1b4f8a", [r["a_value"] for r in pr]), ("Property A assessed value under full reassessment", "#b5472f", [r["a_assessed_if_reassessed_2040"] for r in pr])])}
+{table(["Year", "A value", "A tax (Prop 19 living)", "A tax (full reassessment)", "A insurance", "A water, net of solar", "A maintenance at 1%", "B value", "B tax (statutory rate)", "B rent (owner figure)", "Sources"], rows, cls="wide")}
+<h2>Property tax saved by the living exclusion, 2040 to 2060</h2>
+<p>Total difference between full reassessment and the Proposition 19 living case over those 21 years (nominal): <strong>{usd(SAVE)}</strong>. Sources: {srcl(['S03'])}. The living case is modelled as occupancy within one year; the assessed-value formula is flagged for CPA review (F-20).</p>
+<h2>Spread of outcomes, 2050 transfer, 20 years</h2>
+<div class="grid2">{svg_hist(MO['distribution'], 'SELL_LUMP', '#1b4f8a', 'Sell, lump sum')}{svg_hist(MO['distribution'], 'SELL_P24', '#b5472f', 'Sell, park 24 months, then phase in')}</div>
+<p class="small">Sources: {srcl(['S17','S03','S23'])}.</p>
+"""
+    page("pages/projections.html", "Projections", body, "Year-by-year Property A and B projections.")
+
+
+def p_black_swan():
+    rows = []
+    for pid in PATH_ORDER:
+        r = R50[pid]
+        rows.append([f"<strong>{e(PATH_SHORT[pid])}</strong>", usd(r["bs1929"]), usd(r["bs2008"]), usd(r["bs1973"]),
+                     usd(r["bs2000"]), usd(r["stress_eq5"]), usd(r["det_base"]), srcl(["S17", "S23"])])
+    body = f"""
+<h1>Black-swan scenarios and economic baseline</h1>
+<p>Separate from the baseline. Baseline figures are official projections where marked. Stress scenarios replay real sequences of bad years from the 1928-2025 record. Results are for the 2050 transfer and a 20-year horizon, real, rounded to $10.</p>
+<h2>Baseline inputs and the official projection</h2>
+{table(["Item", "Official projection (CBO, Feb 2026)", "Model input", "Status", "Source"], [
+    ["Inflation (CPI)", "2.8% (2026), 2.4% (2027), 2.3% (2028 onward)", "2.3% a year, flat", badge("assumption") + " simplified; see F-22", srcl(["S23"])],
+    ["PCE inflation", "2.7% (2026), 2.3% (2027), 2.1% (2028), 2.0% (2029-30)", "not used", badge("fetched"), srcl(["S23"])],
+    ["3-month Treasury bills", "3.3% (2026), 3.2% (2027-2030), 3.1% (2031-36)", "3.2% a year, flat", badge("fetched") + " (2027-30 level)", srcl(["S23"])],
+    ["10-year Treasury notes", "4.1% (2026), 4.3% (2027-2030), 4.4% (2031-36)", "not used", badge("fetched"), srcl(["S23"])],
+    ["Equities, historical geometric mean", "not a CBO figure", f"{MO['assumptions']['equity_geo_mean_1928_2025_pct']:.2f}% a year (1928-2025 total return)", badge("academic"), srcl(["S17"])],
+    ["Home-value growth", "not a CBO figure", "2.3% a year", badge("assumption"), "assumption"],
+    ["Assessed-value growth cap", "not in the sources read", "2% a year, lesser of CPI or 2%", badge("unverified"), "Flagged F-18"],
+])}
+<h2>Stress scenarios (real, 2050 transfer, 20 years)</h2>
+{table(["Path", "1929-type crash", "2008-type crash", "1973-type stagflation", "2000-type decline", "Equity at 5% a year", "Baseline", "Sources"], rows, cls="wide")}
+<p class="small">Crash scenarios replay the historical annual returns from 1929, 2008, 1973 and 2000, continuing into later years (the record wraps from 2025 to 1928). They use annual steps, so a fall inside one year is not captured month by month.</p>
+<h2>Limits</h2>
+<ul>
+<li>No historical CPI series was used. The 1973-type scenario uses that period's nominal returns and the flat 2.3% inflation, not a stagflation price path.</li>
+<li>Home values are not drawn at random; only financial returns are simulated.</li>
+<li>The record covers one country and one century. It has no comparable multi-decade real loss, and no month-by-month crash data.</li>
+</ul>
+<p class="small">Sources: {srcl(['S17','S23'])}.</p>
+"""
+    page("pages/black-swan.html", "Black-swan scenarios", body, "Stress scenarios and the official economic baseline.")
+
+
+def p_phased():
+    p = R50
+    rows = []
+    for pid in ("SELL_LUMP", "SELL_P24", "SELL_P36"):
+        r = p[pid]
+        rows.append([f"<strong>{e(PATH_SHORT[pid])}</strong>", usd(r["mc_fin"]["median"]), usd(r["mc_fin"]["p10"]),
+                     usd(r["bs1929"]), usd(r["bs2008"]), usd(r["bs2000"]), usd(r["reinvest_shock"]),
+                     usd(r["det_base"]), srcl(["S03", "S17", "S23"])])
+    body = f"""
+<h1>Phased investing and reinvestment risk</h1>
+<p>Phasing parks the sale proceeds in short Treasury bills for 24 or 36 months, then moves them into equities over 12 months. Reinvestment risk is the chance that the rate earned on parked cash, or the price at which it is put back to work, is worse than expected. It is shown beside every phased result.</p>
+{table(["Path (2050, 20 years)", "Median (real)", "10th pct", "1929-type crash", "2008-type crash", "2000-type decline", "Bills 1% from year 4", "Baseline (real)", "Sources"], rows, cls="wide")}
+<h2>What the test shows</h2>
+<ul>
+<li><strong>Phasing helps in a 1929-type crash:</strong> the lump sum falls to {usd(p['SELL_LUMP']['bs1929'])}; the 36-month path holds {usd(p['SELL_P36']['bs1929'])}.</li>
+<li><strong>Phasing costs in the median:</strong> the 24-month path gives {usd(p['SELL_P24']['mc_fin']['median'])} against {usd(p['SELL_LUMP']['mc_fin']['median'])} for the lump sum, {pct(abs(CHG(p['SELL_P24']['mc_fin']['median'], p['SELL_LUMP']['mc_fin']['median'])),1)} lower. Rule 5 allows 5%, so the phased paths fail.</li>
+<li><strong>Reinvestment risk is small for the parked cash:</strong> when bill yields fall to 1% from year 4, the 24-month path changes by {pct(abs(CHG(p['SELL_P24']['reinvest_shock'], p['SELL_P24']['det_base'])),2)}.</li>
+</ul>
+<h2>Investing policy for the sale proceeds (draft; for attorney and CPA review)</h2>
+<p>This follows section 5 of <code>DECISION_RULES.md</code>. It is a draft and not investment advice; no amounts are decided here.</p>
+<ol>
+<li><strong>Purpose:</strong> hold the proceeds for the household's stated goals and protect against a forced sale in a downturn.</li>
+<li><strong>Liquidity reserve:</strong> [placeholder: months of household spending, to be set by the household before funds arrive].</li>
+<li><strong>Staging, if phasing is chosen:</strong> equal monthly tranches into diversified index exposure over the period the household chooses. The rules say 24 to 36 months; the model tests 12 (Flagged F-21).</li>
+<li><strong>Rebalancing:</strong> once a year, to target weights set in advance.</li>
+<li><strong>No forced sales:</strong> do not sell equities to fund an emergency while the reserve is intact.</li>
+<li><strong>Review:</strong> annually, with the model re-run and the Flagged items checked.</li>
+<li><strong>Tax coordination:</strong> the CPA confirms the holding structure and any trust or entity wrapper before funds are invested.</li>
+</ol>
+<p class="small">Sources: {srcl(['S17','S23'])}. Method: <a href="method.html">Method and privacy</a>.</p>
+"""
+    page("pages/phased-investing.html", "Phased investing", body, "Phased investing and reinvestment risk.")
+
+
+def hist_rows(hist, src):
+    rows = []
+    for h in hist:
+        tax = usd(h["tax"]) if h["tax"] is not None else "not in owner record"
+        rows.append([e(h["year"]), tax, e(h["tax_change"] or "not recorded"), usd(h["assessed"]),
+                     e(h["assessed_change"] or "not recorded"), badge("owner"), srcl(src)])
+    return rows
+
+
+def p_property_a():
+    a = INP["property_a"]
+    body = f"""
+<h1>Property A: inherited single-family house (Santa Clara County)</h1>
+<p>Owner figures are rounded to $10 and labelled as owner records. Each rule is cited beside the figure it governs.</p>
+{table(["Item", "Value", "Status", "Source"], [
+    ["Market value estimate (November 2026)", usd(a['value_estimate']['value']), badge("owner"), "owner estimate; appraisal needed (F-06)"],
+    ["Assessed value, 2026 roll (owner record)", usd(A_HIST[0]['assessed']), badge("owner"), srcl(["S10"]) + " (rule source)"],
+    ["Property tax, 2025 bill (owner record)", usd(A_HIST[1]['tax']), badge("owner"), srcl(["S10"])],
+    ["Rate implied by the 2025 bill", pct(A_RATE, 4), badge("owner"), "owner record; reconcile (F-01)"],
+    ["Reference rate area total, FY 2024-25", pct(REF_A, 4), badge("snippet"), srcl(["S11"]) + " (parcel's own rate area unknown)"],
+    ["Insurance, per year (owner estimate)", usd(a['insurance_annual_owner_estimate']), badge("unverified"), "no official source (F-07)"],
+    ["Water, per month (owner range)", f"{usd(a['water_monthly_range'][0])} to {usd(a['water_monthly_range'][1])}", badge("owner"), "owner record"],
+    ["Solar credit, per month (owner range)", f"{usd(a['solar_credit_monthly_range'][0])} to {usd(a['solar_credit_monthly_range'][1])}", badge("owner"), "owner record"],
+    ["Electricity, per month", usd(a['electricity_monthly']), badge("owner"), "owner record (solar)"],
+    ["Market rent", "not verified (no comparables)", badge("unverified"), "Rule 4; F-08"],
+])}
+<h2>Assessment and tax history</h2>
+{table(["Year", "Property tax", "Change", "Assessed value", "Change", "Status", "Source"], hist_rows(A_HIST, ["S10"]), cls="wide")}
+<p class="small">Rule: assessed value rises by at most the lesser of inflation or 2% a year, and is reset to market value on a change of ownership. The owner's change figures are shown as recorded; the county roll should be checked (F-12). Sources: {srcl(['S10'])} (rule), partly read.</p>
+<h2>Proposition 19 at a 2040 transfer (base case)</h2>
+<p>If the heir occupies A as a principal residence within a year and claims the exemption, the model uses this rule for the assessed value at transfer: the higher of the factored base and (market value less the allowance). Otherwise the house is reassessed to market value. The formula is the model's reading of the BOE letter and is flagged for CPA confirmation (F-20). Sources: {srcl(['S03','S10'])}.</p>
+{table(["Year", "A tax, living (Prop 19)", "A tax, full reassessment", "Difference", "Sources"],
+       [[e(r["year"]), usd(r["a_tax_live_prop19"]), usd(r["a_tax_full_reassessment"]),
+         usd(r["a_tax_full_reassessment"] - r["a_tax_live_prop19"]), srcl(["S03"])]
+        for r in MO["projections"] if r["year"] in (2040, 2045, 2050, 2055, 2060)])}
+<h2>Maintenance</h2>
+<p>No line-item budget is published, because no contractor quotes exist. The model assumes maintenance at 1% of value a year (assumption; F-26). Replace it with quotes before relying on the figure.</p>
+<h2>Questions for this property</h2>
+<ul>
+<li>What is the parcel's rate area, and which voter bonds and direct charges appear on the bill? (F-01)</li>
+<li>What is the market value on the date of death, by appraisal? (F-06)</li>
+<li>Will the heir occupy it as a principal residence within a year? (Rule 3)</li>
+</ul>
+"""
+    page("pages/property-a.html", "Property A", body, "Property A: assessment, tax history, Prop 19 and costs.")
+
+
+def p_property_b():
+    b = INP["property_b"]
+    body = f"""
+<h1>Property B: three-unit building (San Francisco County), owned by [HEIR]</h1>
+<p>Property B is already owned and is held in every path. It does not change between paths, but it affects household liquidity and the choice of which property to live in.</p>
+{table(["Item", "Value", "Status", "Source"], [
+    ["Market value estimate (November 2026)", usd(b['value_estimate']['value']), badge("owner"), "owner estimate; appraisal needed (F-06)"],
+    ["Units", f"{b['units_total']} in total; {b['units_rented']} rented (owner record)", badge("owner"), "the third unit's status is not recorded"],
+    ["Rent, the two rented units (per month, total)", usd(b['rent_monthly_total']), badge("owner"), "rent-control position not verified (F-09)"],
+    ["Water, all units (per month, range)", f"{usd(b['water_monthly_range'][0])} to {usd(b['water_monthly_range'][1])}", badge("owner"), "owner record"],
+    ["Electricity (per month, range)", f"{usd(b['electricity_monthly_range'][0])} to {usd(b['electricity_monthly_range'][1])}", badge("owner"), "owner record"],
+    ["Insurance, per year (owner estimate)", usd(b['insurance_annual_owner_estimate']), badge("unverified"), "no official source (F-07)"],
+    ["Secured property tax rate, FY 2026-27", pct(STAT_B, 8), badge("snippet"), srcl(["S12"])],
+    ["Allowable annual rent increase, March 2026 to February 2027", "1.6% (secondary sites only)", badge("unverified"), srcl(["S18"]) + " (not reached)"],
+])}
+<h2>Tax and assessment history</h2>
+{table(["Year", "Property tax", "Change", "Assessed value", "Change", "Status", "Source"], hist_rows(B_HIST, ["S12"]), cls="wide")}
+<p class="small">The billed tax for the 2025 year is {pct(B_RATE,2)} of assessed value, above the statutory secured rate of {pct(STAT_B,8)}. Other charges may apply; the bill was not reconciled (F-02). Sources: {srcl(['S12'])}.</p>
+<h2>Depreciation and recapture (for the CPA)</h2>
+<ul>
+<li>Depreciable share of value: 70% (assumption; needs an appraisal that separates land from building).</li>
+<li>Recovery period: 27.5 years for residential rental property (used by the model; primary source not read in this session, F-27).</li>
+<li>Gain attributable to depreciation: unrecaptured section 1250 gain, taxed at a maximum 25% federal rate (IRS Pub 544, snippet). The model adds the 3.8% net investment income tax and a California assumption (F-11).</li>
+</ul>
+<p class="small">Sources: {srcl(['S09','S12','S18'])}.</p>
+"""
+    page("pages/property-b.html", "Property B", body, "Property B: owned three-unit building, rent, costs and history.")
+
+
+def p_inventory():
+    body = f"""
+<h1>Estate inventory (structure only)</h1>
+<p>The categories the inventory must cover. Documents and figures are held outside the repository; only rounded owner figures appear on other pages.</p>
+{table(["Category", "Where the figure is held", "Status and next step"], [
+    ["Property A: value, assessment, tax bills", "held outside this repository", "owner record; check against the county roll"],
+    ["Property A: trust and title documents", "held outside this repository", "attorney to confirm the trust terms"],
+    ["Property B: value, rent roll, leases", "held outside this repository", "verify leases and local rules"],
+    ["Financial accounts (sale proceeds, reserve)", "placeholder: [amount set by household]", "not yet collected"],
+    ["Debts and liabilities", "placeholder: none modelled", "Q-09"],
+    ["Other estate assets", "placeholder: [unknown]", "needed to test the $15,000,000 exclusion (Rule 7)"],
+    ["Prior taxable gifts; spouse's unused exclusion", "placeholder: [unknown]", "Q-06, Q-07"],
+    ["Insurance policies (both properties)", "placeholder: quotes not yet obtained", "F-07"],
+])}
+"""
+    page("pages/inventory.html", "Estate inventory", body, "Structure of the private estate inventory (no personal data).")
+
+
+def p_tax_law():
+    body = f"""
+<h1>Federal, state and local rules</h1>
+<p>Three systems are kept apart: <strong>estate tax</strong> at death, <strong>income tax</strong> on later gain (basis) and <strong>property tax</strong> on the assessment. Each rule shows its source and status.</p>
+<h2>Federal estate and gift tax</h2>
+{table(["Rule", "2026 amount or treatment", "Status", "Source"], [
+    ["Basic exclusion amount per decedent", "$15,000,000", badge("partial"), srcl(["S02"])],
+    ["Unified credit on the first $15,000,000", "$5,945,800", badge("partial"), srcl(["S02"])],
+    ["Annual gift exclusion per recipient", "$19,000", badge("fetched"), srcl(["S01"])],
+    ["Annual gift exclusion, non-citizen spouse", "$194,000", badge("fetched"), srcl(["S01"])],
+    ["Rate above the exclusion", "40% (not confirmed in a fetched passage)", badge("unverified"), "Flagged F-05"],
+    ["Form 706 due date", "nine months after death", badge("unverified"), "Flagged F-17"],
+    ["Portability (unused spousal exclusion)", "elected on a timely Form 706", badge("partial"), srcl(["S02"])],
+    ["Income-tax basis of inherited property", "fair market value at the date of death", badge("partial"), srcl(["S07"])],
+    ["Main-home gain exclusion (section 121)", "$250,000 single; $500,000 joint (2 of the last 5 years)", badge("partial"), srcl(["S08"])],
+    ["Unrecaptured section 1250 gain (rental depreciation)", "maximum 25%", badge("snippet"), srcl(["S09"])],
+    ["Net investment income tax", "3.8% (general statute; form not read)", badge("unverified"), srcl(["S19"])],
+])}
+<h2>California</h2>
+{table(["Rule", "Amount or treatment", "Status", "Source"], [
+    ["Estate or inheritance tax", "none found in the sources read; not confirmed on an official page", badge("unverified"), "Flagged F-05"],
+    ["Capital gains taxed as ordinary income", "rule as commonly stated; FTB page not read", badge("unverified"), srcl(["S06"])],
+    ["Behavioral Health Services Tax", "1% of taxable income above $1,000,000", badge("partial"), srcl(["S04"])],
+    ["Top California ordinary rate", "not read from the official schedule (model uses a labelled range)", badge("unverified"), srcl(["S20"])],
+    ["Proposition 19 allowance (transfers 16 Feb 2025 to 15 Feb 2027)", "$1,044,586", badge("fetched"), srcl(["S03"])],
+    ["Proposition 13 growth cap on assessed value", "lesser of inflation or 2% a year", badge("unverified"), "general law; not confirmed in fetched text (F-18)"],
+])}
+<h2>Local (county and city)</h2>
+{table(["Rule", "Amount or treatment", "Status", "Source"], [
+    ["Santa Clara County: documentary transfer tax", "$1.10 per $1,000 of price (county)", badge("snippet"), srcl(["S13"])],
+    ["Santa Clara County: city transfer tax for A's rate area", "not confirmed; sources disagree", badge("unverified"), "Flagged F-10"],
+    ["Santa Clara County: reference rate area total, FY 2024-25", pct(REF_A, 4), badge("snippet"), srcl(["S11"])],
+    ["San Francisco: secured rate, FY 2026-27", pct(STAT_B, 8), badge("snippet"), srcl(["S12"])],
+    ["San Francisco: allowable rent increase, March 2026 to February 2027", "1.6% (secondary sites)", badge("unverified"), srcl(["S18"])],
+])}
+<h2>Property tax timing</h2>
+<p>Installment dates are not confirmed in a fetched passage of the county or city rate sources; they are listed on the <a href="process-timeline.html">timeline</a> as unverified (F-19).</p>
+<p class="small">Not legal or tax advice. Unverified items are on the <a href="flagged.html">Flagged for Review</a> page.</p>
+"""
+    page("pages/tax-law.html", "Federal, state and local rules", body, "Federal, California and local rules with sources and status.")
+
+
+def p_legislation():
+    body = f"""
+<h1>Legislation: enacted vs proposed</h1>
+<p>Enacted law is kept apart from proposals. Proposals are not used in any figure. Each year the watch list is checked and the decision log is updated.</p>
+<h2>Enacted (in force)</h2>
+{table(["Change", "Effect on this decision", "Status", "Source"], [
+    ["Federal basic exclusion of $15,000,000 for 2026", "no federal estate tax below that amount per decedent (unless verified otherwise)", badge("fetched"), srcl(["S02"])],
+    ["Proposition 19 parent-child exclusion (family home, occupied by the child)", "living is the only way to keep the lower assessed base; rental property is reassessed", badge("partial"), srcl(["S03"])],
+    ["Proposition 19 allowance of $1,044,586 (16 Feb 2025 to 15 Feb 2027)", "sets the living case's allowance until February 2027", badge("fetched"), srcl(["S03"])],
+    ["Behavioral Health Services Tax, 1% above $1,000,000", "affects only very high California taxable income", badge("partial"), srcl(["S04"])],
+])}
+<h2>Proposed, or not verified</h2>
+{table(["Item", "What is known", "Status", "Where to check"], [
+    ["Next Proposition 19 allowance adjustment", "due 16 February 2027; amount not yet published", badge("statute"), srcl(["S03"])],
+    ["Federal estate-tax changes beyond 2026", "none verified in this session", badge("unverified"), "Flagged F-05"],
+    ["California inheritance or property-tax changes", "none verified in this session", badge("unverified"), "Flagged F-18"],
+    ["San Francisco rent rules (annual increase)", "1.6% reported by secondary sites only", badge("unverified"), srcl(["S18"])],
+])}
+"""
+    page("pages/legislation.html", "Legislation", body, "Enacted changes and proposals, kept apart.")
+
+
+def p_process():
+    body = f"""
+<h1>Inheritance steps and timeline</h1>
+<h2>Step by step</h2>
+<ol class="steps">
+<li><strong>Date of death.</strong> Record the date. The income-tax basis of Property A becomes its fair market value that day ({srcl(['S07'])}).</li>
+<li><strong>Valuation.</strong> Obtain written appraisals of A and B at the date of death. The estimates used here are owner estimates (F-06).</li>
+<li><strong>Trust administration.</strong> The trustee takes control of the property. The attorney confirms the trust terms and whether the transfer is by trust or by deed.</li>
+<li><strong>Estate-tax check.</strong> Compare the gross estate and adjusted taxable gifts with $15,000,000. If above, or if a portability election is wanted, a Form 706 is needed on the due date (F-17).</li>
+<li><strong>Property-tax claim.</strong> If the heir will live in A, file the claim and move in within the window in the BOE guidance ({srcl(['S03'])}). Otherwise expect reassessment at market value ({srcl(['S10'])}).</li>
+<li><strong>Insurance.</strong> Change the policy on A to the right occupancy (owner-occupied, tenant or vacant) before the transfer date.</li>
+<li><strong>Decision.</strong> Apply the <a href="decision.html">rules</a>. If a sale is chosen, the CPA and attorney review the holding structure first.</li>
+<li><strong>Investing.</strong> Put the investing policy in place before the money arrives (see <a href="phased-investing.html">phased investing</a>).</li>
+</ol>
+<h2>Timeline</h2>
+{table(["When", "What", "Status", "Source"], [
+    ["Date of death (D)", "starts the clock on every item below", badge("fetched"), srcl(["S07"])],
+    ["D + 1 month", "insurance and valuation requests", badge("assumption"), "planning step, not a legal deadline"],
+    ["D + 9 months", "Form 706 due, if required or if portability is elected", badge("unverified"), "Flagged F-17"],
+    ["About D + 12 months", "heir occupies A and claims the exemption (living case)", badge("unverified"), "Flagged F-16"],
+    ["1 January after the transfer", "lien date for the next assessment; supplemental bill follows a change of ownership", badge("unverified"), "Flagged F-19"],
+    ["16 February 2027", "next adjustment of the Proposition 19 amount", badge("statute"), srcl(["S03"])],
+    ["Each year", "re-run the model with updated inputs; review the stress scenarios", badge("model"), "decision log"],
+], cls="wide")}
+<p>The three-year window to file the Proposition 19 claim is from secondary summaries and is not confirmed on an official page (F-16).</p>
+"""
+    page("pages/process-timeline.html", "Inheritance steps and timeline", body, "Inheritance steps and deadlines.")
+
+
+def p_questions():
+    qs = [
+        ["Q-01", "What is the rate area and the full bill for Property A?", "Owner bill implies " + pct(A_RATE, 4) + "; reference total " + pct(REF_A, 4), "county rate-area lookup and one full bill", "Open (F-01)"],
+        ["Q-02", "What is the market value on the date of death?", "owner estimate only", "written appraisal at date of death", "Open (F-06)"],
+        ["Q-03", "Will the heir occupy A as a principal residence within a year?", "not decided", "written commitment (Rule 3)", "Open"],
+        ["Q-04", "Are there three verified rental comparables for A?", "none", "three comparables from a licensed appraiser or property manager", "Open (Rule 4)"],
+        ["Q-05", "What is the total taxable estate after debts and expenses?", "known real estate about " + usd(MO['estate']['known_real_estate_owner_estimates']) + " (owner)", "full inventory; attorney review", "Open"],
+        ["Q-06", "Is there a surviving spouse, and what is the unused exclusion (portability)?", "unknown", "attorney question now", "Open"],
+        ["Q-07", "Are there prior taxable gifts?", "unknown", "gift tax returns, if any", "Open"],
+        ["Q-08", "What are the heir's marginal income-tax rates, federal and California?", "40% combined is an assumption", "CPA review", "Open"],
+        ["Q-09", "Is there debt on either property?", "none modelled", "loan statements", "Open"],
+        ["Q-10", "Insurance quotes for A and B?", "owner estimate of " + usd(INP['property_a']['insurance_annual_owner_estimate']) + " each", "three written quotes per property", "Open (F-07)"],
+        ["Q-11", "Are the Property B rents and rent-control position verified?", "owner figure; rent-board rate not verified", "leases; rent-board records", "Open (F-09)"],
+        ["Q-12", "What is the city transfer tax for A's rate area?", "sources disagree", "city or county schedule", "Open (F-10)"],
+        ["Q-13", "What depreciable share applies to B?", "70% assumption", "appraisal that splits land and building", "Open"],
+        ["Q-14", "Are the solar credit and water costs stable?", "owner records only", "twelve months of utility bills", "Open"],
+    ]
+    body = f"""
+<h1>Questions and gaps</h1>
+<p>Questions that must be answered before a decision can reasonably be made, with what is known and how to find out.</p>
+{table(["ID", "Question", "What we have", "How to find it out", "Status"], qs)}
+<p class="small">Sources: {srcl(['S03','S10','S02'])}.</p>
+"""
+    page("pages/questions.html", "Questions and gaps", body, "Missing information and how to get it.")
+
+
+def p_suggestions():
+    items = [
+        ["SG-01", "Replace owner value estimates with written appraisals of A and B at the date of death.", "Largest unverified input.", "[pending owner decision]"],
+        ["SG-02", "Pull the parcel's rate-area breakdown from the county and reconcile it to the bill.", "Closes F-01.", "[pending]"],
+        ["SG-03", "Obtain three insurance quotes per property.", "Closes F-07.", "[pending]"],
+        ["SG-04", "Obtain three rental comparables for A.", "The only route to a rent path beyond a floor (Rule 4).", "[pending]"],
+        ["SG-05", "Ask the attorney now about portability and prior taxable gifts.", "Can change the estate-tax result.", "[pending]"],
+        ["SG-06", "Add a mortgage or line-of-credit scenario.", "None is modelled; debt changes liquidity.", "[pending]"],
+        ["SG-07", "Verify the top California rate schedule and the 3.8% net investment income tax on official pages.", "Closes F-05 and F-11.", "[pending]"],
+        ["SG-08", "Align the phase-in period with DECISION_RULES.md section 5 (24 to 36 months) or change the rule in writing.", "Closes F-21.", "[pending owner decision]"],
+        ["SG-09", "Re-run the model each year and log the result in the decision log.", "Keeps the decision tied to current inputs.", "[pending]"],
+        ["SG-10", "Rewrite Git history to remove earlier ZIP codes and household material.", "The only way to remove them from history; needs owner approval.", "[pending owner approval]"],
+    ]
+    body = f"""
+<h1>Suggestions (review and choose before any change)</h1>
+<p>These are proposals. None has been applied. Record each decision, with its date, in the <a href="decision-log.html">decision log</a>.</p>
+{table(["ID", "Suggestion", "Why", "Decision"], items)}
+"""
+    page("pages/suggestions.html", "Suggestions", body, "Proposed changes for review before implementation.")
+
+
+def p_flagged():
+    fl = [
+        ["F-01", "Property A's billed rate (" + pct(A_RATE, 4) + ") is above the reference rate-area total (" + pct(REF_A, 4) + "). The parcel's own rate area and voter bonds are unknown.", "unverified", srcl(["S10", "S11"])],
+        ["F-02", "Property B's billed tax is " + pct(B_RATE, 2) + " of assessed value, against a statutory secured rate of " + pct(STAT_B, 8) + ". Other charges are unknown.", "unverified", srcl(["S12"])],
+        ["F-03", "The first model run used a rounded placeholder for the Proposition 19 amount. The statutory $1,044,586 is now used exactly.", "corrected", srcl(["S03"])],
+        ["F-04", "Recapture: the model applies 25% federal, plus 3.8% net investment income tax and a 9.3% California assumption (38.1% combined). The 25% federal rate is from a snippet.", "snippet", srcl(["S09", "S19"])],
+        ["F-05", "The 40% federal top rate, the California top rate, the 9.3% California capital-gain assumption and the 3.8% net investment income tax were not read from official pages in this session.", "unverified", srcl(["S19", "S20"])],
+        ["F-06", "Market values of A and B are owner estimates. No appraisal exists; the date-of-death value sets the basis.", "owner estimate", srcl(["S07"])],
+        ["F-07", "Insurance is an owner estimate of " + usd(INP['property_a']['insurance_annual_owner_estimate']) + " a year for each property. No official premium data was read.", "unverified", srcl(["S21"])],
+        ["F-08", "Market rent for A is unknown. The 3.75% gross yield is an assumption; rent paths are a floor (Rule 4).", "assumption", "Rule 4"],
+        ["F-09", "The San Francisco allowable rent increase (1.6%) comes from secondary sites; the Rent Board was not reached.", "unverified", srcl(["S18"])],
+        ["F-10", "City transfer tax for A's rate area: sources disagree. The model includes only the county rate.", "unverified", srcl(["S13"])],
+        ["F-11", "The 3.8% net investment income tax and the 9.3% California capital-gain rate are assumptions in the model.", "unverified", srcl(["S19"])],
+        ["F-12", "Owner records to check against the county rolls: Property A's billed tax is unchanged from 2019 to 2020 and the change field is blank for 2014, 2018 and 2020; Property B's billed tax fell 5.9% in 2021 while assessed value rose 1%, and rose 18.4% in 2018.", "owner record", srcl(["S10", "S12"])],
+        ["F-13", "Historical returns come from an academic dataset (not an official source). The S&P 500 column compounds to within 0.001% of the source. The T-bill column compounds to 2,579.18 against the source's 2,578.30 (+0.034%); the cause is not yet located, and the 2008 check was not run.", "academic; partly unresolved", srcl(["S17"])],
+        ["F-14", "Earlier copies of the site and analysis folders contained ZIP codes, a neighbourhood name and household material. They have been removed from the published tree and kept locally outside Git. The Git history still contains them; removing them needs a history rewrite and owner approval (SG-10).", "exposure", "Suggestions SG-10"],
+        ["F-15", "The Git history names a personal e-mail address as commit author. It is not reproduced on this site. The history has not been rewritten (SG-10).", "exposure", "Suggestions SG-10"],
+        ["F-16", "The three-year window to file the Proposition 19 claim is from a secondary summary and not confirmed on an official page.", "unverified", srcl(["S03"])],
+        ["F-17", "The Form 706 due date (nine months) is not confirmed in a fetched passage of the instructions.", "unverified", srcl(["S02"])],
+        ["F-18", "The Proposition 13 growth cap and the Santa Clara 2026-27 rate book were not read in full. The 2025-26 book (S10) was read in part only.", "unverified", srcl(["S10"])],
+        ["F-19", "County and city installment dates are not confirmed in a fetched passage.", "unverified", srcl(["S10", "S12"])],
+        ["F-20", "The model's Proposition 19 assessed-value formula (higher of factored base and market value less the allowance) is the model's reading of the BOE letter. The CPA and attorney should confirm it.", "unverified reading", srcl(["S03"])],
+        ["F-21", "Phase-in period: DECISION_RULES.md section 5 says staging over 24 to 36 months. The model tests a 12-month phase-in after 24 or 36 months of parking. The discrepancy is open (SG-08).", "open", "Repository file"],
+        ["F-22", "The model holds 2.3% inflation and a 3.2% bill return flat for all years. CBO's path is 2.8% and 3.3% in 2026 and 2.4% in 2027, and 3.2% bills from 2027 to 2030 (S23).", "simplification", srcl(["S23"])],
+        ["F-23", "Renting: no gross rent yield up to 20% lets a rent path match the lump-sum sale at 20 years. The rent path is not sensitive to the pick.", "result", "What-if"],
+        ["F-24", "Model correction: a living household's running costs compounded at the equity return. Fixed; the pick is unchanged; before and after values are on the decision log.", "corrected", "Decision log"],
+        ["F-25", "Interpretation: the primary metric excludes imputed rent (not cash). Including it would raise the living paths; the rule does not say which.", "interpretation", "Method"],
+        ["F-26", "Maintenance is modelled at 1% of value a year. No quotes exist.", "assumption", "Property A"],
+        ["F-27", "Recovery period (27.5 years) and the depreciation rules were not read in a primary source.", "unverified", "Property B"],
+        ["F-28", "The model applies the section 121 main-home exclusion after 24 months of living. Eligibility for an inherited home depends on facts the CPA must confirm.", "unverified", srcl(["S08"])],
+    ]
+    body = f"""
+<h1>Flagged for Review</h1>
+<p>Everything this site cannot confirm, has corrected, or has left unreconciled. Each item links to its source. The flags do not block publication.</p>
+{table(["ID", "Item", "Status", "Source"], fl)}
+"""
+    page("pages/flagged.html", "Flagged for Review", body, "Unverified items, corrections and open questions, with sources.")
+
+
+def p_sources():
+    rows = []
+    for s in SRC_LIST:
+        st = {"fetched": "fetched", "partial": "partial", "snippet": "snippet", "not_verified": "unverified",
+              "academic": "academic"}.get(s["status"], "unverified")
+        if s["id"] == "S17":
+            st = "academic"
+        rows.append([e(s["id"]), e(s["publisher"]), e(s["title"]), badge(st),
+                     f'<a href="{e(s["url"])}">{e(s["url"])}</a>', e(s["used_for"])])
+    body = f"""
+<h1>Sources</h1>
+<p>"Official, read in full" means the document was fetched in this session and the figures used were read from it. "Partly read" means only the first part was read. "Snippet" means the figure came from a search result on an official domain. "Unverified" means no official source was reached. Accessed {ACCESSED}.</p>
+{table(["ID", "Publisher", "Title", "Status", "Link", "Used for"], rows, cls="wide")}
+"""
+    page("pages/sources.html", "Sources", body, "Source register with links and status.")
+
+
+def p_glossary():
+    terms = [
+        ("Assessed value", "The value on which property tax is computed. Under Proposition 13 it rises by at most the lesser of inflation or 2% a year, until a change of ownership."),
+        ("Basis (step-up)", "The income-tax cost of an inherited asset: its fair market value on the date of death (IRS Pub 551)."),
+        ("Basic exclusion amount", "The federal estate-tax exemption per decedent: $15,000,000 for 2026."),
+        ("Behavioral Health Services Tax", "California surtax of 1% on taxable income above $1,000,000 (FTB Form 540-ES worksheet)."),
+        ("Documentary transfer tax", "Tax on a recorded sale: $1.10 per $1,000 at county level (statute snippet; city rates vary, F-10)."),
+        ("Imputed rent", "The rent an owner saves by living in the home. Not cash; reported separately."),
+        ("Median (real)", "The middle outcome of the simulated paths after inflation. Half are above, half below."),
+        ("Mixed path", "A path that changes mode, for example living for three years and then selling or renting."),
+        ("Phasing", "Moving sale proceeds from cash into equities in equal tranches, instead of all at once."),
+        ("Proposition 13 / Proposition 19", "Proposition 13 limits annual growth of assessed value. Proposition 19 limits the parent-child exclusion to a family home the child occupies."),
+        ("Reinvestment risk", "The risk that cash waiting to be invested earns less, or is invested at worse prices, than expected."),
+        ("Section 121 exclusion", "Gain exclusion on a main home: $250,000 single, $500,000 joint, with ownership and use tests (IRS Pub 523)."),
+        ("Tax-rate area", "A county geographic area with its own total rate (levy plus voter-approved bonds)."),
+        ("Unrecaptured section 1250 gain", "Depreciation taken on rental property, taxed at up to 25% federal when the property is sold."),
+    ]
+    body = f"""
+<h1>Glossary</h1>
+<p>Plain-language definitions. Sources are in the <a href="sources.html">Sources</a> register.</p>
+<dl class="gloss">{''.join(f'<dt>{e(t)}</dt><dd>{e(d)}</dd>' for t, d in terms)}</dl>
+"""
+    page("pages/glossary.html", "Glossary", body, "Glossary of terms used on the site.")
+
+
+def p_method():
+    A = MO["assumptions"]
+    rows = [
+        ["Inflation (base)", pct(A["cpi_base"] * 100, 1), "assumption; CBO path in S23 is 2.3% from 2028", srcl(["S23"])],
+        ["Home-value growth", pct(A["home_value_growth"] * 100, 1), "assumption", "assumption"],
+        ["Assessed-value growth cap", pct(A["prop13_growth_cap"] * 100, 1), "unverified general rule (F-18)", "F-18"],
+        ["Property A tax rate, as billed", pct(A["rate_owner_implied_pct"], 4), "owner record (F-01)", srcl(["S10"])],
+        ["Reference rate-area total", pct(A["rate_county_floor_pct"], 4), "snippet; not the parcel's own area", srcl(["S11"])],
+        ["Property B tax rate (statutory)", pct(A["rate_sf_b_statutory_pct"], 8), "snippet", srcl(["S12"])],
+        ["Insurance, per year (each property)", usd(A["insurance_annual"]), "owner estimate (F-07)", "F-07"],
+        ["Water, net of solar credit, per month", usd(A["water_net_monthly"]), "owner record", "owner record"],
+        ["Gross rent yield", pct(A["rent_yield"] * 100, 2), "assumption; no comparables (Rule 4)", "assumption"],
+        ["Vacancy", pct(A["vacancy"] * 100, 1), "assumption", "assumption"],
+        ["Maintenance, share of value a year", pct(A["maintenance_rate"] * 100, 1), "assumption (F-26)", "F-26"],
+        ["Selling costs", pct(A["sale_costs_pct"], 2), "transfer tax from S13; commission 5% and other 0.5% assumed", srcl(["S13"])],
+        ["Ordinary income-tax rate, combined", pct(A["ordinary_rate_combined"] * 100, 1), "assumption (F-05)", "F-05"],
+        ["Capital-gain rate, combined", pct(A["ltcg_rate_combined"] * 100, 1), "20% federal + 3.8% + 9.3% CA: assumption (F-05, F-11)", "F-05"],
+        ["Unrecaptured 1250 rate, combined", pct(A["recapture_rate_combined"] * 100, 1), "25% federal (snippet) + 3.8% + 9.3% assumption", srcl(["S09"])],
+        ["Depreciable share of value", pct(A["building_share"] * 100, 0), "assumption (F-27)", "F-27"],
+        ["Section 121 exclusion, single", usd(A["exclusion_living"]), "IRS Pub 523 (partly read)", srcl(["S08"])],
+        ["Proposition 19 allowance", usd(PROP19), "statute, exact", srcl(["S03"])],
+        ["Equity return, historical geometric mean 1928-2025", pct(A["equity_geo_mean_1928_2025_pct"], 2), "academic dataset", srcl(["S17"])],
+        ["Bill return (forward)", pct(A["forward_bill_pct"], 1), "CBO, 2027-2030 level (S23)", srcl(["S23"])],
+        ["Equity stress return", pct(A["stress_equity_pct"], 1), "stress assumption", "assumption"],
+    ]
+    body = f"""
+<h1>Method and privacy</h1>
+<h2>Privacy</h2>
+<ul>
+<li>No street address, ZIP code, parcel number or account number appears in the repository or on this site. Properties are labelled "Property A" and "Property B", with the county only.</li>
+<li>People are shown as placeholders: [HEIR], [TRUST], [ATTORNEY], [CPA].</li>
+<li>Every dollar figure is rounded to the nearest $10. Statutory amounts are printed exactly and are checked against the source register.</li>
+<li>The owner figures published here are property values, insurance, utilities and rent ranges, and tax history. No income, account or debt figures were supplied; none appear.</li>
+<li>Earlier copies of the site were removed from the published tree (F-14). Git history still contains them, and a rewrite needs owner approval (SG-10).</li>
+</ul>
+<h2>Model</h2>
+<ul>
+<li>Monthly simulation over 10 and 20 years for each path, with transfers in 2040 and 2050.</li>
+<li>The primary metric is the real financial position at the end of the horizon. A property still held is sold at that point, with selling costs and tax. Imputed rent is excluded (F-25).</li>
+<li>Monte Carlo: {MO['_meta']['monte_carlo_draws']:,} paths. Each year of a path draws one year at random, with replacement, from the 1928-2025 record; equity and bill returns come from the same year. Seed {MO['_meta']['seed']}.</li>
+<li>Household cash flows (rent in; costs and tax out) go to the cash account at the bill return (F-24).</li>
+<li>Crash scenarios replay the historical sequences from 1929, 2008, 1973 and 2000.</li>
+<li>Rules: applied mechanically from DECISION_RULES.md. The model does not set them.</li>
+<li>Property B is in every path and excluded from the comparison.</li>
+</ul>
+<h2>Assumptions and their status</h2>
+{table(["Input", "Value used", "Status and basis", "Source"], rows)}
+<h2>Limits</h2>
+<ul>
+<li>Owner value estimates stand in for appraisals.</li>
+<li>No mortgage or other debt is modelled (Q-09).</li>
+<li>Only financial returns are simulated; home values are not.</li>
+<li>Annual return data are applied as monthly compounding; a fall inside one year is not captured.</li>
+<li>Income tax uses one combined rate; the household's brackets are unknown (Q-08).</li>
+</ul>
+<h2>Reproduce</h2>
+<p><code>python3 tools/model.py</code> then <code>python3 tools/build_site.py</code> then <code>python3 tools/check_site.py</code>. The model reads only files in this repository.</p>
+"""
+    page("pages/method.html", "Method and privacy", body, "How the model works, assumptions and privacy rules.")
+
+
+def p_briefing():
+    pk = R50[PICK50]
+    body = f"""
+<h1>Attorney and CPA briefing sheet</h1>
+<p class="small">Prepared {ACCESSED}. Dollar figures rounded to $10. Owner estimates are unverified. Not legal or tax advice.</p>
+<h3>Facts used</h3>
+<table class="brief">
+<tr><th>Item</th><th>Figure</th><th>Status</th></tr>
+<tr><td>Property A value estimate</td><td>{usd(INP['property_a']['value_estimate']['value'])}</td><td>owner, unverified</td></tr>
+<tr><td>Property A assessed value, 2026 roll</td><td>{usd(A_HIST[0]['assessed'])}</td><td>owner record</td></tr>
+<tr><td>Property B value estimate</td><td>{usd(INP['property_b']['value_estimate']['value'])}</td><td>owner, unverified</td></tr>
+<tr><td>Federal basic exclusion, 2026</td><td>$15,000,000 per decedent</td><td>official (IRS)</td></tr>
+<tr><td>Proposition 19 allowance, to 15 Feb 2027</td><td>{usd(PROP19)}</td><td>official (BOE)</td></tr>
+<tr><td>Section 121 main-home exclusion</td><td>$250,000 single; $500,000 joint</td><td>partly read (IRS Pub 523)</td></tr>
+</table>
+<h3>Model result (2050 transfer, 20 years, real)</h3>
+<p>Pick under the written rules: <strong>{e(PATH_SHORT[PICK50])}</strong>, median {usd(pk['mc_fin']['median'])}. Phased (24 months): median {usd(R50['SELL_P24']['mc_fin']['median'])}; 1929-type crash {usd(R50['SELL_P24']['bs1929'])}, against {usd(R50['SELL_LUMP']['bs1929'])} for the lump sum.</p>
+<h3>For the attorney</h3>
+<ol>
+<li>Trust terms: is A transferred by deed, and does the Proposition 19 parent-child rule apply?</li>
+<li>Will the heir occupy A within a year? A written commitment is needed before any living path can be chosen.</li>
+<li>Portability: is there a surviving spouse, and are there prior taxable gifts? Should a timely Form 706 be filed?</li>
+<li>Is a date-of-death appraisal in hand, and who prepares it?</li>
+</ol>
+<h3>For the CPA</h3>
+<ol>
+<li>Basis: step-up to date-of-death value for A and B; confirm the appraisal split of land and building.</li>
+<li>Section 121: applies only with the use and ownership tests; confirm the heir's facts.</li>
+<li>Rental B: depreciation, recapture at up to 25%, and the 3.8% net investment income tax.</li>
+<li>California: ordinary tax on gains (confirm), and the 1% surtax above $1,000,000 (confirm the top rate).</li>
+<li>Confirm the Proposition 19 assessed-value formula used in the model (F-20).</li>
+</ol>
+<h3>Open items</h3>
+<p>Rate area and bills for A (F-01); B's other charges (F-02); insurance quotes (F-07); market rent for A (F-08); B's rent-control position (F-09); city transfer tax (F-10). See <a href="flagged.html">Flagged for Review</a>.</p>
+<p class="small">Sources: S01, S02, S03, S07, S08, S09, S10, S12, S23 (see Sources).</p>
+"""
+    page("pages/briefing.html", "Attorney and CPA briefing sheet", body,
+         "One-page briefing sheet for the attorney and CPA.", print_mode=True)
+
+
+CSS = """
+:root{--ink:#1d232b;--muted:#5b6673;--line:#dfe4ea;--bg:#f6f8fa;--accent:#1b4f8a;--ok:#2e7d4f;--warn:#9a6700;--bad:#b42318;}
 *{box-sizing:border-box}
-body{margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
-header.top{background:#1a365d;color:#fff;padding:12px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:baseline}
-header.top .brand{color:#fff;font-weight:700;text-decoration:none;font-size:18px}
-header.top .sub{opacity:.85;font-size:13px}
-nav.menu{background:#fff;border-bottom:1px solid var(--line);padding:10px 20px;display:flex;flex-wrap:wrap;gap:14px 22px}
-.navgroup{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin-right:2px}
-nav.menu a{color:var(--acc);text-decoration:none;padding:3px 7px;border-radius:5px;font-size:13.5px}
-nav.menu a.on{background:var(--acc);color:#fff}
-main{max-width:1180px;margin:0 auto;padding:18px 20px 40px}
-h1{font-size:25px;margin:8px 0 12px}
-h2{font-size:18px;margin:4px 0 10px}
-h3{font-size:14px;margin:12px 0 6px}
+body{margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--accent)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 20px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap;position:sticky;top:0;z-index:2}
+.brand{font-weight:700;text-decoration:none;color:var(--ink);font-size:16px}
+.privacy{color:var(--muted);font-size:12px}
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 56px)}
+.side{background:#fff;border-right:1px solid var(--line);padding:14px 10px;position:sticky;top:56px;height:calc(100vh - 56px);overflow:auto}
+.navgroup{margin-bottom:12px}
+.navhead{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:4px 8px}
+.side a{display:block;padding:6px 8px;border-radius:6px;text-decoration:none;color:var(--ink)}
+.side a:hover{background:#eef3f9}
+.side a[aria-current=page]{background:#e3edf8;font-weight:600}
+.content{padding:22px 28px 40px;max-width:1200px}
+h1{font-size:24px;margin:0 0 10px}
+h2{font-size:18px;margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:4px}
+h3{font-size:15px;margin:18px 0 6px}
+.lede{font-size:16px;color:#33404d}
 .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
-.card.warn{background:#fff5e6;border-color:#f6ad55}
-.card.lean{background:#ebf8ff;border-color:#90cdf4}
-.card.risk{background:#fffaf0}
-.bullets li{margin:6px 0}
-.note,.small{color:var(--mut);font-size:13px}
-.tablewrap{overflow-x:auto;margin:8px 0}
-table{border-collapse:collapse;width:100%;background:#fff;font-size:13.5px}
-table.wide{min-width:760px}
-th,td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
-th{background:#edf2f7;font-weight:600}
-.tag{display:inline-block;font-size:10.5px;letter-spacing:.04em;padding:1px 6px;border-radius:4px;background:#e2e8f0;color:#2d3748;vertical-align:middle}
-.t-fetched,.t-excerpt,.t-enacted{background:#c6f6d5}.t-secondary,.t-passed{background:#fefcbf}.t-link{background:#e2e8f0}
-.t-user{background:#bee3f8}.t-derived{background:#e9d8fd}.t-assumption{background:#feebc8}.t-unverified,.t-proposal{background:#fed7d7}.t-failed{background:#e2e8f0}
-.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.navcard{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--ink);text-decoration:none}
-.navcard span{display:block;color:var(--mut);font-size:13px;margin-top:4px}
-.controls{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:8px 0 12px}
-.controls label{display:flex;flex-direction:column;font-size:13px;color:var(--mut)}
-.controls select{margin-top:4px;padding:6px;font-size:14px;border:1px solid #cbd5e0;border-radius:6px;background:#fff}
-.wbar{display:grid;grid-template-columns:300px 1fr 150px;gap:10px;align-items:center;margin:5px 0;font-size:14px}
-.wbar .bar{height:14px;background:var(--acc);border-radius:3px;display:block}
-.chart{width:100%;height:auto}
-.chart .grid{stroke:#e2e8f0}
-.chart .axis{font-size:11px;fill:#4a5568}
-.chart .legend{font-size:12px;fill:#2d3748}
-.chartbox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;margin:12px 0;overflow-x:auto}
-dl.gloss dt{font-weight:700;margin-top:10px}
-dl.gloss dd{margin:2px 0 0 0;color:#2d3748}
-.choice{color:var(--mut);font-size:12.5px}
-.brief{background:#fff;border:1px solid var(--line);padding:14px 16px;font-size:11.5px;line-height:1.35}
-.brief h3{font-size:12.5px;margin:6px 0 3px}
-.brief .briefhead{border-bottom:2px solid #1a365d;padding-bottom:4px;margin-bottom:6px;font-size:12px}
-.brief .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.brief ul{margin:2px 0 4px 16px;padding:0}
-.brief li{margin:1px 0}
-.brieftbl td{border:none;padding:1px 4px 1px 0;font-size:11.5px}
-.brief .foot{font-size:10px;color:var(--mut);margin:6px 0 0}
-footer{max-width:1180px;margin:0 auto;padding:10px 20px 30px;color:var(--mut);font-size:12.5px}
+.card.first{border-left:5px solid var(--accent)}
+.changes li{margin:6px 0}
+.tile{display:block;background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:14px;text-decoration:none;color:var(--ink)}
+.tile span{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+.tile:hover{border-color:var(--accent)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.side{position:static;height:auto}.grid3,.grid2{grid-template-columns:1fr}}
+.tablewrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f1f4f8;font-weight:600}
+table.wide td,table.wide th{white-space:nowrap}
+table.wide td:last-child{white-space:normal}
+.badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;border:1px solid;white-space:nowrap}
+.b-ok{color:var(--ok);border-color:#b7dcc5;background:#eef8f2}
+.b-owner{color:#1f5a99;border-color:#bcd3ec;background:#eff5fc}
+.b-assume{color:var(--warn);border-color:#ecd9a6;background:#fdf7e6}
+.b-bad{color:var(--bad);border-color:#f2b8b5;background:#fdeeed}
+.b-snip{color:#4d5761;border-color:#cfd6de;background:#f5f7f9}
+.b-model{color:#4b3c86;border-color:#d4cdef;background:#f4f1fc}
+.small{font-size:12px;color:var(--muted)}
+footer{margin-top:40px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.controls{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0}
+select{padding:5px 8px;font-size:14px}
+figure{margin:12px 0;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px}
+figure svg{width:100%;height:auto}
+figcaption{font-size:12px;color:var(--muted)}
+dl.gloss dt{font-weight:600;margin-top:10px}
+dl.gloss dd{margin:2px 0 0 0;color:#33404d}
+ol.steps li{margin:8px 0}
+table.brief{width:100%;font-size:12px}
+table.brief th,table.brief td{padding:4px 6px;border-bottom:1px solid #ccc}
+.sheetwrap{max-width:900px;margin:20px auto;padding:0 16px;background:#fff}
 @media print{
-  @page{size:letter;margin:.45in}
-  body{background:#fff;font-size:10px}
-  header.top,nav.menu,footer,.noprint,.controls{display:none}
-  main{max-width:none;padding:0}
-  .brief{border:none;padding:0;font-size:9px;line-height:1.2}
-  .brief .cols{gap:10px}
+ .top,.side,footer{display:none!important}
+ .layout{display:block}.content{padding:0;max-width:none}
+ body{background:#fff;font-size:10.5px;line-height:1.3}
+ .sheetwrap{margin:0;padding:0;max-width:none;box-shadow:none}
+ @page{size:letter;margin:0.45in}
 }
 """
-    js = """// Dependency-free what-if: reads the precomputed grid only (no re-simulation in the browser).
+
+JS = """
 (function(){
-  var el = document.getElementById('grid-data');
-  if(!el) return;
-  var grid = JSON.parse(el.textContent);
-  var labels = {S:'Sell in transfer year, invest lump sum',SP24:'Sell, park 24 months, then phase in',SP36:'Sell, park 36 months, then phase in',
-    L2S:'Mixed: live 2 years, then sell',R10S:'Mixed: rent 10 years, then sell',R:'Rent long-term, sell at horizon',
-    L5S:'Mixed: live 5 years, then sell',L5R_A:'Mixed: live 5 years, then rent (reading A)',L5R_B:'Mixed: live 5 years, then rent (reading B)',
-    L:'Live long-term, sell at horizon'};
-  var order = ['S','SP24','SP36','L2S','R10S','R','L5S','L5R_A','L5R_B','L'];
-  function v(id){ return document.getElementById(id).value; }
-  function money(x){ return '$' + (Math.round(x/10)*10).toLocaleString('en-US'); }
+  var el=document.getElementById('whatif-data'); if(!el) return;
+  var D=JSON.parse(el.textContent);
+  var ry=document.getElementById('ry'), hp=document.getElementById('hp'), out=document.getElementById('whatif-out');
+  if(!ry||!hp||!out) return;
+  var names={LIVE:'Live in A',RENT:'Rent A',SELL_LUMP:'Sell, lump sum',SELL_P24:'Sell, park 24 months, phase in over 12',SELL_P36:'Sell, park 36 months, phase in over 12',LIVE3_SELL:'Mixed: live 3 years, then sell',RENT3_SELL:'Mixed: rent 3 years, then sell',LIVE3_RENT:'Mixed: live 3 years, then rent'};
+  var order=['LIVE','RENT','SELL_LUMP','SELL_P24','SELL_P36','LIVE3_SELL','RENT3_SELL','LIVE3_RENT'];
+  D.rent_yields.forEach(function(v,i){var o=document.createElement('option');o.value=i;o.textContent=(v*100).toFixed(2)+'%';if(i===1)o.selected=true;ry.appendChild(o);});
+  D.hpa.forEach(function(v,i){var o=document.createElement('option');o.value=i;o.textContent=(v*100).toFixed(1)+'% a year';if(i===1)o.selected=true;hp.appendChild(o);});
+  function money(v){return (v<0?'-$':'$')+Math.abs(v).toLocaleString('en-US');}
   function render(){
-    var T = parseInt(v('w-T'),10), H = parseInt(v('w-H'),10), ap = v('w-ap'), eq = v('w-eq'), c = parseFloat(v('w-c'));
-    var row = grid.find(function(r){ return r.T===T && r.H===H && r.appreciation===ap && r.equity===eq && Math.abs(r.credit-c)<1e-9; });
-    var out = document.getElementById('w-out');
-    if(!row){ out.textContent = 'No grid row for these settings.'; return; }
-    var max = Math.max.apply(null, order.map(function(p){ return row.results[p]; }));
-    var best = order.reduce(function(a,p){ return row.results[p] > row.results[a] ? p : a; }, order[0]);
-    var html = '<p><strong>Highest result for these settings:</strong> ' + labels[best] + ' (' + money(row.results[best]) + ', real 2026 dollars).</p>';
-    order.forEach(function(p){
-      var w = Math.max(2, Math.round(100 * row.results[p] / max));
-      html += '<div class="wbar"><span>' + labels[p] + '</span><span><span class="bar" style="width:' + w + '%"></span></span><strong>' + money(row.results[p]) + '</strong></div>';
-    });
-    html += '<p class="note">Settings: transfer ' + T + ', horizon ' + H + ' years, appreciation ' + ap + ', stock returns ' + eq + ', imputed rent credit ' + Math.round(c*100) + '%. Liquidated after tax; rounded to $10.</p>';
-    out.innerHTML = html;
+    var r=parseInt(ry.value,10), h=parseInt(hp.value,10);
+    var cell=D.cells.filter(function(c){return c.rent_yield===D.rent_yields[r]&&c.hpa===D.hpa[h];})[0];
+    if(!cell){out.textContent='No result for this combination.';return;}
+    var best=order.reduce(function(a,b){return cell.paths[b]>cell.paths[a]?b:a;});
+    var rows=order.map(function(p){return '<tr'+(p===best?' style="background:#eef8f2"':'')+'><td>'+names[p]+'</td><td>'+money(cell.paths[p])+'</td></tr>';}).join('');
+    out.innerHTML='<table><thead><tr><th>Path</th><th>Real financial position, 2050 transfer + 20 years (rounded to $10)</th></tr></thead><tbody>'+rows+'</tbody></table><p class="small">Highest in this combination: '+names[best]+'. The rules still apply (see Rules and pick).</p>';
   }
-  ['w-T','w-H','w-ap','w-eq','w-c'].forEach(function(id){ var n=document.getElementById(id); if(n) n.addEventListener('change', render); });
-  render();
+  ry.addEventListener('change',render); hp.addEventListener('change',render); render();
 })();
 """
-    open(os.path.join(ROOT, "assets", "style.css"), "w", encoding="utf-8").write(css.lstrip())
-    open(os.path.join(ROOT, "assets", "app.js"), "w", encoding="utf-8").write(js.lstrip())
-
-
-def build_exec_pages():
-    pass
 
 
 def main():
-    write_assets()
-    build_index()
-    build_paths()
-    build_projections()
-    build_inputs()
-    build_blackswan()
-    build_law_pages()
-    build_legislation()
-    build_timeline()
-    build_questions()
-    build_decision_rules()
-    build_suggestions()
-    build_flagged()
-    build_brief()
-    build_glossary()
-    build_sources()
-    write_irregularities_json()
-    open(os.path.join(ROOT, ".nojekyll"), "w").close()
-    print("site built:", len(PAGES_NAV), "navigation pages")
+    (ROOT / "assets").mkdir(exist_ok=True)
+    (ROOT / "assets/site.css").write_text(CSS.strip() + "\n", encoding="utf-8")
+    (ROOT / "assets/site.js").write_text(JS.strip() + "\n", encoding="utf-8")
+    for fn in (p_index, p_paths, p_decision, p_whatif, p_decision_log, p_projections, p_black_swan, p_phased,
+               p_property_a, p_property_b, p_inventory, p_tax_law, p_legislation, p_process, p_questions,
+               p_suggestions, p_flagged, p_sources, p_glossary, p_method, p_briefing):
+        fn()
+    print("built site")
 
 
 if __name__ == "__main__":

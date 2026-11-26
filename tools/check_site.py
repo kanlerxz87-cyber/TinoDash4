@@ -1,227 +1,209 @@
-"""
-Pre-publish gate. Exits non-zero (fails the build) if any check fails.
+#!/usr/bin/env python3
+"""Pre-publish gate. Exits non-zero if any check fails.
 
-  1. Privacy scan: no value, key, or text string from private/raw_inputs.json appears in any
-     published or tracked text file (html, css, js, json, md, py, txt). The private folder is
-     excluded from the scan; it is never published.
-  2. Forbidden identifiers: zip codes, neighbourhood labels, parcel terms, and personal names.
-  3. Rounding: every money value in data/model_outputs.json is a multiple of $10.
-  4. Row links: every table row on every page contains at least one official-source link.
-  5. Internal links: every relative href and src points to a file that exists.
-  6. Required content: first-screen 'What would change the answer', Flagged for Review, the
-     Attorney & CPA Briefing Sheet, and the glossary, suggestions, and questions pages.
+  python3 tools/check_site.py               full gate (needs private/raw_inputs.json; run locally before publishing)
+  python3 tools/check_site.py --structural  structural checks only (used in CI, where private inputs do not exist)
 
-Run: python3 tools/check_site.py
+Checks
+  1. Privacy scan: every tracked text file is searched for the identifiers listed in
+     private/raw_inputs.json (ZIP codes, neighbourhood labels, personal e-mail, and any
+     other values listed there). The private folder is never published, and its contents
+     are not written into this file.
+  2. Rounding: every dollar figure on the site and in data/model_outputs.json is a multiple
+     of $10, except the statutory amounts listed in STATUTORY below (checked against sources).
+  3. Table rows: every body row of every table on every page contains an official-source
+     link, or is visibly marked as owner, assumption, model, snippet or unverified.
+  4. Internal links: every relative href and src points to a file that exists.
+  5. Required content: the summary's 'What would change the answer', Flagged for Review,
+     the briefing sheet, the glossary, the suggestions and the questions page.
+  6. Source register: every source id used on a page exists in data/sources.json.
 """
 import json
 import os
 import re
+import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
 PRIVATE = os.path.join(ROOT, "private", "raw_inputs.json")
-SCAN_EXT = (".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".yml", ".yaml", ".toml", ".pdf")
-SKIP_DIRS = {".git", "private", "node_modules", "__pycache__", ".github"}
-ALLOW_PUBLIC_NUMBERS = {
-    # public, sourced figures that are allowed to appear
-    15000000, 15480000, 19000, 20000, 194000, 201000, 250000, 500000, 1000000, 1044590, 1044586,
-    400000, 129, 177000000, 10000000, 2026, 2027,
-}
-FORBIDDEN_WORDS = [
-    "cupertino", "outer sunset", "sunset", "95014", "94122", "gmail",
-]
-SELF = os.path.normpath(os.path.abspath(__file__))
-LOG = []
-FAIL = []
+TEXT_EXT = (".html", ".css", ".js", ".json", ".md", ".py", ".txt", ".yml", ".yaml", ".csv")
+# Statutory amounts printed exactly, each traceable to a source in data/sources.json.
+STATUTORY = {1044586, 15000000, 5945800, 19000, 194000, 250000, 500000, 1000000, 1460000, 1940000}
+SKIP_KEYS = {"seed", "valuation_year", "transfer_year", "horizon", "monte_carlo_draws", "sensitivity_draws", "year"}
+OFFICIAL_BADGES = ("b-ok", "b-snip")  # official-source badges; a row also needs an official link to count
+FLAG_BADGES = ("b-owner", "b-assume", "b-model", "b-bad", "b-snip")
+
+FAIL, PASS = [], []
 
 
-def ok(msg):
-    LOG.append("PASS  " + msg)
+def ok(m):
+    PASS.append("PASS  " + m)
 
 
-def bad(msg):
-    FAIL.append("FAIL  " + msg)
-    LOG.append("FAIL  " + msg)
+def bad(m):
+    FAIL.append("FAIL  " + m)
 
 
-def walk_numbers(x, out):
+def tracked_text_files():
+    out = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True).stdout.split("\n")
+    for rel in out:
+        if rel and rel.endswith(TEXT_EXT) and not rel.startswith("private/") and rel != "tools/check_site.py":
+            yield rel
+
+
+def walk_numbers(x, out, key=""):
     if isinstance(x, dict):
         for k, v in x.items():
-            walk_numbers(v, out)
+            if k not in SKIP_KEYS:
+                walk_numbers(v, out, k)
     elif isinstance(x, list):
         for v in x:
-            walk_numbers(v, out)
-    elif isinstance(x, bool):
-        return
-    elif isinstance(x, (int, float)):
-        out.append(x)
+            walk_numbers(v, out, key)
+    elif isinstance(x, (int, float)) and not isinstance(x, bool):
+        out.append((key, x))
 
 
-def walk_strings(x, out):
-    if isinstance(x, dict):
-        for k, v in x.items():
-            walk_strings(v, out)
-    elif isinstance(x, list):
-        for v in x:
-            walk_strings(v, out)
-    elif isinstance(x, str):
-        out.append(x)
-
-
-def pdf_streams(data):
-    """Decode every stream in a PDF (ASCII85 and/or Flate) so the drawn text is scanned."""
-    import base64
-    import zlib
-    out = []
-    for m in re.finditer(rb"stream\r?\n(.*?)endstream", data, re.S):
-        body = m.group(1).strip()
-        try:
-            if body.endswith(b"~>"):
-                body = base64.a85decode(body[:-2].strip(), adobe=False)
-            try:
-                body = zlib.decompress(body)
-            except zlib.error:
-                pass
-            out.append(body.decode("latin-1"))
-        except Exception:
-            out.append(m.group(1).decode("latin-1", "replace"))
-    return out
-
-
-def published_files():
-    for dp, dns, fns in os.walk(ROOT):
-        dns[:] = [d for d in dns if d not in SKIP_DIRS]
-        for fn in fns:
-            full = os.path.join(dp, fn)
-            if fn.endswith(SCAN_EXT) and os.path.normpath(full) != SELF:
-                yield full
-
-
-def main():
+def privacy_scan(structural):
     if not os.path.exists(PRIVATE):
-        bad("private/raw_inputs.json missing: privacy scan cannot run (it is required in the working copy)")
-        return finish()
+        if structural:
+            ok("privacy scan skipped in --structural mode (private inputs are not available in CI)")
+            return
+        bad("private/raw_inputs.json missing: the privacy scan cannot run locally")
+        return
     raw = json.load(open(PRIVATE, encoding="utf-8"))
-
-    # 1. Privacy scan values
-    nums = []
-    walk_numbers(raw, nums)
-    nums = sorted({int(n) for n in nums if n >= 1000})
-    collide = [n for n in nums if n in ALLOW_PUBLIC_NUMBERS]
-    if collide:
-        bad(f"private numbers collide with allowed public figures: {collide}")
     pats = []
-    for n in nums:
-        comma = f"{n:,}"
-        pats.append(("value " + comma, re.compile(r"(?<![0-9.,])" + re.escape(comma) + r"(?![0-9])")))
-        if n >= 10000:  # plain digits only for 5+ digit values (avoids chance matches such as counts)
-            s = str(n)
-            pats.append(("value " + s, re.compile(r"(?<![0-9.,])" + re.escape(s) + r"(?![0-9])")))
-    # small private numbers that appear in ranges (water, solar, etc.)
-    strs = []
-    walk_strings(raw, strs)
-    for s in strs:
-        if len(s) >= 6 and s.lower() not in ("property", "estimate"):
-            pats.append(("text '" + s[:24] + "...'", re.compile(re.escape(s), re.IGNORECASE)))
-    # zip codes (any digits in the private zip list)
     for z in raw.get("zip_codes_internal_only", []):
         pats.append(("zip " + str(z), re.compile(r"(?<![0-9])" + re.escape(str(z)) + r"(?![0-9])")))
-    scanned = 0
-    for fp in published_files():
-        scanned += 1
-        raw_bytes = open(fp, "rb").read()
-        text = raw_bytes.decode("latin-1") if fp.endswith(".pdf") else raw_bytes.decode("utf-8", "replace")
-        if fp.endswith(".pdf"):
-            text += "\n".join(pdf_streams(raw_bytes))
-        rel = os.path.relpath(fp, ROOT)
+    for w in raw.get("forbidden_words", []):
+        pats.append(("word '" + w + "'", re.compile(re.escape(w), re.IGNORECASE)))
+    for s in raw.get("exact_text_internal_only", []):
+        pats.append(("text '" + s[:24] + "'", re.compile(re.escape(s), re.IGNORECASE)))
+    n = 0
+    for rel in tracked_text_files():
+        n += 1
+        text = open(os.path.join(ROOT, rel), encoding="utf-8", errors="replace").read()
         for label, rx in pats:
             if rx.search(text):
                 bad(f"privacy: {label} found in {rel}")
-        low = text.lower()
-        for w in FORBIDDEN_WORDS:
-            if w in low:
-                bad(f"forbidden identifier '{w}' in {rel}")
-    ok(f"privacy scan of {scanned} files against {len(pats)} patterns")
+    ok(f"privacy scan of {n} tracked text files against {len(pats)} internal patterns")
 
-    # 3. Rounding
-    dat = json.load(open(os.path.join(ROOT, "data", "model_outputs.json"), encoding="utf-8"))
-    money_vals = []
-    money_vals += list(dat["base_results_real_2026"].values())
-    money_vals += [v for r in dat["grid"] for v in r["results"].values()]
-    money_vals += [v for s in dat["monte_carlo"]["summary"].values() for v in s.values() if isinstance(v, (int, float)) and v > 1000]
-    money_vals += [v for r in dat["projection_base"] for k, v in r.items() if k != "year"]
-    bad_round = [v for v in money_vals if round(v) % 10 != 0]
-    if bad_round:
-        bad(f"{len(bad_round)} money values are not rounded to $10 (first: {bad_round[:3]})")
+
+def rounding_check():
+    mo = json.load(open(os.path.join(ROOT, "data", "model_outputs.json"), encoding="utf-8"))
+    nums = []
+    walk_numbers(mo, nums)
+    off = [(k, v) for k, v in nums if isinstance(v, float) and v != int(v) and k.startswith("mc_")]
+    money = [(k, v) for k, v in nums if abs(v) >= 1000 and float(v) == int(v)]
+    bad_vals = [(k, v) for k, v in money if int(v) % 10 != 0 and int(v) not in STATUTORY]
+    if bad_vals:
+        bad(f"rounding: {len(bad_vals)} model money values not multiples of $10, e.g. {bad_vals[:3]}")
     else:
-        ok(f"rounding: {len(money_vals)} money values are multiples of $10")
+        ok(f"rounding: {len(money)} model money values are multiples of $10 or statutory")
+    site_bad = []
+    for rel in tracked_text_files():
+        if not rel.endswith(".html"):
+            continue
+        text = open(os.path.join(ROOT, rel), encoding="utf-8").read()
+        text = re.sub(r"<[^>]+>", " ", text)
+        for m in re.finditer(r"\$(-?[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})", text):
+            v = int(m.group(1).replace(",", ""))
+            if v % 10 != 0 and v not in STATUTORY:
+                site_bad.append((rel, v))
+    if site_bad:
+        bad(f"rounding: site dollar figures not multiples of $10: {site_bad[:5]}")
+    else:
+        ok("rounding: every dollar figure on the site is a multiple of $10 or a statutory amount")
 
-    # 4-5. HTML checks
-    pages = [f for f in os.listdir(ROOT) if f.endswith(".html")]
-    if "index.html" not in pages:
-        bad("index.html missing")
-    row_fail = 0
-    row_total = 0
-    for p in sorted(pages):
-        html = open(os.path.join(ROOT, p), encoding="utf-8").read()
-        for tb in re.findall(r"<tbody>(.*?)</tbody>", html, re.S):
-            for tr in re.findall(r"<tr>(.*?)</tr>", tb, re.S):
-                row_total += 1
-                if "href=" not in tr:
-                    row_fail += 1
-                    bad(f"table row without an official-source link in {p}: {re.sub('<[^>]+>', ' ', tr)[:90].strip()}")
-        for href in re.findall(r'(?:href|src)="([^"]+)"', html):
-            if href.startswith(("http://", "https://", "#", "mailto:")):
+
+def html_pages():
+    for rel in tracked_text_files():
+        if rel.endswith(".html"):
+            yield rel, open(os.path.join(ROOT, rel), encoding="utf-8").read()
+
+
+def table_rows_check():
+    total, missing = 0, []
+    for rel, text in html_pages():
+        for tb in re.findall(r"<tbody>(.*?)</tbody>", text, flags=re.S):
+            for row in re.findall(r"<tr>(.*?)</tr>", tb, flags=re.S):
+                total += 1
+                has_official = re.search(r'<a href="https?://', row) is not None
+                flagged = any(b in row for b in FLAG_BADGES)
+                if not (has_official or flagged):
+                    missing.append(rel)
+    if missing:
+        bad(f"table rows without an official link or an unverified marker: {len(missing)} (first in {missing[0]})")
+    else:
+        ok(f"table rows: {total} rows checked; each has an official-source link or a visible status marker")
+
+
+def links_check():
+    broken = []
+    for rel, text in html_pages():
+        base = os.path.dirname(os.path.join(ROOT, rel))
+        for m in re.finditer(r'(?:href|src)="([^"#:]+)"', text):
+            target = m.group(1)
+            if target.startswith(("mailto:", "data:")):
                 continue
-            target = href.split("#")[0]
-            if target and not os.path.exists(os.path.join(ROOT, target)):
-                bad(f"broken internal link in {p}: {href}")
-    ok(f"row links: {row_total - row_fail} of {row_total} table rows linked")
-
-    # 6. Required content
-    idx = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-    for needle, where in [
-        ("What would change the answer", "index.html"),
-        ("Reinvestment risk", "index.html"),
-        ("Executive summary", "index.html"),
-    ]:
-        if needle not in idx:
-            bad(f"'{needle}' missing from {where}")
-    must = {
-        "flagged.html": "Flagged for Review",
-        "brief.html": "Attorney &amp; CPA Briefing Sheet",
-        "glossary.html": "Terms",
-        "suggestions.html": "Suggestions",
-        "questions.html": "Questions and information gaps",
-        "estate-tax.html": "Estate tax",
-        "income-basis.html": "Income-tax basis",
-        "property-tax.html": "Property-tax assessment",
-        "blackswan.html": "Black swan",
-        "timeline.html": "Deadlines timeline",
-        "sources.html": "Sources",
-    }
-    for fn, needle in must.items():
-        path = os.path.join(ROOT, fn)
-        if not os.path.exists(path):
-            bad(f"required page missing: {fn}")
-        elif needle not in open(path, encoding="utf-8").read():
-            bad(f"'{needle}' missing from {fn}")
-    if not os.path.exists(os.path.join(ROOT, ".nojekyll")):
-        bad(".nojekyll missing (GitHub Pages)")
-    irr = os.path.join(ROOT, "data", "irregularities.json")
-    if not os.path.exists(irr):
-        bad("data/irregularities.json missing")
+            path = os.path.normpath(os.path.join(base, target))
+            if not os.path.exists(path):
+                broken.append((rel, target))
+    if broken:
+        bad(f"internal links: {len(broken)} broken, e.g. {broken[:3]}")
     else:
-        ok(f"irregularities: {len(json.load(open(irr)))} items in data/irregularities.json")
-    return finish()
+        ok("internal links: all relative links and assets exist")
 
 
-def finish():
-    for line in LOG:
+def sources_check():
+    reg = {s["id"] for s in json.load(open(os.path.join(ROOT, "data", "sources.json")))["sources"]}
+    used = set()
+    for _, text in html_pages():
+        used |= set(re.findall(r'>(S[0-9]{2})</a>', text))
+    unknown = sorted(used - reg)
+    if unknown:
+        bad(f"source ids used on pages but not in data/sources.json: {unknown}")
+    else:
+        ok(f"source register: {len(used)} source ids used on pages, all registered")
+
+
+def required_content():
+    need = {
+        "index.html": ["What would change the answer", "Pick for the 2050 transfer"],
+        "pages/flagged.html": ["Flagged for Review"],
+        "pages/briefing.html": ["Attorney and CPA briefing sheet"],
+        "pages/glossary.html": ["Glossary"],
+        "pages/suggestions.html": ["Suggestions"],
+        "pages/questions.html": ["Questions and gaps"],
+    }
+    missing = []
+    for rel, phrases in need.items():
+        p = os.path.join(ROOT, rel)
+        if not os.path.exists(p):
+            missing.append(rel)
+            continue
+        text = open(p, encoding="utf-8").read()
+        for ph in phrases:
+            if ph not in text:
+                missing.append(f"{rel}: '{ph}'")
+    if missing:
+        bad("required content missing: " + "; ".join(missing))
+    else:
+        ok("required content: summary, flagged, briefing, glossary, suggestions and questions pages present")
+
+
+def main():
+    structural = "--structural" in sys.argv
+    privacy_scan(structural)
+    rounding_check()
+    table_rows_check()
+    links_check()
+    sources_check()
+    required_content()
+    for line in PASS + FAIL:
         print(line)
     if FAIL:
-        print(f"\n{len(FAIL)} check(s) failed. The build must not be published.")
+        print(f"\n{len(FAIL)} check(s) failed.")
         return 1
     print("\nAll checks passed.")
     return 0

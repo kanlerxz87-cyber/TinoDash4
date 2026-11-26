@@ -377,7 +377,7 @@ The board format here differs from the sections above because this session claim
 | Date | Conflict | Resolution |
 | --- | --- | --- |
 | 2026-11-25 | The root `data/` directory now holds both sites' JSON. | This site's seven files moved to `decision-workspace/data/`; the root `data/` keeps only the earlier session's `model_outputs.json` and `irregularities.json`. Nothing was renamed inside either set. |
-| 2026-11-25 | `tools/check_site.py` forbids six identifiers repo-wide, and this site's text used three of them (the city name, two ZIPs) plus the substring `sunset`. | Scrubbed here rather than exempted: properties are now "Property A - single-family house, Santa Clara County" and "Property B - three-unit building, San Francisco", ZIPs are gone, and `sunset` reads `expiry`. The word `sunset` was over-broad as a substring rule in any case. Files under `decision-model/` still contain the old identifiers - that is that session's call, logged here as an irregularity, not edited. |
+| 2026-11-25 | `tools/check_site.py` forbids six identifiers repo-wide, and this site's text used three of them (the city name, two ZIPs) plus the substring `[neighbourhood word]`. | Scrubbed here rather than exempted: properties are now "Property A - single-family house, Santa Clara County" and "Property B - three-unit building, San Francisco", ZIPs are gone, and `[neighbourhood word]` reads `expiry`. The word `[neighbourhood word]` was over-broad as a substring rule in any case. Files under `decision-model/` still contain the old identifiers - that is that session's call, logged here as an irregularity, not edited. |
 | 2026-11-25 | `9ca44509` generated its 20 pages into the repository root while PRs #8-#12 put a different site at the same paths (`index.html`, `paths.html`, `projections.html`, `flagged.html`, `glossary.html`, `sources.html`, `suggestions.html`, `assets/app.js`, `data/`) - a genuine add/add collision on the published surface, not just on the board. | The workspace moved into `decision-workspace/` (commit `7a4ce48`) before the merge, so the root site is untouched and both are served. `site_lib.OUT` is the single place that decides where pages land; no `href` needed editing because every link in the workspace was already relative to its own directory. `README.md` now describes both sites; `COORDINATION.md` kept the append-only format from main with this session's section added at the end. |
 
 ## Verification log (append-only)
@@ -534,3 +534,40 @@ and `decision-workspace/` were not edited by this session.
 | 2026-11-25 | #16 arena/65b70013-tinodash4 → main (prose polish after privacy scrub) | merged at `45884dd`; `Verify model + site` passed; legacy Pages build `built` | polished index verified live (cache-busted fetch) |
 | 2026-11-25 | #17 arena/65b70013-tinodash4 → main (what-if tax-logic fix) | merged at `7b4c839`; `Verify model + site` passed; legacy Pages build `built` | what-if live: LIVE $52,760 / RENT $79,580 / gap $26,820 — matches model |
 | 2026-11-25 | final integration PR (retire failing `deploy.yml`) | see row below | legacy branch build (`main` /) remains the publisher |
+
+---
+
+## Session b422acd0 — rebuild of the decision site (branch `arena/b422acd0-tinodash4`, base `b7825dc`)
+
+### Claims (file scope)
+| Task | Files | Status |
+|---|---|---|
+| R-01 Decision model (eight paths, Monte Carlo, crash replays, rules, sensitivity, what-if, projections) | `tools/model.py`, `data/model_outputs.json`, `data/returns_1928_2025.csv`, `data/inputs.json`, `data/sources.json`, `DECISION_RULES.md` (read only) | done |
+| R-02 Site generator and pages (summary first, all pages listed in the brief) | `tools/build_site.py`, `index.html`, `pages/`, `assets/site.css`, `assets/site.js` | done |
+| R-03 Publication gate and CI | `tools/check_site.py`, `.github/workflows/verify.yml`, `README.md` | done |
+| R-04 Remove earlier site copies and analysis folders from the published tree (kept locally in `private/legacy/`, gitignored; history not rewritten) | `decision-model/`, `decision-workspace/`, `site/`, `model/`, `research/`, root legacy HTML, `assets/app.js`, `assets/style.css` | done |
+
+### Sources read in this session (official unless marked)
+- IRS Rev. Proc. 2025-32 (chunks 0, 2, 4, 5); IRS Form 706 instructions (chunk 0); IRS Pub 551 and Pub 523 (chunk 0 each); IRS Pub 544 (snippet).
+- BOE Letter to Assessors 2025/009 (Proposition 19 amount $1,044,586).
+- FTB 2025 Form 540-ES instructions (BHST worksheet); FTB 2025 Form 540 instructions (chunk 0).
+- CBO, *The Budget and Economic Outlook: 2026 to 2036, By the Numbers* (February 2026), fetched: CPI, PCE, 3-month bills, 10-year yields (source S23).
+- Santa Clara County tax rate book FY 2025-26 (chunk 0 only); FY 2024-25 reference total from a snippet.
+- Academic return series (NYU Stern; not an official source).
+
+### Decisions (logged)
+1. **Scope of the published tree.** Earlier copies of the site and analysis folders carried ZIP codes, a neighbourhood name and household material. They are removed from the tracked tree and kept locally (gitignored). The new site is the only published site.
+2. **Gate.** The privacy scan needs `private/raw_inputs.json` (local only). The unrounded originals of the owner figures are not in the workspace, so the scan checks the ZIP and neighbourhood list and the structure, not the original values. CI runs `check_site.py --structural`.
+3. **Model correction.** Household cash flows compounded at the equity return (overstating living costs). Fixed: they go to the cash account at the bill return. The pick is unchanged. Living median (2050/20) moved from -$76,930 to $2,558,810.
+4. **Prop 19.** The statutory $1,044,586 is used exactly. The assessed-value formula is the model's reading and is flagged (F-20).
+5. **Phase-in length.** DECISION_RULES.md section 5 says 24 to 36 months; the model tests 12. Flagged (F-21), not changed in the rules.
+6. **Inputs.** The only dollar inputs are owner property figures rounded to $10 (values, insurance, utilities, rent, tax history). No income, account or debt figures were supplied; none are in the repository.
+
+### Open (not decided here; flagged)
+- F-01 parcel's own rate area and bills; F-02 Property B's billed rate; F-06 appraisals; F-07 insurance quotes; F-08 rental comparables (Rule 4); F-13 T-bill column (+0.034% against source, unresolved); F-17 Form 706 due date; F-19 installment dates; F-20 Prop 19 formula confirmation.
+- Git history still holds the earlier material; rewriting it needs owner approval (SG-10).
+
+### Verification (this session)
+- `python3 tools/model.py`: runs in about 30 seconds; deterministic (seed 20261126).
+- `python3 tools/build_site.py`: 21 pages.
+- `python3 tools/check_site.py`: all checks pass (privacy scan against the internal list, rounding, row markers, links, source register, required content).

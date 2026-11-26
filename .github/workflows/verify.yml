@@ -13,9 +13,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Regenerate model data (deterministic)
-        run: python3 model/build_model.py
-      - name: Fail if regeneration changed tracked data (data must be committed in sync)
-        run: git diff --exit-code -- site/data
-      - name: Headless smoke test of all site renderers
-        run: node model/check_site.js
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Regenerate model outputs (seeded, deterministic)
+        run: python3 tools/model.py
+      - name: Fail if model outputs differ from the committed file
+        run: git diff --exit-code -- data/model_outputs.json
+      - name: Rebuild the site
+        run: python3 tools/build_site.py
+      - name: Fail if the built site differs from the committed site
+        run: git diff --exit-code -- index.html pages assets
+      - name: Structural checks (rounding, row markers, links, source register)
+        run: python3 tools/check_site.py --structural
